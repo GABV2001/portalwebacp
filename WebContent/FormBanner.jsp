@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="ISO-8859-1"">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -38,7 +38,12 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+ 					<%
+                            	String pos = "";
+								pos = request.getParameter("posicion")==null?"0":request.getParameter("posicion");
+														
+														
+                            %>
                     <!--Formulario-->
                     <div class="container">
                         <header class="text-center text-white">
@@ -52,29 +57,35 @@
                                         <h3 class="card-title text-left">Banner</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
+                                        <form class = "Banner"  method="post" action="./Sl_GestionBanner"> 
+                                         <input name="opcion" type="hidden" value="1" />
+                                    	<input name="posicion"  type = "hidden" value="<%=pos%>" />
+                                         <div class="form-group">
+                                                <label for="formGroupExampleInput">Titulo:</label>
+                                                <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" required>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="mb-3">
+                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
+                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripciÃ³nBanner" required></textarea>
+                                            </div>
+                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile01">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile01">Seleccionar el
-                                                            archivo</label>
+                                                        <input type="file" class="custom-file-input" id="multBanner" accept="image/*" >
+                                                        <label class="custom-file-label text-truncate" for="multBanner"
+                                                            id="labelmulBanner">Seleccionar archivo...</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
-                                            </div>
+                                          <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>
+				                            <br>
+				                         
                                             <div style="text-align:center;"><a href="GestionBanner.jsp"><i
                                                         class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
@@ -110,6 +121,21 @@
     <!-- Logout Modal-->
    	<jsp:include page="adminLogOutModal.jsp" />    
 
+	<script>
+		var inputbtn = document.getElementById("multBanner");
+	    var customTxt = document.getElementById("labelmulBanner");
+	   		
+		            
+		      inputbtn.addEventListener("change", function () {
+		          if (inputbtn.value) {
+		              customTxt.innerHTML = inputbtn.value.match(
+		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+		              )[1];
+		          } else {
+		              customTxt.innerHTML = "Seleccionar archivo...";
+		          }
+		      });
+		</script>
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">

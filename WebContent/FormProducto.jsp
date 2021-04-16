@@ -61,16 +61,10 @@
                                                 <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
                                             </div>
                                             <div class="form-group">
+                                             <label for="custom-file">Media:</label>
                                                 <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile01">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile01">Seleccionar el
-                                                            archivo</label>
+                                                     <div class="custom-file">
+                                                        <input type="file" id="inputGroupFile01" multiple>      
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,38 +1,62 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"%>
 <!-- footer -->
     <div class="footer-clean bg-success">
         <footer>
             <div class="container">
                 <div class="row justify-content-center">
+                
+                	<%ArrayList<Footer> listFooter = new ArrayList<Footer>();
+									Dt_Footer dtf = new Dt_Footer();
+									listFooter = dtf.listFooter();
+										
+									String Descripcion = null;
+									String Correo = null;
+									String Telefono = null;
+									String Extencion =null ;
+									String Logo = null;
+									
+									for(Footer ft : listFooter){
+										Descripcion = ft.getDescripcion();
+										Correo = ft.getCorreo();
+										Telefono = ft.getTelefono();
+									    Extencion = ft.getExtencion();
+										Logo = ft.getLogo();
+									}
+									 %>
+                
                     <div class="col-sm-4 col-md-3 item">
-                        <h3>Dirección</h3>
+                        <h3>DirecciÃ³n</h3>
                         <ul>
-                            <li><a href="#">Universidad Centroamericana (UCA), Managua, Nicaragua
-                                    Rotonda Rubén Darío 150 metros al oeste. Apartado Postal 69</a></li>
+                            <li><%=Descripcion%></li>
                         </ul>
                     </div>
                     <div class="col-sm-4 col-md-3 item">
                         <h3>Telefono</h3>
                         <ul>
-                            <li><a href="#">22783923 hasta el 27</a></li>
+                            <li><%=Telefono%> </li>
                         </ul>
                         <ul>
-                            <li><a href="#">Ext: 1188</a></li>
+                            <li><a href="#">Ext: <%=Extencion%></a></li>
                         </ul>
                     </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Responsable</h3>
+                      <div class="col-sm-4 col-md-3 item">
+                        <h3>Correo</h3>
                         <ul>
-                            <li> MSc. Alfredo Grijalva</li>
+                            <li><%=Correo%> </li>
                         </ul>
                     </div>
                     <div class="col-sm-4 col-md-3 mt-auto item">
-                        <img src="img/logo_jesuita.png" alt="" class="img-fluid rounded mx-auto d-block" id="imgLogo">
+                        <img src="img/<%=Logo%>" alt="" class="img-fluid rounded mx-auto d-block" id="imgLogo">
                     </div>
                 </div>
+                
+                    <%
+				    Calendar cal=Calendar.getInstance();
+				    int year=cal.get(Calendar.YEAR);%>
+                
                 <div>
-                    <p class="copyright">Arboreto Carmelo Palma © 2021</p>
+                    <p class="copyright">Arboreto Carmelo Palma Â© <%=year %></p>
                 </div>
                 </div>
         </footer>

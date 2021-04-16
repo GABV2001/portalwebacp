@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Inicio</title>
+    <title>Portal ACP - GestiÃ³n Inicio</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,78 +46,101 @@
                         <div class="row ">
                             <div class="col-lg-10 m-auto">
                                 <div class="card rounded shadow border-0">
-
                                     <div class="card-header">
                                         <h2 class="card-title text-center">Inicio</h2>
                                     </div>
                                     <div class="card-body">
-                                        <form>
+									<%ArrayList<Home> listHome = new ArrayList<Home>();
+									Dt_Home dth = new Dt_Home();
+									listHome = dth.ListarHome();
+									
+									int idinicio = 0;
+									int idUsuario = 0;
+									String Historia = null;
+									String Mision = null;
+									String Vision = null;
+									String Img_historia =null;
+									String Img_vision = null;
+									String Img_mision = null;
+									
+									Home hm = new Home();
+									hm = listHome.get(0);
+									idinicio = hm.getHomeID();
+									idUsuario = hm.getUsuarioID();
+									Historia = hm.getHistoria();
+									Mision = hm.getMision();
+									Vision = hm.getVision();
+									Img_historia = hm.getImg_historia();
+									Img_vision = hm.getImg_vision();
+									Img_mision= hm.getImg_mision();
+									
+									 %>
+                                        <form class="Inicio" method="post" action="./Sl_GestionInicio">
+                						<!-- El valor de estos input es para el Servlet opcion editar -->                			
+                                        	<input name="idInicio" type="hidden" value="<%=idinicio%>" />
+                                        	<input name="idUsuario" type="hidden" value="<%=idUsuario%>" />                                        	
+                            				<input name="opcion" type="hidden" value="1" />
                                             <h3>Historia</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile01">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile01">Seleccionar
-                                                        </label>
+                                                        <input type="file" class="custom-file-input" id="multHistoria" accept="image/*">
+                                                        <label class="custom-file-label text-truncate" for="multHistoria"
+                                                            id="labelmulHistoria"><%=Img_historia%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
+                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"> <%=hm.getHistoria() %></textarea>
                                             </div>
-                                            <h3>Misión</h3>
+                                            <h3>MisiÃ³n</h3>
                                             <hr class="bg-dark w-auto">
-                                            <div class="form-group">
+                                           <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile02">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile02">Seleccionar</label>
+                                                        <input type="file" class="custom-file-input" id="multMision" accept="image/*">
+                                                        <label class="custom-file-label text-truncate" for="multMision"
+                                                            id="labelmulMision"><%=Img_mision%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
+                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="4" class="form-control"><%=hm.getMision() %></textarea>
                                             </div>
 
-                                            <h3>Visión</h3>
+                                            <h3>VisiÃ³n</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile03">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile03">Seleccionar</label>
+                                                        <input type="file" class="custom-file-input" id="multVision" accept="image/*">
+                                                        <label class="custom-file-label text-truncate" for="multVision"
+                                                            id="labelmulVision"><%=Img_vision%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
+                                                <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"> <%=hm.getVision() %></textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 49%;">Guardar</button>
-                                                <button class="btn btn-primary" style="width: 48%;">Visualizar</button>
-                                            </div>
+                                      	 <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>  
                                         </form>
                                     </div>
                                 </div>
@@ -152,6 +175,39 @@
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
 
+	<script>
+
+	var inputbtn = document.getElementById("multHistoria");
+    var customTxt = document.getElementById("labelmulHistoria");
+    
+	fileChange(inputbtn, customTxt);
+    
+	var inputbtn = document.getElementById("multMision");
+    var customTxt = document.getElementById("labelmulMision");
+    
+	fileChange(inputbtn, customTxt);
+    
+    var inputbtn = document.getElementById("multVision");
+    var customTxt = document.getElementById("labelmulVision");
+            
+	fileChange(inputbtn, customTxt);
+    
+	function fileChange(p1, p2){
+		var inputbtn = p1 
+	      var customTxt = p2
+	            
+	      inputbtn.addEventListener("change", function () {
+	          if (inputbtn.value) {
+	              customTxt.innerHTML = inputbtn.value.match(
+	                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+	              )[1];
+	          } else {
+	              customTxt.innerHTML = "NingÃºn archivo seleccionado";
+	          }
+	      });
+	}
+ </script>
+	
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 

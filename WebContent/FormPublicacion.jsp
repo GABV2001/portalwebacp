@@ -73,7 +73,7 @@
 
                                         <div class="form-group">
                                             <label>Descripcion</label>
-                                            <textarea class="form-control" rows="3"></textarea>
+                                            <textarea class="form-control" rows="6"></textarea>
                                         </div>
 
                                         <div class="mb-3">

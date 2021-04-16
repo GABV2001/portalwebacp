@@ -31,10 +31,11 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="GestionBanner.jsp">Gestión Banner</a>
-                        <a class="collapse-item" href="GestionInicio.jsp">Gestión Inicio</a>
-                        <a class="collapse-item" href="GestionPiePagina.jsp">Gestión Pie de Página</a>
-                    </div>
+                          <a class="collapse-item" href="GestionBanner.jsp">Gestión Banner</a>                    
+                           <a class="collapse-item" href="GestionInicio.jsp">Gestión Inicio</a> 
+                           <a class="collapse-item" href="GestionPiePagina.jsp">Gestión Pie de Página</a>
+                     <!--    <a class="collapse-item" href="GestionPiePagina.jsp">Gestión Nav</a> -->
+                       </div>
                 </div>
             </li>
 
@@ -106,6 +107,8 @@
                         <a class="collapse-item" href="GestionDistribucion.jsp">Distribución</a>
                         <a class="collapse-item" href="GestionRegion.jsp">Región</a>
                         <a class="collapse-item" href="GestionPais.jsp">País</a>
+                        <a class="collapse-item" href="GestionFloracion.jsp">Floración</a>
+                        
                     </div>
                 </div>
             </li>

@@ -1,9 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+import = "entidades.ViewHead, datos.Dt_ViewHead, java.util.*;"%>
+
+							 <%
+                                	ArrayList<ViewHead> listViewHead = new ArrayList<ViewHead>();
+                                	Dt_ViewHead dth = new Dt_ViewHead();
+                                	listViewHead = dth.ListarViewHead();
+                                %>
+                                
+                                
+            <%
+
+        	String logo = null;
+            String titulo = null;
+            
+			 ViewHead vwh = listViewHead.get(0);	
+             logo = vwh.getLogo();
+             titulo = vwh.getTitulo();
+			 
+	  	 	%>	
+ 					
+        
  <!-- Menu -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">Arboreto Carmelo Palma</a>
+            <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="" style="width: 60px; height: 40px;" id="imgLogo"><%=titulo %></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -13,25 +33,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.jsp">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Publicacion.jsp">Publicaciones</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Arbol.jsp">Árboles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Eventos.jsp">Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Mapa.jsp">Mapa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Servicios.jsp">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Producto.jsp">Productos</a>
-                    </li>
-                    <li class="nav-item">
+                                                   
+                                <%
+                        
+                           		for(ViewHead Vwhead: listViewHead){
+                           			
+                                %>
+			                     <li class="nav-item">
+			                        <a class="nav-link" href="<%=Vwhead.getEnlace()%>"><%=Vwhead.getNombrehead()%></a>
+			                    </li>
+                                <% 
+                           		}
+                                %>
+                     <li class="nav-item">
                         <a class="nav-link" href="Contacto.jsp">Contactos</a>
                     </li>
                     <li class="nav-item">

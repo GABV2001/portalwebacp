@@ -1,49 +1,42 @@
 package entidades;
 
-public class Inicio {
+public class Home {
 
 	//Atributos
-	private int InicioID;
-	private int	UsuarioID;
-	private String Historia;
-	private String Mision;
-	private String Vision;
+	private int homeID;
+	private String historia;
+	private String mision;
+	private String vision;
 	private String img_historia;
 	private String img_vision;
 	private String img_mision;
-	private int Estado;
-	
+	private int estado;
+	private int	usuarioID;
 	
 	//Metodos
-	public int getInicioID() {
-		return InicioID;
+	public int getHomeID() {
+		return homeID;
 	}
-	public void setInicioID(int inicioID) {
-		InicioID = inicioID;
-	}
-	public int getUsuarioID() {
-		return UsuarioID;
-	}
-	public void setUsuarioID(int usuarioID) {
-		UsuarioID = usuarioID;
+	public void setHomeID(int homeID) {
+		this.homeID = homeID;
 	}
 	public String getHistoria() {
-		return Historia;
+		return historia;
 	}
 	public void setHistoria(String historia) {
-		Historia = historia;
+		this.historia = historia;
 	}
 	public String getMision() {
-		return Mision;
+		return mision;
 	}
 	public void setMision(String mision) {
-		Mision = mision;
+		this.mision = mision;
 	}
 	public String getVision() {
-		return Vision;
+		return vision;
 	}
 	public void setVision(String vision) {
-		Vision = vision;
+		this.vision = vision;
 	}
 	public String getImg_historia() {
 		return img_historia;
@@ -64,11 +57,17 @@ public class Inicio {
 		this.img_mision = img_mision;
 	}
 	public int getEstado() {
-		return Estado;
+		return estado;
 	}
 	public void setEstado(int estado) {
-		Estado = estado;
+		this.estado = estado;
 	}
-	
+	public int getUsuarioID() {
+		return usuarioID;
+	}
+	public void setUsuarioID(int usuarioID) {
+		this.usuarioID = usuarioID;
+	}
+
 }
 

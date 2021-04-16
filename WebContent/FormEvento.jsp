@@ -91,7 +91,7 @@
 
                                             <div class="form-group ">
                                                 <label for="formGroupExampleInput ">Ubicación</label>
-                                                <input type="text " class="form-control " id="formGroupExampleInput ">
+                                                <input type="text " class="form-control " id="ubicacionEvento ">
                                             </div>
 
                                             <div class="form-group ">

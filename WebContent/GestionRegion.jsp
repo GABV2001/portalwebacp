@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewRegion,datos.Dt_Region,java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
-    <meta charset="ISO-8859-1">
+    <meta charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Región</title>
+    <title>Portal ACP - GestiÃ³n RegiÃ³n</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,68 +37,54 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Región</h1>
+                    <h1 class="h3 mb-2 text-gray-800">RegiÃ³n</h1>
 
                     <!-- DataTales -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Región</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n RegiÃ³n</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormRegion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Región</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nueva RegiÃ³n</div></a>
+                                    <%
+                                    	ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
+                                        Dt_Region dtu = new Dt_Region();
+                                        listRegion = dtu.listaRegion();                   
+                                    %>
                                     <thead>
                                         <tr>
-                                            <th>Región</th>
-                                            <th>país</th>
+                                            <th>Nombre</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>paÃ­s</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Región</th>
-                                            <th>país</th>
+                                            <th>Nombre</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>PaÃ­s</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
+                                           <%
+                                           	for(ViewRegion us: listRegion){
+                                           %>
+                                       	<tr> 
+                                       	    <td><%=us.getNombreRegion() %></td>                                           
+                                            <td><%=us.getDescripcion() %></td>
+                                             <td><%=us.getNombrePais() %></td>
+                                             <td>&nbsp;&nbsp;<a href="EditarRegion.jsp"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                                    href="#"><i class="far fa-trash-alt"></i></td>                                    
+                                       </tr>
+                                           <%
+                                       		}
+                                           %>                                                                        
                                     </tbody>
                                 </table>
                             </div>

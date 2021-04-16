@@ -3,44 +3,57 @@ package entidades;
 public class Banner {	
 	
 	//Atributos	
-	private int BannerID;
-	private  int UsuarioID;
-	private String Descripcion;
-	private String Image;
-	private int Estado;
+	private int bannerID;
+	private String titulobanner;
+	private String descripcion;
+	private String multimedia;
+	private int posicion;
+	private int estado;
+	private int usuarioID;
 	
 	//Metodos
 	public int getBannerID() {
-		return BannerID;
+		return bannerID;
 	}
 	public void setBannerID(int bannerID) {
-		BannerID = bannerID;
+		this.bannerID = bannerID;
 	}
-	public int getUsuarioID() {
-		return UsuarioID;
+	public String getTitulobanner() {
+		return titulobanner;
 	}
-	public void setUsuarioID(int usuarioID) {
-		UsuarioID = usuarioID;
+	public void setTitulobanner(String titulobanner) {
+		this.titulobanner = titulobanner;
 	}
 	public String getDescripcion() {
-		return Descripcion;
+		return descripcion;
 	}
 	public void setDescripcion(String descripcion) {
-		Descripcion = descripcion;
+		this.descripcion = descripcion;
 	}
-	public String getImage() {
-		return Image;
+	public String getMultimedia() {
+		return multimedia;
 	}
-	public void setImage(String image) {
-		Image = image;
+	public void setMultimedia(String multimedia) {
+		this.multimedia = multimedia;
+	}
+	public int getPosicion() {
+		return posicion;
+	}
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
 	}
 	public int getEstado() {
-		return Estado;
+		return estado;
 	}
 	public void setEstado(int estado) {
-		Estado = estado;
+		this.estado = estado;
+	}
+	public int getUsuarioID() {
+		return usuarioID;
+	}
+	public void setUsuarioID(int usuarioID) {
+		this.usuarioID = usuarioID;
 	}
 	
 	
-
 }

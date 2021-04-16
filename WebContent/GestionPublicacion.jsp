@@ -56,6 +56,8 @@
                                             <th>Titulo</th>
                                             <th>Multimedia</th>
                                             <th>Descripcion</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -63,7 +65,9 @@
                                         <tr>
                                             <th>Titulo</th>
                                             <th>Multimedia</th>
-                                            <th>Descripcion</th>
+                                           <th>Descripcion</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
@@ -72,51 +76,12 @@
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
+                                            <td>Edinburgh</td>
                                             <td>Edinburgh</td>
                                             <td>&nbsp;&nbsp;<a href="#"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brielle Williamson</td>
-                                            <td>Integration Specialist</td>
-                                            <td>New York</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                        </tr>                               
                                     </tbody>
                                 </table>
                             </div>

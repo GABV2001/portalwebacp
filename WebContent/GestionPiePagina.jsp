@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"
+    %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Inicio</title>
+    <title>Portal ACP - Gestión Pie De Página</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,6 +25,8 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+
 
 </head>
 
@@ -39,90 +42,83 @@
                 <div class="container-fluid">
 
                     <!-- Formulario -->
-                    <div class="container">
-                        <header class="text-center text-white">
-                            <script src="https://kit.fontawesome.com/a41f4b8198.js" crossorigin="anonymous"></script>
-                        </header>
+        		 <div class="container">
                         <div class="row ">
-                            <div class="col-lg-10 m-auto">
+                            <div class="col-lg-11 m-auto">
                                 <div class="card rounded shadow border-0">
 
-                                    <div class="card-header">
-                                        <h2 class="card-title text-center">Inicio</h2>
+									<%ArrayList<Footer> listFooter = new ArrayList<Footer>();
+									Dt_Footer dtf = new Dt_Footer();
+									listFooter = dtf.listFooter();
+										
+									String Descripcion = null;
+									String Correo = null;
+									String Telefono = null;
+									String Extension =null ;
+									String Logo = null;
+									int idFooter =0;
+									int idUsuario =0;
+									
+										Footer ft = new Footer();
+										ft = listFooter.get(0);
+										idFooter = ft.getFooterID();
+										idUsuario = ft.getUsuarioID();
+										Descripcion = ft.getDescripcion();
+										Correo = ft.getCorreo();
+										Telefono = ft.getTelefono();
+									    Extension = ft.getExtencion();
+										Logo = ft.getLogo();
+									
+									 %>
+									 
+						 			  <div class="card-header">
+                                        <h2>
+                                            Pie de Página
+                                        </h2>
                                     </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <h3>Historia</h3>
-                                            <hr class="bg-dark w-auto">
+                                    <div class="card-body bg-white rounded">
+                                        <form class="PiePagina" method="post" action="./Sl_GestionPiePagina">
+                                        	<!-- El valor de estos input es para el Servlet opcion editar -->                			
+                                        	<input name="idFooter" type="hidden" value="<%=idFooter%>" />
+                                        	<input name="idUsuario" type="hidden" value="<%=idUsuario%>" />  
+                                        	<input name="opcion" type="hidden" value="1" />
+                                        	                                      	
                                             <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
+                                                <label>Dirección:</label>
+                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=Descripcion%>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Correo:</label>
+                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=Correo%>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Telefono:</label>
+                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=Telefono%>" required  >
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Extensión:</label>
+                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=Extension%>" required>
+                                            </div>
+                                           <div class="form-group">
+                                                <label for="custom-file">Multimedia:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile01">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile01">Seleccionar
-                                                        </label>
+                                                        <input type="file" class="custom-file-input text-truncate" id="multiFooter" accept="image/* ">
+                                                        <label class="custom-file-label text-truncate" for="multVision"
+                                                            id="labelmulFooter"><%=Logo %></label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
-                                            </div>
-                                            <h3>Misión</h3>
-                                            <hr class="bg-dark w-auto">
-                                            <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile02">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile02">Seleccionar</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
-                                            </div>
-
-                                            <h3>Visión</h3>
-                                            <hr class="bg-dark w-auto">
-                                            <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile03">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile03">Seleccionar</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="4" class="form-control"></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 49%;">Guardar</button>
-                                                <button class="btn btn-primary" style="width: 48%;">Visualizar</button>
-                                            </div>
+                                      	 <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>                             
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <!--termina formulario-->
                         </div>
                     </div>
 
@@ -151,6 +147,22 @@
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
+	<!--File Custom JS -->
+	   <script>
+	    const inputbtn = document.getElementById("multiFooter");
+        const customTxt = document.getElementById("labelmulFooter");
+
+        inputbtn.addEventListener("change", function () {
+            if (inputbtn.value) {
+                customTxt.innerHTML = inputbtn.value.match(
+                    /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                )[1];
+            } else {
+                customTxt.innerHTML = "Ningún archivo seleccionado";
+            }
+        });
+
+    </script>
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">

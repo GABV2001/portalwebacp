@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +41,16 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Banner</h1>
 
-                    <!-- DataTales Example -->
+      							<%
+                                	ArrayList<Banner> listBanner = new ArrayList<Banner>();
+                                	Dt_Banner dtb = new Dt_Banner();
+                                	listBanner = dtb.ListarBanner();
+                                	
+                                	Banner ban = new Banner();
+                                	ban = listBanner.get(listBanner.size() - 1);
+                               	
+                                %>
+                    <!-- DataTales Banner -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Gestión Banner</h6>
@@ -49,47 +58,41 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <div style="text-align:right;"><a href="FormBanner.jsp"><i
+                                    <div style="text-align:right;"><a href="FormBanner.jsp?posicion=<%=ban.getPosicion()%>"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Elemento</div></a>
                                     <thead>
                                         <tr>
-                                            <th>Imagen</th>
+                                           <th>Posición</th>
+                                            <th>Titulo</th>
                                             <th>Descripción</th>
+                                            <th>Multimedia</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Imagen</th>
+                                            <th>Posición</th>
+                                            <th>Titulo</th>
                                             <th>Descripción</th>
+                                            <th>Multimedia</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Img-1</td>
-                                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam
-                                                eveniet
-                                                sint</td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="far fa-trash-alt"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Img-2</td>
-                                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam
-                                                eveniet
-                                                sint</td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="far fa-trash-alt"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Img-3</td>
-                                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam
-                                                eveniet
-                                                sint</td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="far fa-trash-alt"></i>
-                                            </td>
-                                        </tr>
+                                    	<%
+                                       		for(Banner bn: listBanner){
+                                       	%>
+                                       <tr>
+   	                                       <td><%=bn.getPosicion() %></td>
+                                           <td><%=bn.getTitulobanner() %></td>
+                                           <td><%=bn.getDescripcion() %></td>
+                                           <td><%=bn.getMultimedia() %></td>
+                                                 <td>&nbsp;&nbsp;<a
+                                                    href="#"><i class="far fa-trash-alt"></i></td>                           
+                                       </tr>
+                                       		<%
+                                       		}
+                                           %>   
                                     </tbody>
                                 </table>
                             </div>
@@ -118,7 +121,7 @@
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
-
+	
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 

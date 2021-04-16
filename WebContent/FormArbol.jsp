@@ -68,7 +68,8 @@
                                                 <textarea class="form-control" rows="3"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label>Género del árbol:</label>
+                                                <label>Género del árbol: &nbsp;<a href="GestionGenero.jsp"><i
+                                                class="fas fa-plus-square"></i></a></label>  
                                                 <select class="form-control">
                                                     <option value="value1">genero 1</option>
                                                     <option value="value2">genero 2</option>
@@ -76,7 +77,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Familia del árbol:</label>
+                                                <label>Familia del árbol:  &nbsp;<a href="GestionFamilia.jsp"><i
+                                                class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control">
                                                     <option value="value1">familia 1</option>
                                                     <option value="value2">familia 2</option>
@@ -91,10 +93,9 @@
                                                     <option value="value3">floración 3</option>
                                                 </select>
                                             </div>
-
-
                                             <div class="form-group">
-                                                <label>Distribución del árbol:</label>
+                                                <label>Distribución del árbol:  &nbsp;<a href="GestionDistribucion.jsp"><i
+                                                class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control">
                                                     <option value="value1">distribución 1</option>
                                                     <option value="value2">distribución 2</option>

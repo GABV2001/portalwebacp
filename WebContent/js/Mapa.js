@@ -17,7 +17,7 @@
     };
 
     //Marcadores de Arboles
-    L.marker([12.126932040970864, -86.27038300037383,]).bindPopup('Árbol Test').addTo(groups.Arboles);
+    L.marker([12.126932040970864, -86.27038300037383]).bindPopup('Árbol Test').addTo(groups.Arboles);
     L.marker([12.126811412639345, -86.27067267894745]).bindPopup('Árbol Test 1').addTo(groups.Arboles);
     L.marker([12.126947775097026, -86.27054393291472]).bindPopup('Árbol Test 2').addTo(groups.Arboles);
     L.marker([12.127052669247792, -86.27022743225098,]).bindPopup('Árbol Test 3').addTo(groups.Arboles);

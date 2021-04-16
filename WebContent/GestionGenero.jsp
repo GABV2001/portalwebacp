@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="entidades.Genero,datos.Dt_Genero,java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset=ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -50,56 +49,40 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormGenero.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Género</div></a>
+                                    <%
+                                    	ArrayList<Genero> listGenero = new ArrayList<Genero>();
+                                      	Dt_Genero dtu = new Dt_Genero();
+                                                                      	listGenero = dtu.listaGenero();
+                                   %>
                                     <thead>
-                                        <tr>
-                                            <th>Nombre del género</th>
-                                            <th>Descripción</th>
+                                        <tr>                                         
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>                       
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                        <tr>
-                                            <th>Nombre del género</th>
-                                            <th>Descripción</th>
+                                        <tr>                                
+                                            <th>Nombre</th>                                            
+                                            <th>Descripción</th>                                                       
                                             <th>Opciones</th>
+
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
+                                    <tbody>                                        
+                                        <%
+									 	for(Genero us: listGenero){
+                                         %>
+                                       	<tr> 
+                                       	    <td><%=us.getNombre() %></td>                                           
+                                            <td><%=us.getDescripcion() %></td>                                      
+                                            <td>&nbsp;&nbsp;<a href="EditarGenero.jsp"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                           <%
+                                       		}
+                                           %>                             
                                     </tbody>
                                 </table>
                             </div>

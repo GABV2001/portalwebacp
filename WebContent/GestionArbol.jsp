@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Arbol, datos.Dt_Arbol, java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Árbol</title>
+    <title>Portal ACP - GestiÃ³n Ãrbol</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,109 +37,69 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Árbol</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Ãrbol</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Árbol</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n Ãrbol</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Ãrbol</div></a>
+                                    <%
+                                	ArrayList<Arbol> listArbol = new ArrayList<Arbol>();
+                                	Dt_Arbol dtu = new Dt_Arbol();
+                                	listArbol = dtu.listaArbol();                                	
+                                     %>
                                     <thead>
                                         <tr>
-                                            <th>Nombre común</th>
-                                            <th>Nombre científico</th>
-                                            <th>Descripción</th>
+                                            <th>Nombre comÃºn</th>
+                                            <th>Nombre cientÃ­fico</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>
-                                            <th>Distribución</th>
-                                            <th>Ubicación</th>
+                                            <th>FloraciÃ³n</th>
+                                            <th>DistribuciÃ³n</th>                                      
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Nombre común</th>
-                                            <th>Nombre científico</th>
-                                            <th>Descripción</th>
+                                            <th>Nombre comÃºn</th>
+                                            <th>Nombre cientÃ­fico</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>
-                                            <th>Distribución</th>
-                                            <th>Ubicación</th>
+                                            <th>FloraciÃ³n</th>
+                                            <th>DistribuciÃ³n</th>                                     
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$433,060</td>
-                                            <td>$433,060</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                         <%
+                                       		for(Arbol us: listArbol){
+                                       	%>
+                                       	<tr> 
+                                       	    <td><%=us.getNombreComun() %></td>
+                                       	    <td><%=us.getNombreCientifico() %></td>                                           
+                                            <td><%=us.getDescripcion() %></td>                                 
+                                            <td><%=us.getMultimedia() %></td>
+                                            <td><%=us.getNombreGenero() %></td>                                            
+                                            <td><%=us.getNombreFam() %></td>
+                                            <td><%=us.getNombreFlo() %></td>
+                                            <td><%=us.getNombreDis() %></td>                                                                                        
+                        			        <td>&nbsp;&nbsp;<a href="EditarArbol.jsp"><i
+                        	                                class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$433,060</td>
-                                            <td>$433,060</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$433,060</td>
-                                            <td>$433,060</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$433,060</td>
-                                            <td>$433,060</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$433,060</td>
-                                            <td>$433,060</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                          <%
+                                       		}
+                                           %>                            
                                     </tbody>
                                 </table>
                             </div>
