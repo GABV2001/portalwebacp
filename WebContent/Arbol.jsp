@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Arbol, datos.Dt_Arbol, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Arboreto Carmelo Palma - Árboles</title>
@@ -36,23 +36,32 @@
     <div class="container mb-5">
         <!-- Page Heading -->
         <h1 class="my-4">Árboles
+        <hr class="border-dark">
         </h1>
 
         <div class="row">
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Árbol 1</a>
-                        </h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam
-                            aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt,
-                            dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
-                    </div>
-                </div>
-            </div>
-           
+        			<%
+                      	ArrayList<Arbol> listArbol = new ArrayList<Arbol>();
+                       	Dt_Arbol dta = new Dt_Arbol();
+                       	listArbol = dta.listaArbol();                        	
+                               	
+                      %>          
+            	       <%for(Arbol a: listArbol){%>
+			                    <div class="col-lg-4 col-sm-6 mb-4">
+					                <div class="card h-100">
+					                    <a href="ArbolIn.jsp?arbolid=<%=a.getID()%>"><img class="card-img-top" src="img/1.jpg" alt="Arbol <%=a.getNombreComun() %>"></a>
+					                    <div class="card-body">
+					                        <h4 class="card-title">
+					                            <a href="ArbolIn.jsp?arbolid=<%=a.getID()%>" class="fw-bold text-dark"> <%=a.getNombreComun() %></a>
+					                        </h4>
+					                        <p class="card-text"><%=a.getDescripcion() %></p>
+					                    </div>
+					       
+					                </div>
+					             </div>
+			           <%
+			             }
+			             %>                   
         </div>
         <!-- /.row -->
 
@@ -66,12 +75,6 @@
             </li>
             <li class="page-item">
                 <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
             </li>
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">

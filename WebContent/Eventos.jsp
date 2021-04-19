@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" import = "entidades.Evento, datos.Dt_Evento ,java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +43,31 @@
     <!-- Contenido -->
     <div class="container">
     
+    	
+    	<%
+    	  ArrayList<Evento> listEventos = new ArrayList<Evento>();
+    	  Dt_Evento dth = new Dt_Evento();
+          listEventos = dth.listarEventos();
+        %> 	
+ 	 	 <%for(Evento ev: listEventos){ 
+ 	 	     StringBuilder fechaInicio = new StringBuilder(ev.getFechainicio());
+         	 fechaInicio.setCharAt(4, '/');
+       	     fechaInicio.setCharAt(7, '/');
+      	     System.out.println(fechaInicio);
+      	     
+            StringBuilder fechaFin = new StringBuilder(ev.getFechafin());
+            fechaFin.setCharAt(4, '/');
+            fechaFin.setCharAt(7, '/');
+ 			%>
+ 			<input type="hidden" id="fechaInicio" value="<%=fechaInicio%>">			
+           <input type="hidden" id="fechaFin" value="<%=fechaFin %>">  
+ 
+        <%}%> 
+        
+      
+   
+    
+    
      <!-- Header -->
             <h1 class="my-4 text-center">
                 Eventos
@@ -66,29 +91,29 @@
     <script src="js/evo-calendar.min.js"></script>
 
     <script>
-        $("#calendar").evoCalendar({
-
-            theme: "Midnight Blue",
-            language: "es",
-            calendarEvents: [
-                {
-                    id: 'bHay68s', // Event's ID (required)
-                    name: "Conferencia 1", // Event name (required)
-                    date: "April/1/2021", // Event date (required)
-                    type: "holiday", // Event type (required)
-                    everyYear: true // Same event every year (optional)
-                },
-                {
-                    name: "Conferencia 2",
-                    badge: "02/13 - 02/15", // Event badge (optional)
-                    date: ["February/13/2020", "February/15/2020"], // Date range
-                    description: "Vacation leave for 3 days.", // Event description (optional)
-                    type: "event",
-                    color: "#63d867" // Event custom color (optional)
-                }
-            ]
-        }
-        );
+    $("#calendar").evoCalendar({
+    	
+    	
+    	
+  /*  	var arrayString = $("#fechaInicio").val().split(",");
+		Evento ev= new Evento();    	
+    	for(i =0; i < arrayString.size() ;i++) {
+    		event
+    	} */	
+    	
+	 	  theme: "Midnight Blue",
+      	  language: "es",
+          calendarEvents: 
+        	[  
+        		  {
+                      name: "Test", // Event name (required)
+                      date: "2021/04/19",// Event date (required)
+                      type: "event", // Event type (required)
+  				    	description: "Acá me las pelas "
+                  }
+     	   ]
+    }
+    );
 
     </script>
 

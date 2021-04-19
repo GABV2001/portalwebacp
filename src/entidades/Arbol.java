@@ -1,7 +1,7 @@
 package entidades;
 
 public class Arbol {
-	//Atributos
+			//Atributos
 			private int ID;
 			private String NombreComun;
 			private String NombreCientifico;

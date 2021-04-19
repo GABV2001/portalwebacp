@@ -88,7 +88,7 @@
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
                                                       	<option value = "0">Seleccionar...</option>
-                                                        <option value="1 ">Agenda Pública</option>
+                                                        <option value="1">Agenda Pública</option>
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
                                                 </div>
