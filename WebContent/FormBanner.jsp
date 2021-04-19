@@ -75,7 +75,7 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multBanner" accept="image/*" >
+                                                        <input type="file" class="custom-file-input" id="multBanner" name="multBanner" accept="image/*" >
                                                         <label class="custom-file-label text-truncate" for="multBanner"
                                                             id="labelmulBanner">Seleccionar archivo...</label>
                                                     </div>

@@ -102,16 +102,15 @@
             language: "es",
             calendarEvents: [
                 {
-                    id: 'bHay68s', // Event's ID (required)
                     name: "Soy Gei", // Event name (required)
-                    date: "January/1/2021", // Event date (required)
-                    type: "holiday", // Event type (required)
-                    everyYear: true // Same event every year (optional)
+                    date: "2021-04-1",// Event date (required)
+                    type: "event", // Event type (required)
+					description: "Acá me las pelas "
                 },
                 {
-                    name: "Vacation Leave",
-                    badge: "02/13 - 02/15", // Event badge (optional)
-                    date: ["February/13/2020", "February/15/2020"], // Date range
+                    name: "test",
+           //       badge: "02/13 - 02/15", // Event badge (optional)
+                    date: ["2021-04-12", "2021-04-19"], // Date range
                     description: "Vacation leave for 3 days.", // Event description (optional)
                     type: "event",
                     color: "#63d867" // Event custom color (optional)

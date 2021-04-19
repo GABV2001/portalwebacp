@@ -51,35 +51,43 @@
 
                                 </div>
                                 <div class="card-body bg-white rounded">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <label>Titulo</label>
-                                            <input class="form-control">
+                              		   <form class="Publicacion" method="post" action="./Sl_Publicacion">
+                      					<input name="opcion" type="hidden" value="1" />
+                                              <div class="form-group">
+                                            <label>Titulo:</label>
+                                            <input class="form-control" id = "txtTituloPost" name = "txtTituloPost">
 
                                         </div>
-                                        <div class="form-group">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Subir</span>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                                    <label class="custom-file-label" for="inputGroupFile01">Seleccionar
-                                                        el
-                                                        archivo</label>
+                                        <div class="form-group">      
+                                        <label>Descripción:</label>
+                                            <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost"></textarea>
+                                        </div>
+                                        
+                                         <div class="form-group">
+                                                <label for="custom-file">Multimedia:</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Archivo</span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="multPost" name= "multPost" accept="image/*">
+                                                        <label class="custom-file-label text-truncate" for="multPost"
+                                                            id="labelPost">Seleccionar archivo</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Descripcion</label>
-                                            <textarea class="form-control" rows="6"></textarea>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary" style="width: 50%;">Guardar</button>
-                                            <button class="btn btn-primary" style="width: 49%;">Visualizar</button>
-                                        </div>
+                                              <div class="form-group">
+                                                    <label for="formGroupExampleInput">Tipo de Evento:</label>
+                                                    <select class="form-control" id= "cbxEstadoPost" name= "cbxEstadoPost" required>
+                                                        <option value= "0">Seleccionar...</option>                                                        
+                                                        <option value="1">Visible</option>
+                                                        <option value="2">No Visible</option>
+                                                    </select>
+                                                </div>
+                                           <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>
+				                            <br>
                                         <div style="text-align:center;"><a href="GestionPublicacion.jsp"><i
                                                     class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
 
@@ -116,6 +124,22 @@
     <jsp:include page="adminLogOutModal.jsp" />    
         
 
+	       
+  	<script>
+		var inputbtn = document.getElementById("multPost");
+	    var customTxt = document.getElementById("labelPost");
+	   		
+		            
+		      inputbtn.addEventListener("change", function () {
+		          if (inputbtn.value) {
+		              customTxt.innerHTML = inputbtn.value.match(
+		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+		              )[1];
+		          } else {
+		              customTxt.innerHTML = "Seleccionar archivo...";
+		          }
+		      });
+		</script>
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">

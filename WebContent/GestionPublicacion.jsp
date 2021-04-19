@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.Publicacion, datos.Dt_Publicacion, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Publicación</title>
+    <title>Portal ACP - GestiÃ³n PublicaciÃ³n</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,23 +39,30 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Publicación</h1>
+                    <h1 class="h3 mb-2 text-gray-800">PublicaciÃ³n</h1>
+                    
+                    			<%
+                                	ArrayList<Publicacion> listPost = new ArrayList<Publicacion>();
+                                	Dt_Publicacion dtp = new Dt_Publicacion();
+                                	listPost = dtp.ListaPost();                               	                   
+                               	
+                                %>
 
-                    <!-- DataTales  -->
+                    <!-- DataTales Publicacion  -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Publicación</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n PublicaciÃ³n</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormPublicacion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nueva Publicación</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nueva PublicaciÃ³n</div></a>
                                     <thead>
                                         <tr>
                                             <th>Titulo</th>
-                                            <th>Multimedia</th>
                                             <th>Descripcion</th>
+                                            <th>Multimedia</th>
                                             <th>Fecha</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
@@ -64,24 +71,30 @@
                                     <tfoot>
                                         <tr>
                                             <th>Titulo</th>
-                                            <th>Multimedia</th>
-                                           <th>Descripcion</th>
+                     				        <th>Descripcion</th>
+                                            <th>Multimedia</th>                             
                                             <th>Fecha</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                   		 <%
+                                       		for(Publicacion post: listPost){
+                                       	%>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
-                                            <td>Edinburgh</td>
+                                            <td><%=post.getTitulo() %></td>
+                                            <td><%=post.getDescripcion()%></td>
+                                            <td><%=post.getMultimedia() %></td>
+                                            <td><%=post.getFecha() %></td>
+                                            <td><%=post.getEstadopublicacion()==1?"Visible":"No Visible" %></td>
                                             <td>&nbsp;&nbsp;<a href="#"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>                               
+                                        </tr>     
+                                        	<%
+                                       		}
+                                           %>                             
                                     </tbody>
                                 </table>
                             </div>

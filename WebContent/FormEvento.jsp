@@ -51,61 +51,78 @@
                                         <h2>Evento</h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form>
+                                        <form class="Evento" method="post" action="./Sl_GestionEvento">
+                      					<input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Nombre:</label>
-                                                <input type="text" class="form-control" id="formGroupExampleInput">
+                                                <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" required>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3"></textarea>
+                                                    <textarea class="form-control" rows="3" id ="txtDescripcionEvento" name = "txtDescripcionEvento" required ></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Fecha Inicio:</label>
-                                                <input type="datetime-local" class="form-control"
-                                                    id="formGroupExampleInput">
+                                                <input type="date" class="form-control" id="datefInicioEvento" name = "datefInicioEvento" required>
                                             </div>
 
+											 <div class="form-group">
+                                                <label for="formGroupExampleInput">Hora Inicio:</label>
+                                                <input type="time" class="form-control" id="timehoraInicioEvento" name = "timehoraInicioEvento" required>
+                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Fecha Final:</label>
-                                                <input type="datetime-local" class="form-control"
-                                                    id="formGroupExampleInput">
+                                                <input type="date" class="form-control" id="datefFinalEvento" name = "datefFinalEvento" required>
                                             </div>
-
-                                            <div class="form-group">
-
+                                            
+                                             <div class="form-group">
+                                                <label for="formGroupExampleInput">Hora Final:</label>
+                                                <input type="time" class="form-control" id="timehoraFinEvento" name = "timehoraFinEvento" required>
+                                            </div>
                                                 <div class="form-group">
-                                                    <label for="formGroupExampleInput">Tipo de Evento</label>
-                                                    <select class="form-control">
-                                                        <option value="value1 ">Agenda Pública</option>
-                                                        <option value="value2 ">Agenda Privada</option>
+                                                    <label for="formGroupExampleInput">Tipo de Evento:</label>
+                                                    <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
+                                                      	<option value = "0">Seleccionar...</option>
+                                                        <option value="1 ">Agenda Pública</option>
+                                                        <option value="2">Agenda Privada</option>
                                                     </select>
                                                 </div>
-
-
+    										  <div class="form-group">
+                                                <label for="custom-file">Multimedia:</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Archivo</span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="multEvento" name= "multEvento" accept="image/*">
+                                                        <label class="custom-file-label text-truncate" for="multEvento"
+                                                            id="labelEvento">Seleccionar archivo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="formGroupExampleInput ">Hipervinculo:</label>
+                                                <input type="text" class="form-control " id="txthipervinculoEvento" name = "txthipervinculoEvento">
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="formGroupExampleInput ">Ubicación</label>
-                                                <input type="text " class="form-control " id="ubicacionEvento ">
+                                                <label for="formGroupExampleInput ">Ubicación:</label>
+                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento">
                                             </div>
-
-                                            <div class="form-group ">
-                                                <label for="formGroupExampleInput ">Hipervinculo</label>
-                                                <input type="text " class="form-control " id="formGroupExampleInput ">
-                                            </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
-                                            </div>
+                                            <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>
                                         </form>
 
                                         <div style="text-align: center; "><a href="GestionEvento.jsp"><i
                                                     class="fas fa-undo "></i>&nbsp;Volver a la tabla</div></a>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <!--termina formulario-->
@@ -139,7 +156,21 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
+  	<script>
+		var inputbtn = document.getElementById("multEvento");
+	    var customTxt = document.getElementById("labelEvento");
+	   		
+		            
+		      inputbtn.addEventListener("change", function () {
+		          if (inputbtn.value) {
+		              customTxt.innerHTML = inputbtn.value.match(
+		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+		              )[1];
+		          } else {
+		              customTxt.innerHTML = "Seleccionar archivo...";
+		          }
+		      });
+		</script>
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">

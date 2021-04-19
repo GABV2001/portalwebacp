@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"import = "entidades.Evento, datos.Dt_Evento, java.util.*;"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Eventos</title>
+    <title>Portal ACP - GestiÃ³n Eventos</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,11 +41,16 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Eventos</h1>
+               				     <%
+                                	ArrayList<Evento> listEventos = new ArrayList<Evento>();
+                                	Dt_Evento dth = new Dt_Evento();
+                                	listEventos = dth.listarEventos();                               	
+                                %>
 
-                    <!-- DataTales Example -->
+                    <!-- DataTales Evento -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Evento</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n Evento</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -54,53 +60,51 @@
                                     </a>
                                     <thead>
                                         <tr>
+                                       		<th>Fecha y Hora de Inicio</th>
+                                            <th>Fecha y Hora Final</th>                                          
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>Fecha de Inicio</th>
-                                            <th>Fecha Final</th>
-                                            <th>Tipo de Evento</th>
-                                            <th>Ubicación</th>
+                                            <th>DescripciÃ³n</th>
+                                      	    <th>Tipo de Evento</th>
+                                            <th>Multimedia</th>                                       
+                                            <th>UbicaciÃ³n</th>
                                             <th>Hipervinculo</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Fecha y Hora de Inicio</th>
+                                            <th>Fecha y Hora Final</th>                                          
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>Fecha de Inicio</th>
-                                            <th>Fecha Final</th>
-                                            <th>Tipo de Evento</th>
-                                            <th>Ubicación</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>Tipo de Evento</th>   
+                                            <th>Multimedia</th>                                            
+                                            <th>UbicaciÃ³n</th>
                                             <th>Hipervinculo</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                   	 <%
+                                       		for(Evento ev: listEventos){
+                                       	%>
                                         <tr>
-                                            <td>Prueba</td>
-                                            <td>Prueba</td>
-                                            <td>27/03/21</td>
-                                            <td>27/03/22</td>
-                                            <td>Prueba</td>
-                                            <td>Prueba</td>
-                                            <td>$320,800</td>
+                                          	<td><%=ev.getFechainicio()%> <%=ev.getHorainicio() %></td>
+                                           	<td><%=ev.getFechafin()%> <%=ev.getHorafin() %></td>
+                                            <td><%=ev.getNombre() %></td>
+                                            <td><%=ev.getDescripcion()%></td>
+                                            <td><%=ev.getTipoevento()==1?"PÃºblico":"Privado" %></td>
+                                            <td><%=ev.getMultimedia() %></td>
+                                            <td><%=ev.getUbicacion() %></td>
+                                            <td><%=ev.getHipervinculo() %></td>
                                             <td>&nbsp;&nbsp;<a href="#"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prueba</td>
-                                            <td>Prueba</td>
-                                            <td>27/03/21</td>
-                                            <td>27/03/22</td>
-                                            <td>Prueba</td>
-                                            <td>Prueba</td>
-                                            <td>$320,800</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                     	   </tr>
+											<%
+                                      	 	}
+                                            %>   
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -133,12 +137,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Seguro desea salir?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Â¿Seguro desea salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">Ã—</span>
                     </button>
                 </div>
-                <div class="modal-body">Has seleccion "Cerrar sesión", clic en confirmar para cerrar la actual sesión.
+                <div class="modal-body">Has seleccion "Cerrar sesiÃ³n", clic en confirmar para cerrar la actual sesiÃ³n.
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>

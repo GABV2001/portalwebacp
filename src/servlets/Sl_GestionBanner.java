@@ -49,6 +49,7 @@ public class Sl_GestionBanner extends HttpServlet {
 				Banner bn = new Banner();
 				bn.setTitulobanner(request.getParameter("txtTituloBanner"));
 				bn.setDescripcion(request.getParameter("txtDescripcionBanner"));
+				bn.setMultimedia(request.getParameter("multBanner"));
 				bn.setPosicion(Integer.parseInt(request.getParameter("posicion")));
 				
 				switch (opc){

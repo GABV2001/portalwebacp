@@ -55,5 +55,4 @@ public class Banner {
 		this.usuarioID = usuarioID;
 	}
 	
-	
 }
