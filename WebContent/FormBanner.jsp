@@ -81,9 +81,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                          <div class="text-center">
+                                         	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>
+				                             <div class="text-center">
+	                                		<input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
+	                            			</div>
 				                            <br>
 				                         
                                             <div style="text-align:center;"><a href="GestionBanner.jsp"><i

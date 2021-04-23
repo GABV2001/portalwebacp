@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gesti贸n Inicio</title>
+    <title>Portal ACP - Gesti髇 Inicio</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -89,17 +89,17 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multHistoria" accept="image/*">
+                                                        <input type="file" class="custom-file-input" id="multHistoria" name= "multHistoria"accept="image/*">
                                                         <label class="custom-file-label text-truncate" for="multHistoria"
                                                             id="labelmulHistoria"><%=Img_historia%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
-                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"> <%=hm.getHistoria() %></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
+                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"><%=hm.getHistoria() %></textarea>
                                             </div>
-                                            <h3>Misi贸n</h3>
+                                            <h3>Misi髇</h3>
                                             <hr class="bg-dark w-auto">
                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -108,18 +108,18 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multMision" accept="image/*">
+                                                        <input type="file" class="custom-file-input" id="multMision" name= "multMision" accept="image/*">
                                                         <label class="custom-file-label text-truncate" for="multMision"
                                                             id="labelmulMision"><%=Img_mision%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
                                                 <textarea id="descripcionMis" 	name = "descripcionMis" rows="4" class="form-control"><%=hm.getMision() %></textarea>
                                             </div>
 
-                                            <h3>Visi贸n</h3>
+                                            <h3>Visi髇</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -128,19 +128,19 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multVision" accept="image/*">
+                                                        <input type="file" class="custom-file-input" id="multVision" name="multVision" accept="image/*">
                                                         <label class="custom-file-label text-truncate" for="multVision"
                                                             id="labelmulVision"><%=Img_vision%></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
-                                                <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"> <%=hm.getVision() %></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
+                                                <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"><%=hm.getVision() %></textarea>
                                             </div>
-                                      	 <div class="text-center">
+                                      	 	<div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>  
+				                            </div>  				                            
                                         </form>
                                     </div>
                                 </div>
@@ -201,9 +201,7 @@
 	              customTxt.innerHTML = inputbtn.value.match(
 	                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
 	              )[1];
-	          } else {
-	              customTxt.innerHTML = "Ning煤n archivo seleccionado";
-	          }
+	          } 
 	      });
 	}
  </script>

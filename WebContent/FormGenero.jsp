@@ -49,18 +49,19 @@
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form role="form">
+                                        <form role="form" class = "Pais" method="post" action="./Sl_GestionGenero">
+                                        <input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
-                                                <label>Nombre del género:</label>
-                                                <input class="form-control">
+                                                <label>Nombre:</label>
+                                                <input class="form-control" name="txtNombreGenero" id="NombreGenero" required>
 
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3"></textarea>
+                                                    <textarea class="form-control" rows="3" name = "txtDescripcionGenero" id="DescripcionGenero" required></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
+                                            <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
                                             <div style="text-align:center;"><a href="GestionGenero.jsp"><i
                                                         class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>

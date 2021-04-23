@@ -52,9 +52,9 @@ public class Sl_GestionInicio extends HttpServlet {
 				hm.setHistoria(request.getParameter("descripcionHis"));
 				hm.setMision(request.getParameter("descripcionMis"));
 				hm.setVision(request.getParameter("descripcionVis"));
-	/*			hm.setImg_historia(request.getParameter(""));			
-				hm.setImg_mision(request.getParameter(""));
-				hm.setImg_vision(request.getParameter(""));*/
+			//	hm.setImg_historia(request.getParameter("multHistoria"));			
+			//	hm.setImg_mision(request.getParameter("multMision"));
+			//	hm.setImg_vision(request.getParameter("multVision"));
 	
 
 			switch(opc) {

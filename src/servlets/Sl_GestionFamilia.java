@@ -43,7 +43,7 @@ public class Sl_GestionFamilia extends HttpServlet {
 		int opc = 0;
 		opc = Integer.parseInt(request.getParameter("opcion"));
 		
-		//CONSTRUIR EL OBJETO USUARIO
+		//CONSTRUIR EL OBJETO FAMILIA
 		Dt_Familia dtf = new Dt_Familia();
 		Familia fm = new Familia();
 		fm.setNombre(request.getParameter("txtNombreFamilia"));
@@ -69,13 +69,34 @@ public class Sl_GestionFamilia extends HttpServlet {
 		        
 				break;
 			}
-		
-			default:
+		case 2:{
+			try {
+	        	
+		        if(dtf.modificarFamilia(fm)) {
+		        	response.sendRedirect("tblUsuarios.jsp?msj=3");
+		        }
+		        else {
+		        	response.sendRedirect("tblUsuarios.jsp?msj=4");
+		        }
+		        
+	        	
+	        }
+	        catch(Exception e) {
+	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
+				e.printStackTrace();
+	        }
+				break;
+				
+			}
+		default:
 			response.sendRedirect("GestionFamilia.jsp?msj=5");	
 			break;
 		
+			
+		}		
+	
 		
 		}
-	}
+	
 
 }

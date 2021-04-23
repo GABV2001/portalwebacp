@@ -48,7 +48,7 @@
                                             Familia
                                         </h2>
                                     </div>
-                                    <div class="card-body bg-white rounded">
+                                    <div class="card-body bg-white rounded">                           
                                         <form class="Familia" method="post" action="./Sl_GestionFamilia">
                       					<input name="opcion" type="hidden" value="1" />
                                          <div class="form-group">

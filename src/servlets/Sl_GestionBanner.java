@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 import entidades.Banner;
 import datos.Dt_Banner;
@@ -49,7 +50,7 @@ public class Sl_GestionBanner extends HttpServlet {
 				Banner bn = new Banner();
 				bn.setTitulobanner(request.getParameter("txtTituloBanner"));
 				bn.setDescripcion(request.getParameter("txtDescripcionBanner"));
-				bn.setMultimedia(request.getParameter("multBanner"));
+	//			bn.setMultimedia(request.getParameter("multBanner"));
 				bn.setPosicion(Integer.parseInt(request.getParameter("posicion")));
 				
 				switch (opc){
@@ -71,8 +72,11 @@ public class Sl_GestionBanner extends HttpServlet {
 					        }
 					        
 							break;
-						}
-				}
+					}
+				default:
+					response.sendRedirect("GestionBanner.jsp?msj=7");	
+					break;
+			}
 		
 	}
 

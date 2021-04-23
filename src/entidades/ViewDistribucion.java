@@ -3,22 +3,25 @@ package entidades;
 public class ViewDistribucion {
 	
 		//Atributos
-		private int ID;
-		private String NombreDist;
+		private int DistribucionID;
+		private String Distribucion;
 		private String Descripcion;
-		private String NombreRegion;
+		private String Region;
+
 		
-		public int getID() {
-			return ID;
+		
+		
+		public int getDistribucionID() {
+			return DistribucionID;
 		}
-		public void setID(int iD) {
-			ID = iD;
+		public void setDistribucionID(int distribucionID) {
+			DistribucionID = distribucionID;
 		}
-		public String getNombreDist() {
-			return NombreDist;
+		public String getDistribucion() {
+			return Distribucion;
 		}
-		public void setNombreDist(String nombreDist) {
-			NombreDist = nombreDist;
+		public void setDistribucion(String distribucion) {
+			Distribucion = distribucion;
 		}
 		public String getDescripcion() {
 			return Descripcion;
@@ -26,11 +29,16 @@ public class ViewDistribucion {
 		public void setDescripcion(String descripcion) {
 			Descripcion = descripcion;
 		}
-		public String getNombreRegion() {
-			return NombreRegion;
+		public String getRegion() {
+			return Region;
 		}
-		public void setNombreRegion(String nombreRegion) {
-			NombreRegion = nombreRegion;
+		public void setRegion(String region) {
+			Region = region;
 		}
-			
+	
+		
+
+		
+		
+	    
 }

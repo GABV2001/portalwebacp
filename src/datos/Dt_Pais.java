@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import entidades.Familia;
 import entidades.Pais;
 
 public class Dt_Pais {
@@ -26,7 +28,7 @@ public class Dt_Pais {
 			e.printStackTrace();
 		}
 	}
-	//Metodo para visualizar usuarios registrados y activos
+	//Metodo para visualizar paises 
 	public ArrayList<Pais> listaPais(){
 		ArrayList<Pais> listPais = new ArrayList<Pais>();
 		try{
@@ -66,5 +68,43 @@ public class Dt_Pais {
 		}
 		return listPais;
 	}
+	
+
+	//Metodo para almacenar nuevo pais
+		public boolean guardarPais(Pais pais){
+			boolean guardado = false;
+			
+			try{
+				c = PoolConexion.getConnection();
+				this.llenaRsPais(c);
+				rsPais.moveToInsertRow();
+				rsPais.updateString("Nombre", pais.getNombre());				
+				rsPais.updateString("Descripcion", pais.getDescripcion());			
+				rsPais.updateInt("Estado", 1);
+				rsPais.insertRow();
+				rsPais.moveToCurrentRow();
+				guardado = true;
+			}
+			catch (Exception e) {
+				System.err.println("ERROR AL GUARDAR PAIS "+e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rsPais != null){
+						rsPais.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			return guardado;
+		}
 
 }

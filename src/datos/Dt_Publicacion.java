@@ -90,7 +90,7 @@ public class Dt_Publicacion {
 					rsPost.updateString("titulo", post.getTitulo());
 					rsPost.updateString("descripcion", post.getDescripcion());			
 					rsPost.updateTimestamp("fecha", post.getFecha());	
-					rsPost.updateString("multimedia", post.getMultimedia());						
+					rsPost.updateString("multimedia", "Defecto.jpeg");						
 					rsPost.updateInt("estadopublicacion", post.getEstadopublicacion());						
 					rsPost.updateInt("estado", 1);
 					rsPost.updateInt("usuarioid", 1);

@@ -87,7 +87,7 @@ public class Dt_Banner {
 				rsBanner.moveToInsertRow();
 				rsBanner.updateString("titulobanner", bn.getTitulobanner());
 				rsBanner.updateString("descripcion", bn.getDescripcion());
-				rsBanner.updateString("multimedia", bn.getMultimedia());
+				rsBanner.updateString("multimedia", "Defecto.jpeg");
 				rsBanner.updateInt("posicion", bn.getPosicion() + 1);
 				rsBanner.updateInt("estado", 1);
 				rsBanner.updateInt("usuarioid", 1);

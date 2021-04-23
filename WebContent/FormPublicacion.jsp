@@ -82,6 +82,7 @@
                                                         <option value= "0">Seleccionar...</option>                                                        
                                                         <option value="1">Visible</option>
                                                         <option value="2">No Visible</option>
+                                                        <option value="3">Borrador</option>
                                                     </select>
                                                 </div>
                                            <div class="text-center">

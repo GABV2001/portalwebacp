@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Arbol, datos.Dt_Arbol, java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.ViewArbol, datos.Dt_ViewArbol, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Arboreto Carmelo Palma - ¡rboles</title>
+    <title>Portal Arboreto Carmelo Palma - √Årboles</title>
 
     <!-- CSS boostrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -35,24 +35,24 @@
     <!-- Contenido -->
     <div class="container mb-5">
         <!-- Page Heading -->
-        <h1 class="my-4">¡rboles
+        <h1 class="my-4">√Årboles
         <hr class="border-dark">
         </h1>
 
         <div class="row">
         			<%
-                      	ArrayList<Arbol> listArbol = new ArrayList<Arbol>();
-                       	Dt_Arbol dta = new Dt_Arbol();
+                      	ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
+                       	Dt_ViewArbol dta = new Dt_ViewArbol();
                        	listArbol = dta.listaArbol();                        	
                                	
                       %>          
-            	       <%for(Arbol a: listArbol){%>
+            	       <%for(ViewArbol a: listArbol){%>
 			                    <div class="col-lg-4 col-sm-6 mb-4">
 					                <div class="card h-100">
-					                    <a href="ArbolIn.jsp?arbolid=<%=a.getID()%>"><img class="card-img-top" src="img/1.jpg" alt="Arbol <%=a.getNombreComun() %>"></a>
+					                    <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>"><img class="card-img-top" src="img/Defecto.jpeg" alt="Arbol <%=a.getNombreComun() %>"></a>
 					                    <div class="card-body">
 					                        <h4 class="card-title">
-					                            <a href="ArbolIn.jsp?arbolid=<%=a.getID()%>" class="fw-bold text-dark"> <%=a.getNombreComun() %></a>
+					                            <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>" class="fw-bold text-dark"> <%=a.getNombreComun() %></a>
 					                        </h4>
 					                        <p class="card-text"><%=a.getDescripcion() %></p>
 					                    </div>

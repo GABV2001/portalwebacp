@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Arbol, datos.Dt_Arbol, java.util.*"%>
+    pageEncoding="ISO-8859-1" import = "entidades.ViewArbol, datos.Dt_ViewArbol, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,8 +31,8 @@
     <br>
     <br>
 						<%											
-					 	ArrayList<Arbol> listArbol = new ArrayList<Arbol>();
-                       	Dt_Arbol dta = new Dt_Arbol();
+					 	ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
+                       	Dt_ViewArbol dta = new Dt_ViewArbol();
                        	listArbol = dta.listaArbol();    
                        	
                        		
@@ -42,14 +42,14 @@
 		    	String arbolid = "";
 				arbolid = request.getParameter("arbolid")==null?"0":request.getParameter("arbolid");
 				int MostrarInfo = Integer.parseInt(arbolid);
-		    	for(Arbol a: listArbol){ 
-		    	if(a.getID()==MostrarInfo){%>
+		    	for(ViewArbol a: listArbol){ 
+		    	if(a.getArbolID()==MostrarInfo){%>
 		        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
 		            <div class="intro">
 		                <h1 class="text-center"><%=a.getNombreComun() %></h1>
 		                <p class="text-center"><span class="date"><%=a.getNombreCientifico() %> </span></p>
 		                <br>
-		                <img class="img-fluid mx-auto d-block" src="img/1.jpg">
+		                <img class="img-fluid mx-auto d-block" src="img/Defecto.jpeg">
 		            </div>
 		            <br>
 		            <div class="text-center">

@@ -94,9 +94,9 @@ public class Dt_Home {
 							rsHome.updateString("historia", hm.getHistoria());
 							rsHome.updateString("mision", hm.getMision());
 							rsHome.updateString("vision", hm.getVision());
-							rsHome.updateString("img_historia", "Historia.jpg");
-							rsHome.updateString("img_mision",  "Mision.jpg");
-							rsHome.updateString("img_vision", "Vision.jpg");
+							rsHome.updateString("img_historia", "Defecto.jpeg");
+							rsHome.updateString("img_mision", "Defecto.jpeg");
+							rsHome.updateString("img_vision","Defecto.jpeg");
 							rsHome.updateInt("usuarioid", hm.getUsuarioID());							
 							rsHome.updateInt("estado", 2);
 							rsHome.updateRow();

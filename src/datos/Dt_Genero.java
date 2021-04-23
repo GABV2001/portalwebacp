@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import entidades.Genero;
+import entidades.Pais;
 
 public class Dt_Genero {
 	//Atributos
@@ -65,6 +66,43 @@ public class Dt_Genero {
 				}
 				return listGenero;
 			}
+			//Metodo para almacenar nuevo genero
+			public boolean guardarGenero(Genero genero){
+				boolean guardado = false;
+				
+				try{
+					c = PoolConexion.getConnection();
+					this.llenaRsGenero(c);
+					rsGenero.moveToInsertRow();
+					rsGenero.updateString("Nombre", genero.getNombre());				
+					rsGenero.updateString("Descripcion", genero.getDescripcion());			
+					rsGenero.updateInt("Estado", 1);
+					rsGenero.insertRow();
+					rsGenero.moveToCurrentRow();
+					guardado = true;
+				}
+				catch (Exception e) {
+					System.err.println("ERROR AL GUARDAR PAIS "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally{
+					try {
+						if(rsGenero != null){
+							rsGenero.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				return guardado;
+			}
+
 
 
 }

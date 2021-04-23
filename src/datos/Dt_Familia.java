@@ -9,7 +9,7 @@ import entidades.Familia;
 
 public class Dt_Familia {
 
-		//Atributos
+	//Atributos
 		PoolConexion pc = PoolConexion.getInstance(); 
 		Connection c = null;
 		private ResultSet rsFamilia = null;
@@ -28,7 +28,7 @@ public class Dt_Familia {
 			}
 		}
 		
-		//Metodo para visualizar usuarios registrados y activos
+		//Metodo para visualizar familia
 		public ArrayList<Familia> listaFamilia(){
 			ArrayList<Familia> listFamilia = new ArrayList<Familia>();
 			try{
@@ -69,7 +69,7 @@ public class Dt_Familia {
 			return listFamilia;
 		}
 		
-			//Metodo para almacenar nuevo familia
+			//Metodo para almacenar nueva familia
 			public boolean guardarFamilia(Familia fm){
 				boolean guardado = false;
 				
@@ -105,5 +105,51 @@ public class Dt_Familia {
 				
 				return guardado;
 			}
+			// Metodo para modificar Familia
+			public boolean modificarFamilia(Familia familia)
+			{
+				boolean modificado=false;	
+				try
+				{
+					c = PoolConexion.getConnection();
+					this.llenaRsFamilia(c);
+					rsFamilia.beforeFirst();
+					while (rsFamilia.next())
+					{
+						if(rsFamilia.getInt(1)==familia.getFamiliaID())
+						{
+							rsFamilia.updateString("nombre", familia.getNombre());
+							rsFamilia.updateString("descripcion", familia.getDescripcion());												
+							rsFamilia.updateInt("estado", 2);
+							rsFamilia.updateRow();
+							modificado=true;
+							break;
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("ERROR AL ACTUALIZAR FAMILIA "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rsFamilia != null){
+							rsFamilia.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return modificado;
+			}
+			
+			
 			
 }

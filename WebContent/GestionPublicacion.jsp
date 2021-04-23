@@ -81,13 +81,30 @@
                                     <tbody>
                                    		 <%
                                        		for(Publicacion post: listPost){
+                                       			String control = null;
+                                       			switch(post.getEstadopublicacion()) {
+                                       			  case 1:{ 
+                                       				control = "Visible";   
+                                       			    break;
+                                       			}
+                                       			  case 2: {
+                                       				control = "No Visible";
+                                       			    break;
+                                       			}
+                                       			 case 3: {
+                                       				control = "Borrador";
+                                       			    break;
+                                       			}
+                                       			}
                                        	%>
                                         <tr>
                                             <td><%=post.getTitulo() %></td>
                                             <td><%=post.getDescripcion()%></td>
                                             <td><%=post.getMultimedia() %></td>
                                             <td><%=post.getFecha() %></td>
-                                            <td><%=post.getEstadopublicacion()==1?"Visible":"No Visible" %></td>
+                                            <td><%=control%></td>
+                                            
+                                            
                                             <td>&nbsp;&nbsp;<a href="#"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>

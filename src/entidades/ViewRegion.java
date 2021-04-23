@@ -6,9 +6,22 @@ public class ViewRegion {
 	private int regionid;
 	private String NombreRegion;
 	private String Descripcion;
-	private String NombrePais;
+	private String Pais;
 	
-	//Metodos
+	
+	//Metodos	
+	public int getRegionid() {
+		return regionid;
+	}
+	public String getPais() {
+		return Pais;
+	}
+	public void setPais(String pais) {
+		Pais = pais;
+	}
+	public void setRegionid(int regionid) {
+		this.regionid = regionid;
+	}
 	public String getNombreRegion() {
 		return NombreRegion;
 	}
@@ -21,17 +34,9 @@ public class ViewRegion {
 	public void setDescripcion(String descripcion) {
 		Descripcion = descripcion;
 	}
-	public String getNombrePais() {
-		return NombrePais;
-	}
-	public void setNombrePais(String nombrePais) {
-		NombrePais = nombrePais;
-	}	
-	public int getRegionid() {
-		return regionid;
-	}
-	public void setRegionid(int regionid) {
-		this.regionid = regionid;
-	}
 
+	
+	
+	
+	
 }

@@ -106,7 +106,7 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input text-truncate" id="multiFooter" accept="image/* ">
+                                                        <input type="file" class="custom-file-input text-truncate" id="multiFooter" name="multiFooter" accept="image/* ">
                                                         <label class="custom-file-label text-truncate" for="multVision"
                                                             id="labelmulFooter"><%=Logo %></label>
                                                     </div>

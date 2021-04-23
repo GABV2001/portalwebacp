@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
-    <meta charset="utf-8">
+    <meta charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario ¡rbol</title>
+   <title>Portal ACP - Formulario √Årbol</title>
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,72 +44,115 @@
 
                                     <div class="card-header">
                                         <h2>
-                                            Cat·logo del ·rbol
+                                            Cat√°logo del √°rbol
                                         </h2>
 
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form>
+                                    
+                                        <form class="Arbol" method="post" action="./Sl_GestionArbol">
+                                        <input name="opcion" type="hidden" value="1" />                                        
                                             <div class="form-group">
-                                                <label>Nombre com˙n:</label>
-                                                <input class="form-control">
+                                                <label>Nombre com√∫n:</label>
+                                                <input class="form-control"  name="txtNombreComun" id="txtNombreComun">
 
                                             </div>
                                             <div class="form-group">
-                                                <label>Nombre cientÌfico:</label>
-                                                <input class="form-control">
+                                                <label>Nombre cient√≠fico:</label>
+                                                <input class="form-control" name="txtNombreCientifico" id="txtNombreCientifico">
 
                                             </div>
-
                                             <div class="form-group">
-                                                <label>DescripciÛn:</label>
-                                                <textarea class="form-control" rows="3"></textarea>
+                                                <label>Descripci√≥n:</label>
+                                                <textarea class="form-control" rows="3"  name="txtDescripcionArbol" id="txtDescripcionArbol" required></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label>GÈnero del ·rbol: &nbsp;<a href="GestionGenero.jsp"><i
+                                            
+                                                <label for="custom-file">Imagen del arbol:</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Archivo</span>
+                                                    </div>                                                    
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="Multimedia" id="Multimedia" accept="image/*" >
+                                                        <label class="custom-file-label text-truncate" for="Multimedia" 
+                                                            id="labelmulBanner">Seleccionar archivo...</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                            <%                                            
+                                            ArrayList<Genero> listGenero = new ArrayList<Genero>();
+                                            Dt_Genero dtu = new Dt_Genero();
+                                            listGenero = dtu.listaGenero();
+                                            %>
+                                                <label>G√©nero del √°rbol: &nbsp;<a href="GestionGenero.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>  
-                                                <select class="form-control">
-                                                    <option value="value1">genero 1</option>
-                                                    <option value="value2">genero 2</option>
-                                                    <option value="value3">genero 3</option>
+                                                <select class="form-control" name="GeneroID" id="GeneroID">
+                                            <%
+                                    		for(Genero u: listGenero){
+                                    	    %>	
+                                    		<option value="<%=u.getGeneroID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>  
                                                 </select>
-                                            </div>
+                                            </div>   
+                                             <%                                            
+                                            ArrayList<Familia> listFamilia = new ArrayList<Familia>();
+                                            Dt_Familia dtuf = new Dt_Familia();
+                                            listFamilia = dtuf.listaFamilia();
+                                            %>                             
                                             <div class="form-group">
-                                                <label>Familia del ·rbol:  &nbsp;<a href="GestionFamilia.jsp"><i
+                                                <label>Familia del √°rbol:  &nbsp;<a href="GestionFamilia.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>
-                                                <select class="form-control">
-                                                    <option value="value1">familia 1</option>
-                                                    <option value="value2">familia 2</option>
-                                                    <option value="value3">familia 3</option>
+                                                <select class="form-control" name="FamiliaID" id="FamiliaID">
+                                            <%
+                                    		for(Familia u: listFamilia){
+                                    	    %>	
+                                    		<option value="<%=u.getFamiliaID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>  
                                                 </select>
                                             </div>
+                                             <%                                            
+                                            ArrayList<Floracion> listFloracion = new ArrayList<Floracion>();
+                                            Dt_Floracion dtf = new Dt_Floracion();
+                                            listFloracion = dtf.listaFloracion();
+                                            %>
                                             <div class="form-group">
-                                                <label>Floracion del ·rbol:</label>
-                                                <select class="form-control">
-                                                    <option value="value1">floraciÛn 1</option>
-                                                    <option value="value2">floraciÛn 2</option>
-                                                    <option value="value3">floraciÛn 3</option>
+                                                <label>Floracion del √°rbol:</label>
+                                                <select class="form-control" name="FloracionID" id="FloracionID">
+                                            <%
+                                    		for(Floracion u: listFloracion){
+                                    	    %>	
+                                    		<option value="<%=u.getFloracionID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>  
                                                 </select>
                                             </div>
+                                             <%                                            
+                                            ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
+                                            Dt_Distribucion dtd = new Dt_Distribucion();
+                                            listDistribucion = dtd.listaDistribucion();
+                                            %>
                                             <div class="form-group">
-                                                <label>DistribuciÛn del ·rbol:  &nbsp;<a href="GestionDistribucion.jsp"><i
+                                                <label>Distribuci√≥n del √°rbol:  &nbsp;<a href="GestionDistribucion.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>
-                                                <select class="form-control">
-                                                    <option value="value1">distribuciÛn 1</option>
-                                                    <option value="value2">distribuciÛn 2</option>
-                                                    <option value="value3">distribuciÛn 3</option>
+                                                <select class="form-control" name="DistribucionID" id="DistribucionID">
+                                            <%
+                                    		for(Distribucion u: listDistribucion){
+                                    	    %>	
+                                    		<option value="<%=u.getDistribucionID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>  
                                                 </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>UbicaciÛn en el mapa:</label>
-                                                <select class="form-control">
-                                                    <option value="value1">sector 1</option>
-                                                    <option value="value2">sector 2</option>
-                                                    <option value="value3">sector 3</option>
-                                                </select>
-                                            </div>
+                                            </div>                                         
                                             <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
+                                                 <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
                                             <div style="text-align:center;"><a href="GestionArbol.jsp"><i
                                                         class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>

@@ -52,7 +52,7 @@ public class Sl_GestionPiePagina extends HttpServlet {
 		ft.setCorreo(request.getParameter("correoFooter"));
 		ft.setTelefono(request.getParameter("telefonoFooter"));
 		ft.setExtencion(request.getParameter("extensionFooter"));
-		
+	//	ft.setLogo(request.getParameter("multiFooter"));
 		switch(opc) {
 		case 1:{
 			

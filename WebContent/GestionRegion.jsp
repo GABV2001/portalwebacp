@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewRegion,datos.Dt_Region,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewRegion,datos.Dt_ViewRegion,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -51,8 +51,8 @@
                                                 class="fas fa-plus-square"></i>&nbsp; Nueva Región</div></a>
                                     <%
                                     	ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
-                                        Dt_Region dtu = new Dt_Region();
-                                        listRegion = dtu.listaRegion();                   
+                                       Dt_ViewRegion dtu = new Dt_ViewRegion();
+                                        listRegion = dtu.listaRegion();
                                     %>
                                     <thead>
                                         <tr>
@@ -77,7 +77,7 @@
                                        	<tr> 
                                        	    <td><%=us.getNombreRegion() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>
-                                             <td><%=us.getNombrePais() %></td>
+                                             <td><%=us.getPais() %></td>
                                              <td>&nbsp;&nbsp;<a href="EditarRegion.jsp"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>                                    

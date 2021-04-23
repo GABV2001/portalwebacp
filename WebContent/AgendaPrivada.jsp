@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" import = "entidades.Evento, datos.Dt_Evento ,java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +52,47 @@
        
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                	<%
+    	  ArrayList<Evento> listEventos = new ArrayList<Evento>();
+    	  Dt_Evento dth = new Dt_Evento();
+          listEventos = dth.listarEventos();
+        %> 	
+ 	 	 <%for(Evento ev: listEventos){ 
+ 	 	     if(ev.getTipoevento()==2){
+ 	 	    	 //Cambio de simbolo de - a /
+ 	 	    	 StringBuilder fechaInicio = new StringBuilder(ev.getFechainicio());
+ 	         	 fechaInicio.setCharAt(4, '/');
+ 	       	     fechaInicio.setCharAt(7, '/');
+ 	             StringBuilder fechaFin = new StringBuilder(ev.getFechafin());
+ 	             fechaFin.setCharAt(4, '/');
+ 	             fechaFin.setCharAt(7, '/'); 	            	 
+             %>
+ 			
+ 			<!-- Se imprime un input por atributo de cada objeto -->
+ 		   <input type=hidden class="nombreEvento"  value="<%=ev.getNombre()%>">	
+ 		   		   
+ 		   <input type="hidden" class="descripcionEvento" value="<%=ev.getDescripcion()%>">	
+ 			
+ 			<input type="hidden" class="fechaInicio" value="<%=fechaInicio%>">			
+            
+           <input type="hidden" class="horaInicio" value="<%=ev.getHorainicio()%>">          
+           
+           <input type="hidden" class="fechaFin" value="<%=fechaFin %>"> 
+           
+           <input type="hidden" class="horaFin" value="<%=ev.getHorafin() %>"> 
+           
+           <input type="hidden" class="tipoEvento" value="<%=ev.getTipoevento() %>">
+          
+           <input type="hidden" class="multimedia" value="<%=ev.getMultimedia() %>"> 
+           
+           <input type="hidden" class="hipervinculo" value="<%=ev.getHipervinculo() %>"> 
+           
+           <input type="hidden" class="ubicacion" value="<%=ev.getUbicacion() %>"> 
+         
+        <%
+        }
+        }
+        %> 
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Agenda Privada</h1>
@@ -96,34 +137,72 @@
     <script src="js/evo-calendar.js"></script>
     <script src="js/evo-calendar.min.js"></script>
 
-    <script>
-        $("#calendar").evoCalendar({
+   <script>
+ 	//Declaracion de arreglos vacios
+  	var nombreEvento = 	[];
+  	var horaIevento = [];
+  	var horaFevento = [];
+  	var descripcionEvento = [];	
+	var fechasI = [];
+	var fechasF =[];
+	var fechasJSON = [];	
+	var hipervinculoEvento = [];
+   	var ubicacionEvento = [];
+    
+  	$(document).ready(function (){
+  			//Funcion MostrarDatos
+   	  		const MostrarDatos = () => {
+   	  		//Declaracion y obtención de los valores de los inputs	
+  	    	var nombre = $(".nombreEvento");
+  	    	var descripcion = $(".descripcionEvento");
+   	  		var fechaInicio = $(".fechaInicio");  	
+  	    	var fechaFinal = $(".fechaFin");
+  	    	var horaI = $(".horaInicio");
+  	    	var horaF = $(".horaFin");
+  	    	var hipervinculo = $(".hipervinculo");  
+  	    	var ubicacion = $(".ubicacion");
+  	    	
+  	    	//Loops para añadir los valores a los arreglos, antes declarados vacios
+  	  		for(var i=0; i<fechaInicio.length; i++){
+  	  			nombreEvento.push(nombre[i].value);
+  	  			fechasI.push(fechaInicio[i].value);
+  	   			fechasF.push(fechaFinal[i].value);
+  	   			descripcionEvento.push(descripcion[i].value);
+  	   			horaIevento.push(horaI[i].value);
+  	  			horaFevento.push(horaF[i].value);
+  	  		    hipervinculoEvento.push(hipervinculo[i].value);
+  	  			ubicacionEvento.push(ubicacion[i].value)
+  	  		}
+  	   	
+  	    	//Se añade al arreglo que carga el calendario y se recorre cada arreglo de según el atributo
+  	  		for(var i=0; i<fechasI.length; i++){
+  					fechasJSON.push(
+  							{
+  			   				   name: nombreEvento[i], // Event name (required)
+  			                   date: [fechasI[i], fechasF[i]],// Event date (required)
+  			                   type: "event", // Event type (required)
+  			                   description: "Descripción: " + descripcionEvento[i] + "<br> Duración " + horaIevento[i] + "-" + " "+  horaFevento[i] + "<br> Enlace: " + hipervinculoEvento[i] + "<br> Ubicación: " + ubicacionEvento[i],
+  			                   color: "#fb3640", // Event custom color (optional)  
+  							}				
+  			);
+  			}
 
-            language: "es",
-            calendarEvents: [
-                {
-                    name: "Soy Gei", // Event name (required)
-                    date: "2021-04-1",// Event date (required)
-                    type: "event", // Event type (required)
-					description: "Acá me las pelas "
-                },
-                {
-                    name: "test",
-           //       badge: "02/13 - 02/15", // Event badge (optional)
-                    date: ["2021-04-12", "2021-04-19"], // Date range
-                    description: "Vacation leave for 3 days.", // Event description (optional)
-                    type: "event",
-                    color: "#63d867" // Event custom color (optional)
-                }
-            ]
-        }
-        );
-
+  	    }
+  		
+  		MostrarDatos();
+  		
+  		   	 $("#calendar").evoCalendar({ 
+	     	   language: "es",
+	     	   calendarEvents: fechasJSON 			  	 	
+	     	
+	   	  });
+	   	 
+   	});
     </script>
 
 
+
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->

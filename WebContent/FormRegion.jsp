@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Pais,datos.Dt_Pais,java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
-    <meta charset="utf-8">
+    <meta charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario Región</title>
+    <title>Portal ACP - Formulario RegiÃ³n</title>
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,28 +44,41 @@
 
                                     <div class="card-header">
                                         <h2>
-                                            Región
+                                            RegiÃ³n
                                         </h2>
 
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form role="form">
+                                        <form class="Region" method="post" action="./Sl_GestionRegion">
+                                        <input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
-                                                <label>Nombre de la región:</label>
-                                                <input class="form-control">
-
+                                                <label>Nombre de la regiÃ³n:</label>
+                                                <input class="form-control" name = "txtNombreRegion" id ="txtNombreRegion">
                                             </div>
                                             <div class="form-group">
-                                                <label>País:</label>
-                                                <select class="form-control">
-                                                    <option value="value1">país 1</option>
-                                                    <option value="value2">país 2</option>
-                                                    <option value="value3">país 3</option>
-                                                </select>
+                                                <label>Descripcion:</label>                                                
+                                                <textarea class="form-control" rows="3" name = "txtDescripcionRegion" id ="txtDescripcionRegion"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                            <%                                            
+                                            ArrayList<Pais> listPais = new ArrayList<Pais>();
+                                            Dt_Pais dtu = new Dt_Pais();
+                                            listPais = dtu.listaPais();
+                                            %>
+                                                <label>PaÃ­s:</label>
+                                                <select class="form-control" name = "txtNombrePais" id ="txtNombrePais">
+                                            <%
+                                    		for(Pais u: listPais){
+                                    	    %>	
+                                    		<option value="<%=u.getPaisID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>                                    	
+                                            </select>
                                             </div>
 
                                             <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
+                                                 <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
                                             <div style="text-align:center;"><a href="GestionRegion.jsp"><i
                                                         class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>

@@ -1,24 +1,21 @@
 package entidades;
 
 public class Arbol {
-			//Atributos
-			private int ID;
+	
+	       //Atributos			
 			private String NombreComun;
 			private String NombreCientifico;
-			private String Descripcion;	
+			private String Descripcion;		
+			private String Geoma;
 			private String Multimedia;
-			private String NombreDis;
-			private String NombreFam;
-			private String NombreFlo;
-			private String NombreGenero;
+			private int FloracionID;
+			private int UsuarioId;
+			private int GeneroID;
+			private int FamiliaID;
+			private int DistribucionID;			
 			private int Estado;
 			
-			public int getID() {
-				return ID;
-			}
-			public void setID(int iD) {
-				ID = iD;
-			}
+			
 			public String getNombreComun() {
 				return NombreComun;
 			}
@@ -37,35 +34,47 @@ public class Arbol {
 			public void setDescripcion(String descripcion) {
 				Descripcion = descripcion;
 			}
+			public int getFloracionID() {
+				return FloracionID;
+			}
+			public void setFloracionID(int floracionID) {
+				FloracionID = floracionID;
+			}
+			public String getGeoma() {
+				return Geoma;
+			}
+			public void setGeoma(String geoma) {
+				Geoma = geoma;
+			}
 			public String getMultimedia() {
 				return Multimedia;
 			}
 			public void setMultimedia(String multimedia) {
 				Multimedia = multimedia;
 			}
-			public String getNombreDis() {
-				return NombreDis;
+			public int getUsuarioId() {
+				return UsuarioId;
 			}
-			public void setNombreDis(String nombreDis) {
-				NombreDis = nombreDis;
+			public void setUsuarioId(int usuarioId) {
+				UsuarioId = usuarioId;
 			}
-			public String getNombreFam() {
-				return NombreFam;
+			public int getGeneroID() {
+				return GeneroID;
 			}
-			public void setNombreFam(String nombreFam) {
-				NombreFam = nombreFam;
+			public void setGeneroID(int generoID) {
+				GeneroID = generoID;
 			}
-			public String getNombreFlo() {
-				return NombreFlo;
+			public int getFamiliaID() {
+				return FamiliaID;
 			}
-			public void setNombreFlo(String nombreFlo) {
-				NombreFlo = nombreFlo;
+			public void setFamiliaID(int familiaID) {
+				FamiliaID = familiaID;
 			}
-			public String getNombreGenero() {
-				return NombreGenero;
+			public int getDistribucionID() {
+				return DistribucionID;
 			}
-			public void setNombreGenero(String nombreGenero) {
-				NombreGenero = nombreGenero;
+			public void setDistribucionID(int distribucionID) {
+				DistribucionID = distribucionID;
 			}
 			public int getEstado() {
 				return Estado;
@@ -73,5 +82,8 @@ public class Arbol {
 			public void setEstado(int estado) {
 				Estado = estado;
 			}
+			
+			
+			
 
 }

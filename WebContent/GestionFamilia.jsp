@@ -78,7 +78,7 @@
                                        <tr>        
                                            <td><%=us.getNombre() %></td>                                           
                                            <td><%=us.getDescripcion() %></td>                                
-                                           <td>&nbsp;&nbsp;<a href="EditarFamilia.jsp"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="far fa-trash-alt"></i></td>
+                                           <td>&nbsp;&nbsp;<a href="EditarFamilia.jsp?userID=<%=us.getFamiliaID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="far fa-trash-alt"></i></td>
                                        </tr>
                                        		<%
                                        		}

@@ -1,6 +1,7 @@
 package entidades;
 
 public class Familia {
+	
 		//Atributos
 		private int FamiliaID;
 		private String Nombre;

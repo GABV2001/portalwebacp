@@ -49,7 +49,7 @@ public class Sl_GestionPublicacion extends HttpServlet {
 		Publicacion post = new Publicacion();
 		post.setTitulo(request.getParameter("txtTituloPost"));
 		post.setDescripcion(request.getParameter("txtDescripcionPost"));
-		post.setMultimedia(request.getParameter("multPost"));
+//		post.setMultimedia(request.getParameter("multPost"));
 		post.setEstadopublicacion(Integer.parseInt(request.getParameter("cbxEstadoPost")));
 		
 		switch (opc){

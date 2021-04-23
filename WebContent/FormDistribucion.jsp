@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewDistribucion,datos.Dt_ViewDistribucion,datos.Dt_Region,entidades.Region,java.util.*;" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario ¡rbol</title>
+    <title>Portal ACP - Formulario √Årbol</title>
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,36 +44,46 @@
 
                                     <div class="card-header">
                                         <h2>
-                                            DistribuciÛn del ·rbol
+                                            Distribuci√≥n del √°rbol
                                         </h2>
 
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form role="form">
+                                     <form class="Distribucion" method="post" action="./Sl_GestionDistribucion">
+                                        <input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
-                                                <label>DistribuciÛn:</label>
-                                                <input class="form-control">
+                                                <label>Nombre de la distribucion:</label>
+                                                <input class="form-control" name = "txtNombreDistribucion" id ="txtNombreDistribucion">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Descripcion:</label>
+                                                <textarea class="form-control" rows="3" name = "txtDescripcionDistribucion" id ="txtDescripcionDistribucion" required></textarea>
+                                            </div>                                             
+                                            <div class="form-group">
+                                            <%                                            
+                                            ArrayList<Region> listRegion = new ArrayList<Region>();
+                                            Dt_Region dtu = new Dt_Region();
+                                            listRegion = dtu.listaRegion();
+                                            %>                     
+                                                <label>Region:</label>
+                                                <select class="form-control" name = "txtNombreRegion" id ="txtNombreRegion">
+                                             <%
+                                    		for(Region u: listRegion){
+                                    	    %>	
+                                    		<option value="<%=u.getRegionID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>                                      	
+                                            </select>
+                                            </div>
 
-                                            </div>
-                                            <div class="form-group">
-                                                <label>DescripciÛn:</label>
-                                                <textarea class="form-control" rows="3"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>RegiÛn:</label>
-                                                <select class="form-control">
-                                                    <option value="value1">regiÛn 1</option>
-                                                    <option value="value2">regiÛn 2</option>
-                                                    <option value="value3">regiÛn 3</option>
-                                                </select>
-                                            </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
+                                                 <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
                                             <div style="text-align:center;"><a href="GestionDistribucion.jsp"><i
                                                         class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
 
-                                        </form>
+                                        </form>                
                                     </div>
                                 </div>
                             </div>

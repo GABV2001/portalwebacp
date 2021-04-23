@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewDistribucion, datos.Dt_Distribucion, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewDistribucion,datos.Dt_ViewDistribucion,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -50,10 +50,10 @@
                                     <div style="text-align:right;"><a href="FormDistribucion.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Distribución</div></a>
                                                   <%
-                                	ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
-                                	Dt_Distribucion dtu = new Dt_Distribucion();
-                                	listDistribucion = dtu.listaDistribucion();                                	
-                                     %>
+                                                  	ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
+                                                    Dt_ViewDistribucion dtu = new Dt_ViewDistribucion();
+                                                    listDistribucion = dtu.listaDistribucion();
+                                                  %>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
@@ -75,9 +75,9 @@
                                        		for(ViewDistribucion us: listDistribucion){
                                        	%>
                                        	<tr> 
-                                       	    <td><%=us.getNombreDist() %></td>                                           
+                                       	    <td><%=us.getDistribucion() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>
-                                             <td><%=us.getNombreRegion() %></td>
+                                             <td><%=us.getRegion() %></td>
                          		       <td>&nbsp;&nbsp;<a href="EditarDistribucion.jsp"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
                                                     href="#"><i class="far fa-trash-alt"></i></td>                                   

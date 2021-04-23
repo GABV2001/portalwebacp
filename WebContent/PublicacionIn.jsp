@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Publicacion, datos.Dt_Publicacion, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,36 +30,44 @@
  
     <br>
     <br>
-    <div class="row">
-        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
-            <div class="intro">
-                <h1 class="text-center">Your Wonderful Article Title</h1>
-                <p class="text-center"><span class="date">Sept
-                        8th, 2018 </span></p><img class="img-fluid" src="img/1.jpg">
-            </div>
-            <br>
-            <div class="text">
-                <p>Sed lobortis mi. Suspendisse vel placerat ligula. <span
-                        style="text-decoration: underline;">Vivamus</span> ac sem lac. Ut vehicula rhoncus elementum.
-                    Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in
-                    justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-                <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac lacus. <strong>Ut vehicula
-                        rhoncus</strong> elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit <em>pulvinar
-                        dict</em> vel in justo. Vestibulum
-                    ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-                <h2>Aliquam In Arcu </h2>
-                <p>Suspendisse vel placerat ligula. Vivamus ac sem lac. Ut vehicula rhoncus elementum. Etiam quis
-                    tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo. Vestibulum ante ipsum
-                    primis in faucibus orci luctus et ultrices
-                    posuere cubilia Curae.</p>
-               <img class="img-fluid" src="img/2.jpg">
-                    <h2>Caption</h2>
-                <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. Suspendisse
-                    vel placerat ligula. Vivamus ac sem lac. Ut vehicula rhoncus elementum. Etiam quis tristique lectus.
-                    Aliquam in arcu eget velit
-                    pulvinar dictum vel in justo.</p>
-            </div>
-        </div>
+						<%											
+					 	ArrayList<Publicacion> ListaPost = new ArrayList<Publicacion>();
+                       	Dt_Publicacion dta = new Dt_Publicacion();
+                       	ListaPost = dta.ListaPost();    
+                       	
+                       		
+						%> 
+		    <div class="row">
+		    	<%
+		    	String publicacionid = "";
+				publicacionid = request.getParameter("publicacionid")==null?"0":request.getParameter("publicacionid");
+				System.out.println(publicacionid);
+				int MostrarInfo = Integer.parseInt(publicacionid);
+		    	for(Publicacion a: ListaPost){ 
+		    	if(a.getPublicacionid()==MostrarInfo){%>
+		        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+		            <div class="intro">
+		                <h1 class="text-center"><%=a.getTitulo() %></h1>
+		                <p class="text-center"><span class="date"><%=a.getDescripcion() %> </span></p>
+		                <br>
+		                <img class="img-fluid mx-auto d-block" src="img/Defecto.jpeg">
+		            </div>
+		            <br>
+		            <div class="text-center">
+
+			               <p>Fecha:<%=a.getFecha() %></p>
+			           
+			               <p>Multimedia: <%=a.getMultimedia() %></p>
+			                 
+			               <p>Estado Publicacion: <%=a.getEstadopublicacion() %></p>
+			                        
+			               
+         	   </div>
+       		 </div>
+       		 <%
+		    	}
+       		 } 
+       		 %>
     </div>
     <br>
     <br>
