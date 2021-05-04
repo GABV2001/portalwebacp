@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entidades.Familia;
 import entidades.Pais;
 
 public class Dt_Pais {

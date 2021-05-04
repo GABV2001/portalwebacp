@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewDistribucion,datos.Dt_ViewDistribucion,datos.Dt_Region,entidades.Region,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewDistribucion,datos.Dt_Distribucion,datos.Dt_Region,entidades.Region,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,6 +10,9 @@
     <meta name="author" content="">
   
     <title>Portal ACP - Formulario Árbol</title>
+    
+      <!-- Icon -->
+	  <jsp:include page="imgShortIcon.jsp" />  
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
 import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 <!DOCTYPE html>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <html lang="en">
-
 <head>
 
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Gestión Banner</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,6 +29,10 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+    
 
 </head>
 
@@ -87,8 +96,27 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                            <td><%=bn.getTitulobanner() %></td>
                                            <td><%=bn.getDescripcion() %></td>
                                            <td><%=bn.getMultimedia() %></td>
-                                                 <td>&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>                           
+                                                 <td>&nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           		onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este elemento?',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionBanner?idB=<%=bn.getBannerID()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td>                           
                                        </tr>
                                        		<%
                                        		}
@@ -142,6 +170,33 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+
+    });
+	</script>
 
 </body>
 

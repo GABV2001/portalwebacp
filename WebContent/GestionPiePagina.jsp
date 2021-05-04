@@ -1,18 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"
     %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Portal ACP - Gestión Pie De Página</title>
+ 
+    <title>Portal ACP - GestiÃ³n Pie De PÃ¡gina</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,57 +49,46 @@
                             <div class="col-lg-11 m-auto">
                                 <div class="card rounded shadow border-0">
 
-									<%ArrayList<Footer> listFooter = new ArrayList<Footer>();
+									<%
+									ArrayList<Footer> listFooter = new ArrayList<Footer>();
 									Dt_Footer dtf = new Dt_Footer();
 									listFooter = dtf.listFooter();
 										
-									String Descripcion = null;
-									String Correo = null;
-									String Telefono = null;
-									String Extension =null ;
-									String Logo = null;
-									int idFooter =0;
-									int idUsuario =0;
+								    	String Logo = null;
 									
 										Footer ft = new Footer();
 										ft = listFooter.get(0);
-										idFooter = ft.getFooterID();
-										idUsuario = ft.getUsuarioID();
-										Descripcion = ft.getDescripcion();
-										Correo = ft.getCorreo();
-										Telefono = ft.getTelefono();
-									    Extension = ft.getExtencion();
 										Logo = ft.getLogo();
 									
 									 %>
 									 
 						 			  <div class="card-header">
                                         <h2>
-                                            Pie de Página
+                                            Pie de PÃ¡gina
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
                                         <form class="PiePagina" method="post" action="./Sl_GestionPiePagina">
                                         	<!-- El valor de estos input es para el Servlet opcion editar -->                			
-                                        	<input name="idFooter" type="hidden" value="<%=idFooter%>" />
-                                        	<input name="idUsuario" type="hidden" value="<%=idUsuario%>" />  
+                                        	<input name="idFooter" type="hidden" value="<%=ft.getFooterID()%>" />
+                                        	<input name="idUsuario" type="hidden" value="<%=ft.getUsuarioID()%>" />  
                                         	<input name="opcion" type="hidden" value="1" />
                                         	                                      	
                                             <div class="form-group">
-                                                <label>Dirección:</label>
-                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=Descripcion%>" required>
+                                                <label>DirecciÃ³n:</label>
+                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Correo:</label>
-                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=Correo%>" required>
+                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Telefono:</label>
-                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=Telefono%>" required  >
+                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=ft.getTelefono()%>" required  >
                                             </div>
                                             <div class="form-group">
-                                                <label>Extensión:</label>
-                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=Extension%>" required>
+                                                <label>ExtensiÃ³n:</label>
+                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=ft.getExtencion()%>" required>
                                             </div>
                                            <div class="form-group">
                                                 <label for="custom-file">Multimedia:</label>
@@ -158,7 +149,7 @@
                     /[\/\\]([\w\d\s\.\-\(\)]+)$/
                 )[1];
             } else {
-                customTxt.innerHTML = "Ningún archivo seleccionado";
+                customTxt.innerHTML = "NingÃºn archivo seleccionado";
             }
         });
 

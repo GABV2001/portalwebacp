@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 import entidades.Region;
+import vistas.ViewRegion;
 
 
 public class Dt_Region {
@@ -113,5 +114,45 @@ public class Dt_Region {
 					return guardado;
 				}
 	
+				//Metodo para visualizar region
+				public ArrayList<ViewRegion> listaViewRegion(){
+					ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
+					try{
+						c = PoolConexion.getConnection();
+						ps = c.prepareStatement("select * from viewregion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						rs = ps.executeQuery();
+						while(rs.next()){
+							ViewRegion region = new ViewRegion();
+							region.setRegionid(rs.getInt("regionid"));
+							region.setNombreRegion(rs.getString("region"));
+							region.setDescripcion(rs.getString("descripcion"));	
+							region.setPais(rs.getString("Pais"));						
+							listRegion.add(region);
+						}
+					}
+					catch (Exception e){
+						System.out.println("DATOS: ERROR EN LISTAR VIEWREGION "+ e.getMessage());
+						e.printStackTrace();
+					}
+					finally{
+						try {
+							if(rs != null){
+								rs.close();
+							}
+							if(ps != null){
+								ps.close();
+							}
+							if(c != null){
+								PoolConexion.closeConnection(c);
+							}
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					return listRegion;
+				}
 
 }

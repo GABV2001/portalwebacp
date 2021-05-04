@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,6 +11,9 @@
     <meta name="author" content="">
 
    <title>Portal ACP - Formulario Árbol</title>
+   
+   <!-- Icon -->
+   <jsp:include page="imgShortIcon.jsp" />  
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

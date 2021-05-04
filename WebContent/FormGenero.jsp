@@ -13,6 +13,9 @@
 
    <title>Portal ACP - Formulario Género</title>
   
+    <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
+	
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link

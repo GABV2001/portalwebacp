@@ -1,8 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ import="entidades.TipoProducto, datos.Dt_TipoProducto, java.util.*;" %>
 <!DOCTYPE html>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <html lang="en">
-
 <head>
 
     <meta charset="ISO-8859-1">
@@ -11,7 +14,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Tipo Productos</title>
+    <title>Portal ACP - GestiÃ³n Tipo Productos</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,6 +31,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+   
 
 </head>
 
@@ -44,54 +55,66 @@
                     <!-- DataTales  -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Tipo Productos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n Tipo Productos</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormTipoProducto.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Tipo Producto</div></a>
+                                    <%
+                                	ArrayList<TipoProducto> listTipoProducto = new ArrayList<TipoProducto>();
+                                	Dt_TipoProducto dtp = new Dt_TipoProducto();
+                                	listTipoProducto = dtp.listarTipoProductos();                                	
+                                     %>
                                     <thead>
                                         <tr>
                                             <th>Tipo de Producto</th>
-                                            <th>Descripción</th>
-                                            <th>Estado</th>
+                                            <th>DescripciÃ³n</th>
                                             <th>Operaciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Tipo de Producto</th>
-                                            <th>Descripción</th>
-                                            <th>Estado</th>
+                                            <th>DescripciÃ³n</th>
                                             <th>Operaciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                    		<%
+                                       		for(TipoProducto tp: listTipoProducto){
+                                       	    %> 
                                         <tr>
-                                            <td>Prueba</td>
-                                            <td>Prueba1</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prueba</td>
-                                            <td>Prueba1</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prueba</td>
-                                            <td>Prueba1</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                           <td><%=tp.getNombre()%></td>                                           
+                                           <td><%=tp.getDescripcion() %></td>                                                                                   
+                                           <td>&nbsp;&nbsp;<a href="FormEditarTipoProducto.jsp?idTp=<%=tp.getTipoproducotid()%>"><i class="fas fa-edit"></i></a>&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': 'Â¿EstÃ¡s seguro que deseas eliminar este Registro',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionTipoProducto?idTp=<%=tp.getTipoproducotid()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td>            
+                                   	     </tr>   
+                                         <%
+                                       		}
+                                           %>                           
                                     </tbody>
                                 </table>
                             </div>
@@ -142,8 +165,32 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+		/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
+        if(mensaje == "1")
+        {
+            successAlert('Exito', '!Los datos han sido registrados exitosamente!');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', '!Revise los datos e intente nuevamente!');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', '!Los datos han sido eliminado exitosamente!');
+        }
 
+    });
+</script>    
 </body>
-
 </html>

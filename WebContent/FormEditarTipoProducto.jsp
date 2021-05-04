@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ import="entidades.TipoProducto, datos.Dt_TipoProducto, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +11,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario Nueva Sección</title>
+    <title>Portal ACP - Formulario Tipo Producto</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,44 +41,50 @@
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                
+                 			 <%
+                            	String tpID = "";
+                 				tpID = request.getParameter("idTp")==null?"0":request.getParameter("idTp");
+														
+								TipoProducto tp = new TipoProducto();
+								Dt_TipoProducto dtp = new Dt_TipoProducto();
+								tp = dtp.getTipoProducto(Integer.parseInt(tpID));						
+                         	   %>
 
                     <!-- Formulario -->
-   			   		 <div class="container">
+   			   		       <div class="container ">
+                        <header class="text-center text-white">
+                            <script src="https://kit.fontawesome.com/a41f4b8198.js" crossorigin="anonymous"></script>
+                        </header>
                         <div class="row">
                             <div class="col-lg-10 mx-auto m-auto">
                                 <div class="card rounded shadow border-0">
-                                         <div class="card-header">
-                                        <h2 class="card-title text-center">Sección Nueva</h2>
+
+                                    <div class="card-header">
+                                        <h3 class="card-title text-left">Tipo Producto</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Nombre Página:</label>
-                                                <input class="form-control">
+                                   <form class="TipoProducto" method="post" action="./Sl_GestionTipoProducto">
+                      			     	<input name="idTipoProducto" type="hidden" value="<%=tp.getTipoproducotid()%>" />                            
+                      					<input name="opcion" type="hidden" value="2" />
+                                    
+                                        <div class="form-group">
+                                                <label for="TP" class="form-label fw-bolder">Tipo de Producto:</label>
+                                                <input type="text" class="form-control" id="nombreTipoProducto" name="nombreTipoProducto">
                                             </div>
                                             <div class="form-group">
-                                                <label>Titulo:</label>
-                                                <input class="form-control">
-                                            </div>
-                                                <div class="form-group">
-                                             <label for="custom-file">Media:</label>
-                                                <div class="input-group mb-3">
-                                                     <div class="custom-file">
-                                                        <input type="file" id="inputGroupFile01" multiple>      
-                                                    </div>
-                                                </div>
+                                                <label for="descripciÃ³nTP"
+                                                    class="form-label fw-bolder">DescripciÃ³n</label>
+                                                <textarea id="descripcionTipoProducto" name="descripcionTipoProducto" rows="4" class="form-control"></textarea>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónCP" rows="9" class="form-control"></textarea>
+                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
                                             </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 50%;">Crear</button>
-                                                <button class="btn btn-primary bg-danger"
-                                                    style="width: 49%;">Cancelar</button>
-                                            </div>
+                                            <div style="text-align:center;"><a href="GestionTipoProductos.jsp"><i
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -105,8 +115,6 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -127,6 +135,13 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+	 <script>  
+		  $(document).ready(function()
+			{
+				$("#nombreTipoProducto").val("<%=tp.getNombre()%>");
+				$("#descripcionTipoProducto").val("<%=tp.getDescripcion()%>");			
+			});
+		 </script>  
 
 </body>
 

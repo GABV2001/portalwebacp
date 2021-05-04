@@ -11,6 +11,10 @@
     <meta name="author" content="">
   
       <title>Portal ACP - Formulario Servicio</title>
+      
+     <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
+	
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,38 +51,45 @@
                                 <div class="card rounded shadow border-0">
 
                                     <div class="card-header">
-                                        <h3 class="card-title text-left">Servicio</h3>
+                                        <h3 class="card-title text-left">Formulario Servicio</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="form-group">
+                                      <form class="Servicio" method="post" action="./Sl_GestionServicio">
+                      					<input name="opcion" type="hidden" value="1" />
+                                      <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreS">
+                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio">
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónS"
                                                     class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónS" rows="4" class="form-control"></textarea>
+                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" ></textarea>
                                             </div>
                                             <div class="form-group">
+                                                <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Subir</span>
+                                                        <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input"
-                                                            id="inputGroupFile01">
-                                                        <label class="custom-file-label"
-                                                            for="inputGroupFile01">Seleccionar el
-                                                            archivo</label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultSer">Seleccionar archivo</label>
+													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/*" required>
+													</div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                             <label>Estado:</label>  
+                                                <select class="form-control" name="cbxEstadoServicio" id="cbxEstadoServicio">                                            	
+                                    			<option value="">Seleccionar</option>                                    			                                            	
+                                    			<option value="1">Disponible</option>
+                                    			<option value="2">No disponible</option>
+                                    	        </select>
+                                    	    </div>                                       	                                          
                                             <div class="mb-3">
                                                 <button class="btn btn-primary" style="width: 100%;">Guardar</button>
                                             </div>
                                             <div style="text-align:center;"><a href="GestionServicio.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>
@@ -133,6 +144,14 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+ 	 <script>  $('#multSer').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multSer')[0].files[0].name;
+	   console.log(file);
+	      $(this).prev('label').text(file);
+
+	    });
+	</script>
 
 </body>
 

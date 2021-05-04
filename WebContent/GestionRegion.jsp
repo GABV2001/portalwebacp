@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewRegion,datos.Dt_ViewRegion,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewRegion,datos.Dt_Region,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,6 +10,10 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Gestión Región</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,8 +55,8 @@
                                                 class="fas fa-plus-square"></i>&nbsp; Nueva Región</div></a>
                                     <%
                                     	ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
-                                       Dt_ViewRegion dtu = new Dt_ViewRegion();
-                                        listRegion = dtu.listaRegion();
+                                  	     Dt_Region dtu = new Dt_Region();
+                                        listRegion = dtu.listaViewRegion();
                                     %>
                                     <thead>
                                         <tr>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.ViewDistribucion,datos.Dt_ViewDistribucion,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewDistribucion,datos.Dt_Distribucion,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,6 +10,10 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Gestión Distribución</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,8 +55,8 @@
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Distribución</div></a>
                                                   <%
                                                   	ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
-                                                    Dt_ViewDistribucion dtu = new Dt_ViewDistribucion();
-                                                    listDistribucion = dtu.listaDistribucion();
+                                                    Dt_Distribucion dtu = new Dt_Distribucion();
+                                                    listDistribucion = dtu.listaViewDistribucion();
                                                   %>
                                     <thead>
                                         <tr>

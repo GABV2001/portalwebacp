@@ -30,7 +30,19 @@ public class Sl_GestionEvento extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	//	response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int idEvento =0;
+		idEvento = Integer.parseInt(request.getParameter("idE"));
+		Dt_Evento dts = new	Dt_Evento();
+		
+		if(dts.eliminarEvento(idEvento)) {
+        	response.sendRedirect("GestionEvento.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionEvento.jsp?msj=6");
+        }
+	
 	}
 
 	/**
@@ -53,7 +65,7 @@ public class Sl_GestionEvento extends HttpServlet {
 		ev.setFechafin(request.getParameter("datefFinalEvento"));
 		ev.setHorafin(request.getParameter("timehoraFinEvento"));
 		ev.setTipoevento(Integer.parseInt(request.getParameter("cbxTipoEvento")));
-		ev.setMultimedia(request.getParameter("multEvento"));
+		//ev.setMultimedia(request.getParameter("multEvento"));
 		ev.setHipervinculo(request.getParameter("txthipervinculoEvento"));
 		ev.setUbicacion(request.getParameter("txtUbicacionEvento"));
 		
@@ -76,6 +88,25 @@ public class Sl_GestionEvento extends HttpServlet {
 		        }
 		        
 				break;
+			}
+		case 2:{
+			ev.setEventoid(Integer.parseInt(request.getParameter("idEvento")));
+     		try {
+				   if(dte.modificarEvento(ev)) {
+		        	response.sendRedirect("GestionEvento.jsp?msj=3");
+		        }
+		        else {
+		        	response.sendRedirect("GestionEvento.jsp?msj=4");
+		        }
+		        
+	        	
+	        }
+	        catch(Exception e) {
+	        	System.out.println("Sl_GestionEvento, el error es: " + e.getMessage());
+				e.printStackTrace();
+	        }
+				break;
+				
 			}
 			default:
 			response.sendRedirect("GestionEvento.jsp?msj=5");	

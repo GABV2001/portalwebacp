@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.ViewArbol, datos.Dt_ViewArbol, java.util.*"%>
+    pageEncoding="utf-8" import = "vistas.ViewArbol,datos.Dt_Arbol, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Arboreto Carmelo Palma - Árboles</title>
+    
+    <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
 
     <!-- CSS boostrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -42,9 +45,8 @@
         <div class="row">
         			<%
                       	ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
-                       	Dt_ViewArbol dta = new Dt_ViewArbol();
-                       	listArbol = dta.listaArbol();                        	
-                               	
+                       	Dt_Arbol dta = new Dt_Arbol();
+                       	listArbol = dta.listaArbol();                     	                         	
                       %>          
             	       <%for(ViewArbol a: listArbol){%>
 			                    <div class="col-lg-4 col-sm-6 mb-4">

@@ -1,17 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ import="entidades.Servicio, datos.Dt_Servicio, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
-
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Servicios</title>
+    <title>Portal ACP - GestiÃ³n Servicios</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,6 +30,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+            
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+    
 
 </head>
 
@@ -44,17 +54,22 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Servicios</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n Servicios</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormServicio.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Servicio</div></a>
+                                    <%
+                                	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
+                                	Dt_Servicio dts = new Dt_Servicio();
+                                	listServicio = dts.listarServicio();                                	
+                                     %>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
+                                            <th>DescripciÃ³n</th>
                                             <th>Foto</th>
                                             <th>Estado</th>
                                             <th>Operaciones</th>
@@ -63,40 +78,49 @@
                                     <tfoot>
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
+                                            <th>DescripciÃ³n</th>
                                             <th>Foto</th>
                                             <th>Estado</th>
                                             <th>Operaciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                      		<%
+                                       		for(Servicio sr: listServicio){
+                                       	    %> 
                                         <tr>
-                                            <td>Prueba1</td>
-                                            <td>Desc. Prueba1</td>
-                                            <td><a href="#">Prueba1</a></td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prueba2</td>
-                                            <td>Desc. Prueba2</td>
-                                            <td><a href="#">Prueba2</a></td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prueba3</td>
-                                            <td>Desc. Prueba3</td>
-                                            <td><a href="#">Prueba3</a></td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                           <td><%=sr.getNombre()%></td>                                           
+                                            <td><%=sr.getDescripcion() %></td>                                                                                   
+                                            <td><%=sr.getMultimedia()%></td>                                                                                
+                                           <td><%=sr.getEstadoservicio()==1?"Disponible":"No disponible" %></td>
+                                           <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': 'Â¿EstÃ¡s seguro que deseas eliminar este Servicio',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionServicio?idS=<%=sr.getServicioid()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td>            
+                                   	     </tr>   
+                                         <%
+                                       		}
+                                           %>                                                           
+                             
                                     </tbody>
                                 </table>
                             </div>
@@ -148,7 +172,32 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+	</script>
+	
 </body>
-
 </html>

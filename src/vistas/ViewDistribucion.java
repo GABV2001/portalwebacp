@@ -1,4 +1,4 @@
-package entidades;
+package vistas;
 
 public class ViewDistribucion {
 	
@@ -7,9 +7,6 @@ public class ViewDistribucion {
 		private String Distribucion;
 		private String Descripcion;
 		private String Region;
-
-		
-		
 		
 		public int getDistribucionID() {
 			return DistribucionID;

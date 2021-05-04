@@ -11,6 +11,9 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Agenda Privada</title>
+    
+    <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -93,6 +96,7 @@
         }
         }
         %> 
+        
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Agenda Privada</h1>

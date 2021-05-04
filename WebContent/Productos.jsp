@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Arboreto Carmelo Palma - Productos</title>
 
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
     <!-- CSS boostrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
@@ -36,55 +39,37 @@
     <!-- Contenido -->
       <div class="container mb-5">
         <br>
-        <h2 class="text-center">Catálogo de Productos</h2>
+        <h2 class="text-center">CatÃ¡logo de Productos</h2>
         <hr>
 
         <div class="row">
-            <div class="col-md-4">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="img/1.jpg"></div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">Semilla de Marihuana</h4>
-                        <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Sapiente reiciendis quod fuga </p>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
-            <div class="col-md-4">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="img/2.jpg"> </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">Semilla de Marisol</h4>
-                        <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Sapiente reiciendis quod fuga </p>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
-            <div class="col-md-4">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="img/3.jpg"></div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">Flor de Cocaína</h4>
-                        <p class="desc">SLorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Sapiente reiciendis quod fuga </p>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-                    </div> <!-- bottom-wrap.// -->
-                </figure>
-            </div> <!-- col // -->
+        			 <%
+                      	ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
+                       	Dt_Producto dtp = new Dt_Producto();
+                       	listProducto = dtp.listarProductos();                     	                         	
+                      %>
+                       
+                     <%for(ViewProducto pr: listProducto){
+                       if(pr.getEstadoproductoid()!=2){%>
+			          
+			            <div class="col-md-4">
+			                <figure class="card card-product">
+			                    <div class="img-wrap"><img src="img/<%=pr.getMultimedia()%>"></div>
+			                    <figcaption class="info-wrap">
+			                        <h4 class="title"><%=pr.getProducto()%></h4>
+			                        <p class="desc"><%=pr.getDescripcion()%></p>
+			                       <h6><%=pr.getTipoproducto()%></h6>
+			                 
+			                    </figcaption>
+			                    <div class="bottom-wrap">
+			                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
+			                    </div> <!-- bottom-wrap.// -->
+			                </figure>
+			            </div> <!-- col // -->				       
+			           <%}
+			             }
+			             %> 
+			   </div>  
         </div> <!-- row.// -->
     </div>
     <!--container.//-->
@@ -104,8 +89,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
-
-
 </body>
 
 </html>

@@ -12,6 +12,10 @@
     <meta name="author" content="">
   
     <title>Portal ACP - Formulario Tipo Producto</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,21 +55,22 @@
                                         <h3 class="card-title text-left">Tipo Producto</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="form-group">
+                                   <form class="TipoProducto" method="post" action="./Sl_GestionTipoProducto">
+                      					<input name="opcion" type="hidden" value="1" />
+                                        <div class="form-group">
                                                 <label for="TP" class="form-label fw-bolder">Tipo de Producto:</label>
-                                                <input type="text" class="form-control" id="TP">
+                                                <input type="text" class="form-control" id="nombreTipoProducto" name="nombreTipoProducto">
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónTP"
                                                     class="form-label fw-bolder">Descripción</label>
-                                                <textarea id="descripciónTP" rows="4" class="form-control"></textarea>
+                                                <textarea id="descripcionTipoProducto" name="descripcionTipoProducto" rows="4" class="form-control"></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <button class="btn btn-primary" style="width: 100%;">Guardar</button>
                                             </div>
                                             <div style="text-align:center;"><a href="GestionTipoProductos.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
 
@@ -99,8 +104,6 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 

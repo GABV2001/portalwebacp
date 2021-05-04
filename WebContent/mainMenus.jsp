@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
-import = "entidades.ViewHead, datos.Dt_ViewHead, java.util.*;"%>
+import = "vistas.ViewHead,datos.Dt_ViewHead, java.util.*;"%>
 
 							 <%
                                 	ArrayList<ViewHead> listViewHead = new ArrayList<ViewHead>();
@@ -19,8 +19,9 @@ import = "entidades.ViewHead, datos.Dt_ViewHead, java.util.*;"%>
 			 
 	  	 	%>	
  					
-        
+
  <!-- Menu -->
+	
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="" style="width: 60px; height: 40px;" id="imgLogo"><%=titulo %></a>

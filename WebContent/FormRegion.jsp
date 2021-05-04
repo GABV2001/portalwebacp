@@ -10,6 +10,10 @@
     <meta name="author" content="">
   
     <title>Portal ACP - Formulario Región</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

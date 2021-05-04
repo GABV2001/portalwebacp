@@ -12,6 +12,9 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Formulario Evento</title>
+    
+      <!-- Icon -->
+	  <jsp:include page="imgShortIcon.jsp" />  
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,7 +51,7 @@
                                 <div class="card rounded shadow border-0">
 
                                     <div class="card-header">
-                                        <h2>Evento</h2>
+                                        <h2>Formulario Evento</h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
                                         <form class="Evento" method="post" action="./Sl_GestionEvento">
@@ -92,17 +95,16 @@
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
                                                 </div>
-    										  <div class="form-group">
+    										 <div class="form-group">
                                                 <label for="custom-file">Multimedia:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multEvento" name= "multEvento" accept="image/*">
-                                                        <label class="custom-file-label text-truncate" for="multEvento"
-                                                            id="labelEvento">Seleccionar archivo</label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultEv" name="filmultEv">Seleccionar Archivo</label>
+													    <input type="file" class="custom-file-input" id="multEvento" name="multEvento" onchange="Test.UpdatePreview(this)" accept="image/jpg" >
+													</div>
                                                 </div>
                                             </div>
                                             <div class="form-group ">
@@ -114,21 +116,18 @@
                                                 <label for="formGroupExampleInput ">Ubicación:</label>
                                                 <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento">
                                             </div>
-                                            <div class="text-center">
+                                            <div class="form-group text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>
                                         </form>
 
                                         <div style="text-align: center; "><a href="GestionEvento.jsp"><i
-                                                    class="fas fa-undo "></i>&nbsp;Volver a la tabla</div></a>
-                                    </div>
-                                    
+                                                    class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</div></a>
+                                    </div>         
                                 </div>
                             </div>
                             <!--termina formulario-->
                         </div>
-
-
                     </div>
                     <!-- Termina Formulario -->
 
@@ -156,21 +155,7 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-  	<script>
-		var inputbtn = document.getElementById("multEvento");
-	    var customTxt = document.getElementById("labelEvento");
-	   		
-		            
-		      inputbtn.addEventListener("change", function () {
-		          if (inputbtn.value) {
-		              customTxt.innerHTML = inputbtn.value.match(
-		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
-		              )[1];
-		          } else {
-		              customTxt.innerHTML = "Seleccionar archivo...";
-		          }
-		      });
-		</script>
+  	
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
@@ -191,8 +176,13 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
-
+    
+    <script>  $('#multEvento').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multEvento')[0].files[0].name;
+	      $(this).prev('label').text(file);
+	    });
+	</script>	
 </body>
 
 </html>

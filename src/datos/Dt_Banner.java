@@ -21,7 +21,7 @@ public class Dt_Banner {
 	// Metodo para llenar el ResultSet
 		public void llenarBanner(Connection c){
 			try{
-				ps = c.prepareStatement("SELECT * FROM banner where banner.estado <> 3 order by Banner.posicion asc", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select bannerid, titulobanner, descripcion, multimedia, posicion, estado, usuarioid from banner", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rsBanner = ps.executeQuery();
 			}
 			catch (Exception e){
@@ -117,6 +117,46 @@ public class Dt_Banner {
 			return guardado;
 		}
 	
-	
+		// Metodo para eliminar Banner
+		public boolean eliminaBanner(int idB)
+		{
+			boolean eliminado=false;	
+			try
+			{
+				c = PoolConexion.getConnection();
+				this.llenarBanner(c);;
+				rsBanner.beforeFirst();
+				while (rsBanner.next())
+				{
+					if(rsBanner.getInt(1)==idB)
+					{
+						rsBanner.deleteRow();
+						eliminado=true;
+						break;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.err.println("ERROR AL ELIMINAR BANNER "+e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rsBanner != null){
+						rsBanner.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return eliminado;
+		}
 
 }

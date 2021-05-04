@@ -1,17 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 
-    <meta charset="utf-8">
+<head>
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Formulario Banner </title>
+    
+     <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -41,8 +47,14 @@
  					<%
                             	String pos = "";
 								pos = request.getParameter("posicion")==null?"0":request.getParameter("posicion");
-														
-														
+								
+								ArrayList<Banner> listBanner = new ArrayList<Banner>();
+                            	Dt_Banner dtb = new Dt_Banner();
+                            	listBanner = dtb.ListarBanner();
+                            	
+                            	Banner ban = new Banner();
+                            	ban = listBanner.get(listBanner.size() - 1);
+                           															
                             %>
                     <!--Formulario-->
                     <div class="container">
@@ -57,7 +69,7 @@
                                         <h3 class="card-title text-left">Banner</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class = "Banner"  method="post" action="./Sl_GestionBanner"> 
+                                        <form class = "Banner"  method="post" action="./Sl_GestionBanner"  > 
                                          <input name="opcion" type="hidden" value="1" />
                                     	<input name="posicion"  type = "hidden" value="<%=pos%>" />
                                          <div class="form-group">
@@ -65,8 +77,8 @@
                                                 <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
-                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripciÃ³nBanner" required></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
+                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripciónBanner" required></textarea>
                                             </div>
                                              <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -74,23 +86,27 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multBanner" name="multBanner" accept="image/*" >
-                                                        <label class="custom-file-label text-truncate" for="multBanner"
-                                                            id="labelmulBanner">Seleccionar archivo...</label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultBanner">Seleccionar archivo</label>
+													    <input type="file" class="custom-file-input" id="multBanner" name="multBanner" onchange="Test.UpdatePreview(this)" accept="image/*" required>
+													</div>
                                                 </div>
                                             </div>
-                                         	 <div class="text-center">
-				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>
-				                             <div class="text-center">
-	                                		<input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-	                            			</div>
+                                            
+		                                  <div class="m-3" align="center">
+												<img id="preview" src="img/Defecto.jpeg" name="preview"  alt="Imagen Banner"
+													class="img-fluid" alt="Responsive image" style="width: 400px; height: 324px; border-bottom-color: white; margin: 2px;" />
+											</div>
+                                         	  	<div class="mb-2 text-center">
+					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+					                            </div>
+					                            <div class="mb-2 text-center">
+					                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
+					                            </div>
 				                            <br>
 				                         
                                             <div style="text-align:center;"><a href="GestionBanner.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
 
@@ -123,22 +139,7 @@
 
     <!-- Logout Modal-->
    	<jsp:include page="adminLogOutModal.jsp" />    
-
-	<script>
-		var inputbtn = document.getElementById("multBanner");
-	    var customTxt = document.getElementById("labelmulBanner");
-	   		
-		            
-		      inputbtn.addEventListener("change", function () {
-		          if (inputbtn.value) {
-		              customTxt.innerHTML = inputbtn.value.match(
-		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
-		              )[1];
-		          } else {
-		              customTxt.innerHTML = "Seleccionar archivo...";
-		          }
-		      });
-		</script>
+		   
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
@@ -160,7 +161,43 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+		<script>
+		
+	    $(document).ready(function() 
+		{
+		//Función para previsualizar la imagen del banner
+	    	Test = {
+	    	        UpdatePreview: function(obj)
+	    	        {
+	    	          // if IE < 10 doesn't support FileReader
+	    	          if(!window.FileReader)
+	    	          {
+	    	             
+	    	          } 
+	    	          else 
+	    	          {
+	    	             var reader = new FileReader();
+	    	             var target = null;
+	    	             
+	    	             reader.onload = function(e) 
+	    	             {
+	    	              target =  e.target || e.srcElement;
+	    	               $("#preview").prop("src", target.result);
+	    	             };
+	    	              reader.readAsDataURL(obj.files[0]);
+	    	          }
+	    	        }
+	    	    };
+		});
+	    
+	    $('#multBanner').on("change",function() {
+		     var i = $(this).prev('label').clone();
+		      var file = $('#multBanner')[0].files[0].name;
+		   console.log(file);
+		      $(this).prev('label').text(file);
 
+		    });
+	</script>
 </body>
 
 </html>

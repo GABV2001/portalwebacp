@@ -1,110 +1,158 @@
-package servlets;
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewArbol,datos.Dt_Arbol,java.util.*;" %>
+<!DOCTYPE html>
+<html lang="es">
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-import entidades.Arbol;
-import datos.Dt_Arbol;
+    <title>Portal ACP - Gestión Árbol</title>
 
-
-
-/**
- * Servlet implementation class Sl_GestionArbol
- */
-@WebServlet("/Sl_GestionArbol")
-public class Sl_GestionArbol extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Sl_GestionArbol() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		//obtenemos el valor de opcion
-		int opc = 0;
-		opc = Integer.parseInt(request.getParameter("opcion"));
-		
-		//CONSTRUIR EL OBJETO ARBOL
-		Dt_Arbol dta = new Dt_Arbol();
-		Arbol ar = new Arbol();
-		ar.setNombreComun(request.getParameter("txtNombreComun"));
-		ar.setNombreCientifico(request.getParameter("txtNombreCientifico"));
-		ar.setDescripcion(request.getParameter("txtDescripcionArbol"));
-		ar.setMultimedia(request.getParameter("Multimedia"));		
-		ar.setGeneroID(Integer.parseInt(request.getParameter("GeneroID")));		
-		ar.setFamiliaID(Integer.parseInt(request.getParameter("FamiliaID")));
-		ar.setDistribucionID(Integer.parseInt(request.getParameter("DistribucionID")));
-		ar.setFloracionID(Integer.parseInt(request.getParameter("FloracionID")));
-		
-		switch (opc){
-		case 1:{
-			
-		        try {
-			        if(	dta.guardarArbol(ar)) {
-			        	response.sendRedirect("GestionArbol.jsp?msj=1");
-			        }
-			        else {
-			        	response.sendRedirect("GestionArbol.jsp?msj=2");
-			        }
-			        	
-		        	
-		        }
-		        catch(Exception e) {
-		        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
-					e.printStackTrace();
-		        }
-		        
-				break;
-			}/*
-		case 2:{
-			try {
-	        	
-		        if(dtf.modificarFamilia(ar)) {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=3");
-		        }
-		        else {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=4");
-		        }
-		        
-	        	
-	        }
-	        catch(Exception e) {
-	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
-				e.printStackTrace();
-	        }
-				break;
-				
-			}*/
-		default:
-			response.sendRedirect("GestionFamilia.jsp?msj=5");	
-			break;
-		
-			
-		}		
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
 	
-		
-		
-	}
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-}
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+   	<!-- Menus -->
+	<jsp:include page="adminMenus.jsp" />  
+	
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Árbol</h1>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Gestión Árbol</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <div style="text-align:right;"><a href="FormArbol.jsp"><i
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</div></a>
+                                    <%
+                                    ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
+                                    Dt_Arbol dtu = new Dt_Arbol();
+                                    listArbol = dtu.listaArbol();
+                                    %>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre común</th>
+                                            <th>Nombre científico</th>
+                                            <th>Descripción</th>
+                                            <th>Multimedia</th>
+                                            <th>Genero</th>
+                                            <th>Familia</th>
+                                            <th>Floración</th>
+                                            <th>Distribución</th>                                      
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Nombre común</th>
+                                            <th>Nombre científico</th>
+                                            <th>Descripción</th>
+                                            <th>Multimedia</th>
+                                            <th>Genero</th>
+                                            <th>Familia</th>
+                                            <th>Floración</th>
+                                            <th>Distribución</th>                                     
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                         <%
+                                         	for(ViewArbol us: listArbol){
+                                         %>
+                                       	<tr> 
+                                       	    <td><%=us.getNombreComun() %></td>
+                                       	    <td><%=us.getNombreCientifico() %></td>                                           
+                                            <td><%=us.getDescripcion() %></td>                                 
+                                            <td><%=us.getMultimedia() %></td>
+                                            <td><%=us.getNombreGenero() %></td>                                            
+                                            <td><%=us.getNombreFam() %></td>
+                                            <td><%=us.getNombreFlo() %></td>
+                                            <td><%=us.getNombreDis() %></td>                                                                                        
+                        			        <td>&nbsp;&nbsp;<a href="EditarArbol.jsp"><i
+                        	                                class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                                    href="#"><i class="far fa-trash-alt"></i></td>
+                                        </tr>
+                                          <%
+                                       		}
+                                           %>                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+        	<jsp:include page="adminFooter.jsp" />   
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+	<jsp:include page="adminLogOutModal.jsp" />  
+
+
+    <!-- JAVASCRIPTS -->
+    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+
+</body>
+
+</html>

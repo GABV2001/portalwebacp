@@ -12,6 +12,10 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Gestión Publicación</title>
+    
+      <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -102,8 +106,7 @@
                                             <td><%=post.getDescripcion()%></td>
                                             <td><%=post.getMultimedia() %></td>
                                             <td><%=post.getFecha() %></td>
-                                            <td><%=control%></td>
-                                            
+                                            <td><%=control%></td>                                           
                                             
                                             <td>&nbsp;&nbsp;<a href="#"><i
                                                         class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a

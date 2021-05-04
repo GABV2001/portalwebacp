@@ -2,8 +2,11 @@
     pageEncoding="utf-8"import = "entidades.Evento, datos.Dt_Evento, java.util.*;"%>
 
 <!DOCTYPE html>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -13,6 +16,10 @@
     <meta name="author" content="">
 
     <title>Portal ACP - Gestión Eventos</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,6 +32,9 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+     <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 
 </head>
 
@@ -97,9 +107,29 @@
                                             <td><%=ev.getMultimedia() %></td>
                                             <td><%=ev.getUbicacion() %></td>
                                             <td><%=ev.getHipervinculo() %></td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
+                                            <td>&nbsp;&nbsp;<a href="FormEditarEvento.jsp?idE=<%=ev.getEventoid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Evento?',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionEvento?idE=<%=ev.getEventoid()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Evento"></i>
+                        						</a></i></td>
                                      	   </tr>
 											<%
                                       	 	}
@@ -131,27 +161,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Seguro desea salir?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Has seleccion "Cerrar sesión", clic en confirmar para cerrar la actual sesión.
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.jsp">Confirmar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   <!-- Logout Modal-->
+   	<jsp:include page="adminLogOutModal.jsp" />  
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
@@ -173,6 +184,32 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+	</script>
 
 </body>
 

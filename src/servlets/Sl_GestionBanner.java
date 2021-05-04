@@ -1,12 +1,20 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import entidades.Banner;
 import datos.Dt_Banner;
@@ -31,7 +39,17 @@ public class Sl_GestionBanner extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int idBanner =0;
+		idBanner = Integer.parseInt(request.getParameter("idB"));
+		Dt_Banner dtb = new Dt_Banner(); 
+		
+		if(dtb.eliminaBanner(idBanner)) {
+        	response.sendRedirect("GestionBanner.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionBanner.jsp?msj=6");
+        }
+	
 	}
 
 	/**
@@ -39,7 +57,6 @@ public class Sl_GestionBanner extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// doGet(request, response);
 		
 				//Obtenemos el valor de opcion
 				int opc = 0;
@@ -50,13 +67,13 @@ public class Sl_GestionBanner extends HttpServlet {
 				Banner bn = new Banner();
 				bn.setTitulobanner(request.getParameter("txtTituloBanner"));
 				bn.setDescripcion(request.getParameter("txtDescripcionBanner"));
-	//			bn.setMultimedia(request.getParameter("multBanner"));
+			//	bn.setMultimedia(request.getParameter("multBanner"));
 				bn.setPosicion(Integer.parseInt(request.getParameter("posicion")));
 				
 				switch (opc){
 					case 1:{
 						
-					        try {
+					        try {				        								
  					        if(dtb.guardarBanner(bn)) {
 						        	response.sendRedirect("GestionBanner.jsp?msj=1");
 						        }
@@ -76,8 +93,8 @@ public class Sl_GestionBanner extends HttpServlet {
 				default:
 					response.sendRedirect("GestionBanner.jsp?msj=7");	
 					break;
-			}
-		
+			}		
+				
 	}
-
+	
 }

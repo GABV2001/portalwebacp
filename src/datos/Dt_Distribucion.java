@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Distribucion;
+import vistas.ViewDistribucion;
 
 
 public class Dt_Distribucion {
@@ -28,25 +29,67 @@ public class Dt_Distribucion {
 				e.printStackTrace();
 			}
 		}
+		
 		//Metodo para visualizar usuarios registrados y activos
-		public ArrayList<Distribucion> listaDistribucion(){
-			ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
+				public ArrayList<Distribucion> listaDistribucion(){
+					ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
+					try{
+						c = PoolConexion.getConnection();
+						ps = c.prepareStatement("select * from distribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						rs = ps.executeQuery();
+						while(rs.next()){
+							Distribucion distribucion = new Distribucion();
+							distribucion.setDistribucionID(rs.getInt("distribucionid"));
+							distribucion.setNombre(rs.getString("nombre"));
+							distribucion.setDescripcion(rs.getString("descripcion"));
+							distribucion.setRegionID(rs.getInt("Regionid"));
+							distribucion.setEstado(rs.getInt("estado"));
+							listDistribucion.add(distribucion);
+						}
+					}
+					catch (Exception e){
+						System.out.println("DATOS: ERROR EN LISTAR DISTRIBUCION "+ e.getMessage());
+						e.printStackTrace();
+					}
+					finally{
+						try {
+							if(rs != null){
+								rs.close();
+							}
+							if(ps != null){
+								ps.close();
+							}
+							if(c != null){
+								PoolConexion.closeConnection(c);
+							}
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					return listDistribucion;
+				}
+				
+		//Metodo para visualizar vista distribucion
+		public ArrayList<ViewDistribucion> listaViewDistribucion(){
+			ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
 			try{
 				c = PoolConexion.getConnection();
-				ps = c.prepareStatement("select * from distribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select * from viewdistribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rs = ps.executeQuery();
 				while(rs.next()){
-					Distribucion distribucion = new Distribucion();
+					ViewDistribucion distribucion = new ViewDistribucion();
 					distribucion.setDistribucionID(rs.getInt("distribucionid"));
-					distribucion.setNombre(rs.getString("nombre"));
-					distribucion.setDescripcion(rs.getString("descripcion"));
-					distribucion.setRegionID(rs.getInt("Regionid"));
-					distribucion.setEstado(rs.getInt("estado"));
+					distribucion.setDistribucion(rs.getString("distribucion"));
+					distribucion.setDescripcion(rs.getString("descripcion"));						
+					distribucion.setRegion(rs.getString("region"));
 					listDistribucion.add(distribucion);
 				}
 			}
 			catch (Exception e){
-				System.out.println("DATOS: ERROR EN LISTAR DISTRIBUCION "+ e.getMessage());
+				System.out.println("DATOS: ERROR EN LISTAR VIEWDISTRIBUCION "+ e.getMessage());
 				e.printStackTrace();
 			}
 			finally{
@@ -109,6 +152,7 @@ public class Dt_Distribucion {
 			return guardado;
 		}
 
+	
 	
 
 }

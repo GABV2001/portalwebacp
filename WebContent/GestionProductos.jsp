@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Productos</title>
+    <title>Portal ACP - GestiÃ³n Productos</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,6 +25,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+          
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+   
 
 </head>
 
@@ -44,59 +49,76 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Productos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n Productos</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormProducto.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Producto</div></a>
+                                    <%
+                                	ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
+                                	Dt_Producto dtp = new Dt_Producto();
+                                	listProducto = dtp.listarProductos();                                	
+                                     %>
                                     <thead>
                                         <tr>
-                                            <th scope="col">Id_Categría_Arbol</th>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>multimedia</th>
                                             <th>Estado</th>
+                                            <th>Tipo Producto</th>                                                                                    
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th scope="col">Id_Categría_Arbol</th>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
+                                            <th>DescripciÃ³n</th>
+                                            <th>multimedia</th>
                                             <th>Estado</th>
+                                            <th>Tipo Producto</th>                                                                                    
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                    	<%
+                                       		for(ViewProducto tp: listProducto){
+                                       	    %> 
                                         <tr>
-                                            <td>1</td>
-                                            <td>Prueba</td>
-                                            <td>Prueba</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Prueba2</td>
-                                            <td>Prueba2</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Prueba3</td>
-                                            <td>Prueba3</td>
-                                            <td>1</td>
-                                            <td>&nbsp;&nbsp;<a href="#"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                                     	   <td><%=tp.getProducto()%></td>          
+                                     	   <td><%=tp.getDescripcion()%></td>   
+                                     	   <td><%=tp.getMultimedia()%></td>     
+                                           <td><%=tp.getEstadoproductoid()==1?"Disponible":"No disponible" %></td>
+                                           <td><%=tp.getTipoproducto()%></td>     
+                                        
+                                                                                                                     
+                                           <td>&nbsp;&nbsp;<a href="FormEditarProducto.jsp?idP=<%=tp.getProductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': 'Â¿EstÃ¡s seguro que deseas eliminar este Producto',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      window.location.href = 'Sl_GestionProducto?idP=<%=tp.getProductoid()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Producto"></i>
+                        						</a></i></td>            
+                                   	     </tr>   
+                                         <%
+                                       		}
+                                           %>                                                                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -148,6 +170,10 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
 
 </body>
 

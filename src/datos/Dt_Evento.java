@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import entidades.Evento;
-import entidades.Familia;
 
 public class Dt_Evento {
 	
@@ -18,7 +18,7 @@ public class Dt_Evento {
 			private PreparedStatement ps = null;
 			
 			// Metodo para llenar el RusultSet
-			public void llenaREventos(Connection c){
+			public void llenaRsEventos(Connection c){
 				try{
 					ps = c.prepareStatement("select eventoid, nombre, descripcion, fechainicio, horainicio,fechafin, horafin, tipoevento, multimedia, hipervinculo, ubicacion ,estado, usuarioid from evento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsEvento = ps.executeQuery();
@@ -85,7 +85,7 @@ public class Dt_Evento {
 				
 				try{
 					c = PoolConexion.getConnection();
-					this.llenaREventos(c);
+					this.llenaRsEventos(c);
 					rsEvento.moveToInsertRow();
 					rsEvento.updateString("nombre", ev.getNombre());
 					rsEvento.updateString("descripcion", ev.getDescripcion());
@@ -94,7 +94,7 @@ public class Dt_Evento {
 					rsEvento.updateString("fechafin", ev.getFechafin());
 					rsEvento.updateString("horafin", ev.getHorafin());
 					rsEvento.updateInt("tipoevento", ev.getTipoevento());	
-					rsEvento.updateString("multimedia", ev.getMultimedia());
+					rsEvento.updateString("multimedia", "Defecto.jpeg");
 					rsEvento.updateString("hipervinculo", ev.getHipervinculo());
 					rsEvento.updateString("ubicacion", ev.getUbicacion());										
 					rsEvento.updateInt("estado", 1);
@@ -121,8 +121,156 @@ public class Dt_Evento {
 						e.printStackTrace();
 					}
 				}
-				
 				return guardado;
 			}
 			
+			// Metodo para eliminar Evento
+			public boolean eliminarEvento(int idEvento)
+			{
+				boolean eliminado=false;	
+				try
+				{
+					c = PoolConexion.getConnection();
+					this.llenaRsEventos(c);
+					rsEvento.beforeFirst();
+					while (rsEvento.next())
+					{
+						if(rsEvento.getInt(1)==idEvento)
+						{
+							rsEvento.updateInt("estado", 3);
+							rsEvento.updateRow();
+							eliminado=true;
+							break;
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("ERROR AL ElIMINAR EVENTO "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rsEvento != null){
+							rsEvento.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return eliminado;
+			}
+			
+			// Metodo para modificar Evento
+			public boolean modificarEvento(Evento ev)
+			{
+				boolean modificado=false;	
+				try
+				{
+					c = PoolConexion.getConnection();
+					this.llenaRsEventos(c);
+					rsEvento.beforeFirst();
+					while (rsEvento.next())
+					{
+						if(rsEvento.getInt(1)==ev.getEventoid())
+						{
+							rsEvento.updateString("nombre", ev.getNombre());
+							rsEvento.updateString("descripcion", ev.getDescripcion());
+							rsEvento.updateString("fechainicio", ev.getFechainicio());
+							rsEvento.updateString("horainicio", ev.getHorainicio());
+							rsEvento.updateString("fechafin", ev.getFechafin());
+							rsEvento.updateString("horafin", ev.getHorafin());
+							rsEvento.updateInt("tipoevento", ev.getTipoevento());	
+							rsEvento.updateString("multimedia", "Defecto.jpeg");
+							rsEvento.updateString("hipervinculo", ev.getHipervinculo());
+							rsEvento.updateString("ubicacion", ev.getUbicacion());										
+							rsEvento.updateInt("estado", 1);
+							rsEvento.updateInt("usuarioid", 1);
+							rsEvento.updateRow();
+							modificado=true;
+							break;
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("ERROR AL ACTUALIZAR EVENTO "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rsEvento != null){
+							rsEvento.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return modificado;
+			}	
+			
+			// Metodo para visualizar los datos de un evento especifico
+			public Evento getEvento(int idEvento)
+			{
+				Evento ev = new Evento();
+				try
+				{
+					c = PoolConexion.getConnection();
+					ps = c.prepareStatement("select eventoid, nombre, descripcion, fechainicio, horainicio,fechafin, horafin, tipoevento, multimedia, hipervinculo, ubicacion ,estado, usuarioid from evento where estado <> 3 and eventoid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps.setInt(1, idEvento);
+					rs = ps.executeQuery();
+					if(rs.next())
+					{
+						ev.setEventoid(idEvento);
+						ev.setNombre(rs.getString("nombre"));
+						ev.setDescripcion(rs.getString("descripcion"));
+						ev.setMultimedia(rs.getString("multimedia"));
+						ev.setFechainicio(rs.getString("fechainicio"));
+						ev.setHorainicio(rs.getString("horainicio"));
+						ev.setFechafin(rs.getString("fechafin"));
+						ev.setHorafin(rs.getString("horafin"));
+						ev.setTipoevento(rs.getInt("tipoevento"));					
+						ev.setHipervinculo(rs.getString("hipervinculo"));
+						ev.setUbicacion(rs.getString("ubicacion"));		
+						ev.setEstado(rs.getInt("estado"));
+					}
+				}
+				catch (Exception e)
+				{
+					System.out.println("DATOS ERROR SERVICIO: "+ e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rs != null){
+							rs.close();
+						}
+						if(ps != null){
+							ps.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				return ev;
+			}
 }

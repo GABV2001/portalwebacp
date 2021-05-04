@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+<meta charset="utf-8">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Portal ACP - Gesti髇 Inicio</title>
+ <title>Portal ACP - Gesti贸n Inicio</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,9 +22,24 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+     <title>Portal ACP - Gesti贸n Inicio</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+	
 
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -50,35 +63,29 @@
                                         <h2 class="card-title text-center">Inicio</h2>
                                     </div>
                                     <div class="card-body">
-									<%ArrayList<Home> listHome = new ArrayList<Home>();
+                                    
+									<%
+									ArrayList<Home> listHome = new ArrayList<Home>();
 									Dt_Home dth = new Dt_Home();
-									listHome = dth.ListarHome();
-									
-									int idinicio = 0;
-									int idUsuario = 0;
-									String Historia = null;
-									String Mision = null;
-									String Vision = null;
-									String Img_historia =null;
-									String Img_vision = null;
-									String Img_mision = null;
-									
+									listHome = dth.ListarHome();									
 									Home hm = new Home();
 									hm = listHome.get(0);
-									idinicio = hm.getHomeID();
-									idUsuario = hm.getUsuarioID();
-									Historia = hm.getHistoria();
-									Mision = hm.getMision();
-									Vision = hm.getVision();
-									Img_historia = hm.getImg_historia();
+									
+									
+								    String Img_historia =null;
+								 	String Img_vision = null;
+									String Img_mision = null;
+									
+									
+								    Img_historia = hm.getImg_historia();
 									Img_vision = hm.getImg_vision();
 									Img_mision= hm.getImg_mision();
 									
 									 %>
                                         <form class="Inicio" method="post" action="./Sl_GestionInicio">
                 						<!-- El valor de estos input es para el Servlet opcion editar -->                			
-                                        	<input name="idInicio" type="hidden" value="<%=idinicio%>" />
-                                        	<input name="idUsuario" type="hidden" value="<%=idUsuario%>" />                                        	
+                                        	<input name="idInicio" type="hidden" value="<%=hm.getHomeID()%>" />
+                                        	<input name="idUsuario" type="hidden" value="<%= hm.getUsuarioID()%>" />                                        	
                             				<input name="opcion" type="hidden" value="1" />
                                             <h3>Historia</h3>
                                             <hr class="bg-dark w-auto">
@@ -96,10 +103,10 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
                                                 <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"><%=hm.getHistoria() %></textarea>
                                             </div>
-                                            <h3>Misi髇</h3>
+                                            <h3>Misi贸n</h3>
                                             <hr class="bg-dark w-auto">
                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -115,11 +122,11 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
                                                 <textarea id="descripcionMis" 	name = "descripcionMis" rows="4" class="form-control"><%=hm.getMision() %></textarea>
                                             </div>
 
-                                            <h3>Visi髇</h3>
+                                            <h3>Visi贸n</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -135,7 +142,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
                                                 <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"><%=hm.getVision() %></textarea>
                                             </div>
                                       	 	<div class="text-center">
@@ -225,7 +232,6 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
 
 </body>
 

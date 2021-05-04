@@ -9,7 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Arboreto Carmelo Palma</title>
+    
+     <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
 
+	<!-- Icon -->
+	 <link rel="shortcut icon" href="img/logo_jesuita.png">
+	
     <!-- CSS boostrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entidades.ViewHead;
+import vistas.ViewHead;
 
 public class Dt_ViewHead {
 		

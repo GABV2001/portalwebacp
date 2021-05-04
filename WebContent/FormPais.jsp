@@ -12,6 +12,11 @@
     <meta name="author" content="">
   
     <title>Portal ACP - Formulario País</title>
+    
+     <!-- Icon -->
+	 <jsp:include page="imgShortIcon.jsp" />  
+    
+    <link rel="icon" href="img/logo_jesuita.ico" type="img/ico">
   
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
