@@ -51,21 +51,16 @@
 		    	if(a.getPublicacionid()==MostrarInfo){%>
 		        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
 		            <div class="intro">
-		                <h1 class="text-center"><%=a.getTitulo() %></h1>
-		                <p class="text-center"><span class="date"><%=a.getDescripcion() %> </span></p>
+		                <h3 class="text-center"><%=a.getTitulo() %></h3>
+		                <p class="text-center"><span class="date">Publicado: <%=a.getFecha() %> </span></p>
 		                <br>
-		                <img class="img-fluid mx-auto d-block" src="img/Defecto.jpeg">
+		                <p class="text-center" ><%=a.getDescripcion()%></p>
+		                    <img class="img-fluid mx-auto d-block" src="img/<%=a.getMultimedia()%>">
+		                <br>
+		            
 		            </div>
 		            <br>
-		            <div class="text-center">
-
-			               <p>Fecha:<%=a.getFecha() %></p>
-			           
-			               <p>Multimedia: <%=a.getMultimedia() %></p>
-			                 
-			               <p>Estado Publicacion: <%=a.getEstadopublicacion() %></p>
-			                        
-			               
+		            <div class="text-center">	            			           	               
          	   </div>
        		 </div>
        		 <%

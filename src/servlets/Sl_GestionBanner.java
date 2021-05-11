@@ -1,9 +1,7 @@
 package servlets;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import entidades.Banner;
 import datos.Dt_Banner;
 
 /**
- * Servlet implementation class Sl_GestionBanner
+ * Servlet implementation class Sl_EditarBanner
  */
 @WebServlet("/Sl_GestionBanner")
 public class Sl_GestionBanner extends HttpServlet {
@@ -49,7 +42,6 @@ public class Sl_GestionBanner extends HttpServlet {
         else {
         	response.sendRedirect("GestionBanner.jsp?msj=6");
         }
-	
 	}
 
 	/**
@@ -57,44 +49,41 @@ public class Sl_GestionBanner extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-				//Obtenemos el valor de opcion
-				int opc = 0;
-				opc = Integer.parseInt(request.getParameter("opcion"));
-				
-				//Construir objeto Banner
-				Dt_Banner dtb = new Dt_Banner();
-				Banner bn = new Banner();
-				bn.setTitulobanner(request.getParameter("txtTituloBanner"));
-				bn.setDescripcion(request.getParameter("txtDescripcionBanner"));
-			//	bn.setMultimedia(request.getParameter("multBanner"));
-				bn.setPosicion(Integer.parseInt(request.getParameter("posicion")));
-				
-				switch (opc){
-					case 1:{
-						
-					        try {				        								
- 					        if(dtb.guardarBanner(bn)) {
-						        	response.sendRedirect("GestionBanner.jsp?msj=1");
-						        }
-						        else {
-						        	response.sendRedirect("GestionBanner.jsp?msj=2");
-						        }
-						        	
-					        	
-					        }
-					        catch(Exception e) {
-					        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
-								e.printStackTrace();
-					        }
-					        
-							break;
-					}
-				default:
-					response.sendRedirect("GestionBanner.jsp?msj=7");	
-					break;
-			}		
-				
-	}
+		//doGet(request, response);
 	
+		//Metodos para actualizar
+		int opc =0;
+		opc = Integer.parseInt(request.getParameter("opcion"));
+		
+		Banner bn = new Banner();
+		Dt_Banner dtb = new Dt_Banner();
+		bn.setBannerID(Integer.parseInt(request.getParameter("bannerID")));
+		bn.setTitulobanner(request.getParameter("txtEditTituloBanner"));
+		bn.setDescripcion(request.getParameter("txtEditDescripcionBanner"));
+		
+	    switch(opc){
+		
+	    case 2:{
+			Date fechaSistema = new Date();
+		    bn.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
+		     
+	 		try {
+				   if(dtb.modificarInfoBanner(bn)) {
+		        	response.sendRedirect("GestionBanner.jsp?msj=3");
+		        }
+		        else {
+		        	response.sendRedirect("GestionBanner.jsp?msj=4");
+		        }
+	 		}
+	        catch(Exception e) {
+	        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
+				e.printStackTrace();
+	        }
+				break;
+				
+			}
+	
+		}
+
+}
 }

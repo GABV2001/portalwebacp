@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.Home, datos.Dt_Home, entidades.Banner, datos.Dt_Banner, java.util.*;"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, entidades.Banner, datos.Dt_Banner, java.util.*;"
     %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Arboreto Carmelo Palma</title>
@@ -87,9 +87,10 @@
 			%>
 
             <div class="carousel-item active">
-                <img src="img/<%=bn1.getMultimedia() %>" class="d-block w-100 h-100 " alt="imagen 1">
+                <img src="<%=bn1.getMultimedia() %>" class="d-block w-100 h-50 " alt="imagen 1">
                    <div class="carousel-caption d-none d-md-block">
 			        <h5 class= "fw-light"><%=bn1.getTitulobanner() %></h5>
+			         <p  class= "fw-light"><%=bn1.getDescripcion()%></p>
 				   </div>
             </div>
         
@@ -98,9 +99,11 @@
 			    Banner bn = listBanner.get(counter);		   
             %>
              <div class="carousel-item ">
-                <img src="img/<%=bn.getMultimedia() %>" class="d-block w-100 h-50" alt="imagen <%=counter %>>">
+                <img src="<%=bn.getMultimedia() %>" class="d-block w-100 h-50" alt="imagen <%=counter %>>">
                  <div class="carousel-caption d-none d-md-block">
 			        <h5 class= "fw-light"><%=bn.getTitulobanner() %></h5>
+					<p class= "fw-light"><%=bn.getDescripcion()%></p>
+		
 				  </div>
             </div>
             <% }
@@ -125,7 +128,7 @@
         <div class="row">
 
             <div class="col-md-5">
-                <img class="img-fluid" src="img/<%=Img_historia%>"  alt="imagen Historia">
+                <img class="img-fluid" src="<%=Img_historia%>"  alt="imagen Historia">
             </div>
 
             <div class="col-md-6">
@@ -136,31 +139,31 @@
     </div>
     <br>
  
-    <!-- Section Misi贸n -->
+    <!-- Section Misi髇 -->
     <div class="container mb-5">
         <div class="row">
             <div class="col-md-6">
-                <h3 class="display-4">Misi贸n</h3>
+                <h3 class="display-4">Misi髇</h3>
                 <hr class="bg-dark w-25 ml-0">
                 <p class="lead">
                     <%=Mision%>
                 </p>
             </div>
             <div class="col-md-5 mt-7">
-                <img class="img-fluid" src="img/<%=Img_mision%>" alt="imagen Mision">
+                <img class="img-fluid" src="<%=Img_mision%>" alt="imagen Mision">
             </div>
         </div>
     </div>
  
-    <!-- Section Visi贸n -->
+    <!-- Section Visi髇 -->
     <div class="container mb-5">
         <div class="row ">
 
 			  <div class="col-md-5 mt-7 ">
-                <img class="img-fluid" src="img/<%=Img_vision%>" alt=" imagen Vision">
+                <img class="img-fluid" src="<%=Img_vision%>" alt=" imagen Vision">
             </div>
             <div class="col-md-7">
-                <h3 class="display-4">Visi贸n</h3>
+                <h3 class="display-4">Visi髇</h3>
                 <hr class="bg-dark w-25 ml-0">
                 <p class="lead">
                  <%=Vision%>

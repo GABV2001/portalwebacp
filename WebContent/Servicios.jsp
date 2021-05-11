@@ -28,6 +28,13 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
 
+  <style type="text/css">
+    	.img-guide{
+			  position: relative;
+			  height: 300px;
+			  width: 100%;			  	
+    	}
+    </style>
 </head>
 
 <body>
@@ -53,7 +60,7 @@
 			          
 			            <div class="col-md-4">
 			                <figure class="card card-product">
-			                    <div class="img-wrap"><img src="img/<%=sr.getMultimedia()%>"></div>
+			                    <div class=""><img class="img-guide" src="<%=sr.getMultimedia()%>"></div>
 			                    <figcaption class="info-wrap">
 			                        <h4 class="title"><%=sr.getNombre()%></h4>
 			                        <p class="desc"><%=sr.getDescripcion()%></p>

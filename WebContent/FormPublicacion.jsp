@@ -94,7 +94,7 @@
 				                            </div>
 				                            <br>
                                         <div style="text-align:center;"><a href="GestionPublicacion.jsp"><i
-                                                    class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                    class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
 
                                     </form>
                                 </div>

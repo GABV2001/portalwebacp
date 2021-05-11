@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Producto {
 	//Atributos
 	private int productoid;
@@ -8,6 +10,9 @@ public class Producto {
 	private String multimedia;
 	private int estado;
 	private int estadoproductoid;
+	private Timestamp fcreacion;
+	private Timestamp fmodificacion;
+	private Timestamp feliminacion;
 	private int usuarioid;
 	private int tipoproductoid;
 	
@@ -60,5 +65,22 @@ public class Producto {
 	public void setTipoproductoid(int tipoproductoid) {
 		this.tipoproductoid = tipoproductoid;
 	}
-
+	public Timestamp getFcreacion() {
+		return fcreacion;
+	}
+	public void setFcreacion(Timestamp fcreacion) {
+		this.fcreacion = fcreacion;
+	}
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}
+	public Timestamp getFeliminacion() {
+		return feliminacion;
+	}
+	public void setFeliminacion(Timestamp feliminacion) {
+		this.feliminacion = feliminacion;
+	}
 }

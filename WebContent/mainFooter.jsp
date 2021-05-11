@@ -47,7 +47,7 @@
                         </ul>
                     </div>
                     <div class="col-sm-4 col-md-3 mt-auto item">
-                        <img src="img/<%=Logo%>" alt="" class="img-fluid rounded mx-auto d-block" id="imgLogo">
+                        <img src="<%=Logo%>" alt="" class="img-fluid rounded mx-auto d-block" id="imgLogo">
                     </div>
                 </div>
                 

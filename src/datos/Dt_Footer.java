@@ -21,7 +21,7 @@ public class Dt_Footer {
 		// Metodo para llenar el ResultSet
 			public void llenaRFooter(Connection c){
 				try{
-					ps = c.prepareStatement("SELECT footerid, descripcion, correo, telefono, extencion, logo, estado, usuarioid FROM footer", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("SELECT footerid, descripcion, correo, telefono, extencion, logo, fmodificacion, estado, usuarioid FROM footer", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsFooter = ps.executeQuery();
 				}
 				catch (Exception e){
@@ -95,7 +95,8 @@ public class Dt_Footer {
 							rsFooter.updateString("correo", ft.getCorreo());
 							rsFooter.updateString("telefono", ft.getTelefono());
 							rsFooter.updateString("extencion", ft.getExtencion());
-							rsFooter.updateString("logo", "Defecto.jpeg");
+							rsFooter.updateString("logo", ft.getLogo());
+							rsFooter.updateTimestamp("fmodificacion", ft.getFmodificacion());
 							rsFooter.updateInt("usuarioid", ft.getUsuarioID());							
 							rsFooter.updateInt("estado", 2);
 							rsFooter.updateRow();
@@ -126,7 +127,4 @@ public class Dt_Footer {
 				}
 				return modificado;
 			}		
-		
-		
-
 }

@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Footer {
 	
 	//Atributos
@@ -11,6 +13,7 @@ public class Footer {
 	private String logo;
 	private int estado;
 	private int usuarioID;
+	private Timestamp fmodificacion;
 	
 	//Metodos
 	public int getFooterID() {
@@ -61,5 +64,10 @@ public class Footer {
 	public void setUsuarioID(int usuarioID) {
 		this.usuarioID = usuarioID;
 	}
-		
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}		
 }

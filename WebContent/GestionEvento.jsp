@@ -95,7 +95,7 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                   	 <%
+                                   	    <%
                                        		for(Evento ev: listEventos){
                                        	%>
                                         <tr>

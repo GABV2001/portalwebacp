@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-
- <title>Portal ACP - Gesti贸n Inicio</title>
+<meta charset="ISO-8859-1">
+ <title>Portal ACP - Gesti髇 Inicio</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -22,7 +21,7 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-     <title>Portal ACP - Gesti贸n Inicio</title>
+     <title>Portal ACP - Gesti髇 Inicio</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -70,19 +69,17 @@
 									listHome = dth.ListarHome();									
 									Home hm = new Home();
 									hm = listHome.get(0);
-									
-									
+																		
 								    String Img_historia =null;
 								 	String Img_vision = null;
 									String Img_mision = null;
-									
-									
+								
 								    Img_historia = hm.getImg_historia();
 									Img_vision = hm.getImg_vision();
 									Img_mision= hm.getImg_mision();
 									
 									 %>
-                                        <form class="Inicio" method="post" action="./Sl_GestionInicio">
+                                        <form class="Inicio" method="post" action="./Sl_GestionInicio" enctype="multipart/form-data">
                 						<!-- El valor de estos input es para el Servlet opcion editar -->                			
                                         	<input name="idInicio" type="hidden" value="<%=hm.getHomeID()%>" />
                                         	<input name="idUsuario" type="hidden" value="<%= hm.getUsuarioID()%>" />                                        	
@@ -90,23 +87,24 @@
                                             <h3>Historia</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multHistoria" name= "multHistoria"accept="image/*">
-                                                        <label class="custom-file-label text-truncate" for="multHistoria"
-                                                            id="labelmulHistoria"><%=Img_historia%></label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultHistoria">Historia.jpg</label>
+													    <input type="file" class="custom-file-input" id="multHistoria" name="multHistoria"  accept="image/jpeg" title="Historia.jpg">
+													   <input type="hidden" name="urlfotoHistoria" value="<%=Img_historia%>">									
+													</div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
                                                 <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"><%=hm.getHistoria() %></textarea>
                                             </div>
-                                            <h3>Misi贸n</h3>
+                                            <h3>Misi髇</h3>
                                             <hr class="bg-dark w-auto">
                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -114,19 +112,19 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multMision" name= "multMision" accept="image/*">
-                                                        <label class="custom-file-label text-truncate" for="multMision"
-                                                            id="labelmulMision"><%=Img_mision%></label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultMision">Mision.jpg</label>
+													    <input type="file" class="custom-file-input" id="multMision" name="multMision"  accept="image/jpeg" title="Mision.jpg">
+													    <input type="hidden" name="urlfotoMision" value="<%=Img_mision%>">																		
+													</div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
                                                 <textarea id="descripcionMis" 	name = "descripcionMis" rows="4" class="form-control"><%=hm.getMision() %></textarea>
                                             </div>
 
-                                            <h3>Visi贸n</h3>
+                                            <h3>Visi髇</h3>
                                             <hr class="bg-dark w-auto">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -134,15 +132,15 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multVision" name="multVision" accept="image/*">
-                                                        <label class="custom-file-label text-truncate" for="multVision"
-                                                            id="labelmulVision"><%=Img_vision%></label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultVision">Vision.jpg</label>
+													    <input type="file" class="custom-file-input" id="multVision" name="multVision"  accept="image/jpeg" title="Vision.jpg">
+													    <input type="hidden" name="urlfotoVision" value="<%=Img_vision%>">																												
+													</div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripci贸n:</label>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripci髇:</label>
                                                 <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"><%=hm.getVision() %></textarea>
                                             </div>
                                       	 	<div class="text-center">
@@ -182,36 +180,7 @@
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
 
-	<script>
-
-	var inputbtn = document.getElementById("multHistoria");
-    var customTxt = document.getElementById("labelmulHistoria");
-    
-	fileChange(inputbtn, customTxt);
-    
-	var inputbtn = document.getElementById("multMision");
-    var customTxt = document.getElementById("labelmulMision");
-    
-	fileChange(inputbtn, customTxt);
-    
-    var inputbtn = document.getElementById("multVision");
-    var customTxt = document.getElementById("labelmulVision");
-            
-	fileChange(inputbtn, customTxt);
-    
-	function fileChange(p1, p2){
-		var inputbtn = p1 
-	      var customTxt = p2
-	            
-	      inputbtn.addEventListener("change", function () {
-	          if (inputbtn.value) {
-	              customTxt.innerHTML = inputbtn.value.match(
-	                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
-	              )[1];
-	          } 
-	      });
-	}
- </script>
+	
 	
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
@@ -232,7 +201,30 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+	
+    <script>
+   
+    $('#multHistoria').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multHistoria')[0].files[0].name;
+	      $(this).prev('label').text(file);
 
+	    });
+    $('#multMision').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multMision')[0].files[0].name;
+	      $(this).prev('label').text(file);
+
+	    });
+    $('#multVision').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multVision')[0].files[0].name;
+	      $(this).prev('label').text(file);
+
+	    });
+   
+</script>
+</script>
 </body>
 
 </html>

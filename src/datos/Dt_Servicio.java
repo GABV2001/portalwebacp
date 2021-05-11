@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entidades.Servicio;
 
@@ -19,7 +20,7 @@ public class Dt_Servicio {
 		// Metodo para llenar el ResultSet
 		public void llenarRsServicio(Connection c){
 			try{
-				ps = c.prepareStatement("select servicioid,nombre, descripcion,multimedia,estadoservicio, estado, usuarioid from servicio;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select servicioid,nombre, descripcion,multimedia,estadoservicio, fcreacion, fmodificacion, feliminacion,estado, usuarioid from servicio;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rsServicio = ps.executeQuery();
 			}
 			catch (Exception e){
@@ -82,8 +83,9 @@ public class Dt_Servicio {
 						rsServicio.moveToInsertRow();
 						rsServicio.updateString("nombre", sr.getNombre());
 						rsServicio.updateString("descripcion", sr.getDescripcion());
-						rsServicio.updateString("multimedia", "Defecto.jpeg");
+						rsServicio.updateString("multimedia", sr.getMultimedia());
 						rsServicio.updateInt("estadoservicio", sr.getEstadoservicio());		
+						rsServicio.updateTimestamp("fcreacion", sr.getFcreacion());
 						rsServicio.updateInt("estado", 1);
 						rsServicio.updateInt("usuarioid", 1);
 						rsServicio.insertRow();
@@ -127,8 +129,9 @@ public class Dt_Servicio {
 							{
 								rsServicio.updateString("nombre", sr.getNombre());
 								rsServicio.updateString("descripcion", sr.getDescripcion());
-								rsServicio.updateString("multimedia", "Defecto.jpeg");
+								rsServicio.updateString("multimedia", sr.getMultimedia());
 								rsServicio.updateInt("estadoservicio", sr.getEstadoservicio());
+								rsServicio.updateTimestamp("fmodificacion", sr.getFmodificacion());
 								rsServicio.updateInt("estado", 2);
 								rsServicio.updateRow();
 								modificado=true;
@@ -214,12 +217,15 @@ public class Dt_Servicio {
 					try
 					{
 						c = PoolConexion.getConnection();
-						this.llenarRsServicio(c);;
+						this.llenarRsServicio(c);
 						rsServicio.beforeFirst();
+						Date fechaSistema = new Date();
+						
 						while (rsServicio.next())
 						{
 							if(rsServicio.getInt(1)==idServicio)
 							{
+								rsServicio.updateTimestamp("feliminacion", new java.sql.Timestamp(fechaSistema.getTime()));
 								rsServicio.updateInt("estado", 3);
 								rsServicio.updateRow();
 								eliminado=true;

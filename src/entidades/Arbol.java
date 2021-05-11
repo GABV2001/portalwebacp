@@ -15,7 +15,7 @@ public class Arbol {
 			private int DistribucionID;			
 			private int Estado;
 			
-			
+			//Metodos
 			public String getNombreComun() {
 				return NombreComun;
 			}

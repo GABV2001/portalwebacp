@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,9 +39,14 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
  						<%
-                            	String pos = "";
-								pos = request.getParameter("posicion")==null?"0":request.getParameter("posicion");                           															
-                         %>
+		 						String idBanner = "";
+ 								idBanner = request.getParameter("idB")==null?"0":request.getParameter("idB");
+							
+								ArrayList<Banner> listBanner = new ArrayList<Banner>();
+                            	Dt_Banner dtb = new Dt_Banner();
+                            	listBanner = dtb.ListarBanner();  
+                            	Banner bn = dtb.getBanner(Integer.parseInt(idBanner));	
+                            %>
                     <!--Formulario-->
                     <div class="container">
                         <header class="text-center text-white">
@@ -55,41 +60,21 @@
                                         <h3 class="card-title text-left">Banner</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class = "Banner"  method="post" action="./Sl_GuardarBanner" enctype="multipart/form-data" > 
-                                         <input name="opcion" type="hidden" value="1" />
-                                    	<input name="posicion"  type = "hidden" value="<%=pos%>" />
+                                        <form class = "Banner"  method="post" action="./Sl_GestionBanner" > 
+                                         <input name="opcion" type="hidden" value="2"/>
+                                    	<input name="bannerID"  type = "hidden" value="<%=bn.getBannerID()%>" />
                                          <div class="form-group">
                                                 <label for="formGroupExampleInput">Titulo:</label>
-                                                <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" required>
+                                                <input type="text" class="form-control" name= "txtEditTituloBanner" id="txtEditTituloBanner" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripcionBanner" required></textarea>
-                                            </div>
-                                             <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Archivo</span>
-                                                    </div>
-                                                   <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultBanner">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multBanner" name="multBanner" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
-													</div>
-                                                </div>
-                                            </div>                                           
-		                                  <div class="m-3" align="center">
-												<img id="preview" src="img/Defecto.jpeg" name="preview"  alt="Imagen Banner"
-													class="img-fluid" alt="Responsive image" style="width: 400px; height: 324px; border-bottom-color: white; margin: 2px;" />
-											</div>
+                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
+                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" required></textarea>
+                                            </div>                                                                                    		                                
                                          	  	<div class="mb-2 text-center">
 					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 					                            </div>
-					                            <div class="mb-2 text-center">
-					                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-					                            </div>
-				                            <br>
-				                         
+					                           <br>				                         
                                             <div style="text-align:center;"><a href="GestionBanner.jsp"><i
                                                         class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
@@ -145,42 +130,12 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
-		<script>		
-	    $(document).ready(function() 
+    
+	 <script>  
+	  $(document).ready(function()
 		{
-		//Función para previsualizar la imagen del banner
-	    	Test = {
-	    	        UpdatePreview: function(obj)
-	    	        {
-	    	          // if IE < 10 doesn't support FileReader
-	    	          if(!window.FileReader)
-	    	          {
-	    	             
-	    	          } 
-	    	          else 
-	    	          {
-	    	             var reader = new FileReader();
-	    	             var target = null;
-	    	             
-	    	             reader.onload = function(e) 
-	    	             {
-	    	              target =  e.target || e.srcElement;
-	    	               $("#preview").prop("src", target.result);
-	    	             };
-	    	              reader.readAsDataURL(obj.files[0]);
-	    	          }
-	    	        }
-	    	    };
+			$("#txtEditTituloBanner").val("<%=bn.getTitulobanner()%>");
+			$("#txtEditDescripcionBanner").val("<%=bn.getDescripcion()%>");	
 		});
-	    
-	    $('#multBanner').on("change",function() {
-		     var i = $(this).prev('label').clone();
-		      var file = $('#multBanner')[0].files[0].name;
-		      $(this).prev('label').text(file);
-
-		    });
-	</script>
-</body>
-
+	 </script> </body>
 </html>

@@ -17,7 +17,7 @@ public class Dt_Evento {
 			private ResultSet rs = null;
 			private PreparedStatement ps = null;
 			
-			// Metodo para llenar el RusultSet
+			// Metodo para llenar el ResultSet
 			public void llenaRsEventos(Connection c){
 				try{
 					ps = c.prepareStatement("select eventoid, nombre, descripcion, fechainicio, horainicio,fechafin, horafin, tipoevento, multimedia, hipervinculo, ubicacion ,estado, usuarioid from evento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);

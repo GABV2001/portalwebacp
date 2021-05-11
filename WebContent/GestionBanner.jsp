@@ -56,9 +56,16 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                 	listBanner = dtb.ListarBanner();
                                 	
                                 	Banner ban = new Banner();
-                                	ban = listBanner.get(listBanner.size() - 1);
                                	
-                                %>
+                                	int posicion = 0;
+                                	if(listBanner.size() == 0){
+                                		posicion= 1;	
+                                	}	
+                                	else{			
+                                		ban = listBanner.get(listBanner.size() - 1);
+                                		posicion = ban.getPosicion();		
+                                	}    
+                                    %>
                     <!-- DataTales Banner -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -71,8 +78,7 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo Elemento</div></a>
                                     <thead>
                                         <tr>
-                                           <th>Posición</th>
-                                            <th>Titulo</th>
+                                             <th>Titulo</th>
                                             <th>Descripción</th>
                                             <th>Multimedia</th>
                                             <th>Opciones</th>
@@ -80,8 +86,7 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Posición</th>
-                                            <th>Titulo</th>
+                                              <th>Titulo</th>
                                             <th>Descripción</th>
                                             <th>Multimedia</th>
                                             <th>Opciones</th>
@@ -89,14 +94,19 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                     </tfoot>
                                     <tbody>
                                     	<%
-                                       		for(Banner bn: listBanner){
+                                       		for(Banner bn: listBanner){                                       		
                                        	%>
                                        <tr>
-   	                                       <td><%=bn.getPosicion() %></td>
-                                           <td><%=bn.getTitulobanner() %></td>
+   	                                        <td><%=bn.getTitulobanner() %></td>
                                            <td><%=bn.getDescripcion() %></td>
-                                           <td><%=bn.getMultimedia() %></td>
-                                                 <td>&nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
+                        							<i class="fas fa-camera mostrarImagen" title="<%=bn.getMultimedia()%>" onClick="getValue()"></i>
+                        							</a></td>
+                                             
+                                                 <td>
+                                                 &nbsp;&nbsp;<a href="FormEditarBanner.jsp?idB=<%=bn.getBannerID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;                                       
+                                                 
+                                                 <a class="ajax-link" href="javascript:void(0);" 
                                            		onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar este elemento?',
@@ -116,8 +126,11 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td>                           
-                                       </tr>
+                        						</a></i>
+                        						
+                        						
+                        						</td>      
+                        			          </tr>
                                        		<%
                                        		}
                                            %>   
@@ -128,7 +141,30 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-
+			
+			
+                     <!-- MODAL VISUALIZAR IMAGEN -->					
+					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					       <h5 class="modal-title">Visualizar Imagen</h5>				
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					    	<div align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Banner"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+								</div>								
+					      </div>					 
+					    </div>
+					  </div>
+					</div>					
+					<!-- FIN Modal -->
+					
+				
             </div>
             <!-- End of Main Content -->
 
@@ -193,9 +229,15 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
         if(mensaje == "5")
         {
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
-        }
-
+        }       
+    
+       
     });
+    function getValue()
+    {   	
+        var a= event.srcElement.title;
+        document.getElementById("preview").src = a;
+    }  
 	</script>
 
 </body>

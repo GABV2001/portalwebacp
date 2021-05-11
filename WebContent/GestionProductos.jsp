@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
  import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
 <!DOCTYPE html>
+ <% response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 
+ response.setHeader("Pragma","no-cache"); //HTTP 1.0 
+ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  
+%>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <html lang="en">
 
 <head>
@@ -83,17 +91,17 @@
                                     </tfoot>
                                     <tbody>
                                     	<%
-                                       		for(ViewProducto tp: listProducto){
+                                       		for(ViewProducto pr: listProducto){
                                        	    %> 
                                         <tr>
-                                     	   <td><%=tp.getProducto()%></td>          
-                                     	   <td><%=tp.getDescripcion()%></td>   
-                                     	   <td><%=tp.getMultimedia()%></td>     
-                                           <td><%=tp.getEstadoproductoid()==1?"Disponible":"No disponible" %></td>
-                                           <td><%=tp.getTipoproducto()%></td>     
-                                        
-                                                                                                                     
-                                           <td>&nbsp;&nbsp;<a href="FormEditarProducto.jsp?idP=<%=tp.getProductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
+                                     	   <td><%=pr.getProducto()%></td>          
+                                     	   <td><%=pr.getDescripcion()%></td>   
+                                     	     <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
+                        							<i class="fas fa-camera mostrarImagen" title="<%=pr.getMultimedia()%>" onClick="getValue()"></i>
+                        							</a></td>
+                                  		   <td><%=pr.getEstadoproductoid()==1?"Disponible":"No disponible" %></td>
+                                           <td><%=pr.getTipoproducto()%></td>     
+				                           <td>&nbsp;&nbsp;<a href="FormEditarProducto.jsp?idP=<%=pr.getProductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -102,7 +110,7 @@
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
-                                           		      window.location.href = 'Sl_GestionProducto?idP=<%=tp.getProductoid()%>';
+                                           		      window.location.href = 'Sl_GestionProducto?idP=<%=pr.getProductoid()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -127,6 +135,26 @@
                 </div>
                 <!-- /.container-fluid -->
 
+         	   <!-- MODAL VISUALIZAR IMAGEN -->					
+					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					       <h5 class="modal-title">Visualizar Imagen</h5>				
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					    	<div align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Banner"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+								</div>								
+					      </div>					 
+					    </div>
+					  </div>
+					</div>					
+					<!-- FIN Modal -->
             </div>
             <!-- End of Main Content -->
 
@@ -174,7 +202,36 @@
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
+		<script>
+    $(document).ready(function ()
+    {
+		/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'Los datos han sido registrados exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "3")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+    function getValue()
+    {   	
+        var a= event.srcElement.title;
+        document.getElementById("preview").src = a;
+    }  
+</script> 
 </body>
 
 </html>

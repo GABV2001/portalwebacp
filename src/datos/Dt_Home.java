@@ -20,7 +20,7 @@ public class Dt_Home {
 	// Metodo para llenar el ResultSet
 			public void llenaRHome(Connection c){
 				try{
-					ps = c.prepareStatement("select homeid, historia, mision, vision, img_historia, img_mision, img_vision, estado, usuarioid from home", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("select homeid, historia, mision, vision, img_historia, img_mision, img_vision, fmodificacion, estado, usuarioid from home", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsHome = ps.executeQuery();
 				}
 				catch (Exception e){
@@ -94,9 +94,10 @@ public class Dt_Home {
 							rsHome.updateString("historia", hm.getHistoria());
 							rsHome.updateString("mision", hm.getMision());
 							rsHome.updateString("vision", hm.getVision());
-							rsHome.updateString("img_historia", "Defecto.jpeg");
-							rsHome.updateString("img_mision", "Defecto.jpeg");
-							rsHome.updateString("img_vision","Defecto.jpeg");
+							rsHome.updateString("img_historia", hm.getImg_historia());
+							rsHome.updateString("img_mision", hm.getImg_mision());
+							rsHome.updateString("img_vision", hm.getImg_vision());
+							rsHome.updateTimestamp("fmodificacion", hm.getFmodificacion());
 							rsHome.updateInt("usuarioid", hm.getUsuarioID());							
 							rsHome.updateInt("estado", 2);
 							rsHome.updateRow();

@@ -26,6 +26,14 @@
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
+    
+    <style type="text/css">
+    	.img-guide{
+			  position: relative;
+			  height: 300px;
+			  width: 100%;			  	
+    	}
+    </style>
 
 </head>
 
@@ -54,11 +62,11 @@
 			          
 			            <div class="col-md-4">
 			                <figure class="card card-product">
-			                    <div class="img-wrap"><img src="img/<%=pr.getMultimedia()%>"></div>
+			                    <div class=""><img class= "img-guide" src="<%=pr.getMultimedia()%>"></div>
 			                    <figcaption class="info-wrap">
 			                        <h4 class="title"><%=pr.getProducto()%></h4>
 			                        <p class="desc"><%=pr.getDescripcion()%></p>
-			                       <h6><%=pr.getTipoproducto()%></h6>
+			                       <h6>Tipo de producto: <%=pr.getTipoproducto()%></h6>
 			                 
 			                    </figcaption>
 			                    <div class="bottom-wrap">

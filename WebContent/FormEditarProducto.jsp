@@ -60,8 +60,8 @@
                                         <h3 class="card-title text-left">Formulario Productos</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class="Producto" method="post" action="./Sl_GestionProducto">
-                      					<input name="idProducto" type="hidden" value="<%=pr.getProductoid()%>" />                            
+                                        <form class="Producto" method="post" action="./Sl_GestionProducto" enctype="multipart/form-data">
+                      					<input name="productoid" type="hidden" value="<%=pr.getProductoid()%>" />                            
                       					<input name="opcion" type="hidden" value="2" />
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>
@@ -78,15 +78,16 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                    <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultPro"><%=pr.getMultimedia()%></label>
-													    <input type="file" class="custom-file-input" id="multPro" name="multPro" onchange="Test.UpdatePreview(this)" accept="image/*" title="<%=pr.getMultimedia()%>" >
+													    <label class="custom-file-label text-left" for="customFile" id="filmultPro">Producto.jpg</label>
+													    <input type="file" class="custom-file-input" id="multPro" name="multPro" onchange="Test.UpdatePreview(this)" accept="image/jpeg" title="Producto.jpg" >
+														<input type="hidden" name="url_foto" value="<%=pr.getMultimedia()%>">																
 													</div>
                                                 </div>
                                             </div>
                                              <div class="form-group">
                                              <label>Estado:</label>  
                                                 <select class="form-control" name="cbxEstadoProducto" id="cbxEstadoProducto">                                            	
-                                    			<option value="">Seleccionar</option>                                    			                                            	
+                                    			<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                     			<option value="1">Disponible</option>
                                     			<option value="2">No disponible</option>
                                     	        </select>
@@ -99,7 +100,7 @@
                                             %>
                                              <label>Tipo Producto:</label>  
                                                 <select class="form-control" name="cbxTipoProducto" id="cbxTipoProducto"> 
-                                                	<option value="">Seleccionar...</option>                                                                              	
+                                                	<option value="" selected disabled>Seleccionar...</option>                                                                              	
                                     	    <%
                                     		for(TipoProducto tp: listTipoProducto){
                                     	    %>	

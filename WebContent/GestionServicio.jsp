@@ -33,9 +33,8 @@
             
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
-    
-
 </head>
+    
 
 <body id="page-top">
 
@@ -44,11 +43,11 @@
 
          <!-- Menus -->
      	<jsp:include page="adminMenus.jsp" />  
-
+     	
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
+             
+                 <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Servicios</h1>
 
                     <!-- DataTales Example -->
@@ -91,9 +90,11 @@
                                         <tr>
                                            <td><%=sr.getNombre()%></td>                                           
                                             <td><%=sr.getDescripcion() %></td>                                                                                   
-                                            <td><%=sr.getMultimedia()%></td>                                                                                
+                                            <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
+                        							<i class="fas fa-camera mostrarImagen" title="<%=sr.getMultimedia()%>" onClick="getValue()"></i>
+                        							</a></td>
                                            <td><%=sr.getEstadoservicio()==1?"Disponible":"No disponible" %></td>
-                                           <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                           <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit"></i></a>
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -116,7 +117,7 @@
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
                         						</a></i></td>            
-                                   	     </tr>   
+                                   	       </tr>   
                                          <%
                                        		}
                                            %>                                                           
@@ -128,6 +129,28 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
+               
+                <!-- MODAL VISUALIZAR IMAGEN -->					
+					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					       <h5 class="modal-title">Visualizar Imagen</h5>				
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					    	<div align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Banner"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+								</div>								
+					      </div>					 
+					    </div>
+					  </div>
+					</div>					
+					<!-- FIN Modal -->
+               
 
             </div>
             <!-- End of Main Content -->
@@ -192,11 +215,20 @@
         {
             errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
+        if(mensaje == "3")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
         if(mensaje == "5")
         {
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
         }
     });
+    function getValue()
+    {   	
+        var a= event.srcElement.title;
+        document.getElementById("preview").src = a;
+    }  
 	</script>
 	
 </body>

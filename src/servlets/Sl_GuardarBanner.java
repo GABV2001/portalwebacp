@@ -3,7 +3,6 @@ package servlets;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,21 +15,22 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import java.util.Date;
 
-import datos.Dt_Footer;
-import entidades.Footer;
+import entidades.Banner;
+import datos.Dt_Banner;
 
 /**
- * Servlet implementation class Sl_GestionPiePagina
+ * Servlet implementation class Sl_GestionBanner
  */
-@WebServlet("/Sl_GestionPiePagina")
-public class Sl_GestionPiePagina extends HttpServlet {
+@WebServlet("/Sl_GuardarBanner")
+public class Sl_GuardarBanner extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Sl_GestionPiePagina() {
+    public Sl_GuardarBanner() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,7 +40,7 @@ public class Sl_GestionPiePagina extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());		
 	}
 
 	/**
@@ -49,19 +49,15 @@ public class Sl_GestionPiePagina extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		Dt_Footer dtf = new Dt_Footer();
-		Footer ft = new Footer();
+		Dt_Banner dtb = new Dt_Banner();
+		Banner bn = new Banner();
 		
 		int opc = 0;
-		String FooterID = null;
-		String UsuarioID = null;
-		String direccionFooter = null;
-		String correoFooter = null;
-		String telefonoFooter = null;
-		String extensionFooter = null;
+		String posicion = null;
+		String txtTituloBanner = null;
+		String txtDescripcionBanner = null;
 		String rutaFichero = null;
-		String logoMultimedia = null;
-			
+		
 		try
 		{
 			FileItemFactory factory = new DiskFileItemFactory();
@@ -80,30 +76,18 @@ public class Sl_GestionPiePagina extends HttpServlet {
 					if(key.equals("opcion")){
 						opc = Integer.parseInt(valor);
 					}
-					else if(key.equals("idFooter")){
-						FooterID = valor;
-					}else if(key.equals("idUsuario")){
-						UsuarioID = valor;
-					}else if(key.equals("direccionFooter")){
-						direccionFooter = valor;
-					}else if(key.equals("correoFooter")){
-						correoFooter = valor;
-					}
-					else if(key.equals("telefonoFooter")){
-						telefonoFooter = valor;
-					}
-					else if(key.equals("extensionFooter")){
-						extensionFooter = valor;
-					}
-					else if(key.equals("url_foto")){
-						logoMultimedia = valor;
-					}
+					else if(key.equals("posicion")){
+						posicion = valor;
+					}else if(key.equals("txtTituloBanner")){
+						txtTituloBanner = valor;
+					}else if(key.equals("txtDescripcionBanner")){
+						txtDescripcionBanner = valor;
+					}					
 				}
 			}
 			for(FileItem item : items)
 			{
 				FileItem uploaded = item;
-				if(uploaded.getName()!=""){
 				if(!uploaded.isFormField())
 				{
 					/////////TAMAÑO DEL ARCHIVO ////////
@@ -111,19 +95,17 @@ public class Sl_GestionPiePagina extends HttpServlet {
 					System.out.println("size: "+size);
 					
 					/////// GUARDAMOS EN UN ARREGLO LOS FORMATOS QUE SE DESEAN PERMITIR
-					List<String> formatos = Arrays.asList("image/png");
+					List<String> formatos = Arrays.asList("image/jpeg");
 					
 					////// COMPROBAR SI EL TAMAÑO Y FORMATO SON PERMITIDOS //////////
-					int valorImagen = Integer.parseInt(FooterID); 
+					int valorPosicion = Integer.parseInt(posicion) + 1; 
 					
 					if(formatos.contains(uploaded.getContentType()))
 					{
-						String urlFotos = uploaded.getFieldName();
-						
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
-						rutaFichero = "fotosServicio"+valorImagen+".png";
-						path = "C:\\payara5\\glassfish\\fotosServicio\\";
+						rutaFichero = "fotosBanner"+valorPosicion+".jpg";
+						path = "C:\\payara5\\glassfish\\fotosBanner\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -134,64 +116,49 @@ public class Sl_GestionPiePagina extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosServicio/"+rutaFichero;
+						String url = "fotosBanner/"+rutaFichero;
 						
-						ft.setLogo(url);										
+						//Setear valores al objeto para guardar en la bd
+						bn.setPosicion(Integer.parseInt(posicion));
+						bn.setTitulobanner(txtTituloBanner);
+						bn.setDescripcion(txtDescripcionBanner);
+						bn.setMultimedia(url);									
 					}
 					else
-					{						
+					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionPiePagina.jsp?msj="+valorImagen+"&guardado=3");						
-					}							
+						response.sendRedirect("GestionBanner.jsp?msj="+valorPosicion+"&guardado=3");						
+					}
 				}	
-			  }
-			}
-						
-			//Setear valores al objeto para guardar en la bd
-			ft.setFooterID(Integer.parseInt(FooterID));
-			ft.setDescripcion(direccionFooter);
-			ft.setCorreo(correoFooter);
-			ft.setTelefono(telefonoFooter);	
-			ft.setExtencion(extensionFooter);	
-			ft.setUsuarioID(Integer.parseInt(UsuarioID));
-			if(ft.getLogo()==null){
-				ft.setLogo(logoMultimedia);
 			}
 		}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
-		
-    	switch(opc) {
-		case 1:{
-			
-			try {
-				Date fechaSistema = new Date();
-			    ft.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));						     
-		        if(dtf.modificarFooter(ft)) {
-		        	response.sendRedirect("GestionPiePagina.jsp?msj=1");
-		        }
-		        else {
-		        	response.sendRedirect("GestionPiePagina.jsp?msj=2");
-		        }
-		        	
-	        	
-	        }
-	        catch(Exception e) {
-	        	System.out.println("Sl_GestionPiePagina, el error es: " + e.getMessage());
-				e.printStackTrace();
-	        }
-				break;
-				
-			}
-		
-		default:
-			response.sendRedirect("GestionPiePagina.jsp?msj=3");	
-			break;
-	}
-		
-		
-	}
-
+						
+				switch (opc){
+					case 1:{						
+							Date fechaSistema = new Date();
+						    bn.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));						 
+					        try {				        								
+ 					        if(dtb.guardarBanner(bn)) {
+						        	response.sendRedirect("GestionBanner.jsp?msj=1");
+						        }
+						        else {
+						        	response.sendRedirect("GestionBanner.jsp?msj=2");
+						        }      	
+					        }
+					        catch(Exception e) {
+					        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
+								e.printStackTrace();
+					        }
+					        
+							break;
+			    		}					
+				default:
+					response.sendRedirect("GestionBanner.jsp?msj=7");	
+					break;
+			}										
+	}	
 }

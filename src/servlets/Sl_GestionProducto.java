@@ -1,11 +1,21 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import datos.Dt_Producto;
 import entidades.Producto;
@@ -51,21 +61,116 @@ public class Sl_GestionProducto extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//Obtenemos el valor de opcion
-		int opc = 0;
-		opc = Integer.parseInt(request.getParameter("opcion"));
-		
-		//Construir objeto estudiante
 		Dt_Producto dts = new Dt_Producto();
 		Producto pr = new Producto();
-		pr.setProducto(request.getParameter("nombreProducto"));
-		pr.setDescripcion(request.getParameter("descripcionProducto"));
-		pr.setEstadoproductoid(Integer.parseInt(request.getParameter("cbxEstadoProducto")));		
-		pr.setTipoproductoid(Integer.parseInt(request.getParameter("cbxTipoProducto")));
 		
+		
+		int opc = 0;
+		int productoid =0;
+		String nombreProducto = null;
+		String descripcionProducto = null;
+		String cbxEstadoProducto = null;
+		String cbxTipoProducto = null;
+		String rutaFichero = null;
+		String url_foto = null;
+		
+		try
+		{
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			String path = getServletContext().getRealPath("/");
+			List<FileItem> items = upload.parseRequest(request);
+			File fichero = null;
+					
+			for(FileItem item: items)
+			{
+				FileItem uploaded = item;
+				if(uploaded.isFormField())
+				{	
+					String key = uploaded.getFieldName();
+					String valor = uploaded.getString();
+					if(key.equals("opcion")){
+						opc = Integer.parseInt(valor);
+					}else if(key.equals("productoid")){
+						productoid = Integer.parseInt(valor);
+					}else if(key.equals("nombreProducto")){
+						nombreProducto = valor;
+					}else if(key.equals("descripcionProducto")){
+						descripcionProducto = valor;
+					}else if(key.equals("cbxEstadoProducto")){
+						cbxEstadoProducto = valor;
+					}else if(key.equals("cbxTipoProducto")){
+						cbxTipoProducto = valor;
+					}else if(key.equals("url_foto")){
+						url_foto = valor;
+					}					
+				}
+			}
+
+			int valorImagen = 0;
+			for(FileItem item : items)
+			{
+			
+				FileItem uploaded = item;
+				if(uploaded.getName()!=""){					
+				if(!uploaded.isFormField())
+				{
+					/////////TAMAÑO DEL ARCHIVO ////////
+					long size = uploaded.getSize();
+					System.out.println("size: "+size);
+					
+					/////// GUARDAMOS EN UN ARREGLO LOS FORMATOS QUE SE DESEAN PERMITIR
+					List<String> formatos = Arrays.asList("image/jpeg");
+					
+					////// COMPROBAR SI EL TAMAÑO Y FORMATO SON PERMITIDOS //////////
+				    valorImagen = productoid; 
+					
+					if(formatos.contains(uploaded.getContentType()))
+					{
+						System.out.println("Filetype: "+uploaded.getContentType());
+						
+						rutaFichero = "fotosProducto"+valorImagen+".jpg";
+						path = "C:\\payara5\\glassfish\\fotosProducto\\";
+						System.out.println(path+rutaFichero);
+						
+						fichero = new File(path+rutaFichero);
+						System.out.println(path+rutaFichero);
+						
+						///////// GUARDAR EN EL SERVIDOR //////////////
+						uploaded.write(fichero);
+						
+						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
+						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
+						String url = "fotosProducto/"+rutaFichero;
+						pr.setMultimedia(url);
+					}
+					else
+					{
+						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
+						response.sendRedirect("GestionProducto.jsp?msj="+valorImagen+"&guardado=3");						
+					}
+			   	  }
+			   }
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
+		}
+			
+		pr.setProducto(nombreProducto);
+		pr.setDescripcion(descripcionProducto);
+		pr.setEstadoproductoid(Integer.parseInt(cbxEstadoProducto));		
+		pr.setTipoproductoid(Integer.parseInt(cbxTipoProducto));
+			if(pr.getMultimedia()==null){
+			pr.setMultimedia(url_foto);
+		}
+				
 		switch (opc){
 		case 1:{
-			
+				//PARA GUARDAR LA FECHA Y HORA DE CREACION
+		        Date fechaSistema = new Date();
+		        pr.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  	     
 		        try {
 		        	if(dts.guardarProducto(pr)) {
 			        	response.sendRedirect("GestionProductos.jsp?msj=1");
@@ -73,9 +178,7 @@ public class Sl_GestionProducto extends HttpServlet {
 			   
 			         else {
 			        	response.sendRedirect("GestionProductos.jsp?msj=2");
-			        }
-			        	
-		        	
+			        }	        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionProducto, el error es: " + e.getMessage());
@@ -85,16 +188,17 @@ public class Sl_GestionProducto extends HttpServlet {
 				break;
 			}
 	   	case 2:{
-			pr.setProductoid(Integer.parseInt(request.getParameter("idProducto")));
+			pr.setProductoid(productoid);
+			//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
+	        Date fechaSistema = new Date();
+	        pr.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));		
      		try {
 				   if(dts.modificarProducto(pr)) {
 		        	response.sendRedirect("GestionProductos.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionProductos.jsp?msj=4");
-		        }
-		        
-	        	
+		        }  	
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionProductos, el error es: " + e.getMessage());

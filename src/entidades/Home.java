@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Home {
 
 	//Atributos
@@ -10,6 +12,7 @@ public class Home {
 	private String img_historia;
 	private String img_vision;
 	private String img_mision;
+	private Timestamp fmodificacion;
 	private int estado;
 	private int	usuarioID;
 	
@@ -67,6 +70,12 @@ public class Home {
 	}
 	public void setUsuarioID(int usuarioID) {
 		this.usuarioID = usuarioID;
+	}
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
 	}
 
 }

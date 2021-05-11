@@ -61,8 +61,8 @@
                                         <h3 class="card-title text-left">Formulario Servicio</h3>
                                     </div>
                                     <div class="card-body">
-                                      <form class="Servicio" method="post" action="./Sl_GestionServicio">
-                                         <input name="idServicio" type="hidden" value="<%=sr.getServicioid()%>" />                            
+                                      <form class="Servicio" method="post" action="./Sl_GestionServicio" enctype="multipart/form-data">
+                                         <input name="servicioid" type="hidden" value="<%=sr.getServicioid()%>" />                            
                       					<input name="opcion" type="hidden" value="2" />
                                       <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
@@ -80,8 +80,9 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                    <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultSer" name="filmultSer"><%=sr.getMultimedia()%></label>
-													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/jpg" title="<%=sr.getMultimedia()%>" >
+													    <label class="custom-file-label text-left" for="customFile" id="filmultSer" name="filmultSer">Servicio.jpg</label>
+													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/jpeg" title="Servicio.jpg" >
+														<input type="hidden" name="url_foto" value="<%=sr.getMultimedia()%>">									
 													</div>
                                                 </div>
                                             </div>

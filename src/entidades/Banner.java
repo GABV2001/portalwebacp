@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Banner {	
 	
 	//Atributos	
@@ -9,6 +11,8 @@ public class Banner {
 	private String multimedia;
 	private int posicion;
 	private int estado;
+	private Timestamp fcreacion;
+	private Timestamp fmodificacion;
 	private int usuarioID;
 	
 	//Metodos
@@ -54,5 +58,16 @@ public class Banner {
 	public void setUsuarioID(int usuarioID) {
 		this.usuarioID = usuarioID;
 	}
-	
+	public Timestamp getFcreacion() {
+		return fcreacion;
+	}
+	public void setFcreacion(Timestamp fcreacion) {
+		this.fcreacion = fcreacion;
+	}
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}	
 }

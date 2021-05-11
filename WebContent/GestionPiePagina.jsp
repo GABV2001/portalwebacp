@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"
-    %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  
-    <title>Portal ACP - GestiÃ³n Pie De PÃ¡gina</title>
+    <title>Portal ACP - Gestión Pie De Página</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -52,30 +51,26 @@
 									<%
 									ArrayList<Footer> listFooter = new ArrayList<Footer>();
 									Dt_Footer dtf = new Dt_Footer();
-									listFooter = dtf.listFooter();
-										
-								    	String Logo = null;
-									
+									listFooter = dtf.listFooter();										
+								    	String Logo = null;									
 										Footer ft = new Footer();
-										ft = listFooter.get(0);
-										Logo = ft.getLogo();
-									
+										ft = listFooter.get(0);									
 									 %>
 									 
 						 			  <div class="card-header">
                                         <h2>
-                                            Pie de PÃ¡gina
+                                            Pie de Página
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form class="PiePagina" method="post" action="./Sl_GestionPiePagina">
+                                        <form class="PiePagina" method="post" action="./Sl_GestionPiePagina" enctype="multipart/form-data">
                                         	<!-- El valor de estos input es para el Servlet opcion editar -->                			
                                         	<input name="idFooter" type="hidden" value="<%=ft.getFooterID()%>" />
                                         	<input name="idUsuario" type="hidden" value="<%=ft.getUsuarioID()%>" />  
                                         	<input name="opcion" type="hidden" value="1" />
                                         	                                      	
                                             <div class="form-group">
-                                                <label>DirecciÃ³n:</label>
+                                                <label>Dirección:</label>
                                                 <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" required>
                                             </div>
                                             <div class="form-group">
@@ -87,22 +82,26 @@
                                                 <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=ft.getTelefono()%>" required  >
                                             </div>
                                             <div class="form-group">
-                                                <label>ExtensiÃ³n:</label>
+                                                <label>Extensión:</label>
                                                 <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=ft.getExtencion()%>" required>
                                             </div>
                                            <div class="form-group">
-                                                <label for="custom-file">Multimedia:</label>
+                                                <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input text-truncate" id="multiFooter" name="multiFooter" accept="image/* ">
-                                                        <label class="custom-file-label text-truncate" for="multVision"
-                                                            id="labelmulFooter"><%=Logo %></label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultFooter">ImagenFooter.png</label>
+													    <input type="file" class="custom-file-input" id="multFooter" name="multFooter" onchange="Test.UpdatePreview(this)" accept="image/png" title="ImagenFooter.png">
+													</div>
                                                 </div>
-                                            </div>
+                                            </div> 
+                                              <div class="m-3" align="center">
+												<img id="preview" src="<%=ft.getLogo()%>" name="preview"  alt="Imagen Footer"
+													class="img-fluid bg-dark" alt="Responsive image" style="width: 400px; height: 324px; border-bottom-color: white; margin: 2px;" />
+												<input type="hidden" name="url_foto" value="<%=ft.getLogo()%>">
+											</div>										
                                       	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>                             
@@ -138,22 +137,7 @@
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
-	<!--File Custom JS -->
-	   <script>
-	    const inputbtn = document.getElementById("multiFooter");
-        const customTxt = document.getElementById("labelmulFooter");
-
-        inputbtn.addEventListener("change", function () {
-            if (inputbtn.value) {
-                customTxt.innerHTML = inputbtn.value.match(
-                    /[\/\\]([\w\d\s\.\-\(\)]+)$/
-                )[1];
-            } else {
-                customTxt.innerHTML = "NingÃºn archivo seleccionado";
-            }
-        });
-
-    </script>
+	
 
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
@@ -174,6 +158,43 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <!--File Custom JS -->
+	<script>		
+	    $(document).ready(function() 
+		{
+		//Función para previsualizar la imagen del banner
+	    	Test = {
+	    	        UpdatePreview: function(obj)
+	    	        {
+	    	          // if IE < 10 doesn't support FileReader
+	    	          if(!window.FileReader)
+	    	          {
+	    	             
+	    	          } 
+	    	          else 
+	    	          {
+	    	             var reader = new FileReader();
+	    	             var target = null;
+	    	             
+	    	             reader.onload = function(e) 
+	    	             {
+	    	              target =  e.target || e.srcElement;
+	    	               $("#preview").prop("src", target.result);
+	    	             };
+	    	              reader.readAsDataURL(obj.files[0]);
+	    	          }
+	    	        }
+	    	    };
+		});
+	    
+	    $('#multFooter').on("change",function() {
+		     var i = $(this).prev('label').clone();
+		      var file = $('#multFooter')[0].files[0].name;
+		      $(this).prev('label').text(file);
+
+		    });
+	</script>
 
 
 </body>

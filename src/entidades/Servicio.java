@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Servicio {
 	//Atributos
 	private int servicioid;
@@ -8,6 +10,9 @@ public class Servicio {
 	private String multimedia;
 	private int estadoservicio;
 	private int estado;
+	private Timestamp fcreacion;
+	private Timestamp fmodificacion;
+	private Timestamp feliminacion;
 	private int usuarioid;
 	
 	//Metodos
@@ -53,5 +58,22 @@ public class Servicio {
 	public void setUsuarioid(int usuarioid) {
 		this.usuarioid = usuarioid;
 	}
-
+	public Timestamp getFcreacion() {
+		return fcreacion;
+	}
+	public void setFcreacion(Timestamp fcreacion) {
+		this.fcreacion = fcreacion;
+	}
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}
+	public Timestamp getFeliminacion() {
+		return feliminacion;
+	}
+	public void setFeliminacion(Timestamp feliminacion) {
+		this.feliminacion = feliminacion;
+	}
 }

@@ -4,5 +4,10 @@
 <glassfish-web-app>
     <context-root>/PortalWebACP</context-root>
     <parameter-encoding default-charset="UTF-8"/>	
-    <property name="alternatedocroot_1" value="from=/fotosBanner/* dir=\\C:\payara5\glassfish"/>	
+    <property name="alternatedocroot_1" value="from=/fotosBanner/* dir=\\C:\payara5\glassfish"/>
+    <property name="alternatedocroot_2" value="from=/fotosPiePagina/* dir=\\C:\payara5\glassfish"/>	
+    <property name="alternatedocroot_3" value="from=/fotosInicio/* dir=\\C:\payara5\glassfish"/>	
+    <property name="alternatedocroot_4" value="from=/fotosServicio/* dir=\\C:\payara5\glassfish"/>	
+    <property name="alternatedocroot_5" value="from=/fotosProducto/* dir=\\C:\payara5\glassfish"/>	
+
 </glassfish-web-app>

@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.TipoProducto, datos.Dt_TipoProducto, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import="entidades.TipoProducto,vistas.ViewProducto,datos.Dt_TipoProducto,datos.Dt_Producto, java.util.*;"%>
 <!DOCTYPE html>
+<%            	
+	ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
+	Dt_Producto dts = new Dt_Producto();
+	listProducto = dts.listarProductos();
+	
+	ViewProducto pr = new ViewProducto();
+	
+	int productoid =0;
+	
+	if(listProducto.size() == 0){
+		productoid= 1;	
+	}	
+	else{			
+		pr = listProducto.get(listProducto.size() - 1);
+		productoid = pr.getProductoid() +1 ;		
+	}
+%>
 <html lang="en">
 
 <head>
@@ -52,15 +69,16 @@
                                         <h3 class="card-title text-left">Formulario Productos</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form class="Producto" method="post" action="./Sl_GestionProducto">
+                                        <form class="Producto" method="post" action="./Sl_GestionProducto" enctype="multipart/form-data" >
                       					<input name="opcion" type="hidden" value="1" />
+                       					<input name="productoid" type="hidden" value="<%=productoid%>" />                      					
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreProducto" name= "nombreProducto">
+                                                <input type="text" class="form-control" id="nombreProducto" name= "nombreProducto" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionProducto" name= "descripcionProducto" rows="4" class="form-control"></textarea>
+                                                <textarea id="descripcionProducto" name= "descripcionProducto" rows="4" class="form-control" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -70,14 +88,14 @@
                                                     </div>
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultPro">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multPro" name="multPro" onchange="Test.UpdatePreview(this)" accept="image/*" required>
+													    <input type="file" class="custom-file-input" id="multPro" name="multPro" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
 													</div>
                                                 </div>
                                             </div>
                                              <div class="form-group">
                                              <label>Estado:</label>  
                                                 <select class="form-control" name="cbxEstadoProducto" id="cbxEstadoProducto">                                            	
-                                    			<option value="">Seleccionar</option>                                    			                                            	
+                                    			<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                     			<option value="1">Disponible</option>
                                     			<option value="2">No disponible</option>
                                     	        </select>
@@ -89,8 +107,8 @@
                                             listTipoProducto = dtp.listarTipoProductos();
                                             %>
                                              <label>Tipo Producto:</label>  
-                                                <select class="form-control" name="cbxTipoProducto" id="cbxTipoProducto"> 
-                                                	<option value="">Seleccionar...</option>                                                                              	
+                                                <select class="form-control" name="cbxTipoProducto" id="cbxTipoProducto"required> 
+                                                	<option value="" selected disabled>Seleccionar...</option>                                                                              	
                                     	    <%
                                     		for(TipoProducto tp: listTipoProducto){
                                     	    %>	

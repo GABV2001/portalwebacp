@@ -3,7 +3,6 @@
     <%
     Calendar cal=Calendar.getInstance();
     int year=cal.get(Calendar.YEAR);
-
 	%>
   <!-- Footer -->
             <footer class="sticky-footer bg-white">

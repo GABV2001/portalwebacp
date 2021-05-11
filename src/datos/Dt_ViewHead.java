@@ -28,7 +28,7 @@ public class Dt_ViewHead {
 						e.printStackTrace();
 					}
 				}
-				//Metodo para visualizar Banners
+				//Metodo para visualizar Head
 				public ArrayList<ViewHead> ListarViewHead(){
 
 					//Crear lista de arreglos

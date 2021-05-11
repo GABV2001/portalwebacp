@@ -1,8 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Servicio, datos.Dt_Servicio, java.util.*;"
+%>
 <!DOCTYPE html>
+<%            	
+	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
+	Dt_Servicio dts = new Dt_Servicio();
+	listServicio = dts.listarServicio();
+	
+	Servicio sr = new Servicio();
+	
+	int servicioid =0;
+	
+	if(listServicio.size() == 0){
+		servicioid= 1;	
+	}	
+	else{			
+		sr = listServicio.get(listServicio.size() - 1);
+		servicioid = sr.getServicioid() +1 ;		
+	}
+%>
 <html lang="en">
-
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,16 +71,17 @@
                                         <h3 class="card-title text-left">Formulario Servicio</h3>
                                     </div>
                                     <div class="card-body">
-                                      <form class="Servicio" method="post" action="./Sl_GestionServicio">
+                                      <form class="Servicio" method="post" action="./Sl_GestionServicio" enctype="multipart/form-data">
                       					<input name="opcion" type="hidden" value="1" />
+                      					<input name="servicioid" type="hidden" value="<%=servicioid%>" />                      					
                                       <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio">
+                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónS"
                                                     class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" ></textarea>
+                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" required ></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -73,14 +91,14 @@
                                                     </div>
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultSer">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/*" required>
+													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
 													</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                              <label>Estado:</label>  
-                                                <select class="form-control" name="cbxEstadoServicio" id="cbxEstadoServicio">                                            	
-                                    			<option value="">Seleccionar</option>                                    			                                            	
+                                                <select class="form-control" name="cbxEstadoServicio" id="cbxEstadoServicio" required>                                            	
+                                    			<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                     			<option value="1">Disponible</option>
                                     			<option value="2">No disponible</option>
                                     	        </select>

@@ -131,7 +131,7 @@
                                         </form>
 
                                         <div style="text-align: center; "><a href="GestionEvento.jsp"><i
-                                                    class="fas fa-undo "></i>&nbsp;Volver a la tabla</div></a>
+                                                    class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</div></a>
                                     </div>
                                     
                                 </div>

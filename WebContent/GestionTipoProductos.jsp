@@ -179,15 +179,15 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', '!Los datos han sido registrados exitosamente!');
+            successAlert('Exito', 'Los datos han sido registrados exitosamente');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '!Revise los datos e intente nuevamente!');
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', '!Los datos han sido eliminado exitosamente!');
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
         }
 
     });

@@ -20,7 +20,7 @@ public class Dt_Producto {
 	// Metodo para llenar el ResultSet
 	public void llenarRsProducto(Connection c){
 		try{
-			ps = c.prepareStatement("select productoid, nombre, descripcion, multimedia, estado, estadoproducto, tipoproductoid, usuarioid from producto", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps = c.prepareStatement("select productoid, nombre, descripcion, multimedia, estado, estadoproducto, tipoproductoid, fcreacion, fmodificacion, feliminacion, usuarioid from producto", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			rsProducto = ps.executeQuery();
 		}
 		catch (Exception e){
@@ -84,9 +84,10 @@ public class Dt_Producto {
 			rsProducto.moveToInsertRow();
 			rsProducto.updateString("nombre", pr.getProducto());
 			rsProducto.updateString("descripcion", pr.getDescripcion());
-			rsProducto.updateString("multimedia", "Defecto.jpeg");
+			rsProducto.updateString("multimedia", pr.getMultimedia());
 			rsProducto.updateInt("estadoproducto", pr.getEstadoproductoid());
 			rsProducto.updateInt("estado", 1);
+			rsProducto.updateTimestamp("fcreacion", pr.getFcreacion());
 			rsProducto.updateInt("tipoproductoid", pr.getTipoproductoid());
 			rsProducto.updateInt("usuarioid", 1);
 			rsProducto.insertRow();
@@ -129,9 +130,10 @@ public class Dt_Producto {
 				{
 					rsProducto.updateString("nombre", pr.getProducto());
 					rsProducto.updateString("descripcion", pr.getDescripcion());
-					rsProducto.updateString("multimedia", "Defecto.jpeg");
+					rsProducto.updateString("multimedia", pr.getMultimedia());
 					rsProducto.updateInt("estadoproducto", pr.getEstadoproductoid());	
-					rsProducto.updateInt("tipoproductoid", pr.getTipoproductoid());		
+					rsProducto.updateInt("tipoproductoid", pr.getTipoproductoid());	
+					rsProducto.updateTimestamp("fmodificacion", pr.getFmodificacion());
 					rsProducto.updateInt("estado", 2);
 					rsProducto.updateRow();
 					modificado=true;
@@ -210,7 +212,7 @@ public class Dt_Producto {
 		return tp;
 	}
 	
-	// Metodo para eliminar Tipo de Producto
+	// Metodo para eliminar Producto
 	public boolean eliminarProducto(int idProducto)
 				{
 					boolean eliminado=false;	
@@ -232,7 +234,7 @@ public class Dt_Producto {
 					}
 					catch (Exception e)
 					{
-						System.err.println("ERROR AL ElIMINAR TIPO DE PRODUCTO "+e.getMessage());
+						System.err.println("ERROR AL ElIMINAR PRODUCTO "+e.getMessage());
 						e.printStackTrace();
 					}
 					finally
