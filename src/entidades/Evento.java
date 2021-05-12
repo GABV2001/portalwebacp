@@ -1,5 +1,7 @@
 package entidades;
 
+import java.sql.Timestamp;
+
 public class Evento {
 	//Atributos
 	private int eventoid;
@@ -13,6 +15,9 @@ public class Evento {
 	private String multimedia;
 	private String  hipervinculo;
 	private String ubicacion;
+	private Timestamp fcreacion;
+	private Timestamp fmodificacion;
+	private Timestamp feliminacion;
 	private int estado;
 	private int usuarioid;
 	
@@ -95,5 +100,22 @@ public class Evento {
 	public void setUsuarioid(int usuarioid) {
 		this.usuarioid = usuarioid;
 	}
-
+	public Timestamp getFcreacion() {
+		return fcreacion;
+	}
+	public void setFcreacion(Timestamp fcreacion) {
+		this.fcreacion = fcreacion;
+	}
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}
+	public Timestamp getFeliminacion() {
+		return feliminacion;
+	}
+	public void setFeliminacion(Timestamp feliminacion) {
+		this.feliminacion = feliminacion;
+	}
 }

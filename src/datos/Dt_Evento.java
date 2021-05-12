@@ -1,6 +1,7 @@
 package datos;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class Dt_Evento {
 			// Metodo para llenar el ResultSet
 			public void llenaRsEventos(Connection c){
 				try{
-					ps = c.prepareStatement("select eventoid, nombre, descripcion, fechainicio, horainicio,fechafin, horafin, tipoevento, multimedia, hipervinculo, ubicacion ,estado, usuarioid from evento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("select eventoid, nombre, descripcion, fechainicio, horainicio,fechafin, horafin, tipoevento, multimedia, hipervinculo, ubicacion , fcreacion, fmodificacion, feliminacion,estado, usuarioid from evento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsEvento = ps.executeQuery();
 				}
 				catch (Exception e){
@@ -94,9 +95,10 @@ public class Dt_Evento {
 					rsEvento.updateString("fechafin", ev.getFechafin());
 					rsEvento.updateString("horafin", ev.getHorafin());
 					rsEvento.updateInt("tipoevento", ev.getTipoevento());	
-					rsEvento.updateString("multimedia", "Defecto.jpeg");
+					rsEvento.updateString("multimedia", ev.getMultimedia());
 					rsEvento.updateString("hipervinculo", ev.getHipervinculo());
-					rsEvento.updateString("ubicacion", ev.getUbicacion());										
+					rsEvento.updateString("ubicacion", ev.getUbicacion());		
+					rsEvento.updateTimestamp("fcreacion", ev.getFcreacion());	
 					rsEvento.updateInt("estado", 1);
 					rsEvento.updateInt("usuarioid", 1);
 					rsEvento.insertRow();
@@ -132,11 +134,13 @@ public class Dt_Evento {
 				{
 					c = PoolConexion.getConnection();
 					this.llenaRsEventos(c);
+					Date fechaSistema = new Date();					
 					rsEvento.beforeFirst();
 					while (rsEvento.next())
 					{
 						if(rsEvento.getInt(1)==idEvento)
 						{
+							rsEvento.updateTimestamp("feliminacion", new java.sql.Timestamp(fechaSistema.getTime()));
 							rsEvento.updateInt("estado", 3);
 							rsEvento.updateRow();
 							eliminado=true;
@@ -187,9 +191,10 @@ public class Dt_Evento {
 							rsEvento.updateString("fechafin", ev.getFechafin());
 							rsEvento.updateString("horafin", ev.getHorafin());
 							rsEvento.updateInt("tipoevento", ev.getTipoevento());	
-							rsEvento.updateString("multimedia", "Defecto.jpeg");
+							rsEvento.updateString("multimedia", ev.getMultimedia());
 							rsEvento.updateString("hipervinculo", ev.getHipervinculo());
-							rsEvento.updateString("ubicacion", ev.getUbicacion());										
+							rsEvento.updateString("ubicacion", ev.getUbicacion());		
+							rsEvento.updateTimestamp("fmodificacion", ev.getFmodificacion());	
 							rsEvento.updateInt("estado", 1);
 							rsEvento.updateInt("usuarioid", 1);
 							rsEvento.updateRow();
@@ -249,7 +254,7 @@ public class Dt_Evento {
 				}
 				catch (Exception e)
 				{
-					System.out.println("DATOS ERROR SERVICIO: "+ e.getMessage());
+					System.out.println("DATOS ERROR EVENTO: "+ e.getMessage());
 					e.printStackTrace();
 				}
 				finally

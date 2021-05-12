@@ -144,15 +144,14 @@ public class Sl_GestionServicio extends HttpServlet {
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
 						response.sendRedirect("GestionServicio.jsp?msj="+valorImagen+"&guardado=3");						
 					}
-				}
+				  }
 			   }
 			}
 		}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
-		}
-			
+		}	
 		sr.setNombre(nombreServicio);
 		sr.setDescripcion(descripcionServicio);
 		sr.setEstadoservicio(Integer.parseInt(cbxEstadoServicio));
@@ -173,15 +172,12 @@ public class Sl_GestionServicio extends HttpServlet {
 			   
 			         else {
 			        	response.sendRedirect("GestionServicio.jsp?msj=2");
-			        }
-			        	
-		        	
+			        }		        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionServicio, el error es: " + e.getMessage());
 					e.printStackTrace();
-		        }
-		        
+		        }    
 				break;
 			}
 			case 2:{
@@ -195,9 +191,7 @@ public class Sl_GestionServicio extends HttpServlet {
 			        }
 			        else {
 			        	response.sendRedirect("GestionServicio.jsp?msj=4");
-			        }
-			        
-		        	
+			        }        		        	
 		        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionServicio, el error es: " + e.getMessage());
@@ -211,5 +205,4 @@ public class Sl_GestionServicio extends HttpServlet {
 			break;
 		}		
 	}
-
 }

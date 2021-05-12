@@ -62,9 +62,9 @@
                                         <h2>Formulario Evento</h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                     <form class="Producto" method="post" action="./Sl_GestionEvento">
-                                       <input name="idEvento" type="hidden" value="<%=ev.getEventoid()%>" />                            
-                      					<input name="opcion" type="hidden" value="2" />
+                                     <form class="Producto" method="post" action="./Sl_GestionEvento" enctype="multipart/form-data">
+                                      <input name="eventoid" type="hidden" value="<%=ev.getEventoid()%>" />                            
+                      				  <input name="opcion" type="hidden" value="2" />
                                        <div class="form-group">
                                                 <label for="formGroupExampleInput">Nombre:</label>
                                                 <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" required>
@@ -111,8 +111,9 @@
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                    <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultEv" name="filmultEv"><%=ev.getMultimedia()%></label>
-													    <input type="file" class="custom-file-input" id="multEvento" name="multEvento" onchange="Test.UpdatePreview(this)" accept="image/jpg" title="<%=ev.getMultimedia()%>" >
+													    <label class="custom-file-label text-left" for="customFile" id="filmultEv" name="filmultEv">Evento.jpg</label>
+													    <input type="file" class="custom-file-input" id="multEvento" name="multEvento" onchange="Test.UpdatePreview(this)" accept="image/jpeg" title="Evento.jpg" >
+														<input type="hidden" name="url_foto" value="<%=ev.getMultimedia()%>">																		
 													</div>
                                                 </div>
                                             </div>

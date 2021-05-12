@@ -41,8 +41,6 @@ public class Sl_GestionTipoProducto extends HttpServlet {
         else {
         	response.sendRedirect("GestionTipoProductos.jsp?msj=6");
         }
-		
-	
 	}
 
 	/**
@@ -52,7 +50,7 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		
-			//Obtenemos el valor de opcion
+				//Obtenemos el valor de opcion
 				int opc = 0;
 				opc = Integer.parseInt(request.getParameter("opcion"));
 				
@@ -72,15 +70,12 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 					   
 					         else {
 					        	response.sendRedirect("GestionTipoProductos.jsp?msj=2");
-					        }
-					        	
-				        	
+					        }	        	
 				        }
 				        catch(Exception e) {
 				        	System.out.println("Sl_GestionTipoProducto, el error es: " + e.getMessage());
 							e.printStackTrace();
-				        }
-				        
+				        }				        
 						break;
 					}
 				case 2:{
@@ -92,8 +87,6 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 				        else {
 				        	response.sendRedirect("GestionTipoProductos.jsp?msj=4");
 				        }
-				        
-			        	
 			        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionTipoProducto, el error es: " + e.getMessage());

@@ -1,11 +1,21 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import datos.Dt_Evento;
 import entidades.Evento;
@@ -51,36 +61,141 @@ public class Sl_GestionEvento extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//Obtenemos el valor de opcion
-		int opc = 0;
-		opc = Integer.parseInt(request.getParameter("opcion"));
-		
-		//Construir objeto Evento
 		Dt_Evento dte = new Dt_Evento();
 		Evento ev = new Evento();
-		ev.setNombre(request.getParameter("txtNombreEvento"));
-		ev.setDescripcion(request.getParameter("txtDescripcionEvento"));
-		ev.setFechainicio(request.getParameter("datefInicioEvento"));
-		ev.setHorainicio(request.getParameter("timehoraInicioEvento"));
-		ev.setFechafin(request.getParameter("datefFinalEvento"));
-		ev.setHorafin(request.getParameter("timehoraFinEvento"));
-		ev.setTipoevento(Integer.parseInt(request.getParameter("cbxTipoEvento")));
-		//ev.setMultimedia(request.getParameter("multEvento"));
-		ev.setHipervinculo(request.getParameter("txthipervinculoEvento"));
-		ev.setUbicacion(request.getParameter("txtUbicacionEvento"));
+			
+		int opc = 0;
+		int eventoid =0;
+		String txtNombreEvento = null;
+		String txtDescripcionEvento = null;
+		String datefInicioEvento = null;
+		String timehoraInicioEvento = null;
+		String datefFinalEvento = null;
+		String timehoraFinEvento = null;
+		String cbxTipoEvento = null;
+		String multEvento = null;
+		String txthipervinculoEvento = null;
+		String txtUbicacionEvento = null;		
+		String rutaFichero = null;
+				
+		try
+		{
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			String path = getServletContext().getRealPath("/");
+			List<FileItem> items = upload.parseRequest(request);
+			File fichero = null;
+					
+			for(FileItem item: items)
+			{
+				FileItem uploaded = item;
+				if(uploaded.isFormField())
+				{	
+					String key = uploaded.getFieldName();
+					String valor = uploaded.getString();
+					if(key.equals("opcion")){
+						opc = Integer.parseInt(valor);
+					}else if(key.equals("eventoid")){
+						eventoid = Integer.parseInt(valor);
+					}else if(key.equals("txtNombreEvento")){
+						txtNombreEvento = valor;
+					}else if(key.equals("txtDescripcionEvento")){
+						txtDescripcionEvento = valor;
+					}else if(key.equals("datefInicioEvento")){
+						datefInicioEvento = valor;
+					}else if(key.equals("timehoraInicioEvento")){
+						timehoraInicioEvento = valor;
+					}else if(key.equals("datefFinalEvento")){
+						datefFinalEvento = valor;
+					}else if(key.equals("timehoraFinEvento")){
+						timehoraFinEvento = valor;
+					}else if(key.equals("cbxTipoEvento")){
+						cbxTipoEvento = valor;
+					}else if(key.equals("multEvento")){
+						multEvento = valor;
+					}else if(key.equals("txthipervinculoEvento")){
+						txthipervinculoEvento = valor;
+					}else if(key.equals("txtUbicacionEvento")){
+						txtUbicacionEvento = valor;
+					}					
+				}
+			}
+
+			int valorImagen = 0;
+			for(FileItem item : items)
+			{			
+				FileItem uploaded = item;
+				if(uploaded.getName()!=""){					
+				if(!uploaded.isFormField())
+				{
+					/////////TAMAÑO DEL ARCHIVO ////////
+					long size = uploaded.getSize();
+					System.out.println("size: "+size);
+					
+					/////// GUARDAMOS EN UN ARREGLO LOS FORMATOS QUE SE DESEAN PERMITIR
+					List<String> formatos = Arrays.asList("image/jpeg");
+					
+					////// COMPROBAR SI EL TAMAÑO Y FORMATO SON PERMITIDOS //////////
+				    valorImagen = eventoid; 
+					
+					if(formatos.contains(uploaded.getContentType()))
+					{
+						System.out.println("Filetype: "+uploaded.getContentType());
+						
+						rutaFichero = "fotosEvento"+valorImagen+".jpg";
+						path = "C:\\payara5\\glassfish\\fotosEvento\\";
+						System.out.println(path+rutaFichero);
+						
+						fichero = new File(path+rutaFichero);
+						System.out.println(path+rutaFichero);
+						
+						///////// GUARDAR EN EL SERVIDOR //////////////
+						uploaded.write(fichero);
+						
+						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
+						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
+						String url = "fotosEvento/"+rutaFichero;
+						ev.setMultimedia(url);
+					}
+					else
+					{
+						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
+						response.sendRedirect("GestionEvento.jsp?msj="+valorImagen+"&guardado=3");						
+					}
+				}
+			   }
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
+		}
+			
+		ev.setNombre(txtNombreEvento);
+		ev.setDescripcion(txtDescripcionEvento);
+		ev.setFechainicio(datefInicioEvento);
+		ev.setHorainicio(timehoraInicioEvento);
+		ev.setFechafin(datefFinalEvento);
+		ev.setHorafin(timehoraFinEvento);
+		ev.setTipoevento(Integer.parseInt(cbxTipoEvento));
+		ev.setHipervinculo(txthipervinculoEvento);
+		ev.setUbicacion(txtUbicacionEvento);	
+		if(ev.getMultimedia()==null){
+			ev.setMultimedia(multEvento);
+		}
 		
 		switch (opc){
 		case 1:{
-			
+			//PARA GUARDAR LA FECHA Y HORA DE CREACION
+	        Date fechaSistema = new Date();
+	        ev.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
 		        try {
 			        if(dte.guardarEventos(ev)) {
 			        	response.sendRedirect("GestionEvento.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionEvento.jsp?msj=2");
-			        }
-			        	
-		        	
+			        }			        		        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionEvento, el error es: " + e.getMessage());
@@ -90,16 +205,17 @@ public class Sl_GestionEvento extends HttpServlet {
 				break;
 			}
 		case 2:{
-			ev.setEventoid(Integer.parseInt(request.getParameter("idEvento")));
+			//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
+	        Date fechaSistema = new Date();
+	        ev.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
+			ev.setEventoid(eventoid);
      		try {
 				   if(dte.modificarEvento(ev)) {
 		        	response.sendRedirect("GestionEvento.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionEvento.jsp?msj=4");
-		        }
-		        
-	        	
+		        }       	
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionEvento, el error es: " + e.getMessage());
@@ -111,11 +227,8 @@ public class Sl_GestionEvento extends HttpServlet {
 			default:
 			response.sendRedirect("GestionEvento.jsp?msj=5");	
 			break;
-	}//Fin Switch
-		
-	}
-		
-		
+	}//Fin Switch	
+   }				
 }
 
 

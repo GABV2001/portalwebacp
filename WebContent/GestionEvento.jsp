@@ -104,8 +104,10 @@
                                             <td><%=ev.getNombre() %></td>
                                             <td><%=ev.getDescripcion()%></td>
                                             <td><%=ev.getTipoevento()==1?"Público":"Privado" %></td>
-                                            <td><%=ev.getMultimedia() %></td>
-                                            <td><%=ev.getUbicacion() %></td>
+                                  			  <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
+                        							<i class="fas fa-camera mostrarImagen" title="<%=ev.getMultimedia()%>" onClick="getValue()"></i>
+                        							</a></td>
+                                                <td><%=ev.getUbicacion() %></td>
                                             <td><%=ev.getHipervinculo() %></td>
                                             <td>&nbsp;&nbsp;<a href="FormEditarEvento.jsp?idE=<%=ev.getEventoid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
                                                         
@@ -143,6 +145,27 @@
 
                 </div>
                 <!-- /.container-fluid -->
+                
+                    <!-- MODAL VISUALIZAR IMAGEN -->					
+					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					       <h5 class="modal-title">Visualizar Imagen</h5>				
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					    	<div align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Banner"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+								</div>								
+					      </div>					 
+					    </div>
+					  </div>
+					</div>					
+					<!-- FIN Modal -->
 
             </div>
             <!-- End of Main Content -->
@@ -204,13 +227,21 @@
         {
             errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
+        if(mensaje == "3")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
         if(mensaje == "5")
         {
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
         }
     });
+    function getValue()
+    {   	
+        var a= event.srcElement.title;
+        document.getElementById("preview").src = a;
+    }  
 	</script>
-
 </body>
 
 </html>

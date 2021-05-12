@@ -1,15 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Evento, datos.Dt_Evento, java.util.*;"
+%>
 <!DOCTYPE html>
 <html lang="en">
-
+<%            	
+	ArrayList<Evento> listEvento = new ArrayList<Evento>();
+	Dt_Evento dte = new Dt_Evento();
+	listEvento = dte.listarEventos();
+	
+	Evento ev = new Evento();	
+	int eventoid =0;	
+	
+	if(listEvento.size() == 0){
+		eventoid= 1;	
+	}	
+	else{			
+		ev = listEvento.get(listEvento.size() - 1);
+		eventoid = ev.getEventoid() + 1;		
+	}
+%>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Formulario Evento</title>
     
@@ -54,8 +67,9 @@
                                         <h2>Formulario Evento</h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
-                                        <form class="Evento" method="post" action="./Sl_GestionEvento">
+                                        <form class="Evento" method="post" action="./Sl_GestionEvento" enctype="multipart/form-data">
                       					<input name="opcion" type="hidden" value="1" />
+                      					<input name="eventoid" type="hidden" value="<%=eventoid%>" />                   					                            
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Nombre:</label>
                                                 <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" required>
@@ -103,7 +117,7 @@
                                                     </div>
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultEv" name="filmultEv">Seleccionar Archivo</label>
-													    <input type="file" class="custom-file-input" id="multEvento" name="multEvento" onchange="Test.UpdatePreview(this)" accept="image/jpg" >
+													    <input type="file" class="custom-file-input" id="multEvento" name="multEvento" onchange="Test.UpdatePreview(this)" accept="image/jpeg" >
 													</div>
                                                 </div>
                                             </div>
@@ -177,10 +191,13 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    <script>  $('#multEvento').on("change",function() {
+	<script> 
+	$('#multEvento').on("change",function() {
 	     var i = $(this).prev('label').clone();
 	      var file = $('#multEvento')[0].files[0].name;
+	   console.log(file);
 	      $(this).prev('label').text(file);
+
 	    });
 	</script>	
 </body>
