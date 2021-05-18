@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
  import="entidades.Servicio, datos.Dt_Servicio, java.util.*;" %>
-<!DOCTYPE html>
+    <% 
+	  ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
+	  Dt_Servicio dts = new Dt_Servicio();
+	  listServicio = dts.listarServicio(); 
+      boolean c= 	listServicio.stream().allMatch(x -> x.getEstadoservicio() == 2);
+      %>   
+<!DOCTYPE html>            
 <html lang="en">
-
 <head>
   <meta charset="ISO-8859-1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,13 +33,8 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
 
-  <style type="text/css">
-    	.img-guide{
-			  position: relative;
-			  height: 300px;
-			  width: 100%;			  	
-    	}
-    </style>
+  <!-- CSS IMAGE -->
+  <link rel="stylesheet" href="./css/image.css">
 </head>
 
 <body>
@@ -51,15 +51,62 @@
 
         <div class="row">
        				 <%
-                      	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
-                       	Dt_Servicio dts = new Dt_Servicio();
-                       	listServicio = dts.listarServicio();                     	                         	
-                      %> 
-                       <%for(Servicio sr: listServicio){
-                       if(sr.getEstadoservicio()!=2){%>
-			          
-			            <div class="col-md-4">
-			                <figure class="card card-product">
+       				 	int control = 2;
+                 	    if(listServicio.size() == 0 || listServicio.stream().allMatch(x -> x.getEstadoservicio() == 2)){%>
+              	        <div class="row">
+                          <div class="col-md-4">
+                              <figure class="card card-product">
+                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                                  <figcaption class="info-wrap">
+                                      <h4 class="title">amet consectetur</h4>
+                                      <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                                          elit. Sapiente reiciendis quod fuga </p>
+                                  </figcaption>
+                                  <div class="bottom-wrap">
+                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                                  </div> <!-- bottom-wrap.// -->
+                              </figure>
+                          </div> <!-- col // -->
+                          <div class="col-md-4">
+                              <figure class="card card-product">
+                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"> </div>
+                                  <figcaption class="info-wrap">
+                                      <h4 class="title">accusantium iusto</h4>
+                                      <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                                          elit. Sapiente reiciendis quod fuga </p>
+                                  </figcaption>
+                                  <div class="bottom-wrap">
+                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                                  </div> <!-- bottom-wrap.// -->
+                              </figure>
+                          </div> <!-- col // -->
+                          <div class="col-md-4">
+                              <figure class="card card-product">
+                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                                  <figcaption class="info-wrap">
+                                      <h4 class="title">ipsum dolor</h4>
+                                      <p class="desc">SLorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                                          elit. Sapiente reiciendis quod fuga </p>
+                                  </figcaption>
+                                  <div class="bottom-wrap">
+                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                                  </div> <!-- bottom-wrap.// -->
+                              </figure>
+                          </div> <!-- col // -->
+                      </div> <!-- row.// -->
+              	    </div>
+              	    <!--container.//-->     	    
+                     <%}else{                    
+                    	 for(Servicio sr: listServicio){                    	
+                         if(sr.getEstadoservicio()!=2){%>			          
+			             <div class="col-md-4">
+			                <figure class="card card-product border border-dark">
 			                    <div class=""><img class="img-guide" src="<%=sr.getMultimedia()%>"></div>
 			                    <figcaption class="info-wrap">
 			                        <h4 class="title"><%=sr.getNombre()%></h4>
@@ -70,14 +117,14 @@
 			                    </div> <!-- bottom-wrap.// -->
 			                </figure>
 			            </div> <!-- col // -->				       
-			           <%
-                       }
-			             }
-			             %> 
-			              </div>
-			            
+			          <%
+					  }//Fin if
+			         }//Fin For
+			        }//Fin else
+			       %>  
+			    </div>	            
             </div> <!-- row.// -->
-    </div>
+         </div>
     <!--container.//-->	
 
   <!-- footer -->

@@ -73,7 +73,7 @@
                                         <tr>
                                             <th>Producto</th>
                                             <th>Descripción</th>
-                                            <th>multimedia</th>
+                                            <th>Multimedia</th>
                                             <th>Estado</th>
                                             <th>Tipo Producto</th>                                                                                    
                                             <th>Opciones</th>
@@ -83,7 +83,7 @@
                                         <tr>
                                             <th>Producto</th>
                                             <th>Descripción</th>
-                                            <th>multimedia</th>
+                                            <th>Multimedia</th>
                                             <th>Estado</th>
                                             <th>Tipo Producto</th>                                                                                    
                                             <th>Opciones</th>

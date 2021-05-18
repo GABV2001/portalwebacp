@@ -21,25 +21,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!-- BOOTSTRAP V.4 CSS-->
-    <link rel="stylesheet" href="./style/style.css">
-
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
-    
-    <style type="text/css">
-    	.img-guide{
-			  position: relative;
-			  height: 300px;
-			  width: 100%;			  	
-    	}
-    </style>
-
+   
+    <!-- CSS IMAGE -->
+    <link rel="stylesheet" href="./css/image.css">
 </head>
 
 <body>
-
-
     <!-- Menu -->
 	<jsp:include page="mainMenus.jsp" />   
 
@@ -49,40 +38,91 @@
         <br>
         <h2 class="text-center">Catálogo de Productos</h2>
         <hr>
-
-        <div class="row">
-        			 <%
-                      	ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
-                       	Dt_Producto dtp = new Dt_Producto();
-                       	listProducto = dtp.listarProductos();                     	                         	
-                      %>
-                       
-                     <%for(ViewProducto pr: listProducto){
-                       if(pr.getEstadoproductoid()!=2){%>
-			          
-			            <div class="col-md-4">
-			                <figure class="card card-product">
-			                    <div class=""><img class= "img-guide" src="<%=pr.getMultimedia()%>"></div>
-			                    <figcaption class="info-wrap">
-			                        <h4 class="title"><%=pr.getProducto()%></h4>
-			                        <p class="desc"><%=pr.getDescripcion()%></p>
-			                       <h6>Tipo de producto: <%=pr.getTipoproducto()%></h6>
-			                 
-			                    </figcaption>
-			                    <div class="bottom-wrap">
-			                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-			                    </div> <!-- bottom-wrap.// -->
-			                </figure>
-			            </div> <!-- col // -->				       
-			           <%}
-			             }
-			             %> 
-			   </div>  
+         <div class="row">   
+     	 <%
+       	 ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
+       	 Dt_Producto dtp = new Dt_Producto();
+       	 listProducto = dtp.listarProductos();                     	                         	
+       	 %>
+       	                
+         <%
+         if(listProducto.size() == 0){%>
+	     <div class="row">
+            <div class="col-md-4">
+                <figure class="card card-product">
+                    <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                    <figcaption class="info-wrap">
+                        <h4 class="title">Semilla de Mango</h4>
+                        <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Sapiente reiciendis quod fuga </p>
+                    </figcaption>
+                    <div class="bottom-wrap">
+                        <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                    </div> <!-- bottom-wrap.// -->
+                </figure>
+            </div> <!-- col // -->
+            <div class="col-md-4">
+                <figure class="card card-product">
+                    <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"> </div>
+                    <figcaption class="info-wrap">
+                        <h4 class="title">Semilla de Marisol</h4>
+                        <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Sapiente reiciendis quod fuga </p>
+                    </figcaption>
+                    <div class="bottom-wrap">
+                        <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                    </div> <!-- bottom-wrap.// -->
+                </figure>
+            </div> <!-- col // -->
+            <div class="col-md-4">
+                <figure class="card card-product">
+                    <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                    <figcaption class="info-wrap">
+                        <h4 class="title">Flor de Girasol</h4>
+                        <p class="desc">SLorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                            accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                            Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Sapiente reiciendis quod fuga </p>
+                    </figcaption>
+                    <div class="bottom-wrap">
+                        <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                    </div> <!-- bottom-wrap.// -->
+                </figure>
+            </div> <!-- col // -->
         </div> <!-- row.// -->
-    </div>
+	    </div>
+	    <!--container.//-->     	       	
+	         <%}else{
+        	 for(ViewProducto pr: listProducto){
+        	 if(pr.getEstadoproductoid()!=2){%>        
+			    <div class="col-md-4" >
+			      <figure class="card card-product border border-dark" >
+			      <div><img class= "img-guide" src="<%=pr.getMultimedia()%>"></div>
+			      <figcaption class="info-wrap">
+			         <h4 class="title"><%=pr.getProducto()%></h4>
+			         <p class="desc"><%=pr.getDescripcion()%></p>
+			         <h6>Tipo de producto: <%=pr.getTipoproducto()%></h6>  
+			      </figcaption>
+			         <div class="bottom-wrap">
+			         <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
+			    </div> <!-- bottom-wrap.// -->
+			    <figure>
+       		</div> <!-- col // -->				       
+		<%
+		  }//Fin if
+         }//Fin For
+        }//Fin else
+       %> 
+	 </div>  
+    </div> <!-- row.// -->
     <!--container.//-->
 
-    <!-- footer -->
+
+     <!-- footer -->
      <jsp:include page="mainFooter.jsp" />
     
 

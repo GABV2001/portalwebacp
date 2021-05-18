@@ -68,17 +68,8 @@
 									Dt_Home dth = new Dt_Home();
 									listHome = dth.ListarHome();									
 									Home hm = new Home();
-									hm = listHome.get(0);
-																		
-								    String Img_historia =null;
-								 	String Img_vision = null;
-									String Img_mision = null;
-								
-								    Img_historia = hm.getImg_historia();
-									Img_vision = hm.getImg_vision();
-									Img_mision= hm.getImg_mision();
-									
-									 %>
+									hm = listHome.get(0);												
+									%>
                                         <form class="Inicio" method="post" action="./Sl_GestionInicio" enctype="multipart/form-data">
                 						<!-- El valor de estos input es para el Servlet opcion editar -->                			
                                         	<input name="idInicio" type="hidden" value="<%=hm.getHomeID()%>" />
@@ -96,13 +87,13 @@
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultHistoria">Historia.jpg</label>
 													    <input type="file" class="custom-file-input" id="multHistoria" name="multHistoria"  accept="image/jpeg" title="Historia.jpg">
-													   <input type="hidden" name="urlfotoHistoria" value="<%=Img_historia%>">									
+													   <input type="hidden" name="urlfotoHistoria" value="<%=hm.getImg_historia()%>">									
 													</div>
                                                 </div>
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="10" class="form-control"><%=hm.getHistoria() %></textarea>
+                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control"><%=hm.getHistoria() %></textarea>
                                             </div>
                                             <h3>Misión</h3>
                                             <hr class="bg-dark w-auto">
@@ -115,13 +106,13 @@
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultMision">Mision.jpg</label>
 													    <input type="file" class="custom-file-input" id="multMision" name="multMision"  accept="image/jpeg" title="Mision.jpg">
-													    <input type="hidden" name="urlfotoMision" value="<%=Img_mision%>">																		
+													    <input type="hidden" name="urlfotoMision" value="<%=hm.getImg_mision()%>">																		
 													</div>
                                                 </div>
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="4" class="form-control"><%=hm.getMision() %></textarea>
+                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control"><%=hm.getMision() %></textarea>
                                             </div>
 
                                             <h3>Visión</h3>
@@ -135,13 +126,13 @@
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultVision">Vision.jpg</label>
 													    <input type="file" class="custom-file-input" id="multVision" name="multVision"  accept="image/jpeg" title="Vision.jpg">
-													    <input type="hidden" name="urlfotoVision" value="<%=Img_vision%>">																												
+													    <input type="hidden" name="urlfotoVision" value="<%=hm.getImg_vision()%>">																												
 													</div>
                                                 </div>
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionVis" name = "descripcionVis" rows="4" class="form-control"><%=hm.getVision() %></textarea>
+                                                <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control"><%=hm.getVision() %></textarea>
                                             </div>
                                       	 	<div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
@@ -179,9 +170,6 @@
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
-
-	
-	
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -202,8 +190,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 	
-    <script>
-   
+    <script>  
     $('#multHistoria').on("change",function() {
 	     var i = $(this).prev('label').clone();
 	      var file = $('#multHistoria')[0].files[0].name;
@@ -221,10 +208,7 @@
 	      var file = $('#multVision')[0].files[0].name;
 	      $(this).prev('label').text(file);
 
-	    });
-   
-</script>
+	    });  
 </script>
 </body>
-
 </html>

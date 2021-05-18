@@ -15,7 +15,7 @@ public class PoolConexion {
 	private static BasicDataSource dataSource;
 	
 	//SERVIDOR LOCAL
-	private static String db = "portalwebacp";
+	private static String db = "test1";
 	private static String url = "jdbc:postgresql://localhost:5432/"+db;
 	private static String user = "postgres";
 	private static String password = "Imp2@20";
