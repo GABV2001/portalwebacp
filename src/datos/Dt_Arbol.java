@@ -88,12 +88,13 @@ public class Dt_Arbol {
 					rsArbol.updateString("NombreComun", arbol.getNombreComun());
 					rsArbol.updateString("NombreCientifico", arbol.getNombreCientifico());					
 					rsArbol.updateString("Descripcion", arbol.getDescripcion());
-					rsArbol.updateString("Multimedia", "Defecto.jpeg");
+					rsArbol.updateString("Multimedia", arbol.getMultimedia());
 					//rsArbol.updateString("Geoma", "");
 					rsArbol.updateInt("FloracionID", arbol.getFloracionID() );					
 					rsArbol.updateInt("FamiliaID", arbol.getFamiliaID());
 					rsArbol.updateInt("GeneroID", arbol.getGeneroID());
 					rsArbol.updateInt("DistribucionID", arbol.getDistribucionID());
+					rsArbol.updateTimestamp("fcreacion", arbol.getFcreacion());
 					rsArbol.updateInt("UsuarioID", 1);
 					rsArbol.updateInt("Estado", 1);
 					rsArbol.insertRow();
@@ -121,6 +122,4 @@ public class Dt_Arbol {
 				
 				return guardado;
 			}
-			
-
 }

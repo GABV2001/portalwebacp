@@ -41,7 +41,4 @@ public class Region {
 	public void setPaisID(int paisID) {
 		PaisID = paisID;
 	}
-	
-	
-
 }

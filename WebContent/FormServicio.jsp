@@ -76,12 +76,12 @@
                       					<input name="servicioid" type="hidden" value="<%=servicioid%>" />                      					
                                       <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" required>
+                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" minlength="10" maxlength="200" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónS"
                                                     class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" required ></textarea>
+                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" minlength="25" maxlength="350" required ></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>

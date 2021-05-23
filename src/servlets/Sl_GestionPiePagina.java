@@ -123,7 +123,7 @@ public class Sl_GestionPiePagina extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosPiePagina"+valorImagen+".png";
-						path = "C:\\payara5\\glassfish\\fotosPiePagina\\";
+						path = "C:\\payara5\\glassfish\\fotosPiePaginaAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -134,7 +134,7 @@ public class Sl_GestionPiePagina extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosPiePagina/"+rutaFichero;
+						String url = "fotosPiePaginaAbra/"+rutaFichero;
 						
 						ft.setLogo(url);										
 					}

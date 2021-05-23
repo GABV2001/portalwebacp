@@ -65,11 +65,11 @@
                       					<input name="opcion" type="hidden" value="2" />
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreProducto" name= "nombreProducto">
+                                                <input type="text" class="form-control" id="nombreProducto" name= "nombreProducto" minlength="10" maxlength="200" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionProducto" name= "descripcionProducto" rows="4" class="form-control"></textarea>
+                                                <textarea id="descripcionProducto" name= "descripcionProducto" rows="4" class="form-control" minlength="25" maxlength="200" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>

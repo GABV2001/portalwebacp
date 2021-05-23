@@ -66,12 +66,12 @@
                       					<input name="opcion" type="hidden" value="2" />
                                       <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio">
+                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" minlength="10" maxlength="200" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónS"
                                                     class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" id="descripcionServicio" name= "descripcionServicio"></textarea>
+                                                <textarea rows="4" class="form-control" id="descripcionServicio" name= "descripcionServicio" minlength="25" maxlength="350" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>

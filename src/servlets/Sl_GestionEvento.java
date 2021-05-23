@@ -143,7 +143,7 @@ public class Sl_GestionEvento extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosEvento"+valorImagen+".jpg";
-						path = "C:\\payara5\\glassfish\\fotosEvento\\";
+						path = "C:\\payara5\\glassfish\\fotosEventoAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -154,7 +154,7 @@ public class Sl_GestionEvento extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosEvento/"+rutaFichero;
+						String url = "fotosEventoAbra/"+rutaFichero;
 						ev.setMultimedia(url);
 					}
 					else

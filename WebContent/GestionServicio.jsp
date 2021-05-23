@@ -34,8 +34,6 @@
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
-    
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -89,7 +87,7 @@
                                        	    %> 
                                         <tr>
                                            <td><%=sr.getNombre()%></td>                                           
-                                            <td><%=sr.getDescripcion() %></td>                                                                                   
+                                            <td><%=sr.getDescripcion()%></td>                                                                                   
                                             <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
                         							<i class="fas fa-camera mostrarImagen" title="<%=sr.getMultimedia()%>" onClick="getValue()"></i>
                         							</a></td>
@@ -118,7 +116,7 @@
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
                         						</a></i></td>            
                                    	       </tr>   
-                                         <%
+                                        	 <%
                                        		}
                                            %>                                                           
                              
@@ -172,9 +170,7 @@
 
     <!-- Logout Modal-->
    	<jsp:include page="adminLogOutModal.jsp" />  
-
-
-
+	
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -224,12 +220,14 @@
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
         }
     });
+	</script>
+	
+	<script type="text/javascript">
     function getValue()
     {   	
         var a= event.srcElement.title;
         document.getElementById("preview").src = a;
-    }  
-	</script>
-	
+    }
+    </script>
 </body>
 </html>

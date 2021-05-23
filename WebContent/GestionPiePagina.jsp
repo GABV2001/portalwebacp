@@ -3,7 +3,10 @@
 %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +30,8 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
-
-
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
 
 <body id="page-top">
@@ -71,19 +74,19 @@
                                         	                                      	
                                             <div class="form-group">
                                                 <label>Dirección:</label>
-                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" required>
+                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" minlength="10" maxlength="150" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Correo:</label>
-                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" required>
+                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" minlength="10" maxlength="75" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Telefono:</label>
-                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=ft.getTelefono()%>" required  >
+                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=ft.getTelefono()%>" minlength="8" maxlength="20" required  >
                                             </div>
                                             <div class="form-group">
                                                 <label>Extensión:</label>
-                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=ft.getExtencion()%>" required>
+                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=ft.getExtencion()%>" minlength="10" required>
                                             </div>
                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -159,6 +162,11 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
+    
     <!--File Custom JS -->
 	<script>		
 	    $(document).ready(function() 
@@ -194,9 +202,23 @@
 		      $(this).prev('label').text(file);
 
 		    });
-	</script>
+</script>
+<script>
+    $(document).ready(function ()
+    {        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
-
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        });
+</script>
 </body>
-
 </html>

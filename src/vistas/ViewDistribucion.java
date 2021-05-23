@@ -6,6 +6,7 @@ public class ViewDistribucion {
 		private int DistribucionID;
 		private String Distribucion;
 		private String Descripcion;
+		private int Estado;
 		private String Region;
 		
 		public int getDistribucionID() {
@@ -32,10 +33,10 @@ public class ViewDistribucion {
 		public void setRegion(String region) {
 			Region = region;
 		}
-	
-		
-
-		
-		
-	    
+		public int getEstado() {
+			return Estado;
+		}
+		public void setEstado(int estado) {
+			Estado = estado;
+		}	    
 }

@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewArbol,datos.Dt_Arbol,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
-
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,8 +29,9 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+	 <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -91,15 +95,37 @@
                                        	    <td><%=us.getNombreComun() %></td>
                                        	    <td><%=us.getNombreCientifico() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>                                 
-                                            <td><%=us.getMultimedia() %></td>
-                                            <td><%=us.getNombreGenero() %></td>                                            
+                                            <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
+                        							<i class="fas fa-camera mostrarImagen" title="<%=us.getMultimedia()%>" onClick="getValue()"></i>
+                        							</a></td>
+                                         <td><%=us.getNombreGenero() %></td>                                            
                                             <td><%=us.getNombreFam() %></td>
                                             <td><%=us.getNombreFlo() %></td>
                                             <td><%=us.getNombreDis() %></td>                                                                                        
-                        			        <td>&nbsp;&nbsp;<a href="EditarArbol.jsp"><i
-                        	                                class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>
+                        			       <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idS=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Servicio',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionArbol?idA=<%=us.getArbolID()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td>            
+ 													</tr>
                                           <%
                                        		}
                                            %>                            
@@ -110,6 +136,27 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
+                
+                   <!-- MODAL VISUALIZAR IMAGEN -->					
+					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					       <h5 class="modal-title">Visualizar Imagen</h5>				
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					    	<div align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Banner"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+								</div>								
+					      </div>					 
+					    </div>
+					  </div>
+					</div>					
+					<!-- FIN Modal -->
 
             </div>
             <!-- End of Main Content -->
@@ -151,8 +198,44 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+        
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
-
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "3")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+	</script>
+	
+	<script type="text/javascript">
+    function getValue()
+    {   	
+        var a= event.srcElement.title;
+        document.getElementById("preview").src = a;
+    }
+    </script>
 </body>
-
 </html>

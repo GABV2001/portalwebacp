@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Pais, datos.Dt_Pais, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
-
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,6 +29,11 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+      <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+    
+    
 
 </head>
 
@@ -80,10 +88,30 @@
                                         <tr>                                           
                                        	    <td><%=us.getNombre() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>                                            
-                                            <td>&nbsp;&nbsp;<a href="EditarPais.jsp"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
-                                        </tr>    
+                                          <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=us.getPaisID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este país?',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		      window.location.href = 'Sl_GestionPais?idP=<%=us.getPaisID()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td>
+                        						</tr>   
                                             <%
                                        		}
                                            %>                         
@@ -135,8 +163,32 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
-
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+	</script>
 </body>
-
 </html>

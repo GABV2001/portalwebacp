@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="entidades.Genero,datos.Dt_Genero,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
-
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
     <meta charset=ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,6 +29,9 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+        <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 
 </head>
 
@@ -56,7 +62,7 @@
                                     <%
                                     	ArrayList<Genero> listGenero = new ArrayList<Genero>();
                                       	Dt_Genero dtu = new Dt_Genero();
-                                                                      	listGenero = dtu.listaGenero();
+                                        listGenero = dtu.listaGenero();
                                    %>
                                     <thead>
                                         <tr>                                         
@@ -78,11 +84,31 @@
 									 	for(Genero us: listGenero){
                                          %>
                                        	<tr> 
-                                       	    <td><%=us.getNombre() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>                                      
-                                            <td>&nbsp;&nbsp;<a href="EditarGenero.jsp"><i
-                                                        class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-                                                    href="#"><i class="far fa-trash-alt"></i></td>
+                                       	    <td><%=us.getNombre()%></td>                                           
+                                            <td><%=us.getDescripcion()%></td>                                      
+                                            <td>&nbsp;&nbsp;<a href="FormEditarGenero.jsp?idG=<%=us.getGeneroID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                        
+                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           			onclick="$.jAlert({
+                                           		    'type': 'confirm',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este genero?',
+                                           		    'onConfirm': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+
+                                           		       window.location.href = 'Sl_GestionGenero?idG=<%=us.getGeneroID()%>';
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    },
+                                           		    'onDeny': function(e, btn){
+                                           		      e.preventDefault();
+                                           		      //do something here
+                                           		      btn.parents('.jAlert').closeAlert();
+                                           		      return false;
+                                           		    }
+                                           		  });">
+                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        						</a></i></td> 
                                         </tr>
                                            <%
                                        		}
@@ -135,6 +161,34 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+       <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        if(mensaje == "5")
+        {
+            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }
+    });
+	</script>
+	
 
 
 </body>

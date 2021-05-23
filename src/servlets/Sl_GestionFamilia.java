@@ -30,7 +30,18 @@ public class Sl_GestionFamilia extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int idFamilia =0;
+		idFamilia = Integer.parseInt(request.getParameter("idF"));
+		Dt_Familia dtf = new Dt_Familia();
+		
+		if(dtf.eliminarFamila(idFamilia)) {
+        	response.sendRedirect("GestionFamilia.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionFamilia.jsp?msj=6");
+        }
 	}
 
 	/**
@@ -70,31 +81,28 @@ public class Sl_GestionFamilia extends HttpServlet {
 				break;
 			}
 		case 2:{
-			try {
-	        	
-		        if(dtf.modificarFamilia(fm)) {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=3");
+			fm.setFamiliaID(Integer.parseInt(request.getParameter("idfamilia")));
+     		try {
+				   if(dtf.modificarFamilia(fm)) {
+		        	response.sendRedirect("GestionFamilia.jsp?msj=3");
 		        }
 		        else {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=4");
+		        	response.sendRedirect("GestionFamilia.jsp?msj=4");
 		        }
 		        
 	        	
 	        }
 	        catch(Exception e) {
-	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
+	        	System.out.println("Sl_GestionFamilia, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
 				break;
 				
 			}
 		default:
-			response.sendRedirect("GestionFamilia.jsp?msj=5");	
+			response.sendRedirect("GestionFamilia.jsp?msj=7");	
 			break;
-		
-			
-		}		
-	
+		}
 		
 		}
 	

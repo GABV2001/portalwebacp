@@ -105,7 +105,7 @@ public class Sl_GuardarBanner extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosBanner"+valorPosicion+".jpg";
-						path = "C:\\payara5\\glassfish\\fotosBanner\\";
+						path = "C:\\payara5\\glassfish\\fotosBannerAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -116,7 +116,7 @@ public class Sl_GuardarBanner extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosBanner/"+rutaFichero;
+						String url = "fotosBannerAbra/"+rutaFichero;
 						
 						//Setear valores al objeto para guardar en la bd
 						bn.setPosicion(Integer.parseInt(posicion));

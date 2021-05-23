@@ -65,11 +65,11 @@
                                     	<input name="bannerID"  type = "hidden" value="<%=bn.getBannerID()%>" />
                                          <div class="form-group">
                                                 <label for="formGroupExampleInput">Titulo:</label>
-                                                <input type="text" class="form-control" name= "txtEditTituloBanner" id="txtEditTituloBanner" required>
+                                                <input type="text" class="form-control" name= "txtEditTituloBanner" id="txtEditTituloBanner" minlength="5" maxlength="80" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" required></textarea>
+                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" minlength="5" maxlength="80" required></textarea>
                                             </div>                                                                                    		                                
                                          	  	<div class="mb-2 text-center">
 					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />

@@ -228,7 +228,7 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Exito', 'El elemento ha sido eliminado exitosamente');
         }       
     
        
@@ -239,7 +239,5 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
         document.getElementById("preview").src = a;
     }  
 	</script>
-
 </body>
-
 </html>

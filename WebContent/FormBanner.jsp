@@ -60,11 +60,11 @@
                                     	<input name="posicion"  type = "hidden" value="<%=pos%>" />
                                          <div class="form-group">
                                                 <label for="formGroupExampleInput">Titulo:</label>
-                                                <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" required>
+                                                <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" minlength="5" maxlength="80" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripcionBanner" required></textarea>
+                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripcionBanner" minlength="5" maxlength="200" required></textarea>
                                             </div>
                                              <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>

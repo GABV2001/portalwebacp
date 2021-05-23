@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
 <meta charset="ISO-8859-1">
  <title>Portal ACP - Gestión Inicio</title>
@@ -38,6 +42,9 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
 <body id="page-top">
 
@@ -86,14 +93,14 @@
                                                     </div>
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultHistoria">Historia.jpg</label>
-													    <input type="file" class="custom-file-input" id="multHistoria" name="multHistoria"  accept="image/jpeg" title="Historia.jpg">
+													    <input type="file" class="custom-file-input" id="multHistoria" name="multHistoria" accept="image/jpeg" title="Historia.jpg">
 													   <input type="hidden" name="urlfotoHistoria" value="<%=hm.getImg_historia()%>">									
 													</div>
                                                 </div>
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control"><%=hm.getHistoria() %></textarea>
+                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getHistoria() %></textarea>
                                             </div>
                                             <h3>Misión</h3>
                                             <hr class="bg-dark w-auto">
@@ -112,7 +119,7 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control"><%=hm.getMision() %></textarea>
+                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getMision() %></textarea>
                                             </div>
 
                                             <h3>Visión</h3>
@@ -132,7 +139,7 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control"><%=hm.getVision() %></textarea>
+                                                <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getVision() %></textarea>
                                             </div>
                                       	 	<div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
@@ -189,6 +196,11 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
 	
     <script>  
     $('#multHistoria').on("change",function() {
@@ -210,5 +222,22 @@
 
 	    });  
 </script>
+<script>
+    $(document).ready(function ()
+    {      
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "1")
+        {
+            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+        }
+        if(mensaje == "2")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        }
+        });
+	</script>
 </body>
 </html>

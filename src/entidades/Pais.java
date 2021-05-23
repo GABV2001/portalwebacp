@@ -8,7 +8,7 @@ public class Pais {
 	private String Descripcion;
 	private int Estado;
 	
-	//Metodos
+	//metodos
 	public int getPaisID() {
 		return PaisID;
 	}
@@ -33,7 +33,4 @@ public class Pais {
 	public void setEstado(int estado) {
 		Estado = estado;
 	}
-	
-	
-
 }

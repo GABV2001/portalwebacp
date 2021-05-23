@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
- import="entidades.Servicio, datos.Dt_Servicio, java.util.*;" %>
-    <% 
-	  ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
-	  Dt_Servicio dts = new Dt_Servicio();
-	  listServicio = dts.listarServicio(); 
-      boolean c= 	listServicio.stream().allMatch(x -> x.getEstadoservicio() == 2);
-      %>   
+ import="entidades.Servicio, datos.Dt_Servicio, negocio.Ng_Servicio, java.util.*;" %>
+   
 <!DOCTYPE html>            
 <html lang="en">
 <head>
@@ -36,112 +31,130 @@
   <!-- CSS IMAGE -->
   <link rel="stylesheet" href="./css/image.css">
 </head>
-
 <body>
+<!-- Menu -->
+<jsp:include page="mainMenus.jsp" />
 
+<!-- Contenido -->
+<div class="container mb-5">
+<br>
+<h2 class="text-center">Servicios</h2>
+<hr>
 
-  <!-- Menu -->
-     <jsp:include page="mainMenus.jsp" />
+<div class="row">
+		<%       			
+		boolean control = Ng_Servicio.validarVisibilidad();
+		if(control == true){%>
+		 <div class="row">
+           <div class="col-md-4">
+               <figure class="card card-product">
+                   <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                   <figcaption class="info-wrap">
+                       <h4 class="title">amet consectetur</h4>
+                       <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                           accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                           Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Sapiente reiciendis quod fuga </p>
+                   </figcaption>
+                   <div class="bottom-wrap">
+                       <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                   </div> <!-- bottom-wrap.// -->
+               </figure>
+           </div> <!-- col // -->
+           <div class="col-md-4">
+               <figure class="card card-product">
+                   <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"> </div>
+                   <figcaption class="info-wrap">
+                       <h4 class="title">accusantium iusto</h4>
+                       <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                           accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                           Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Sapiente reiciendis quod fuga </p>
+                   </figcaption>
+                   <div class="bottom-wrap">
+                       <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                   </div> <!-- bottom-wrap.// -->
+               </figure>
+           </div> <!-- col // -->
+           <div class="col-md-4">
+               <figure class="card card-product">
+                   <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
+                   <figcaption class="info-wrap">
+                       <h4 class="title">ipsum dolor</h4>
+                       <p class="desc">SLorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
+                           accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
+                           Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Sapiente reiciendis quod fuga </p>
+                   </figcaption>
+                   <div class="bottom-wrap">
+                       <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
+                   </div> <!-- bottom-wrap.// -->
+               </figure>
+	           </div> <!-- col // -->
+	       </div> <!-- row.// -->
+	    </div>
+	    <!--container.//-->     	    
+	      <%}else{   
+	     	 ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
+			 Dt_Servicio dts = new Dt_Servicio();
+			 listServicio = dts.listarServicio(); 
+		   	
+	     	  for(Servicio sr: listServicio){                    	
+	          if(sr.getEstadoservicio()==1){
+	          String desc = sr.getDescripcion();
+	          desc = desc.substring(0,25);
+	          %>			          
+			  
+			  <div class="col-md-4">
+			    <figure class="card card-product border border-dark">
+			        <div class="card-img-top">
+			        <img class="img-guide" src="<%=sr.getMultimedia()%>">
+			        </div>
+			        <figcaption class="info-wrap">
+			            <h4 class="card-title"><%=sr.getNombre()%></h4>
+			            <p class="card-text descServicio" onClick="getValue()" title="<%=sr.getDescripcion()%>"><%=desc%>...</p>
+			        </figcaption>
+			        <div class="bottom-wrap">
+			            <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
+			        </div> <!-- bottom-wrap.// -->
+			    </figure>
+					</div> <!-- col // -->				       
+			<%
+			  }//Fin if
+		     }//Fin For
+		    }//Fin else
+		   %>  
+		</div>	            
+      </div> <!-- row.// -->
+    </div>
+<!--container.//-->	
 
- <!-- Contenido -->
-      <div class="container mb-5">
-        <br>
-        <h2 class="text-center">Servicios</h2>
-        <hr>
+<!-- footer -->
+<jsp:include page="mainFooter.jsp" />
 
-        <div class="row">
-       				 <%
-       				 	int control = 2;
-                 	    if(listServicio.size() == 0 || listServicio.stream().allMatch(x -> x.getEstadoservicio() == 2)){%>
-              	        <div class="row">
-                          <div class="col-md-4">
-                              <figure class="card card-product">
-                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
-                                  <figcaption class="info-wrap">
-                                      <h4 class="title">amet consectetur</h4>
-                                      <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                                          elit. Sapiente reiciendis quod fuga </p>
-                                  </figcaption>
-                                  <div class="bottom-wrap">
-                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
-                                  </div> <!-- bottom-wrap.// -->
-                              </figure>
-                          </div> <!-- col // -->
-                          <div class="col-md-4">
-                              <figure class="card card-product">
-                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"> </div>
-                                  <figcaption class="info-wrap">
-                                      <h4 class="title">accusantium iusto</h4>
-                                      <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                                          elit. Sapiente reiciendis quod fuga </p>
-                                  </figcaption>
-                                  <div class="bottom-wrap">
-                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
-                                  </div> <!-- bottom-wrap.// -->
-                              </figure>
-                          </div> <!-- col // -->
-                          <div class="col-md-4">
-                              <figure class="card card-product">
-                                  <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
-                                  <figcaption class="info-wrap">
-                                      <h4 class="title">ipsum dolor</h4>
-                                      <p class="desc">SLorem ipsum dolor sit amet consectetur adipisicing elit. Eum dolorum earum
-                                          accusamus optio, iusto accusantium deleniti quod alias error nulla voluptate a eaque soluta!
-                                          Esse iure vel minus consectetur ad?, Lorem ipsum dolor, sit amet consectetur adipisicing
-                                          elit. Sapiente reiciendis quod fuga </p>
-                                  </figcaption>
-                                  <div class="bottom-wrap">
-                                      <a href="" class="btn btn-sm btn-primary float-right">Contactar</a>
-                                  </div> <!-- bottom-wrap.// -->
-                              </figure>
-                          </div> <!-- col // -->
-                      </div> <!-- row.// -->
-              	    </div>
-              	    <!--container.//-->     	    
-                     <%}else{                    
-                    	 for(Servicio sr: listServicio){                    	
-                         if(sr.getEstadoservicio()!=2){%>			          
-			             <div class="col-md-4">
-			                <figure class="card card-product border border-dark">
-			                    <div class=""><img class="img-guide" src="<%=sr.getMultimedia()%>"></div>
-			                    <figcaption class="info-wrap">
-			                        <h4 class="title"><%=sr.getNombre()%></h4>
-			                        <p class="desc"><%=sr.getDescripcion()%></p>
-			                    </figcaption>
-			                    <div class="bottom-wrap">
-			                        <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-			                    </div> <!-- bottom-wrap.// -->
-			                </figure>
-			            </div> <!-- col // -->				       
-			          <%
-					  }//Fin if
-			         }//Fin For
-			        }//Fin else
-			       %>  
-			    </div>	            
-            </div> <!-- row.// -->
-         </div>
-    <!--container.//-->	
+<!-- Javascript -->
+<link rel="stylesheet" href="js/bootstrap.min.js">
+<script defer src="./js/index.js"></script>
 
-  <!-- footer -->
-  <jsp:include page="mainFooter.jsp" />
+<!-- BOOTSTRAP V.4 -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+  integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+  integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+  crossorigin="anonymous"></script>
 
-
-  <!-- Javascript -->
-  <link rel="stylesheet" href="js/bootstrap.min.js">
-  <script defer src="./js/index.js"></script>
-
-  <!-- BOOTSTRAP V.4 -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
-    integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
-    integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
-    crossorigin="anonymous"></script>
+<script>
+ function getValue()
+    {   	
+        var b = document.getElementsByClassName("descServicio");         
+        for(var i=0; i<b.length; i++){
+        	var a = b[i].title;
+        	var c = b[i].innerHTML;
+        	b[i].innerHTML = a;
+        	b[i].title=c;
+        	}
+    }  
+</script>
 </body>
-
 </html>

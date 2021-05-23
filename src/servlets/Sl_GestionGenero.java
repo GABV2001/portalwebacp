@@ -31,7 +31,18 @@ public class Sl_GestionGenero extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int idGenero =0;
+		idGenero = Integer.parseInt(request.getParameter("idG"));
+		Dt_Genero dtg = new Dt_Genero();
+		
+		if(dtg.eliminarGenero(idGenero)) {
+        	response.sendRedirect("GestionGenero.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionGenero.jsp?msj=6");
+        }
 	}
 
 	/**
@@ -39,39 +50,56 @@ public class Sl_GestionGenero extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
 		//Obtenemos el valor de opcion
 		int opc = 0;
 		opc = Integer.parseInt(request.getParameter("opcion"));
 		
 		//Construir objeto genero
-		Dt_Genero dtb = new Dt_Genero();
-		Genero bn = new Genero();
-		bn.setNombre(request.getParameter("txtNombreGenero"));
-		bn.setDescripcion(request.getParameter("txtDescripcionGenero"));		
+		Dt_Genero dtg = new Dt_Genero();
+		Genero gn = new Genero();
+		gn.setNombre(request.getParameter("txtNombreGenero"));
+		gn.setDescripcion(request.getParameter("txtDescripcionGenero"));		
 		
 		switch (opc){
-			case 1:{
+		case 1:{			
+		        try {
+			        if(	dtg.guardarGenero(gn)) {
+			        	response.sendRedirect("GestionGenero.jsp?msj=1");
+			        }
+			        else {
+			        	response.sendRedirect("GestionGenero.jsp?msj=2");
+			        }		        		        	
+		        }
+		        catch(Exception e) {
+		        	System.out.println("Sl_GestionGenero, el error es: " + e.getMessage());
+					e.printStackTrace();
+		        }		        
+				break;
+			}
+		case 2:{
+			gn.setGeneroID(Integer.parseInt(request.getParameter("idgenero")));
+     		try {
+				   if(dtg.modificarGenero(gn)) {
+		        	response.sendRedirect("GestionGenero.jsp?msj=3");
+		        }
+		        else {
+		        	response.sendRedirect("GestionGenero.jsp?msj=4");
+		        }       	
+	        }
+	        catch(Exception e) {
+	        	System.out.println("Sl_GestionGenero, el error es: " + e.getMessage());
+				e.printStackTrace();
+	        }
+				break;
 				
-			        try {
-				        if(dtb.guardarGenero(bn)) {
-				        	response.sendRedirect("GestionGenero.jsp?msj=1");
-				        }
-				        else {
-				        	response.sendRedirect("GestionGenero.jsp?msj=2");
-				        }
-				        	
-			        	
-			        }
-			        catch(Exception e) {
-			        	System.out.println("Sl_GestionFamilia, el error es: " + e.getMessage());
-						e.printStackTrace();
-			        }
-			        
-					break;
-				}
+			}
+		default:
+			response.sendRedirect("GestionGenero.jsp?msj=7");	
+			break;
 		}
-	}
+		
+	}		
 	
 
 }

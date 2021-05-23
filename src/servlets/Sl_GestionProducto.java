@@ -130,7 +130,7 @@ public class Sl_GestionProducto extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosProducto"+valorImagen+".jpg";
-						path = "C:\\payara5\\glassfish\\fotosProducto\\";
+						path = "C:\\payara5\\glassfish\\fotosProductoAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -141,7 +141,7 @@ public class Sl_GestionProducto extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosProducto/"+rutaFichero;
+						String url = "fotosProductoAbra/"+rutaFichero;
 						pr.setMultimedia(url);
 					}
 					else

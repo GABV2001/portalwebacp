@@ -57,8 +57,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionUsuario.jsp">Gestión Usuarios</a>
+                        <a class="collapse-item" href="GestionRol.jsp">Gestión Roles</a>
+                        <a class="collapse-item" href="GestionOpciones.jsp">Gestión Opciones</a>                        
                     </div>
-                </div>
+                </div>               
             </li>
 
             <!-- Divider -->

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Distribucion;
+import entidades.Familia;
 import vistas.ViewDistribucion;
 
 
@@ -21,7 +22,7 @@ public class Dt_Distribucion {
 		// Metodo para llenar el RusultSet
 		public void llenaRsDistribucion(Connection c){
 			try{
-				ps = c.prepareStatement("select * from distribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,regionid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rsDistribucion = ps.executeQuery();
 			}
 			catch (Exception e){
@@ -30,12 +31,13 @@ public class Dt_Distribucion {
 			}
 		}
 		
-		//Metodo para visualizar usuarios registrados y activos
+
+		//Metodo para visualizar distribucion para combobox
 				public ArrayList<Distribucion> listaDistribucion(){
 					ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
 					try{
 						c = PoolConexion.getConnection();
-						ps = c.prepareStatement("select * from distribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,regionid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 						rs = ps.executeQuery();
 						while(rs.next()){
 							Distribucion distribucion = new Distribucion();
@@ -71,13 +73,14 @@ public class Dt_Distribucion {
 					}
 					return listDistribucion;
 				}
+		
 				
 		//Metodo para visualizar vista distribucion
 		public ArrayList<ViewDistribucion> listaViewDistribucion(){
 			ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
 			try{
 				c = PoolConexion.getConnection();
-				ps = c.prepareStatement("select * from viewdistribucion", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select distribucionid,estado,descripcion,distribucion,region from viewdistribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rs = ps.executeQuery();
 				while(rs.next()){
 					ViewDistribucion distribucion = new ViewDistribucion();
@@ -85,6 +88,7 @@ public class Dt_Distribucion {
 					distribucion.setDistribucion(rs.getString("distribucion"));
 					distribucion.setDescripcion(rs.getString("descripcion"));						
 					distribucion.setRegion(rs.getString("region"));
+					distribucion.setEstado(rs.getInt("estado"));
 					listDistribucion.add(distribucion);
 				}
 			}
@@ -151,6 +155,143 @@ public class Dt_Distribucion {
 			
 			return guardado;
 		}
+		
+		// Metodo para visualizar los datos de una distribucion especifica
+			public Distribucion getDistribucion(int idDistribucion)
+			{
+				Distribucion ds = new Distribucion();
+				try
+				{
+					c = PoolConexion.getConnection();
+					ps = c.prepareStatement("select distribucionid, nombre, descripcion, regionid, estado from distribucion where estado <> 3 and distribucionid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps.setInt(1, idDistribucion);
+					rs = ps.executeQuery();
+					if(rs.next())
+					{
+						ds.setDistribucionID(idDistribucion);
+						ds.setNombre(rs.getString("nombre"));
+						ds.setDescripcion(rs.getString("descripcion"));	
+						ds.setRegionID(rs.getInt("regionid"));
+						ds.setEstado(rs.getInt("estado"));
+					}
+				}
+				catch (Exception e)
+				{
+					System.out.println("DATOS ERROR DISTRIBUCION: "+ e.getMessage());
+					e.printStackTrace();
+						}
+						finally
+						{
+						try {
+						if(rs != null){
+							rs.close();
+						}
+						if(ps != null){
+							ps.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+								
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+						
+						return ds;
+			}
+			
+			
+			
+		// Metodo para eliminar region
+		public boolean eliminarDistribucion(int idDistribucion)
+		{
+			boolean eliminado=false;	
+			try
+			{
+				c = PoolConexion.getConnection();
+				this.llenaRsDistribucion(c);
+				rsDistribucion.beforeFirst();
+				while (rsDistribucion.next())
+				{
+					if(rsDistribucion.getInt(1)==idDistribucion)
+					{
+						rsDistribucion.updateInt("estado", 3);
+						rsDistribucion.updateRow();
+						eliminado=true;
+						break;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.err.println("ERROR AL ElIMINAR Distribucion "+e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rsDistribucion != null){
+						rsDistribucion.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return eliminado;
+		}
+		// Metodo para modificar familia
+		public boolean modificarDistribucion (Distribucion ds)
+		{
+			boolean modificado=false;	
+			try
+			{
+				c = PoolConexion.getConnection();
+				this.llenaRsDistribucion(c);
+				rsDistribucion.beforeFirst();
+				while (rsDistribucion.next())
+				{
+					if(rsDistribucion.getInt(1)==ds.getDistribucionID())
+					{
+						rsDistribucion.updateString("nombre", ds.getNombre());
+						rsDistribucion.updateString("descripcion", ds.getDescripcion());	
+						rsDistribucion.updateInt("regionid", ds.getRegionID());
+						rsDistribucion.updateInt("estado", 2);
+						rsDistribucion.updateRow();
+						modificado=true;
+						break;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.err.println("ERROR AL ACTUALIZAR DISTRIBUCION"+e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rsDistribucion != null){
+						rsDistribucion.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return modificado;
+		}
+		
 
 	
 	

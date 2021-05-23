@@ -2,7 +2,7 @@ package entidades;
 
 public class Distribucion {
 	
-	  //Atributos
+	//Atributos
 	private int DistribucionID;
 	private String Nombre;
 	private String Descripcion;

@@ -141,7 +141,7 @@ public class Sl_GestionInicio extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosInicio"+valorImagen+".jpg";
-						path = "C:\\payara5\\glassfish\\fotosInicio\\";
+						path = "C:\\payara5\\glassfish\\fotosInicioAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -152,7 +152,7 @@ public class Sl_GestionInicio extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosInicio/"+rutaFichero;
+						String url = "fotosInicioAbra/"+rutaFichero;
 						urls =url;
 						
 						if(urlFotos.equals("multHistoria")){

@@ -1,4 +1,4 @@
-package entidades;
+  package entidades;
 
 public class Genero {
 	
@@ -6,8 +6,7 @@ public class Genero {
 		private int GeneroID;
 		private String Nombre;
 		private String Descripcion;
-		
-		//Metodos
+		private int Estado;
 		public int getGeneroID() {
 			return GeneroID;
 		}
@@ -26,5 +25,15 @@ public class Genero {
 		public void setDescripcion(String descripcion) {
 			Descripcion = descripcion;
 		}
+		public int getEstado() {
+			return Estado;
+		}
+		public void setEstado(int estado) {
+			Estado = estado;
+		}
+		
+		//Metodos
+		
+		
 
 }

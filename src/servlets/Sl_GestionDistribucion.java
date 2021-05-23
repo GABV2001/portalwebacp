@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Distribucion;
 import datos.Dt_Distribucion;
 
-
-
 /**
  * Servlet implementation class Sl_GestionDistribucion
  */
@@ -31,8 +29,19 @@ public class Sl_GestionDistribucion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		int idDistribucion =0;
+		idDistribucion = Integer.parseInt(request.getParameter("idD"));
+		Dt_Distribucion dtr = new Dt_Distribucion();
+		
+		if(dtr.eliminarDistribucion(idDistribucion)) {
+        	response.sendRedirect("GestionDistribucion.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionDistribucion.jsp?msj=6");
+        }
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -43,17 +52,18 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		int opc = 0;
 		opc = Integer.parseInt(request.getParameter("opcion"));
 		
-		//CONSTRUIR EL OBJETO USUARIO
+		//CONSTRUIR EL OBJETO 
 		Dt_Distribucion dtf = new Dt_Distribucion();
-		Distribucion dt = new Distribucion();
-		dt.setNombre(request.getParameter("txtNombreDistribucion"));
-		dt.setDescripcion(request.getParameter("txtDescripcionDistribucion"));
+		Distribucion ds = new Distribucion();
+		ds.setNombre(request.getParameter("txtNombreDistribucion"));
+		ds.setDescripcion(request.getParameter("txtDescripcionDistribucion"));
+		ds.setRegionID(Integer.parseInt(request.getParameter("txtNombreRegion")));
 		
 		switch (opc){
 		case 1:{
 			
 		        try {
-			        if(	dtf.guardarDistribucion(dt)) {
+			        if(	dtf.guardarDistribucion(ds)) {
 			        	response.sendRedirect("GestionDistribucion.jsp?msj=1");
 			        }
 			        else {
@@ -69,14 +79,32 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		        
 				break;
 			}
-		
-			default:
-			response.sendRedirect("GestionDistribucion.jsp?msj=5");	
+		case 2:{
+			ds.setDistribucionID(Integer.parseInt(request.getParameter("iddistribucion")));
+     		try {
+				   if(dtf.modificarDistribucion(ds)) {
+		        	response.sendRedirect("GestionDistribucion.jsp?msj=3");
+		        }
+		        else {
+		        	response.sendRedirect("GestionDistribucion.jsp?msj=4");
+		        }
+		        
+	        	
+	        }
+	        catch(Exception e) {
+	        	System.out.println("Sl_GestionDistribucion, el error es: " + e.getMessage());
+				e.printStackTrace();
+	        }
+				break;
+				
+			}
+		default:
+			response.sendRedirect("GestionDistribucion.jsp?msj=7");	
 			break;
-		
+		}
 		
 		}
-	}
+	
 
 	
 

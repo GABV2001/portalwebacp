@@ -30,8 +30,20 @@ public class Sl_GestionRegion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		int idRegion =0;
+		idRegion = Integer.parseInt(request.getParameter("idR"));
+		Dt_Region dtr = new Dt_Region();
+		
+		if(dtr.eliminarRegion(idRegion)) {
+        	response.sendRedirect("GestionRegion.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionRegion.jsp?msj=6");
+        }
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +59,7 @@ public class Sl_GestionRegion extends HttpServlet {
 				Region rg = new Region();
 				rg.setNombre(request.getParameter("txtNombreRegion"));
 				rg.setDescripcion(request.getParameter("txtDescripcionRegion"));
-				//rg.setPaisID(Integer.parseInt(request.getParameter("txtNombrePais")));				
+				rg.setPaisID(Integer.parseInt(request.getParameter("txtNombrePais")));				
 				
 				switch (opc){
 				case 1:{
@@ -68,16 +80,33 @@ public class Sl_GestionRegion extends HttpServlet {
 				        }
 				        
 						break;
+				}
+				case 2:{
+					rg.setRegionID(Integer.parseInt(request.getParameter("idregion")));
+		     		try {
+						   if(dtf.modificarRegion(rg)) {
+				        	response.sendRedirect("GestionRegion.jsp?msj=3");
+				        }
+				        else {
+				        	response.sendRedirect("GestionRegion.jsp?msj=4");
+				        }
+				        
+			        	
+			        }
+			        catch(Exception e) {
+			        	System.out.println("Sl_GestionRegion, el error es: " + e.getMessage());
+						e.printStackTrace();
+			        }
+						break;
+						
 					}
-				
-					default:
-					response.sendRedirect("GestionRegion.jsp?msj=5");	
+				default:
+					response.sendRedirect("GestionRegion.jsp?msj=7");	
 					break;
-				
+				}
 				
 				}
-			}
-	
+			
 	
 	
 	

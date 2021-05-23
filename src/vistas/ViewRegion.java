@@ -6,6 +6,7 @@ public class ViewRegion {
 	private int regionid;
 	private String NombreRegion;
 	private String Descripcion;
+	private int Estado;
 	private String Pais;
 	
 	
@@ -34,9 +35,10 @@ public class ViewRegion {
 	public void setDescripcion(String descripcion) {
 		Descripcion = descripcion;
 	}
-
-	
-	
-	
-	
+	public int getEstado() {
+		return Estado;
+	}
+	public void setEstado(int estado) {
+		Estado = estado;
+	}	
 }

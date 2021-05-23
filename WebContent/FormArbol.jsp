@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,java.util.*;" %>
+import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -54,7 +54,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     </div>
                                     <div class="card-body bg-white rounded">
                                     
-                                        <form class="Arbol" method="post" action="./Sl_GestionArbol">
+                                        <form class="Arbol" method="post" action="./Sl_GestionArbol" enctype="multipart/form-data">
                                         <input name="opcion" type="hidden" value="1" />                                        
                                             <div class="form-group">
                                                 <label>Nombre común:</label>
@@ -70,18 +70,16 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                                 <label>Descripción:</label>
                                                 <textarea class="form-control" rows="3"  name="txtDescripcionArbol" id="txtDescripcionArbol" required></textarea>
                                             </div>
-                                            <div class="form-group">
-                                            
-                                                <label for="custom-file">Imagen del arbol:</label>
+                                             <div class="form-group">
+                                                <label for="custom-file">Multimedia:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
-                                                    </div>                                                    
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="Multimedia" id="Multimedia" accept="image/*" >
-                                                        <label class="custom-file-label text-truncate" for="Multimedia" 
-                                                            id="labelmulBanner">Seleccionar archivo...</label>
                                                     </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultArb" name="filmultArb">Seleccionar Archivo</label>
+													    <input type="file" class="custom-file-input" id="multArbol" name="multArbol" onchange="Test.UpdatePreview(this)" accept="image/jpeg" >
+													</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -93,6 +91,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                                 <label>Género del árbol: &nbsp;<a href="GestionGenero.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>  
                                                 <select class="form-control" name="GeneroID" id="GeneroID">
+                                                <option value="0" selected disabled>Seleccionar</option> 
                                             <%
                                     		for(Genero u: listGenero){
                                     	    %>	
@@ -111,6 +110,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                                 <label>Familia del árbol:  &nbsp;<a href="GestionFamilia.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control" name="FamiliaID" id="FamiliaID">
+                                                <option value="0" selected disabled>Seleccionar</option> 
                                             <%
                                     		for(Familia u: listFamilia){
                                     	    %>	
@@ -128,6 +128,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                             <div class="form-group">
                                                 <label>Floracion del árbol:</label>
                                                 <select class="form-control" name="FloracionID" id="FloracionID">
+                                                <option value="0" selected disabled>Seleccionar</option> 
                                             <%
                                     		for(Floracion u: listFloracion){
                                     	    %>	
@@ -143,9 +144,10 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                             listDistribucion = dtd.listaDistribucion();
                                             %>
                                             <div class="form-group">
-                                                <label>Distribución del árbol:  &nbsp;<a href="GestionDistribucion.jsp"><i
+                                                <label>Distribución del árbol:  &nbsp;<a href="GestionDistribucion.jsp" data-toggle="modal" data-target="#modalDistribucion"><i
                                                 class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control" name="DistribucionID" id="DistribucionID">
+                                       			<option value="0" selected disabled>Seleccionar</option>                                   			                                            	                                   
                                             <%
                                     		for(Distribucion u: listDistribucion){
                                     	    %>	
@@ -153,7 +155,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     	    <%
                                     		}
                                     	    %>  
-                                                </select>
+                                           </select>
                                             </div>                                         
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
@@ -170,6 +172,74 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
 
                 </div>
                 <!-- /.container-fluid -->
+                
+                	<!-- MODAL NUEVO USUARIO -->
+					<div class="modal fade" id="modalDistribucion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalCenterTitle">Formulario Distribución</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					         <form class="distribucion" method="post" action="./Sl_GestionDistribucion" >
+								<!-- El valor de este input es para el Servlet opcion guardar -->
+                            	<input name="opcion" type="hidden" value="1" />
+                            		<div class="form-group row">
+                                    <div class="col-sm-12 mb-3">
+                                    	<%
+		                            /*    	ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
+		                                	Dt_Distribucion dtd = new Dt_Distribucion();
+		                                	listDistribucion = dtd.listaDistribucion();*/
+                                		%>
+                                    	<select class="form-control" name="cbxUser" id="cbxUser" required>
+                                    	<option value="">Seleccione...</option>
+                                    	<%
+                                    /*		for(UDistribucionsuario u: listUser){*/
+                                    	%>	
+                                      	<%
+                                    	/*	}*/
+                                    	%>
+                                    	
+                                    	</select>
+                                    </div>
+                                    <div class="col-sm-12 mb-3">
+                                 	<%
+		                                /*	ArrayList<Rol> listRol = new ArrayList<Rol>();
+		                                	Dt_Rol dtr = new Dt_Rol();
+											listRol = dtr.listaRolActivos();*/
+                                		%>
+                                    	<select class="form-control" name="cbxRol" id="cbxRol" required>
+                                    	<option value="">Seleccione...</option>
+                                    	<%
+                                    	/*	for(Rol r: listRol){*/
+                                    	%>	
+        	                           	<%
+                                    	/*	}*/
+                                    	%>
+                                    	
+                                    	</select>
+                                    </div>
+                                </div>                            
+	                            <hr>
+	                            <div class="form-group text-center">
+	                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+	                            </div>
+	                            <div class="form-group text-center">
+	                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
+	                            </div>
+                            </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<!-- 					        <button type="button" class="btn btn-primary">Save changes</button> -->
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<!-- FIN Modal -->
 
             </div>
             <!-- End of Main Content -->
@@ -214,6 +284,15 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+	<script> 
+	$('#multArbol').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multArbol')[0].files[0].name;
+	   console.log(file);
+	      $(this).prev('label').text(file);
+
+	    });
+	</script>	
 
 </body>
 
