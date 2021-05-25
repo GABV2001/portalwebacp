@@ -12,5 +12,6 @@
     <property name="alternatedocroot_6" value="from=/fotosEventoAbra/* dir=\\C:\payara5\glassfish"/> 
     <property name="alternatedocroot_7" value="from=/fotosArbolAbra/* dir=\\C:\payara5\glassfish"/> 
     <property name="alternatedocroot_8" value="from=/fotosUsuarioAbra/* dir=\\C:\payara5\glassfish"/> 	
-    <property name="alternatedocroot_8" value="from=/fotosPublicacionAbra/* dir=\\C:\payara5\glassfish"/> 	 
+    <property name="alternatedocroot_8" value="from=/fotosPublicacionAbra/* dir=\\C:\payara5\glassfish"/> 
+    <property name="alternatedocroot_9" value="from=/fotosArbolAbra/* dir=\\C:\payara5\glassfish"/> 	     	 
 </glassfish-web-app>

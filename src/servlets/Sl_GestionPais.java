@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_Pais;
 import entidades.Pais;
+import negocio.Ng_Pais;
 
 /**
  * Servlet implementation class Sl_GestionPais
@@ -58,21 +59,26 @@ public class Sl_GestionPais extends HttpServlet {
 		//Construir objeto pais
 		Dt_Pais dtp = new Dt_Pais();
 		Pais p = new Pais();
+		Ng_Pais ngp = new Ng_Pais();
+		
 		p.setNombre(request.getParameter("txtNombrePais"));
 		p.setDescripcion(request.getParameter("txtDescripcionPais"));
+		p.setRegionID(Integer.parseInt(request.getParameter("txtNombreRegion")));
 
 		switch (opc){
 		case 1:{
-			
-		        try {
+			    try {
+	        	if(ngp.existePais(p.getNombre())){
+		        	response.sendRedirect("GestionPais.jsp?msj=2");
+		        }
+		        else {			        
 			        if(	dtp.guardarPais(p)) {
 			        	response.sendRedirect("GestionPais.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionPais.jsp?msj=2");
 			        }
-			        	
-		        	
+		          } 		        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionPais, el error es: " + e.getMessage());
@@ -106,5 +112,4 @@ public class Sl_GestionPais extends HttpServlet {
 		}
 		
 		}
-
 }

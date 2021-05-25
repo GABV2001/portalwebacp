@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.UbicacionArbol;
+import vistas.ViewUbicacionArbol;
 
 public class Dt_UbicacionArbol {
 		//Atributos
@@ -27,6 +28,49 @@ public class Dt_UbicacionArbol {
 						e.printStackTrace();
 					}
 				}
+				
+		    //Metodo para visualizar region
+			public ArrayList<ViewUbicacionArbol> listViewUbicacionArbol(){
+				ArrayList<ViewUbicacionArbol> listViewUbicacionArbol = new ArrayList<ViewUbicacionArbol>();
+				try{
+					c = PoolConexion.getConnection();
+					ps = c.prepareStatement("select * from viewubicacionarbol", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					rs = ps.executeQuery();
+					while(rs.next()){
+						ViewUbicacionArbol vua = new ViewUbicacionArbol();
+						vua.setUbicacionarbolid(rs.getInt("ubicacionarbolid"));
+						vua.setNombrecientifico(rs.getString("nombrecientifico"));
+						vua.setNombrecomun(rs.getString("nombrecomun"));
+						vua.setNombredistribucion(rs.getString("nombredistribucion"));	
+						vua.setNombrepais(rs.getString("nombrepais"));
+						vua.setNombreregion(rs.getString("nombreregion"));
+						listViewUbicacionArbol.add(vua);
+					}
+				}
+				catch (Exception e){
+					System.out.println("DATOS: ERROR EN LISTAR UBICACION ARBOL "+ e.getMessage());
+					e.printStackTrace();
+				}
+				finally{
+					try {
+						if(rs != null){
+							rs.close();
+						}
+						if(ps != null){
+							ps.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				return listViewUbicacionArbol;
+			}
 
 				//Metodo para almacenar nueva ubicacion arbol
 				public boolean guardarArbol(UbicacionArbol uarbol){
@@ -37,7 +81,7 @@ public class Dt_UbicacionArbol {
 						this.llenaRsArbol(c);
 						rsUbicacionArbol.moveToInsertRow();
 						rsUbicacionArbol.updateInt("arbolid", uarbol.getArbolid());
-						rsUbicacionArbol.updateInt("distribucionid", uarbol.getArbolid());						
+						rsUbicacionArbol.updateInt("distribucionid", uarbol.getDistribucionid());						
 						rsUbicacionArbol.insertRow();
 						rsUbicacionArbol.moveToCurrentRow();
 						guardado = true;
@@ -62,5 +106,47 @@ public class Dt_UbicacionArbol {
 					}
 					
 					return guardado;
+				}
+				
+				// Metodo para eliminar Ubicacion Arbol
+				public boolean eliminarUbicacionArbol(int idA)
+				{
+					boolean eliminado=false;	
+					try
+					{
+						c = PoolConexion.getConnection();
+						this.llenaRsArbol(c);
+						rsUbicacionArbol.beforeFirst();
+						while (rsUbicacionArbol.next())
+						{
+							if(rsUbicacionArbol.getInt(1)== idA)
+							{
+								rsUbicacionArbol.deleteRow();
+								eliminado=true;
+								break;
+							}
+						}
+					}
+					catch (Exception e)
+					{
+						System.err.println("ERROR AL ELIMINAR UBICACION ARBOL "+e.getMessage());
+						e.printStackTrace();
+					}
+					finally
+					{
+						try {
+							if(rsUbicacionArbol != null){
+								rsUbicacionArbol.close();
+							}
+							if(c != null){
+								PoolConexion.closeConnection(c);
+							}
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					return eliminado;
 				}
 }

@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import entidades.Distribucion;
 import entidades.Familia;
 import entidades.Pais;
+import vistas.ViewPais;
 
 public class Dt_Pais {
 	//Atributos
@@ -20,7 +22,7 @@ public class Dt_Pais {
 	// Metodo para llenar el RusultSet
 	public void llenaRsPais(Connection c){
 		try{
-			ps = c.prepareStatement("select paisid, nombre, descripcion, estado from pais where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps = c.prepareStatement("select paisid,nombre,descripcion,estado,regionid from pais where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			rsPais = ps.executeQuery();
 		}
 		catch (Exception e){
@@ -28,19 +30,64 @@ public class Dt_Pais {
 			e.printStackTrace();
 		}
 	}
-	//Metodo para visualizar paises 
+	
+	// listar para combobox
 	public ArrayList<Pais> listaPais(){
 		ArrayList<Pais> listPais = new ArrayList<Pais>();
 		try{
 			c = PoolConexion.getConnection();
-			ps = c.prepareStatement("select paisid, nombre, descripcion, estado from pais where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps = c.prepareStatement("select paisid,nombre,descripcion,estado,regionid from pais where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			rs = ps.executeQuery();
 			while(rs.next()){
 				Pais pais = new Pais();
-				pais.setPaisID(rs.getInt("PaisID"));
-				pais.setNombre(rs.getString("Nombre"));
-				pais.setDescripcion(rs.getString("Descripcion"));				
-				pais.setEstado(rs.getInt("Estado"));		
+				pais.setPaisID(rs.getInt("paisid"));
+				pais.setNombre(rs.getString("nombre"));
+				pais.setDescripcion(rs.getString("descripcion"));
+				pais.setRegionID(rs.getInt("regionid"));
+				pais.setEstado(rs.getInt("estado"));
+				listPais.add(pais);
+			}
+		}
+		catch (Exception e){
+			System.out.println("DATOS: ERROR EN LISTAR PAIS"+ e.getMessage());
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(rs != null){
+					rs.close();
+				}
+				if(ps != null){
+					ps.close();
+				}
+				if(c != null){
+					PoolConexion.closeConnection(c);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return listPais;
+	}
+
+	//Metodo para visualizar region
+	public ArrayList<ViewPais> listaViewPais(){
+		ArrayList<ViewPais> listPais = new ArrayList<ViewPais>();
+		try{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement("select paisid, nombre, descripcion,  estado, region from viewpais where estado <> 3"
+					+ "", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				ViewPais pais = new ViewPais();
+				pais.setPaisID(rs.getInt("paisid"));
+				pais.setNombre(rs.getString("nombre"));
+				pais.setDescripcion(rs.getString("descripcion"));
+				pais.setEstado(rs.getInt("estado"));	
+				pais.setRegion(rs.getString("region"));						
 				listPais.add(pais);
 			}
 		}
@@ -69,6 +116,7 @@ public class Dt_Pais {
 		return listPais;
 	}
 	
+	
 
 	//Metodo para almacenar nuevo pais
 		public boolean guardarPais(Pais pais){
@@ -79,7 +127,8 @@ public class Dt_Pais {
 				this.llenaRsPais(c);
 				rsPais.moveToInsertRow();
 				rsPais.updateString("Nombre", pais.getNombre());				
-				rsPais.updateString("Descripcion", pais.getDescripcion());			
+				rsPais.updateString("Descripcion", pais.getDescripcion());
+				rsPais.updateInt("RegionID", pais.getRegionID());
 				rsPais.updateInt("Estado", 1);
 				rsPais.insertRow();
 				rsPais.moveToCurrentRow();
@@ -114,20 +163,21 @@ public class Dt_Pais {
 						try
 						{
 							c = PoolConexion.getConnection();
-							ps = c.prepareStatement("select paisid, nombre, descripcion, estado from pais where estado <> 3 and paisid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+							ps = c.prepareStatement("select paisid, nombre, descripcion, estado, regionid from pais where estado <> 3 and paisid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 							ps.setInt(1, idPais);
 							rs = ps.executeQuery();
 							if(rs.next())
 							{
 								p.setPaisID(idPais);
 								p.setNombre(rs.getString("nombre"));
-								p.setDescripcion(rs.getString("descripcion"));					
+								p.setDescripcion(rs.getString("descripcion"));
+								p.setRegionID(rs.getInt("regionid"));
 								p.setEstado(rs.getInt("estado"));
 							}
 						}
 						catch (Exception e)
 						{
-							System.out.println("DATOS ERROR PAIS: "+ e.getMessage());
+							System.out.println("DATOS ERROR AL OBTENER PAIS: "+ e.getMessage());
 							e.printStackTrace();
 						}
 						finally
@@ -166,7 +216,8 @@ public class Dt_Pais {
 								if(rsPais.getInt(1)==p.getPaisID())
 								{
 									rsPais.updateString("nombre", p.getNombre());
-									rsPais.updateString("descripcion", p.getDescripcion());	
+									rsPais.updateString("descripcion", p.getDescripcion());
+									rsPais.updateInt("regionid", p.getRegionID());
 									rsPais.updateInt("estado", 2);
 									rsPais.updateRow();
 									modificado=true;

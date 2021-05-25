@@ -4,17 +4,17 @@ import java.sql.Timestamp;
 
 public class Arbol {
 	
-//Atributos			
+//Atributos	
+private int ArbolID;
 private String NombreComun;
 private String NombreCientifico;
 private String Descripcion;		
-private String Geoma;
+private String Geom;
 private String Multimedia;
 private int FloracionID;
 private int UsuarioId;
 private int GeneroID;
-private int FamiliaID;
-private int DistribucionID;			
+private int FamiliaID;			
 private int Estado;
 private Timestamp fcreacion;
 private Timestamp fmodificacion;
@@ -45,12 +45,6 @@ public int getFloracionID() {
 public void setFloracionID(int floracionID) {
 	FloracionID = floracionID;
 }
-public String getGeoma() {
-	return Geoma;
-}
-public void setGeoma(String geoma) {
-	Geoma = geoma;
-}
 public String getMultimedia() {
 	return Multimedia;
 }
@@ -74,12 +68,6 @@ public int getFamiliaID() {
 }
 public void setFamiliaID(int familiaID) {
 	FamiliaID = familiaID;
-}
-public int getDistribucionID() {
-	return DistribucionID;
-}
-public void setDistribucionID(int distribucionID) {
-	DistribucionID = distribucionID;
 }
 public int getEstado() {
 	return Estado;
@@ -105,4 +93,20 @@ public Timestamp getFeliminacion() {
 public void setFeliminacion(Timestamp feliminacion) {
 	this.feliminacion = feliminacion;
 }
+public String getGeom() {
+	return Geom;
+}
+public void setGeom(String geom) {
+	Geom = geom;
+}
+public int getArbolID() {
+	return ArbolID;
+}
+public void setArbolID(int arbolID) {
+	ArbolID = arbolID;
+}
+
+
+
+
 }

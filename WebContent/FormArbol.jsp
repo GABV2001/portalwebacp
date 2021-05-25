@@ -1,8 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,,java.util.*;" %>
+import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,entidades.Pais,datos.Dt_Pais,datos.Dt_Distribucion,datos.Dt_Region,entidades.Region,entidades.Arbol,datos.Dt_Arbol,
+ entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,vistas.ViewArbol,java.util.*;" %>
+ <%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
 <html lang="es">
-
+<%            	
+	ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
+	Dt_Arbol dts = new Dt_Arbol();
+	listArbol = dts.listaArbol();
+	
+	ViewArbol ar = new ViewArbol();
+	
+	int arbolid =0;
+	
+	if(listArbol.size() == 0){
+		arbolid= 1;	
+	}	
+	else{			
+		ar = listArbol.get(listArbol.size() - 1);
+		arbolid = ar.getArbolID() +1 ;		
+	}
+	
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <head>
     <meta charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +124,9 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     <div class="card-body bg-white rounded">
                                     
                                         <form class="Arbol" method="post" action="./Sl_GestionArbol" enctype="multipart/form-data">
-                                        <input name="opcion" type="hidden" value="1" />                                        
+                                         <input name="usuarioid" type="hidden" value="<%=usuarioid %>" />  
+                                         <input name="arbolid" type="hidden" value="<%=arbolid %>" />                                      
+                                          <input name="opcion" type="hidden" value="1" />                                        
                                             <div class="form-group">
                                                 <label>Nombre común:</label>
                                                 <input class="form-control"  name="txtNombreComun" id="txtNombreComun">
@@ -137,26 +208,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     		}
                                     	    %>  
                                                 </select>
-                                            </div>
-                                             <%                                            
-                                            ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
-                                            Dt_Distribucion dtd = new Dt_Distribucion();
-                                            listDistribucion = dtd.listaDistribucion();
-                                            %>
-                                            <div class="form-group">
-                                                <label>Distribución del árbol:  &nbsp;<a href="GestionDistribucion.jsp" data-toggle="modal" data-target="#modalDistribucion"><i
-                                                class="fas fa-plus-square"></i></a></label>
-                                                <select class="form-control" name="DistribucionID" id="DistribucionID">
-                                       			<option value="0" selected disabled>Seleccionar</option>                                   			                                            	                                   
-                                            <%
-                                    		for(Distribucion u: listDistribucion){
-                                    	    %>	
-                                    		<option value="<%=u.getDistribucionID()%>"><%=u.getNombre()%></option>
-                                    	    <%
-                                    		}
-                                    	    %>  
-                                           </select>
-                                            </div>                                         
+                                            </div>                                                                                                                                                                  
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
@@ -173,73 +225,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                 </div>
                 <!-- /.container-fluid -->
                 
-                	<!-- MODAL NUEVO USUARIO -->
-					<div class="modal fade" id="modalDistribucion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalCenterTitle">Formulario Distribución</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					         <form class="distribucion" method="post" action="./Sl_GestionDistribucion" >
-								<!-- El valor de este input es para el Servlet opcion guardar -->
-                            	<input name="opcion" type="hidden" value="1" />
-                            		<div class="form-group row">
-                                    <div class="col-sm-12 mb-3">
-                                    	<%
-		                            /*    	ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
-		                                	Dt_Distribucion dtd = new Dt_Distribucion();
-		                                	listDistribucion = dtd.listaDistribucion();*/
-                                		%>
-                                    	<select class="form-control" name="cbxUser" id="cbxUser" required>
-                                    	<option value="">Seleccione...</option>
-                                    	<%
-                                    /*		for(UDistribucionsuario u: listUser){*/
-                                    	%>	
-                                      	<%
-                                    	/*	}*/
-                                    	%>
-                                    	
-                                    	</select>
-                                    </div>
-                                    <div class="col-sm-12 mb-3">
-                                 	<%
-		                                /*	ArrayList<Rol> listRol = new ArrayList<Rol>();
-		                                	Dt_Rol dtr = new Dt_Rol();
-											listRol = dtr.listaRolActivos();*/
-                                		%>
-                                    	<select class="form-control" name="cbxRol" id="cbxRol" required>
-                                    	<option value="">Seleccione...</option>
-                                    	<%
-                                    	/*	for(Rol r: listRol){*/
-                                    	%>	
-        	                           	<%
-                                    	/*	}*/
-                                    	%>
-                                    	
-                                    	</select>
-                                    </div>
-                                </div>                            
-	                            <hr>
-	                            <div class="form-group text-center">
-	                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-	                            </div>
-	                            <div class="form-group text-center">
-	                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-	                            </div>
-                            </form>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-<!-- 					        <button type="button" class="btn btn-primary">Save changes</button> -->
-					      </div>
-					    </div>
-					  </div>
-					</div>
-					<!-- FIN Modal -->
+                	
 
             </div>
             <!-- End of Main Content -->

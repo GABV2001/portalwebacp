@@ -165,8 +165,8 @@
                         <a class="collapse-item" href="GestionFamilia.jsp">Familia</a>
                         <a class="collapse-item" href="GestionGenero.jsp">Género</a>
                         <a class="collapse-item" href="GestionDistribucion.jsp">Distribución</a>
-                        <a class="collapse-item" href="GestionRegion.jsp">Región</a>
                         <a class="collapse-item" href="GestionPais.jsp">País</a>
+                        <a class="collapse-item" href="GestionRegion.jsp">Región</a>                        
                         <a class="collapse-item" href="GestionFloracion.jsp">Floración</a>
                         
                     </div>

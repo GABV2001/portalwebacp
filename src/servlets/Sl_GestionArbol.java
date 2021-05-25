@@ -40,7 +40,17 @@ public class Sl_GestionArbol extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		int idArbol =0;
+		idArbol = Integer.parseInt(request.getParameter("idA"));
+		Dt_Arbol dta = new Dt_Arbol();
+		
+		if(dta.eliminarArbol(idArbol)) {
+        	response.sendRedirect("GestionArbol.jsp?msj=5");
+        }
+        else {
+        	response.sendRedirect("GestionArbol.jsp?msj=6");
+        }
 	}
 
 	/**
@@ -61,9 +71,9 @@ public class Sl_GestionArbol extends HttpServlet {
 		String txtDescripcionArbol = null;
 		String GeneroID = null;
 		String FamiliaID = null;
-		String DistribucionID = null;
 		String FloracionID = null;
 		String rutaFichero = null;
+		String usuarioid= null;
 		String url_foto = null;		
 		
 		try
@@ -94,13 +104,13 @@ public class Sl_GestionArbol extends HttpServlet {
 					}else if(key.equals("GeneroID")){
 						GeneroID = valor;
 					}else if(key.equals("FamiliaID")){
-						FamiliaID = valor;
-					}else if(key.equals("DistribucionID")){
-						DistribucionID = valor;
+						FamiliaID = valor;				
 					}else if(key.equals("FloracionID")){
 						FloracionID = valor;
 					}else if(key.equals("url_foto")){
 						url_foto = valor;
+					}else if(key.equals("usuarioid")){
+						usuarioid = valor;
 					}					
 				}
 			}
@@ -128,7 +138,7 @@ public class Sl_GestionArbol extends HttpServlet {
 						System.out.println("Filetype: "+uploaded.getContentType());
 						
 						rutaFichero = "fotosArbol"+valorImagen+".jpg";
-						path = "C:\\payara5\\glassfish\\fotosArbol\\";
+						path = "C:\\payara5\\glassfish\\fotosArbolAbra\\";
 						System.out.println(path+rutaFichero);
 						
 						fichero = new File(path+rutaFichero);
@@ -139,7 +149,7 @@ public class Sl_GestionArbol extends HttpServlet {
 						
 						System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-						String url = "fotosServicio/"+rutaFichero;
+						String url = "fotosArbolAbra/"+rutaFichero;
 						ar.setMultimedia(url);
 					}
 					else
@@ -160,9 +170,8 @@ public class Sl_GestionArbol extends HttpServlet {
 		ar.setDescripcion(txtDescripcionArbol);
 		ar.setGeneroID(Integer.parseInt(GeneroID));		
 		ar.setFamiliaID(Integer.parseInt(FamiliaID));
-		ar.setDistribucionID(Integer.parseInt(DistribucionID));
 		ar.setFloracionID(Integer.parseInt(FloracionID));
-		
+		ar.setUsuarioId(Integer.parseInt(usuarioid));
 		if(ar.getMultimedia()==null){
 			ar.setMultimedia(url_foto);
 		}
@@ -183,29 +192,28 @@ public class Sl_GestionArbol extends HttpServlet {
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
 					e.printStackTrace();
-		        }
-		        
+		        }  
 				break;
-			}/*
+			}
 		case 2:{
 			try {
-	        	
-		        if(dtf.modificarFamilia(ar)) {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=3");
+	        	ar.setArbolID(arbolid);
+		        if(dta.modificarArbol(ar)) {
+		        	response.sendRedirect("GestionArbol.jsp?msj=3");
 		        }
 		        else {
-		        	response.sendRedirect("tblUsuarios.jsp?msj=4");
+		        	response.sendRedirect("GestionArbol.jsp?msj=4");
 		        }
 		        
 	        	
 	        }
 	        catch(Exception e) {
-	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
+	        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
 				break;
 				
-			}*/
+			}
 		default:
 			response.sendRedirect("GestionArbol.jsp?msj=5");	
 			break;

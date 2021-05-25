@@ -22,7 +22,7 @@ public class Dt_Distribucion {
 		// Metodo para llenar el RusultSet
 		public void llenaRsDistribucion(Connection c){
 			try{
-				ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,regionid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,paisid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rsDistribucion = ps.executeQuery();
 			}
 			catch (Exception e){
@@ -37,14 +37,14 @@ public class Dt_Distribucion {
 					ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
 					try{
 						c = PoolConexion.getConnection();
-						ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,regionid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						ps = c.prepareStatement("select distribucionid,nombre,descripcion,estado,paisid from distribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 						rs = ps.executeQuery();
 						while(rs.next()){
 							Distribucion distribucion = new Distribucion();
 							distribucion.setDistribucionID(rs.getInt("distribucionid"));
 							distribucion.setNombre(rs.getString("nombre"));
 							distribucion.setDescripcion(rs.getString("descripcion"));
-							distribucion.setRegionID(rs.getInt("Regionid"));
+							distribucion.setPaisID(rs.getInt("Paisid"));
 							distribucion.setEstado(rs.getInt("estado"));
 							listDistribucion.add(distribucion);
 						}
@@ -80,14 +80,14 @@ public class Dt_Distribucion {
 			ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
 			try{
 				c = PoolConexion.getConnection();
-				ps = c.prepareStatement("select distribucionid,estado,descripcion,distribucion,region from viewdistribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select distribucionid,estado,descripcion,distribucion,pais from viewdistribucion where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rs = ps.executeQuery();
 				while(rs.next()){
 					ViewDistribucion distribucion = new ViewDistribucion();
 					distribucion.setDistribucionID(rs.getInt("distribucionid"));
 					distribucion.setDistribucion(rs.getString("distribucion"));
 					distribucion.setDescripcion(rs.getString("descripcion"));						
-					distribucion.setRegion(rs.getString("region"));
+					distribucion.setPais(rs.getString("pais"));
 					distribucion.setEstado(rs.getInt("estado"));
 					listDistribucion.add(distribucion);
 				}
@@ -128,7 +128,7 @@ public class Dt_Distribucion {
 				rsDistribucion.moveToInsertRow();
 				rsDistribucion.updateString("Nombre", distribucion.getNombre());								
 				rsDistribucion.updateString("Descripcion", distribucion.getDescripcion());			
-				rsDistribucion.updateInt("RegionID", distribucion.getRegionID());
+				rsDistribucion.updateInt("PaisID", distribucion.getPaisID());
 				rsDistribucion.updateInt("Estado", 1);
 				rsDistribucion.insertRow();
 				rsDistribucion.moveToCurrentRow();
@@ -163,7 +163,7 @@ public class Dt_Distribucion {
 				try
 				{
 					c = PoolConexion.getConnection();
-					ps = c.prepareStatement("select distribucionid, nombre, descripcion, regionid, estado from distribucion where estado <> 3 and distribucionid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("select distribucionid, nombre, descripcion, paisid, estado from distribucion where estado <> 3 and distribucionid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					ps.setInt(1, idDistribucion);
 					rs = ps.executeQuery();
 					if(rs.next())
@@ -171,7 +171,7 @@ public class Dt_Distribucion {
 						ds.setDistribucionID(idDistribucion);
 						ds.setNombre(rs.getString("nombre"));
 						ds.setDescripcion(rs.getString("descripcion"));	
-						ds.setRegionID(rs.getInt("regionid"));
+						ds.setPaisID(rs.getInt("paisid"));
 						ds.setEstado(rs.getInt("estado"));
 					}
 				}
@@ -261,7 +261,7 @@ public class Dt_Distribucion {
 					{
 						rsDistribucion.updateString("nombre", ds.getNombre());
 						rsDistribucion.updateString("descripcion", ds.getDescripcion());	
-						rsDistribucion.updateInt("regionid", ds.getRegionID());
+						rsDistribucion.updateInt("paisid", ds.getPaisID());
 						rsDistribucion.updateInt("estado", 2);
 						rsDistribucion.updateRow();
 						modificado=true;

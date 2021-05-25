@@ -1,5 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
- import="entidades.Distribucion, datos.Dt_Distribucion, entidades.Region, datos.Dt_Region, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,entidades.Rol,vistas.ViewRolUsuario,datos.Dt_Pais, entidades.Pais,vistas.ViewPais, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,16 +109,16 @@
                                                 </div>
                                                  <div class="form-group">
                                             <%                                            
-                                            ArrayList<Region> listRegion = new ArrayList<Region>();
-                                            Dt_Region dtu = new Dt_Region();
-                                            listRegion = dtu.listaRegion();
+                                            ArrayList<Pais> listPais = new ArrayList<Pais>();
+                                            Dt_Pais dtu = new Dt_Pais();
+                                            listPais = dtu.listaPais();
                                             %>
-                                                <label>Region:</label>
-                                                <select class="form-control" name = "txtNombreRegion" id ="txtNombreRegion" required>
+                                                <label>Pais:</label>
+                                                <select class="form-control" name = "txtNombrePais" id ="txtNombrePais" required>
                                             <%
-                                    		for(Region u: listRegion){
+                                    		for(Pais u: listPais){
                                     	    %>	
-                                    		<option value="<%=u.getRegionID()%>"><%=u.getNombre()%></option>
+                                    		<option value="<%=u.getPaisID()%>"><%=u.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>                                    	
@@ -152,7 +189,7 @@
 		{
 			$("#txtNombreDistribucion").val("<%=ds.getNombre()%>");
 			$("#txtDescripcionDistribucion").val("<%=ds.getDescripcion()%>");
-			$("#txtNombreRegion").val("<%=ds.getRegionID()%>");		 
+			$("#txtNombrePais").val("<%=ds.getPaisID()%>");		 
 		});
 	 </script>  
 </body>

@@ -1,5 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,java.util.*;" %>
+import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,entidades.Pais,datos.Dt_Pais,datos.Dt_Distribucion,datos.Dt_Region,entidades.Region,entidades.Arbol,datos.Dt_Arbol,
+ entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,vistas.ViewArbol,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,7 +89,14 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                               <%
+                               String arID = "";
+							 	arID = request.getParameter("idA")==null?"0":request.getParameter("idA");
+														
+								Arbol ar = new Arbol();
+								Dt_Arbol dta = new Dt_Arbol();
+								ar = dta.getArbol(Integer.parseInt(arID));						
+                         	   %>
                     <!-- Formulario -->
    					<div class="container">
                         <div class="row">
@@ -55,7 +112,9 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     <div class="card-body bg-white rounded">
                                     
                                         <form class="Arbol" method="post" action="./Sl_GestionArbol" enctype="multipart/form-data">
-                                        <input name="opcion" type="hidden" value="1" />                                        
+                                        <input name="opcion" type="hidden" value="2" />
+                                        <input name="usuarioid" type="hidden" value="<%=usuarioid %>" />                                     
+                                        <input name="arbolid" type="hidden" value="<%=ar.getArbolID()%>" />                                       
                                             <div class="form-group">
                                                 <label>Nombre común:</label>
                                                 <input class="form-control"  name="txtNombreComun" id="txtNombreComun">
@@ -79,6 +138,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultArb" name="filmultArb">Seleccionar Archivo</label>
 													    <input type="file" class="custom-file-input" id="multArbol" name="multArbol" onchange="Test.UpdatePreview(this)" accept="image/jpeg" >
+														<input type="hidden" name="url_foto" value="<%=ar.getMultimedia()%>">																		
 													</div>
                                                 </div>
                                             </div>
@@ -134,26 +194,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                     		}
                                     	    %>  
                                                 </select>
-                                            </div>
-                                             <%                                            
-                                            ArrayList<Distribucion> listDistribucion = new ArrayList<Distribucion>();
-                                            Dt_Distribucion dtd = new Dt_Distribucion();
-                                            listDistribucion = dtd.listaDistribucion();
-                                            %>
-                                            <div class="form-group">
-                                                <label>Distribución del árbol:  &nbsp;<a href="GestionDistribucion.jsp"><i
-                                                class="fas fa-plus-square"></i></a></label>
-                                                <select class="form-control" name="DistribucionID" id="DistribucionID">
-
-                                            <%
-                                    		for(Distribucion u: listDistribucion){
-                                    	    %>	
-                                    		<option value="<%=u.getDistribucionID()%>"><%=u.getNombre()%></option>
-                                    	    <%
-                                    		}
-                                    	    %>  
-                                                </select>
-                                            </div>                                         
+                                            </div>                                                                                                                                
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
@@ -221,6 +262,18 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
 
 	    });
 	</script>	
+	<script>  
+	  $(document).ready(function()
+		{
+			$("#txtNombreComun").val("<%=ar.getNombreComun()%>");
+			$("#txtNombreCientifico").val("<%=ar.getNombreCientifico()%>");
+			$("#txtDescripcionArbol").val("<%=ar.getDescripcion()%>");
+			$("#GeneroID").val("<%=ar.getGeneroID()%>");
+			$("#FamiliaID").val("<%=ar.getFamiliaID()%>");
+			$("#FloracionID").val("<%=ar.getFloracionID()%>");
+			$("#Multimedia").val("<%=ar.getMultimedia()%>");
+		});
+	 </script>  
 </body>
 
 </html>

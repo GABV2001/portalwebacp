@@ -1,10 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewArbol,datos.Dt_Arbol,java.util.*;" %>
-<!DOCTYPE html>
-<html lang="es">
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,10 +88,13 @@
                             <h6 class="m-0 font-weight-bold text-primary">Gestión Árbol</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive"> 
+                              <div style="text-align:right;"><a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp; Imprimir Reporte de los árboles</div></a>                         
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</a>
+                                                <a href="GestionUbicacionArbol.jsp"><i
+                                                class="fas fa-plus-square"></i>&nbsp; Distribución Arbol</div></a></div>
                                     <%
                                     ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
                                     Dt_Arbol dtu = new Dt_Arbol();
@@ -69,8 +108,7 @@
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>
-                                            <th>Distribución</th>                                      
+                                            <th>Floración</th>                                                                               
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -82,8 +120,7 @@
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>
-                                            <th>Distribución</th>                                     
+                                            <th>Floración</th>                
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
@@ -100,9 +137,8 @@
                         							</a></td>
                                          <td><%=us.getNombreGenero() %></td>                                            
                                             <td><%=us.getNombreFam() %></td>
-                                            <td><%=us.getNombreFlo() %></td>
-                                            <td><%=us.getNombreDis() %></td>                                                                                        
-                        			       <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idS=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
+                                            <td><%=us.getNombreFlo() %></td>                                                                                                                                                                                                                 
+                        			       <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idA=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -126,7 +162,7 @@
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
                         						</a></i></td>            
  													</tr>
-                                          <%
+                                           <%
                                        		}
                                            %>                            
                                     </tbody>
@@ -137,7 +173,7 @@
                 </div>
                 <!-- /.container-fluid -->
                 
-                   <!-- MODAL VISUALIZAR IMAGEN -->					
+                   <!-- MODAL VISUALIZAR IMAGEN -->				
 					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered" role="document">
 					    <div class="modal-content">
@@ -149,13 +185,13 @@
 					      </div>
 					      <div class="modal-body">
 					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Banner"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+									<img id="preview" src="" name="preview"  alt="Imagen Arbol"
+										class = "img-fluid"; border-bottom-color: white; margin: 2px;"/>
 								</div>								
 					      </div>					 
 					    </div>
 					  </div>
-					</div>					
+					</div>						
 					<!-- FIN Modal -->
 
             </div>
@@ -203,7 +239,12 @@
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
-	<script>
+	
+	<script type="text/javascript">
+	function verRptArbol()
+	{
+		window.open("Sl_RptArbol", '_blank');
+	}	
     $(document).ready(function ()
     {
         
@@ -219,23 +260,17 @@
         {
             errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
-        if(mensaje == "3")
-        {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
-        }
         if(mensaje == "5")
         {
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
         }
-    });
+    });    
+
+	function getValue()
+	{   	
+	    var a= event.srcElement.title;
+	    document.getElementById("preview").src = a;
+	} 
 	</script>
-	
-	<script type="text/javascript">
-    function getValue()
-    {   	
-        var a= event.srcElement.title;
-        document.getElementById("preview").src = a;
-    }
-    </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entidades.Region;
 import datos.Dt_Region;
+import negocio.Ng_Region;
 /**
  * Servlet implementation class Sl_GestionRegion
  */
@@ -57,22 +58,26 @@ public class Sl_GestionRegion extends HttpServlet {
 				//CONSTRUIR EL OBJETO Region
 				Dt_Region dtf = new Dt_Region();
 				Region rg = new Region();
+				Ng_Region ngr = new Ng_Region();
+				
 				rg.setNombre(request.getParameter("txtNombreRegion"));
 				rg.setDescripcion(request.getParameter("txtDescripcionRegion"));
-				rg.setPaisID(Integer.parseInt(request.getParameter("txtNombrePais")));				
 				
 				switch (opc){
 				case 1:{
 					
 				        try {
+				        	if(ngr.existeRegion(rg.getNombre())){
+					        	response.sendRedirect("GestionRegion.jsp?msj=2");
+					        }
+					        else {
 					        if(	dtf.guardarRegion(rg)) {
 					        	response.sendRedirect("GestionRegion.jsp?msj=1");
 					        }
 					        else {
 					        	response.sendRedirect("GestionRegion.jsp?msj=2");
 					        }
-					        	
-				        	
+					      }				        	
 				        }
 				        catch(Exception e) {
 				        	System.out.println("Sl_GestionRegion, el error es: " + e.getMessage());
@@ -105,10 +110,5 @@ public class Sl_GestionRegion extends HttpServlet {
 					break;
 				}
 				
-				}
-			
-	
-	
-	
-
+		}		
 }

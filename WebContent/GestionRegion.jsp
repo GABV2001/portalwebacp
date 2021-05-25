@@ -1,4 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="vistas.ViewRegion,datos.Dt_Region,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <html lang="es">
 <%
@@ -60,35 +98,32 @@
                                     <div style="text-align:right;"><a href="FormRegion.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nueva Región</div></a>
                                     <%
-                                    	ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
-                                  	     Dt_Region dtu = new Dt_Region();
-                                        listRegion = dtu.listaViewRegion();
+                                    	ArrayList<Region> listRegion = new ArrayList<Region>();
+                                        Dt_Region dtu = new Dt_Region();
+                                        listRegion = dtu.listaRegion();
                                     %>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>país</th>
+                                            <th>Descripción</th>                                            
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>País</th>
+                                            <th>Descripción</th>                                            
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                            <%
-                                           	for(ViewRegion us: listRegion){
+                                           	for(Region us: listRegion){
                                            %>
                                        	<tr> 
-                                       	    <td><%=us.getNombreRegion() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>
-                                             <td><%=us.getPais() %></td>
-                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=us.getRegionid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                       	    <td><%=us.getNombre() %></td>                                           
+                                            <td><%=us.getDescripcion() %></td>                                             
+                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=us.getRegionID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -98,7 +133,7 @@
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionRegion?idR=<%=us.getRegionid()%>';
+                                           		      window.location.href = 'Sl_GestionRegion?idR=<%=us.getRegionID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },

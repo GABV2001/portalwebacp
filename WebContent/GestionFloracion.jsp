@@ -1,5 +1,5 @@
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="entidades.Floracion, datos.Dt_Floracion, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" 
+import="entidades.Floracion, datos.Dt_Floracion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="es">
 

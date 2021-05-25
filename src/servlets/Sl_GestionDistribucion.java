@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entidades.Distribucion;
+import negocio.Ng_Distribucion;
 import datos.Dt_Distribucion;
 
 /**
@@ -55,22 +56,27 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		//CONSTRUIR EL OBJETO 
 		Dt_Distribucion dtf = new Dt_Distribucion();
 		Distribucion ds = new Distribucion();
+		Ng_Distribucion ngd = new Ng_Distribucion();
+		
 		ds.setNombre(request.getParameter("txtNombreDistribucion"));
 		ds.setDescripcion(request.getParameter("txtDescripcionDistribucion"));
-		ds.setRegionID(Integer.parseInt(request.getParameter("txtNombreRegion")));
+		ds.setPaisID(Integer.parseInt(request.getParameter("txtNombrePais")));
 		
 		switch (opc){
 		case 1:{
 			
 		        try {
+		        	if(ngd.existeDistribucion(ds.getNombre())){
+			        	response.sendRedirect("GestionDistribucion.jsp?msj=2");
+			        }
+			        else {	
 			        if(	dtf.guardarDistribucion(ds)) {
 			        	response.sendRedirect("GestionDistribucion.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionDistribucion.jsp?msj=2");
 			        }
-			        	
-		        	
+			      }			        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionDistribucion, el error es: " + e.getMessage());
@@ -104,8 +110,4 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		}
 		
 		}
-	
-
-	
-
 }

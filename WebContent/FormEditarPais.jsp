@@ -1,5 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
- import="entidades.Pais, datos.Dt_Pais, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, entidades.Region,datos.Dt_Region, entidades.Pais, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,10 +104,29 @@
                                                 <input class="form-control" name = "txtNombrePais" id ="txtNombrePais" required>
 
                                                 <div class="form-group">
-                                                    <label>Descripci�n:</label>
+                                                    <label>Descripción:</label>
                                                     <textarea class="form-control" rows="3" name = "txtDescripcionPais" id = "txtDescripcionPais" required></textarea>
                                                 </div>
+                                                 <div class="form-group">
+                                            <%                                            
+                                            ArrayList<Region> listRegion = new ArrayList<Region>();
+                                            Dt_Region dtu = new Dt_Region();
+                                            listRegion = dtu.listaRegion();
+                                            %>
+                                                <label>País:</label>
+                                                <select class="form-control" name = "txtNombreRegion" id ="txtNombreRegion">
+                                            <%
+                                    		for(Region u: listRegion){
+                                    	    %>	
+                                    		<option value="<%=u.getRegionID()%>"><%=u.getNombre()%></option>
+                                    	    <%
+                                    		}
+                                    	    %>                                    	
+                                            </select>
                                             </div>
+                                            </div>                                           
+                                            
+                                            
                                          	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>  
@@ -135,7 +191,7 @@
 		{
 			$("#txtNombrePais").val("<%=p.getNombre()%>");
 			$("#txtDescripcionPais").val("<%=p.getDescripcion()%>");
-		
+			$("#txtNombreRegion").val("<%=p.getRegionID()%>");	
 		});
 	 </script>  
 </body>

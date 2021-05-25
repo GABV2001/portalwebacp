@@ -7,7 +7,7 @@ public class ViewDistribucion {
 		private String Distribucion;
 		private String Descripcion;
 		private int Estado;
-		private String Region;
+		private String Pais;
 		
 		public int getDistribucionID() {
 			return DistribucionID;
@@ -27,11 +27,11 @@ public class ViewDistribucion {
 		public void setDescripcion(String descripcion) {
 			Descripcion = descripcion;
 		}
-		public String getRegion() {
-			return Region;
+		public String getPais() {
+			return Pais;
 		}
-		public void setRegion(String region) {
-			Region = region;
+		public void setPais(String pais) {
+			Pais = pais;
 		}
 		public int getEstado() {
 			return Estado;

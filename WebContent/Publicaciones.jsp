@@ -25,6 +25,9 @@
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
+   
+   <!-- CSS IMAGE -->
+  <link rel="stylesheet" href="./css/image.css">
 </head>
 <body>
  <!-- Menu -->
@@ -48,9 +51,9 @@
                        	for(Publicacion a: ListaPost){
             	    	if(a.getEstadopublicacion()==1){
 	                    %>
-		                    <div class="col-lg-4 col-sm-6 mb-4">
+		                    <div class="col-md-5 mb-5">
 			                <div class="card h-100">
-			                    <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>"><img class="card-img-top" src="img/Defecto.jpeg" alt="Arbol <%=a.getTitulo() %>"></a>
+			                    <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>"><img class="img-guide" src="<%=a.getMultimedia() %>" alt="Arbol <%=a.getTitulo() %>"></a>
 			                    <div class="card-body">
 			                        <h4 class="card-title">
 			                            <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>" class="fw-bold text-dark"> <%=a.getTitulo() %></a>
@@ -58,7 +61,8 @@
 			                        <p class="card-text"><%=a.getDescripcion()%></p>
 			                    </div>					       
 			                </div>
-			             </div>			
+			             </div>		
+			             
 	          		  <%
             	       }
 			          }

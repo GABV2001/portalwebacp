@@ -8,7 +8,7 @@ public class Region {
 	private String Nombre;
 	private String Descripcion;
 	private int Estado;
-	private int PaisID;	
+	
 	
 	
 	public int getRegionID() {
@@ -35,10 +35,5 @@ public class Region {
 	public void setEstado(int estado) {
 		Estado = estado;
 	}
-	public int getPaisID() {
-		return PaisID;
-	}
-	public void setPaisID(int paisID) {
-		PaisID = paisID;
-	}
+
 }

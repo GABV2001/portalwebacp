@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 import entidades.Distribucion;
 import entidades.Familia;
+import entidades.Pais;
 import entidades.Region;
-import vistas.ViewRegion;
+import vistas.ViewPais;
 
 
 public class Dt_Region {
@@ -25,7 +26,7 @@ public class Dt_Region {
 	// Metodo para llenar el RusultSet
 				public void llenaRsRegion(Connection c){
 					try{
-						ps = c.prepareStatement("select regionid, nombre, descripcion, paisid, estado from region where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						ps = c.prepareStatement("select regionid, nombre, descripcion, estado from region where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 						rsRegion = ps.executeQuery();
 					}
 					catch (Exception e){
@@ -47,7 +48,6 @@ public class Dt_Region {
 						rsRegion.moveToInsertRow();
 						rsRegion.updateString("Nombre", region.getNombre());											
 						rsRegion.updateString("Descripcion", region.getDescripcion());	
-						rsRegion.updateInt("PaisID", region.getPaisID());
 						rsRegion.updateInt("Estado", 1);
 						rsRegion.insertRow();
 						rsRegion.moveToCurrentRow();
@@ -76,68 +76,26 @@ public class Dt_Region {
 					
 				}
 
-				//Metodo para visualizar combobox de region
+				
+	
+				//Metodo para visualizar region
 				public ArrayList<Region> listaRegion(){
 					ArrayList<Region> listRegion = new ArrayList<Region>();
 					try{
 						c = PoolConexion.getConnection();
-						ps = c.prepareStatement("select regionid, nombre, descripcion, paisid, estado from region where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						ps = c.prepareStatement("select regionid, nombre, descripcion, estado  from region where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 						rs = ps.executeQuery();
 						while(rs.next()){
 							Region region = new Region();
-							region.setRegionID(rs.getInt("regionid"));
-							region.setNombre(rs.getString("nombre"));
-							region.setDescripcion(rs.getString("descripcion"));
-							region.setPaisID(rs.getInt("paisid"));
-							region.setEstado(rs.getInt("estado"));
+							region.setRegionID(rs.getInt("RegionID"));
+							region.setNombre(rs.getString("Nombre"));
+							region.setDescripcion(rs.getString("Descripcion"));							
+							region.setEstado(rs.getInt("Estado"));		
 							listRegion.add(region);
 						}
 					}
 					catch (Exception e){
-						System.out.println("DATOS: ERROR EN LISTAR DISTRIBUCION "+ e.getMessage());
-						e.printStackTrace();
-					}
-					finally{
-						try {
-							if(rs != null){
-								rs.close();
-							}
-							if(ps != null){
-								ps.close();
-							}
-							if(c != null){
-								PoolConexion.closeConnection(c);
-							}
-							
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					}
-					return listRegion;
-				}
-	
-				//Metodo para visualizar region
-				public ArrayList<ViewRegion> listaViewRegion(){
-					ArrayList<ViewRegion> listRegion = new ArrayList<ViewRegion>();
-					try{
-						c = PoolConexion.getConnection();
-						ps = c.prepareStatement("select regionid, region, descripcion, pais, estado from viewregion where estado <> 3"
-								+ "", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
-						rs = ps.executeQuery();
-						while(rs.next()){
-							ViewRegion region = new ViewRegion();
-							region.setRegionid(rs.getInt("regionid"));
-							region.setNombreRegion(rs.getString("region"));
-							region.setDescripcion(rs.getString("descripcion"));
-							region.setEstado(rs.getInt("estado"));	
-							region.setPais(rs.getString("Pais"));						
-							listRegion.add(region);
-						}
-					}
-					catch (Exception e){
-						System.out.println("DATOS: ERROR EN LISTAR VIEWREGION "+ e.getMessage());
+						System.out.println("DATOS: ERROR EN LISTAR REGION "+ e.getMessage());
 						e.printStackTrace();
 					}
 					finally{
@@ -167,21 +125,20 @@ public class Dt_Region {
 					try
 					{
 						c = PoolConexion.getConnection();
-						ps = c.prepareStatement("select regionid, nombre, descripcion, paisid, estado from region where estado <> 3 and regionid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+						ps = c.prepareStatement("select regionid, nombre, descripcion,  estado from region where estado <> 3 and regionid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 						ps.setInt(1, idRegion);
 						rs = ps.executeQuery();
 						if(rs.next())
 						{
 							rg.setRegionID(idRegion);
 							rg.setNombre(rs.getString("nombre"));
-							rg.setDescripcion(rs.getString("descripcion"));
-							rg.setPaisID(rs.getInt("paisid"));
+							rg.setDescripcion(rs.getString("descripcion"));							
 							rg.setEstado(rs.getInt("estado"));
 						}
 					}
 					catch (Exception e)
 					{
-						System.out.println("DATOS ERROR FAMILIA: "+ e.getMessage());
+						System.out.println("DATOS ERROR EN OBTENER REGION: "+ e.getMessage());
 						e.printStackTrace();
 					}
 					finally
@@ -262,8 +219,7 @@ public class Dt_Region {
 							if(rsRegion.getInt(1)==rg.getRegionID())
 							{
 								rsRegion.updateString("nombre", rg.getNombre());
-								rsRegion.updateString("descripcion", rg.getDescripcion());
-								rsRegion.updateInt("paisid", rg.getPaisID());
+								rsRegion.updateString("descripcion", rg.getDescripcion());								
 								rsRegion.updateInt("estado", 2);
 								rsRegion.updateRow();
 								modificado=true;
@@ -293,5 +249,4 @@ public class Dt_Region {
 					}
 					return modificado;
 				}
-
 }

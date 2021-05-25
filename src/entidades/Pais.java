@@ -6,6 +6,7 @@ public class Pais {
 	private int PaisID;
 	private String Nombre;
 	private String Descripcion;
+	private int RegionID;
 	private int Estado;
 	
 	//metodos
@@ -33,4 +34,11 @@ public class Pais {
 	public void setEstado(int estado) {
 		Estado = estado;
 	}
+	public int getRegionID() {
+		return RegionID;
+	}
+	public void setRegionID(int regionID) {
+		RegionID = regionID;
+	}
+	
 }

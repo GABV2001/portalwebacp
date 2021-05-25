@@ -1,4 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Pais, datos.Dt_Pais, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <html lang="es">
 <%
@@ -63,14 +101,15 @@
                                     <div style="text-align:right;"><a href="FormPais.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nuevo País</div></a>
                                     <%
-                                	ArrayList<Pais> listPais = new ArrayList<Pais>();
+                                	ArrayList<ViewPais> listPais = new ArrayList<ViewPais>();
                                 	Dt_Pais dtu = new Dt_Pais();
-                                	listPais = dtu.listaPais();                                	
+                                	listPais = dtu.listaViewPais();                                	
                                      %>
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Descripción</th>
+                                            <th>Región</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -78,16 +117,18 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Descripción</th>
+                                            <th>Región</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                             <%
-                                       		for(Pais us: listPais){
+                                       		for(ViewPais us: listPais){
                                        	    %> 
                                         <tr>                                           
                                        	    <td><%=us.getNombre() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>                                            
+                                            <td><%=us.getDescripcion() %></td>
+                                            <td><%=us.getRegion() %></td>                                            
                                           <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=us.getPaisID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 

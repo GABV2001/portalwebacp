@@ -1,4 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Pais,datos.Dt_Pais,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="entidades.Pais,datos.Dt_Pais,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -62,25 +112,7 @@
                                             <div class="form-group">
                                                 <label>Descripcion:</label>                                                
                                                 <textarea class="form-control" rows="3" name = "txtDescripcionRegion" id ="txtDescripcionRegion"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                            <%                                            
-                                            ArrayList<Pais> listPais = new ArrayList<Pais>();
-                                            Dt_Pais dtu = new Dt_Pais();
-                                            listPais = dtu.listaPais();
-                                            %>
-                                                <label>País:</label>
-                                                <select class="form-control" name = "txtNombrePais" id ="txtNombrePais">
-                                            <%
-                                    		for(Pais u: listPais){
-                                    	    %>	
-                                    		<option value="<%=u.getPaisID()%>"><%=u.getNombre()%></option>
-                                    	    <%
-                                    		}
-                                    	    %>                                    	
-                                            </select>
-                                            </div>
-
+                                            </div>                                     
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>

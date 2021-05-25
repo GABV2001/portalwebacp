@@ -73,4 +73,5 @@ public int getEstado() {
 public void setEstado(int estado) {
 	Estado = estado;
 }
+
 }
