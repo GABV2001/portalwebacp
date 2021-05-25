@@ -1,5 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+ 
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	
+	//Datos del Usuario
+	String NombreApellido = null;
+    String url_foto = null;	
+    
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+	
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		 NombreApellido = vrgu.getNombres() + " "+ vrgu.getApellidos();
+	     url_foto = vrgu.getUrl_foto();		  
+	}
+	
+    if(NombreApellido == null){
+    	NombreApellido = "Anonimo"; 
+    }
+    if(url_foto ==null){
+    	url_foto = "img/undraw_profile.svg";
+    }
+%>
  <!-- Sidebar -->
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -62,8 +121,7 @@
                     </div>
                 </div>               
             </li>
-
-            <!-- Divider -->
+	        <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -254,13 +312,14 @@
                                 </form>
                             </div>
                         </li>
-
+						
+						
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Guillermo Vado</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=NombreApellido%></span>
+                                <img class="img-profile rounded-circle" src=<%=url_foto %>>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

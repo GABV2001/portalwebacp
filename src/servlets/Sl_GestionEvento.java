@@ -75,7 +75,8 @@ public class Sl_GestionEvento extends HttpServlet {
 		String cbxTipoEvento = null;
 		String multEvento = null;
 		String txthipervinculoEvento = null;
-		String txtUbicacionEvento = null;		
+		String txtUbicacionEvento = null;	
+		String usuarioid = null;		
 		String rutaFichero = null;
 				
 		try
@@ -117,7 +118,9 @@ public class Sl_GestionEvento extends HttpServlet {
 						txthipervinculoEvento = valor;
 					}else if(key.equals("txtUbicacionEvento")){
 						txtUbicacionEvento = valor;
-					}					
+					}else if(key.equals("usuarioid")){
+						usuarioid = valor;
+					}
 				}
 			}
 
@@ -180,6 +183,7 @@ public class Sl_GestionEvento extends HttpServlet {
 		ev.setTipoevento(Integer.parseInt(cbxTipoEvento));
 		ev.setHipervinculo(txthipervinculoEvento);
 		ev.setUbicacion(txtUbicacionEvento);	
+		ev.setUsuarioid(Integer.parseInt(usuarioid));
 		if(ev.getMultimedia()==null){
 			ev.setMultimedia(multEvento);
 		}

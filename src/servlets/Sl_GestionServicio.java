@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import entidades.Servicio;
+import negocio.Ng_Servicio;
 import datos.Dt_Servicio;
 
 /**
@@ -61,6 +62,7 @@ public class Sl_GestionServicio extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		Dt_Servicio dts = new Dt_Servicio();
+		Ng_Servicio ngs = new Ng_Servicio();
 		Servicio sr = new Servicio();		
 		
 		int opc = 0;
@@ -69,7 +71,9 @@ public class Sl_GestionServicio extends HttpServlet {
 		String descripcionServicio = null;
 		String cbxEstadoServicio = null;
 		String rutaFichero = null;
+		String usuarioid = null;		
 		String url_foto = null;
+		boolean control = false;
 		
 		try
 		{
@@ -98,10 +102,18 @@ public class Sl_GestionServicio extends HttpServlet {
 						cbxEstadoServicio = valor;
 					}else if(key.equals("url_foto")){
 						url_foto = valor;
+					}else if(key.equals("usuarioid")){
+						usuarioid = valor;
 					}					
 				}
 			}
-
+			
+			if(nombreServicio.trim().isEmpty() || descripcionServicio.trim().isEmpty()){
+				response.sendRedirect("GestionServicio.jsp?msj=2"); 
+			}else {
+				control = true;
+			}
+			if(control){
 			int valorImagen = 0;
 			for(FileItem item : items)
 			{
@@ -147,22 +159,30 @@ public class Sl_GestionServicio extends HttpServlet {
 				  }
 			   }
 			}
+		  }
 		}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
-		}	
+		}
+		
+		if(control){
+		//Setear Objeto con sus valores
 		sr.setNombre(nombreServicio);
 		sr.setDescripcion(descripcionServicio);
 		sr.setEstadoservicio(Integer.parseInt(cbxEstadoServicio));
+		sr.setUsuarioid(Integer.parseInt(usuarioid));
 			if(sr.getMultimedia()==null){
 			sr.setMultimedia(url_foto);
 		}
 		
 		switch (opc){
-		case 1:{
-			
+		case 1:{	
 		        try {
+			        if(ngs.existeServicio(sr.getNombre())) {
+			        	response.sendRedirect("FormServicio.jsp?msj=existe");
+			        }
+			        else {
 		        	//PARA GUARDAR LA FECHA Y HORA DE CREACION
 			        Date fechaSistema = new Date();
 			        sr.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
@@ -173,6 +193,7 @@ public class Sl_GestionServicio extends HttpServlet {
 			         else {
 			        	response.sendRedirect("GestionServicio.jsp?msj=2");
 			        }		        	
+		        }
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionServicio, el error es: " + e.getMessage());
@@ -205,4 +226,5 @@ public class Sl_GestionServicio extends HttpServlet {
 			break;
 		}		
 	}
+  }
 }

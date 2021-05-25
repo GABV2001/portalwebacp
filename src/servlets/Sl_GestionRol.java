@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import datos.Dt_Rol;
 import datos.Dt_Usuario;
 import entidades.Rol;
+import negocio.Ng_Rol;
 
 /**
  * Servlet implementation class Sl_GetionRol
@@ -59,10 +60,21 @@ public class Sl_GestionRol extends HttpServlet {
 		
 		//CONSTRUIR EL OBJETO ROL
 		Dt_Rol dtr = new Dt_Rol();
+		Ng_Rol ngr = new Ng_Rol();
 		Rol r = new Rol();
-		r.setRol(request.getParameter("txtRol"));
-		r.setDesc_rol(request.getParameter("txtRolDesc"));
 		
+		//Variable
+		String rol = request.getParameter("txtRol");
+		String desc =request.getParameter("txtRolDesc"); 
+		
+		if(rol.trim().isEmpty() || desc.trim().isEmpty()){
+        	response.sendRedirect("GestionRol.jsp?msj=2");
+		}else {
+		
+		//Setear valores
+		r.setRol(rol);
+		r.setDesc_rol(desc);
+	
 		switch (opc){
 		case 1:{
 			
@@ -70,14 +82,17 @@ public class Sl_GestionRol extends HttpServlet {
 		        	//PARA GUARDAR LA FECHA Y HORA DE CREACION
 			        Date fechaSistema = new Date();
 			        r.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));
+			        if(ngr.existeRol(r.getRol())) {
+			        	response.sendRedirect("FormRol.jsp?msj=existe");
+			        }
+			        else {
 			         if(dtr.guardarrol(r)) {
 			        	response.sendRedirect("GestionRol.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionRol.jsp?msj=2");
 			        }
-			        	
-		        	
+			      }		        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionRol, el error es: " + e.getMessage());
@@ -110,4 +125,5 @@ public class Sl_GestionRol extends HttpServlet {
 			break;
 	 }	
 	}
+   }
 }

@@ -10,6 +10,7 @@ public class ViewRolUsuario {
 	private String contra;
 	private String nombres;
 	private String apellidos;
+	private String url_foto;
 	
 	//Metodos
 	public int getIdrol_usuario() {
@@ -59,5 +60,11 @@ public class ViewRolUsuario {
 	}
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+	public String getUrl_foto() {
+		return url_foto;
+	}
+	public void setUrl_foto(String url_foto) {
+		this.url_foto = url_foto;
 	}
 }

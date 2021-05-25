@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Servicio, datos.Dt_Servicio, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;"
-%>
+    pageEncoding="ISO-8859-1" import= "entidades.Publicacion, datos.Dt_Publicacion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -49,40 +48,23 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Variable de control de mensajes
+    String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
-<%            	
-	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
-	Dt_Servicio dts = new Dt_Servicio();
-	listServicio = dts.listarServicio();
-	
-	Servicio sr = new Servicio();
-	
-	int servicioid =0;
-	
-	if(listServicio.size() == 0){
-		servicioid= 1;	
-	}	
-	else{			
-		sr = listServicio.get(listServicio.size() - 1);
-		servicioid = sr.getServicioid() +1 ;		
-	}
-	
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
+
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
   
-      <title>Portal ACP - Formulario Servicio</title>
-      
+    <title>Portal ACP - Formulario Publicación</title>
+    
      <!-- Icon -->
-	<jsp:include page="imgShortIcon.jsp" />  
+	 <jsp:include page="imgShortIcon.jsp" />  
 	
   
     <!-- Custom fonts for this template -->
@@ -96,77 +78,103 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
-    <!-- jAlert css  -->
-	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+
 </head>
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+    
+    <%            	
+	ArrayList<Publicacion> listPost = new ArrayList<Publicacion>();
+	Dt_Publicacion dtp = new Dt_Publicacion();
+    listPost = dtp.ListaPost();
+	
+	Publicacion p = new Publicacion();
+	
+	int publicacionid =0;
+	
+	if(listPost.size() == 0){
+		publicacionid= 1;	
+	}	
+	else{			
+		p = listPost.get(listPost.size() - 1);
+		publicacionid = p.getPublicacionid()+1 ;		
+	}
+%>
         <!-- Menus -->
   		 <jsp:include page="adminMenus.jsp" />    
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                
+                 <%
+                    String postID = "";
+                    postID = request.getParameter("idP")==null?"0":request.getParameter("idP");											
+					Publicacion post = new Publicacion();
+					Dt_Publicacion dts = new Dt_Publicacion();
+					post = dts.getPublicacion(Integer.parseInt(postID));						
+                  %>
 
                     <!-- Formulario -->
-   			   		  <div class="container">
-                        <header class="text-center text-white">
-                            <script src="https://kit.fontawesome.com/a41f4b8198.js" crossorigin="anonymous"></script>
-                        </header>
+   			   		 <div class="container">
                         <div class="row">
                             <div class="col-lg-10 mx-auto m-auto">
-                                <div class="card rounded shadow border-0">
+                            <div class="card rounded shadow border-0">
 
-                                    <div class="card-header">
-                                        <h3 class="card-title text-left">Formulario Servicio</h3>
-                                    </div>
-                                    <div class="card-body">
-                                      <form class="Servicio" method="post" action="./Sl_GestionServicio" enctype="multipart/form-data">
-                      					<input name="opcion" type="hidden" value="1" />
-                      					<input name="servicioid" type="hidden" value="<%=servicioid%>" />  
-                      					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                      					
-                                      <div class="form-group">
-                                                <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" minlength="10" maxlength="200" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="descripciónS"
-                                                    class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" minlength="25" maxlength="350" required ></textarea>
-                                            </div>
-                                            <div class="form-group">
+                                <div class="card-header">
+                                    <h2>
+                                        Formulario Publicación
+                                    </h2>
+
+                                </div>
+                                <div class="card-body bg-white rounded">
+                              		   <form class="Publicacion" method="post" action="./Sl_GestionPublicacion" enctype="multipart/form-data">
+                      					<input name="opcion" type="hidden" value="2" />
+                      					<input name="publicacionid" type="hidden" value="<%=post.getPublicacionid()%>" />  
+                      					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                     				
+                                        <div class="form-group">
+                                            <label>Titulo:</label>
+                                            <input class="form-control" id = "txtTituloPost" name = "txtTituloPost" minlegth="10" maxlength="300" required>
+
+                                        </div>
+                                        <div class="form-group">      
+                                        <label>Descripción:</label>
+                                            <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost" minlegth="10" maxlength="3000" required></textarea>
+                                        </div>                                        
+                                          <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
                                                    <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultSer">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
+													    <label class="custom-file-label text-left" for="customFile" id="filmultPost">Seleccionar archivo</label>
+													    <input type="file" class="custom-file-input" id="multPost" name="multPost" onchange="Test.UpdatePreview(this)" accept="image/jpeg" >
+											    		<input type="hidden" name="url_foto" value="<%=post.getMultimedia()%>">																			
 													</div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                             <label>Estado:</label>  
-                                                <select class="form-control" name="cbxEstadoServicio" id="cbxEstadoServicio" required>                                            	
-                                    			<option value="" selected disabled>Seleccionar</option>                                    			                                            	
-                                    			<option value="1">Disponible</option>
-                                    			<option value="2">No disponible</option>
-                                    	        </select>
-                                    	    </div>                                       	                                          
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary" style="width: 100%;">Guardar</button>
-                                            </div>
-                                            <div style="text-align:center;"><a href="GestionServicio.jsp"><i
-                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
-                                        </form>
-                                    </div>
+                                              <div class="form-group">
+                                                    <label for="formGroupExampleInput">Tipo de Evento:</label>
+                                                    <select class="form-control" id= "cbxEstadoPost" name= "cbxEstadoPost" required>
+                                                        <option value= "0" selected disabled>Seleccionar...</option>                                                        
+                                                        <option value="1">Visible</option>
+                                                        <option value="2">No Visible</option>
+                                                        <option value="3">Borrador</option>
+                                                    </select>
+                                                </div>
+                                           <div class="text-center">
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                            </div>
+				                            <br>
+                                        <div style="text-align:center;"><a href="GestionPublicacion.jsp"><i
+                                                    class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                     <!-- Termina Formulario -->
@@ -194,9 +202,7 @@
 
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
-        
-
-
+              
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -217,10 +223,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-		<!-- jAlert js -->
-	<script src="jAlert/dist/jAlert.min.js"></script>
-	<script src="jAlert/dist/jAlert-functions.min.js"></script>
-	
 	<script>		
 	    $(document).ready(function() 
 		{
@@ -230,18 +232,27 @@
 
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'El servicio que esta intentando registrar ya existe en la base de datos!');
+	            errorAlert('Error', 'El Publicación que esta intentando registrar ya existe en la base de datos!');
 	        }
 	    });
 	 </script>
 		
- 	 <script>  $('#multSer').on("change",function() {
+ 	 <script>  $('#multPost').on("change",function() {
 	     var i = $(this).prev('label').clone();
-	      var file = $('#multSer')[0].files[0].name;
+	      var file = $('#multPost')[0].files[0].name;
 	   console.log(file);
 	      $(this).prev('label').text(file);
 
 	    });
 	</script>
+	
+	 <script>  
+	  $(document).ready(function()
+		{
+			$("#txtTituloPost").val("<%=post.getTitulo()%>");
+			$("#txtDescripcionPost").val("<%=post.getDescripcion()%>");	
+			$("#cbxEstadoPost").val("<%=post.getEstadopublicacion()%>");	
+		});
+	 </script>  
 </body>
 </html>

@@ -87,7 +87,7 @@ public class Dt_Servicio {
 						rsServicio.updateInt("estadoservicio", sr.getEstadoservicio());		
 						rsServicio.updateTimestamp("fcreacion", sr.getFcreacion());
 						rsServicio.updateInt("estado", 1);
-						rsServicio.updateInt("usuarioid", 1);
+						rsServicio.updateInt("usuarioid", sr.getUsuarioid());
 						rsServicio.insertRow();
 						rsServicio.moveToCurrentRow();
 						guardado = true;
@@ -132,6 +132,7 @@ public class Dt_Servicio {
 								rsServicio.updateString("multimedia", sr.getMultimedia());
 								rsServicio.updateInt("estadoservicio", sr.getEstadoservicio());
 								rsServicio.updateTimestamp("fmodificacion", sr.getFmodificacion());
+								rsServicio.updateInt("usuarioid", sr.getUsuarioid());
 								rsServicio.updateInt("estado", 2);
 								rsServicio.updateRow();
 								modificado=true;

@@ -3,18 +3,19 @@ package entidades;
 import java.sql.Timestamp;
 
 public class Usuario {
-	
 	//Atributos
 	private int idUser;
 	private String user;
 	private String pwd;
 	private String nombre;
+	private String email;
 	private String apellido;
 	private Timestamp fCreacion;
 	private Timestamp fModificacion;
 	private Timestamp fEliminacion;
 	private int estado;
 	private String url_foto;
+	private String telefono;
 	
 	//Metodos
 	public int getIdUser() {
@@ -76,5 +77,17 @@ public class Usuario {
 	}
 	public void setUrl_foto(String url_foto) {
 		this.url_foto = url_foto;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}	
 }

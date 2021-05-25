@@ -1,5 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Home, datos.Dt_Home,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <%
@@ -80,7 +129,7 @@
                                         <form class="Inicio" method="post" action="./Sl_GestionInicio" enctype="multipart/form-data">
                 						<!-- El valor de estos input es para el Servlet opcion editar -->                			
                                         	<input name="idInicio" type="hidden" value="<%=hm.getHomeID()%>" />
-                                        	<input name="idUsuario" type="hidden" value="<%= hm.getUsuarioID()%>" />                                        	
+                                        	<input name="idUsuario" type="hidden" value="<%=usuarioid%>" />                                        	
                             				<input name="opcion" type="hidden" value="1" />
                                             <h3>Historia</h3>
                                             <hr class="bg-dark w-auto">
@@ -237,6 +286,7 @@
         {
             errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
+        
         });
 	</script>
 </body>

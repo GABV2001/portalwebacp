@@ -1,5 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.TipoProducto, entidades.Producto, datos.Dt_TipoProducto, datos.Dt_Producto, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import="entidades.TipoProducto,
+    vistas.ViewProducto,datos.Dt_TipoProducto,datos.Dt_Producto,entidades.Producto, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,6 +112,7 @@
                                     <div class="card-body">
                                         <form class="Producto" method="post" action="./Sl_GestionProducto" enctype="multipart/form-data">
                       					<input name="productoid" type="hidden" value="<%=pr.getProductoid()%>" />                            
+                      				   	<input name="usuarioid"  type = "hidden" value="<%=usuarioid%>" />                                                                    	                                                
                       					<input name="opcion" type="hidden" value="2" />
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>

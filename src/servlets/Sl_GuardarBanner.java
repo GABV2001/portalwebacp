@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import java.util.Date;
 
 import entidades.Banner;
+import negocio.Ng_Banner;
 import datos.Dt_Banner;
 
 /**
@@ -49,14 +50,20 @@ public class Sl_GuardarBanner extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		//Construir Objetos
 		Dt_Banner dtb = new Dt_Banner();
 		Banner bn = new Banner();
+		Ng_Banner ngb = new Ng_Banner();
 		
 		int opc = 0;
 		String posicion = null;
 		String txtTituloBanner = null;
 		String txtDescripcionBanner = null;
+		String usuarioid = null;
 		String rutaFichero = null;
+		
+		//Controlador
+		boolean control = false;
 		
 		try
 		{
@@ -82,9 +89,20 @@ public class Sl_GuardarBanner extends HttpServlet {
 						txtTituloBanner = valor;
 					}else if(key.equals("txtDescripcionBanner")){
 						txtDescripcionBanner = valor;
+					}else if(key.equals("usuarioid")){
+						usuarioid = valor;
 					}					
 				}
 			}
+			
+			//Validar si los campos estan vacios
+			if(txtTituloBanner.trim().isEmpty() || txtDescripcionBanner.trim().isEmpty()){
+	        	response.sendRedirect("GestionBanner.jsp?msj=2");			
+			}else{
+				control = true;
+			}
+			
+			if(control){
 			for(FileItem item : items)
 			{
 				FileItem uploaded = item;
@@ -118,10 +136,7 @@ public class Sl_GuardarBanner extends HttpServlet {
 						/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
 						String url = "fotosBannerAbra/"+rutaFichero;
 						
-						//Setear valores al objeto para guardar en la bd
-						bn.setPosicion(Integer.parseInt(posicion));
-						bn.setTitulobanner(txtTituloBanner);
-						bn.setDescripcion(txtDescripcionBanner);
+						//Setear el url foto
 						bn.setMultimedia(url);									
 					}
 					else
@@ -129,36 +144,52 @@ public class Sl_GuardarBanner extends HttpServlet {
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
 						response.sendRedirect("GestionBanner.jsp?msj="+valorPosicion+"&guardado=3");						
 					}
-				}	
+				}					
 			}
-		}
+		  }
+		}		
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
+		
+		if(control){
+			//Setear valores al objeto para guardar en la bd
+			bn.setPosicion(Integer.parseInt(posicion));
+			bn.setTitulobanner(txtTituloBanner);
+			bn.setDescripcion(txtDescripcionBanner);
+			bn.setUsuarioID(Integer.parseInt(usuarioid));
+			
+			//Opciones
+			switch (opc){
+			case 1:{
+				       try {
+				    	Date fechaSistema = new Date();
+					    bn.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));						 
+			        	if(ngb.existeBanner(bn.getTitulobanner())) {
+			   	        	response.sendRedirect("FormBanner.jsp?msj=existe");
+			   	        }
+			   	        else {
 						
-				switch (opc){
-					case 1:{						
-							Date fechaSistema = new Date();
-						    bn.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));						 
-					        try {				        								
- 					        if(dtb.guardarBanner(bn)) {
-						        	response.sendRedirect("GestionBanner.jsp?msj=1");
-						        }
-						        else {
-						        	response.sendRedirect("GestionBanner.jsp?msj=2");
-						        }      	
-					        }
-					        catch(Exception e) {
-					        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
-								e.printStackTrace();
-					        }
-					        
-							break;
-			    		}					
+				        if(dtb.guardarBanner(bn)) {
+				        	response.sendRedirect("GestionBanner.jsp?msj=1");
+				        }
+				        else {
+				        	response.sendRedirect("GestionBanner.jsp?msj=2");
+				        } 
+			   	        }
+			        }			        
+			        catch(Exception e) {
+			        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
+						e.printStackTrace();
+			        }
+			        
+					break;
+	    		}					
 				default:
 					response.sendRedirect("GestionBanner.jsp?msj=7");	
 					break;
-			}										
+			}
+		}
 	}	
 }

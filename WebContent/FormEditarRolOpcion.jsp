@@ -1,5 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Rol,entidades.Opcion,entidades.RolOpcion,datos.Dt_Opcion,datos.Dt_Opcion,datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+import="entidades.Rol,entidades.Opcion,entidades.RolOpcion,datos.Dt_Opcion,datos.Dt_Opcion,
+datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtrog = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpcU = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpcU = dtrog.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpcU){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 

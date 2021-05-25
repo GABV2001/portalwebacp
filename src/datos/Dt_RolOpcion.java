@@ -234,4 +234,47 @@ public class Dt_RolOpcion {
 			}
 			return modificado;
 		}	
+		
+		//Metodo para visualizar las opciones de un rol
+		public ArrayList<ViewRolOpcion> listaRolOpc(int idRol){
+			ArrayList<ViewRolOpcion> listropc = new ArrayList<ViewRolOpcion>();
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("select * from vw_rol_opciones where rolid=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, idRol);
+				rs = ps.executeQuery();
+				while(rs.next()){
+					ViewRolOpcion vwrop = new ViewRolOpcion();
+					vwrop.setIdrol_opc(rs.getInt("idrol_opc"));
+					vwrop.setRolid(rs.getInt("rolid"));
+					vwrop.setRol(rs.getString("rol"));
+					vwrop.setId_opc(rs.getInt("id_opc"));
+					vwrop.setOpcion(rs.getString("opcion"));
+					listropc.add(vwrop);
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS: ERROR EN listaRolOpc "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			return listropc;
+		}
 }

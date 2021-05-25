@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Usuario;
+import negocio.Ng_Usuario;
 import datos.Dt_Usuario;
 
 /**
@@ -59,11 +60,31 @@ public class Sl_GestionUsuario extends HttpServlet {
 		//CONSTRUIR EL OBJETO USUARIO
 		Dt_Usuario dtu = new Dt_Usuario();
 		Usuario user = new Usuario();
+		Ng_Usuario ngu = new Ng_Usuario();
 		
-		user.setNombre(request.getParameter("txtNombres"));
-		user.setApellido(request.getParameter("txtApellidos"));
-		user.setUser(request.getParameter("txtUserName"));
-		user.setPwd(request.getParameter("txtPwd"));
+		//Control Variables
+		String nombres = request.getParameter("txtNombres");
+		String apellidos = request.getParameter("txtApellidos");
+		String usuario = request.getParameter("txtUserName");
+		String pwd= request.getParameter("txtPwd");
+		String email = request.getParameter("txtEmail");
+		String telefono = request.getParameter("txtTelefono");
+		
+		if(nombres.trim().isEmpty()|| apellidos.trim().isEmpty()|| usuario.trim().isEmpty() || pwd.trim().isEmpty()){
+        	response.sendRedirect("GestionUsuario.jsp?msj=2");
+		}else{
+		user.setNombre(nombres);
+		user.setApellido(apellidos);
+		user.setUser(usuario);
+		user.setPwd(pwd);
+		user.setEmail(email);
+		user.setTelefono(telefono);
+		
+		if(user.getTelefono() == null){
+			user.setTelefono("opcional");			
+		}else{
+			user.setTelefono(request.getParameter("txtTelefono"));			
+		}
 		
 		switch (opc){
 			case 1:{
@@ -73,14 +94,17 @@ public class Sl_GestionUsuario extends HttpServlet {
 				        Date fechaSistema = new Date();
 				        user.setfCreacion(new java.sql.Timestamp(fechaSistema.getTime()));
 				        System.out.println("user.getFechaCreacion(): "+user.getfCreacion());
-				        if(dtu.guardarUser(user)) {
-				        	response.sendRedirect("GestionUsuario.jsp?msj=1");
+				        if(ngu.existeUser(user.getUser())) {
+				        	response.sendRedirect("FormUsuario.jsp?msj=existe");
 				        }
 				        else {
-				        	response.sendRedirect("GestionUsuario.jsp?msj=2");
-				        }
-				        	
-			        	
+				        	if(dtu.guardarUser(user)) {
+					        	response.sendRedirect("GestionUsuario.jsp?msj=1");
+					        }
+					        else {
+					        	response.sendRedirect("GestionUsuario.jsp?msj=2");
+					        }
+				        }			        	
 			        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());
@@ -97,14 +121,15 @@ public class Sl_GestionUsuario extends HttpServlet {
 		        	//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
 			        Date fechaSistema = new Date();
 			        user.setfModificacion(new java.sql.Timestamp(fechaSistema.getTime()));
-			        System.out.println("user.getfModificacion(): "+user.getfModificacion());
+			        System.out.println("user.getfModificacion(): "+user.getfModificacion());	       			        
 			        if(dtu.modificarUser(user)) {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=3");
 			        }
 			        else {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=4");
 			        }
-     }
+					
+					}
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());
 					e.printStackTrace();
@@ -118,5 +143,5 @@ public class Sl_GestionUsuario extends HttpServlet {
 				break;
 		}	
 	}
-
+  }
 }

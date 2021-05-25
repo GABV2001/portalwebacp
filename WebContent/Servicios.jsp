@@ -43,8 +43,9 @@
 
 <div class="row">
 		<%       			
-		boolean control = Ng_Servicio.validarVisibilidad();
-		if(control == true){%>
+		//Construir objecto negocio
+		Ng_Servicio ngs = new Ng_Servicio();
+		if(ngs.validarVisibilidad()){%>
 		 <div class="row">
            <div class="col-md-4">
                <figure class="card card-product">

@@ -18,11 +18,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import entidades.Arbol;
-import entidades.Servicio;
 import datos.Dt_Arbol;
-import datos.Dt_Servicio;
-
-
 
 /**
  * Servlet implementation class Sl_GestionArbol

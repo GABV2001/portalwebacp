@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_RolOpcion;
-import datos.Dt_RolUsuario;
 import entidades.RolOpcion;
-import entidades.RolUsuario;
+import negocio.Ng_RolOpcion;
 
 /**
  * Servlet implementation class Sl_GestionRolOpciones
@@ -59,21 +58,25 @@ public class Sl_GestionRolOpciones extends HttpServlet {
 		//CONSTRUIR EL OBJETO ROL-USER
 		RolOpcion ro = new RolOpcion();		
 		Dt_RolOpcion dtro = new Dt_RolOpcion(); 
+		Ng_RolOpcion ngp = new Ng_RolOpcion();
 		
 		ro.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
 		ro.setId_opc(Integer.parseInt(request.getParameter("cbxOpc")));
 
 		switch (opc){
 		case 1:{
-			
-		        try {		        	
+		        try {
+		        	if(ngp.existeOpcionAsignada(ro.getRolid(), ro.getId_opc())){
+			        	response.sendRedirect("FormRolOpcion.jsp?msj=existe");
+			        }
+			        else {			      
 			        if(dtro.guardarRolOpc(ro)) {
 			        	response.sendRedirect("GestionRolOpcion.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionRolOpcion.jsp?msj=2");
 			        }
-			        	
+			       }        	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionRolOpcion, el error es: " + e.getMessage());
@@ -92,9 +95,7 @@ public class Sl_GestionRolOpciones extends HttpServlet {
 		        }
 		        else {
 		        	response.sendRedirect("GestionRolOpcion.jsp?msj=4");
-		        }
-		        	
-	        	
+		        }	        	
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());

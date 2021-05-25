@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_TipoProducto;
 import entidades.TipoProducto;
+import negocio.Ng_TipoProducto;
 
 /**
  * Servlet implementation class Sl_GestionTipoProducto
@@ -57,20 +58,36 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 				//Construir objeto estudiante
 				Dt_TipoProducto dtp = new Dt_TipoProducto();
 				TipoProducto tp = new TipoProducto();
-				tp.setNombre(request.getParameter("nombreTipoProducto"));
-				tp.setDescripcion(request.getParameter("descripcionTipoProducto"));
+				Ng_TipoProducto ngtp = new Ng_TipoProducto();
+				
+				//Variables de control
+				String nombre = request.getParameter("nombreTipoProducto");
+				String desc = request.getParameter("descripcionTipoProducto");
+				
+				if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+		        	response.sendRedirect("GestionTipoProductos.jsp?msj=2");					
+				}
+				else{
+				//Setear info a objeto
+				tp.setNombre(nombre);
+				tp.setDescripcion(desc);
 				
 				switch (opc){
-				case 1:{
-					
+				case 1:{					
 				        try {
+				        	if(ngtp.existeTipoProducto(tp.getNombre()))
+				        	{
+				        	   	response.sendRedirect("FormTipoProducto.jsp?msj=existe");									
+				        	}else {
+				        	
 				        	if(dtp.guardarTipoProducto(tp)) {
 					        	response.sendRedirect("GestionTipoProductos.jsp?msj=1");
 					        }
 					   
 					         else {
 					        	response.sendRedirect("GestionTipoProductos.jsp?msj=2");
-					        }	        	
+					        }	
+				        	}
 				        }
 				        catch(Exception e) {
 				        	System.out.println("Sl_GestionTipoProducto, el error es: " + e.getMessage());
@@ -99,6 +116,6 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 					response.sendRedirect("GestionTipoProducto.jsp?msj=7");	
 					break;
 				}
-			
+		}
 	}
 }

@@ -63,6 +63,10 @@ public class Sl_GestionInicio extends HttpServlet {
 		String multHistoria = null;
 		String multMision = null;
 		String multVision = null;
+		
+		//Controlador
+		boolean control = false;
+		
 					
 		try
 		{
@@ -107,7 +111,15 @@ public class Sl_GestionInicio extends HttpServlet {
 			
 			int valorImagen = 0;
 			String urls = null;
+			
+			//Validar si los campos estan vacios
+			if(idInicio.trim().isEmpty()|| idUsuario.trim().isEmpty() || descripcionHis.trim().isEmpty() || descripcionMis.trim().isEmpty()|| descripcionVis.trim().isEmpty()){
+	        	response.sendRedirect("GestionInicio.jsp?msj=2");			
+			}else{
+				control = true;
+			}
 		
+			if(control){
 			for(FileItem item : items )
 			{ 
 				FileItem uploaded = item;
@@ -170,14 +182,16 @@ public class Sl_GestionInicio extends HttpServlet {
 						response.sendRedirect("GestionInicio.jsp?msj="+valorImagen+"&guardado=3");						
 					}	
 				}
-				}
+		   	  }
 			}
+		 }
 		}			
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
 		
+		if(control){
 		//Setear valores al objeto para guardar en la bd
 		hm.setHomeID(Integer.parseInt(idInicio));
 		hm.setHistoria(descripcionHis);
@@ -221,4 +235,5 @@ public class Sl_GestionInicio extends HttpServlet {
 				break;
 		}
 	}
+   }
 }

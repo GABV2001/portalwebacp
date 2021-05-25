@@ -1,5 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Evento, datos.Dt_Evento, java.util.*;"
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"
+%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +118,8 @@
                                     <div class="card-body bg-white rounded">
                                         <form class="Evento" method="post" action="./Sl_GestionEvento" enctype="multipart/form-data">
                       					<input name="opcion" type="hidden" value="1" />
-                      					<input name="eventoid" type="hidden" value="<%=eventoid%>" />                   					                            
+                      					<input name="eventoid" type="hidden" value="<%=eventoid%>" />   
+                      					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                 					                            
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Nombre:</label>
                                                 <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" required>
@@ -77,7 +127,7 @@
 
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label>Descripción:</label>
+                                                    <label>DescripciÃ³n:</label>
                                                     <textarea class="form-control" rows="3" id ="txtDescripcionEvento" name = "txtDescripcionEvento" required ></textarea>
                                                 </div>
                                             </div>
@@ -105,7 +155,7 @@
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
                                                       	<option value = "0" selected disabled>Seleccionar...</option>
-                                                        <option value="1">Agenda Pública</option>
+                                                        <option value="1">Agenda PÃºblica</option>
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
                                                 </div>
@@ -127,7 +177,7 @@
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="formGroupExampleInput ">Ubicación:</label>
+                                                <label for="formGroupExampleInput ">UbicaciÃ³n:</label>
                                                 <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento">
                                             </div>
                                             <div class="form-group text-center">

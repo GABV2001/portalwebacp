@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import entidades.Usuario;
+import vistas.ViewRolUsuario;
 
 public class Dt_Usuario {
 	//Atributos
@@ -19,7 +20,7 @@ public class Dt_Usuario {
 	// Metodo para llenar el RusultSet
 	public void llenaRsUsuario(Connection c){
 		try{
-			ps = c.prepareStatement("SELECT usuarioid, nombres, apellidos, email, usuario, contra, estado, url_foto,fcreacion, fmodificacion, feliminacion FROM usuario where estado<>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps = c.prepareStatement("SELECT usuarioid, nombres, apellidos, email, usuario, contra, telefono,estado, url_foto,fcreacion, fmodificacion, feliminacion FROM usuario where estado<>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			rsUsuario = ps.executeQuery();
 		}
 		catch (Exception e){
@@ -32,7 +33,7 @@ public class Dt_Usuario {
 			ArrayList<Usuario> listUser = new ArrayList<Usuario>();
 			try{
 				c = PoolConexion.getConnection();
-				ps = c.prepareStatement("SELECT usuarioid, nombres, apellidos, email, usuario, contra, estado, url_foto,fcreacion, fmodificacion, feliminacion FROM usuario where estado<>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("SELECT usuarioid, nombres, apellidos, email, telefono,usuario, contra, estado, url_foto,fcreacion, fmodificacion, feliminacion FROM usuario where estado<>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				rs = ps.executeQuery();
 				while(rs.next()){
 					Usuario user = new Usuario();
@@ -42,6 +43,8 @@ public class Dt_Usuario {
 					user.setNombre(rs.getString("nombres"));
 					user.setApellido(rs.getString("apellidos"));
 					user.setfCreacion(rs.getTimestamp("fcreacion"));
+					user.setEmail(rs.getString("email"));
+					user.setTelefono(rs.getString("telefono"));
 					user.setEstado(rs.getInt("estado"));
 					listUser.add(user);
 				}
@@ -77,7 +80,7 @@ public class Dt_Usuario {
 			try
 			{
 				c = PoolConexion.getConnection();
-				ps = c.prepareStatement("select usuarioid, nombres, apellidos, email, usuario, contra, estado, url_foto, fcreacion, fmodificacion, feliminacion from usuario where estado <> 3 and usuarioid=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps = c.prepareStatement("select usuarioid, nombres, apellidos, email, telefono ,usuario, contra, estado, url_foto, fcreacion, fmodificacion, feliminacion from usuario where estado <> 3 and usuarioid=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 				ps.setInt(1, idUsuario);
 				rs = ps.executeQuery();
 				if(rs.next())
@@ -88,6 +91,8 @@ public class Dt_Usuario {
 					user.setNombre(rs.getString("nombres"));
 					user.setApellido(rs.getString("apellidos"));
 					user.setUrl_foto(rs.getString("url_foto"));
+					user.setEmail(rs.getString("email"));
+					user.setTelefono(rs.getString("telefono"));
 					user.setEstado(rs.getInt("estado"));
 				}
 			}
@@ -131,6 +136,8 @@ public class Dt_Usuario {
 				rsUsuario.updateString("nombres", user.getNombre());
 				rsUsuario.updateString("apellidos", user.getApellido());
 				rsUsuario.updateTimestamp("fcreacion", user.getfCreacion());
+				rsUsuario.updateString("email", user.getEmail());
+				rsUsuario.updateString("telefono",user.getTelefono());
 				rsUsuario.updateInt("Estado", 1);
 				rsUsuario.insertRow();
 				rsUsuario.moveToCurrentRow();
@@ -175,7 +182,9 @@ public class Dt_Usuario {
 						rsUsuario.updateString("nombres", user.getNombre());
 						rsUsuario.updateString("apellidos", user.getApellido());
 						rsUsuario.updateTimestamp("fmodificacion", user.getfModificacion());
-						rsUsuario.updateInt("estado", 2);
+						rsUsuario.updateString("email", user.getEmail());
+						rsUsuario.updateString("telefono",user.getTelefono());						
+						rsUsuario.updateInt("estado", 2);						
 						rsUsuario.updateRow();
 						modificado=true;
 						break;
@@ -295,4 +304,91 @@ public class Dt_Usuario {
 			
 			return actualizado;
 		}
+		
+		// METODO PARA VERIFICAR USUARIO Y PWD //
+		public boolean dtverificarLogin(String login, String clave, int rol)
+		{
+			boolean existe=false;
+			String SQL = ("SELECT * FROM vw_usuario_rol WHERE usuario=? AND contra=? AND rolid=?");
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement(SQL);
+				ps.setString(1, login);
+				ps.setString(2, clave);
+				ps.setInt(3, rol);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS: ERROR AL VERIFICAR EL LOGIN "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
+			return existe;
+		}
+		
+		// METODO PARA OBTENER UN OBJETO DE TIPO Vw_RolUser //
+		public ViewRolUsuario dtGetRU(String login)
+		{
+			ViewRolUsuario vwru = new ViewRolUsuario();
+		String SQL = ("SELECT * FROM vw_usuario_rol where usuario=?");
+		try{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(SQL);
+			ps.setString(1, login);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				vwru.setIdrol_usuario(rs.getInt("idrol_usuario"));
+				vwru.setUsuarioid(rs.getInt("usuarioid"));
+				vwru.setRolid(rs.getInt("rolid"));
+				vwru.setUsuario(rs.getString("usuario"));
+				vwru.setRol(rs.getString("rol"));
+				vwru.setContra(rs.getString("contra"));
+				vwru.setNombres(rs.getString("nombres"));
+				vwru.setApellidos(rs.getString("apellidos"));
+				vwru.setUrl_foto(rs.getString("url_foto"));
+			}
+		}
+		catch (Exception e){
+			System.out.println("DATOS: ERROR EN dtGetRU "+ e.getMessage());
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(rs != null){
+					rs.close();
+				}
+				if(ps != null){
+					ps.close();
+				}
+				if(c != null){
+					PoolConexion.closeConnection(c);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return vwru;
+	}
 }

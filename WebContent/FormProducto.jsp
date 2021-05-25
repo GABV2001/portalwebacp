@@ -1,5 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.TipoProducto,vistas.ViewProducto,datos.Dt_TipoProducto,datos.Dt_Producto, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import="entidades.TipoProducto,
+    vistas.ViewProducto,datos.Dt_TipoProducto,datos.Dt_Producto,  entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>   
 <!DOCTYPE html>
 <%            	
 	ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
@@ -71,6 +123,7 @@
                                     <div class="card-body">
                                         <form class="Producto" method="post" action="./Sl_GestionProducto" enctype="multipart/form-data" >
                       					<input name="opcion" type="hidden" value="1" />
+                      				   	<input name="usuarioid"  type = "hidden" value="<%=usuarioid%>" />                                                                      	              
                        					<input name="productoid" type="hidden" value="<%=productoid%>" />                      					
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>
@@ -94,7 +147,7 @@
                                             </div>
                                              <div class="form-group">
                                              <label>Estado:</label>  
-                                                <select class="form-control" name="cbxEstadoProducto" id="cbxEstadoProducto">                                            	
+                                                <select class="form-control" name="cbxEstadoProducto" id="cbxEstadoProducto" required>                                            	
                                     			<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                     			<option value="1">Disponible</option>
                                     			<option value="2">No disponible</option>
@@ -177,6 +230,25 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+    
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>		
+	    $(document).ready(function() 
+		{
+	    	/////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+
+	        if(mensaje == "existe")
+	        {
+	            errorAlert('Error', 'El Producto que esta intentando registrar ya existe en la base de datos!');
+	        }
+	    });
+	 </script>
+    
      <script>  $('#multPro').on("change",function() {
 	     var i = $(this).prev('label').clone();
 	      var file = $('#multPro')[0].files[0].name;
@@ -185,9 +257,5 @@
 
 	    });
 	</script>
-    
-
-
 </body>
-
 </html>

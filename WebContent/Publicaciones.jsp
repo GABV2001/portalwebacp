@@ -55,7 +55,7 @@
 			                        <h4 class="card-title">
 			                            <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>" class="fw-bold text-dark"> <%=a.getTitulo() %></a>
 			                        </h4>
-			                        <p class="card-text"><%=a.getDescripcion() %></p>
+			                        <p class="card-text"><%=a.getDescripcion()%></p>
 			                    </div>					       
 			                </div>
 			             </div>			

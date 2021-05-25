@@ -1,5 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
- import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="entidades.TipoProducto,
+    vistas.ViewProducto,datos.Dt_TipoProducto,datos.Dt_Producto,  entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>   
 <!DOCTYPE html>
  <% response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 
  response.setHeader("Pragma","no-cache"); //HTTP 1.0 
@@ -16,7 +54,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Portal ACP - Gesti贸n Productos</title>
+    <title>Portal ACP - Gesti髇 Productos</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -57,7 +95,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gesti贸n Productos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gesti髇 Productos</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -72,7 +110,7 @@
                                     <thead>
                                         <tr>
                                             <th>Producto</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Descripci髇</th>
                                             <th>Multimedia</th>
                                             <th>Estado</th>
                                             <th>Tipo Producto</th>                                                                                    
@@ -82,7 +120,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Producto</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Descripci髇</th>
                                             <th>Multimedia</th>
                                             <th>Estado</th>
                                             <th>Tipo Producto</th>                                                                                    
@@ -106,7 +144,7 @@
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '驴Est谩s seguro que deseas eliminar este Producto',
+                                           		    'confirmQuestion': '縀st醩 seguro que deseas eliminar este Producto',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here

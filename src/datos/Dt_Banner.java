@@ -91,7 +91,7 @@ public class Dt_Banner {
 				rsBanner.updateInt("posicion", bn.getPosicion() + 1);
 				rsBanner.updateTimestamp("fcreacion", bn.getFcreacion());				
 				rsBanner.updateInt("estado", 1);
-				rsBanner.updateInt("usuarioid", 1);
+				rsBanner.updateInt("usuarioid", bn.getUsuarioID());
 				rsBanner.insertRow();
 				rsBanner.moveToCurrentRow();
 				guardado = true;
@@ -181,6 +181,7 @@ public class Dt_Banner {
 						rsBanner.updateString("titulobanner", bn.getTitulobanner());
 						rsBanner.updateString("descripcion", bn.getDescripcion());
 						rsBanner.updateTimestamp("fmodificacion", bn.getFmodificacion());								
+						rsBanner.updateInt("usuarioid", bn.getUsuarioID());
 						rsBanner.updateInt("estado", 2);
 						rsBanner.updateRow();
 						modificado=true;

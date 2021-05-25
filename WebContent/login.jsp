@@ -1,5 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" 
+import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	String mensaje = request.getParameter("msj");
+	mensaje=mensaje==null?"":mensaje;
+	
+	HttpSession hts = request.getSession(false);
+	hts.removeAttribute("acceso");
+	hts.invalidate();
+
+%>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +25,6 @@
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal Arboreto Carmelo Palma</title>
      
@@ -27,7 +43,10 @@
 
     <!-- Custom  CSS -->
     <link rel="stylesheet" href="css/styles1.css">
-
+    
+     <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+    
 </head>
 
 <body>
@@ -49,25 +68,35 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 font-weight-bold">¡Bienvenido!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="./Sl_Login">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                            <input type="text" class="form-control form-control-user"
+                                                id="userName" name="userName" aria-describedby="emailHelp"
                                                 placeholder="Correo">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Contraseña">
+                                                id="pwd" name="pwd" placeholder="Contraseña">
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Recordar</label>
-                                            </div>
+                                         <div class="form-group">
+                                            <%
+			                                	ArrayList<Rol> listRol = new ArrayList<Rol>();
+			                                	Dt_Rol dtr = new Dt_Rol();
+												listRol = dtr.listaRolActivos();
+                                			%>
+                                    		<select class=" form-control-user w-100" name="cbxRol" id="cbxRol" required>
+		                                    	<option value="" selected disabled>Seleccione...</option>
+		                                    	<%
+		                                    		for(Rol r: listRol){
+		                                    	%>	
+		                                    		<option value="<%=r.getIdRol()%>"><%=r.getRol()%></option>
+		                                    	<%
+		                                    		}
+		                                    	%>
+                                    		</select>
                                         </div>
-                                        <a href="index2.jsp" class="btn btn-success btn-user btn-block">
-                                            Iniciar sesión
-                                        </a>
+                                        <input type="submit" value="Iniciar sesión" class="btn btn-success btn-user btn-block" />
+                                        <input type="submit" value="Cancelar" class="btn btn-google btn-user btn-block" />
                                         <hr>
                                     </form>
                                     <hr>
@@ -92,7 +121,26 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+     <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
 
+	<script>
+    $(document).ready(function ()
+    {
+        
+	/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "403")
+        {
+            errorAlert('Error', 'Revise los datos e intente nuevamente(Usuario o Contraseña Incorrecta)');
+        }
+    });
+	</script>
 </body>
 
 </html>

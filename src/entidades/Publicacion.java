@@ -7,7 +7,9 @@ public class Publicacion {
 	private int publicacionid;
 	private String titulo;
 	private String descripcion;
-	private Timestamp fecha;
+	private Timestamp fcreacion;
+	private Timestamp fmodificacion;
+	private Timestamp feliminacion;
 	private String multimedia;
 	private int estadopublicacion;
 	private int estado;
@@ -57,13 +59,22 @@ public class Publicacion {
 	public void setUsuarioid(int usuarioid) {
 		this.usuarioid = usuarioid;
 	}
-	public Timestamp getFecha() {
-		return fecha;
+	public Timestamp getFcreacion() {
+		return fcreacion;
 	}
-	public void setFecha(Timestamp fecha) {
-		this.fecha = fecha;
+	public void setFcreacion(Timestamp fcreacion) {
+		this.fcreacion = fcreacion;
 	}
-
-	
-
+	public Timestamp getFmodificacion() {
+		return fmodificacion;
+	}
+	public void setFmodificacion(Timestamp fmodificacion) {
+		this.fmodificacion = fmodificacion;
+	}
+	public Timestamp getFeliminacion() {
+		return feliminacion;
+	}
+	public void setFeliminacion(Timestamp feliminacion) {
+		this.feliminacion = feliminacion;
+	}
 }

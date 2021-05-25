@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "entidades.Publicacion, datos.Dt_Publicacion, java.util.*"%>
+    pageEncoding="ISO-8859-1" import = "entidades.Publicacion, datos.Dt_Publicacion, java.text.SimpleDateFormat,java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,33 +31,31 @@
 <body>
  <!-- Menu -->
  <jsp:include page="mainMenus.jsp" />
- 
     <br>
     <br>
-						<%											
-					 	ArrayList<Publicacion> ListaPost = new ArrayList<Publicacion>();
-                       	Dt_Publicacion dta = new Dt_Publicacion();
-                       	ListaPost = dta.ListaPost();    
-                       	
-                       		
-						%> 
+				<%											
+				ArrayList<Publicacion> ListaPost = new ArrayList<Publicacion>();
+              	Dt_Publicacion dta = new Dt_Publicacion();
+              	ListaPost = dta.ListaPost();  
+     		    
+				%> 
 		    <div class="row">
 		    	<%
 		    	String publicacionid = "";
-				publicacionid = request.getParameter("publicacionid")==null?"0":request.getParameter("publicacionid");
-				System.out.println(publicacionid);
+				publicacionid = request.getParameter("publicacionid")==null?"0":request.getParameter("publicacionid");	
 				int MostrarInfo = Integer.parseInt(publicacionid);
 		    	for(Publicacion a: ListaPost){ 
+		    	String fechaCreacion = new SimpleDateFormat("dd/MM/yyyy").format(a.getFcreacion());		            
 		    	if(a.getPublicacionid()==MostrarInfo){%>
 		        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
 		            <div class="intro">
 		                <h3 class="text-center"><%=a.getTitulo() %></h3>
-		                <p class="text-center"><span class="date">Publicado: <%=a.getFecha() %> </span></p>
+		                <p class="text-center"><span class="date">Publicado: <%=fechaCreacion %> </span></p>
 		                <br>
+		                <img class="img-fluid mx-auto d-block" src="<%=a.getMultimedia()%>">		
+		                <br>            
 		                <p class="text-center" ><%=a.getDescripcion()%></p>
-		                    <img class="img-fluid mx-auto d-block" src="img/<%=a.getMultimedia()%>">
-		                <br>
-		            
+		                <br>		            
 		            </div>
 		            <br>
 		            <div class="text-center">	            			           	               

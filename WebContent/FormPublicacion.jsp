@@ -1,8 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import= "entidades.Publicacion, datos.Dt_Publicacion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+	//Variable de control de mensajes
+    String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -35,7 +85,24 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+    
+    <%            	
+	ArrayList<Publicacion> listPost = new ArrayList<Publicacion>();
+	Dt_Publicacion dtp = new Dt_Publicacion();
+    listPost = dtp.ListaPost();
+	
+	Publicacion p = new Publicacion();
+	
+	int publicacionid =0;
+	
+	if(listPost.size() == 0){
+		publicacionid= 1;	
+	}	
+	else{			
+		p = listPost.get(listPost.size() - 1);
+		publicacionid = p.getPublicacionid()+1 ;		
+	}
+%>
         <!-- Menus -->
   		 <jsp:include page="adminMenus.jsp" />    
         
@@ -50,40 +117,40 @@
 
                                 <div class="card-header">
                                     <h2>
-                                        Publicación
+                                       Formulario Publicación
                                     </h2>
 
                                 </div>
                                 <div class="card-body bg-white rounded">
-                              		   <form class="Publicacion" method="post" action="./Sl_Publicacion">
+                              		   <form class="Publicacion" method="post" action="./Sl_GestionPublicacion" enctype="multipart/form-data">
                       					<input name="opcion" type="hidden" value="1" />
+                      					<input name="publicacionid" type="hidden" value="<%=publicacionid%>" />  
+                      					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                     					
                                               <div class="form-group">
                                             <label>Titulo:</label>
-                                            <input class="form-control" id = "txtTituloPost" name = "txtTituloPost">
+                                            <input class="form-control" id = "txtTituloPost" name = "txtTituloPost" minlegth="10" maxlength="300" required>
 
                                         </div>
                                         <div class="form-group">      
                                         <label>Descripción:</label>
-                                            <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost"></textarea>
-                                        </div>
-                                        
-                                         <div class="form-group">
-                                                <label for="custom-file">Multimedia:</label>
+                                            <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost" minlegth="10" maxlength="3000" required></textarea>
+                                        </div>                                        
+                                          <div class="form-group">
+                                                <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Archivo</span>
                                                     </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="multPost" name= "multPost" accept="image/*">
-                                                        <label class="custom-file-label text-truncate" for="multPost"
-                                                            id="labelPost">Seleccionar archivo</label>
-                                                    </div>
+                                                   <div class="custom-file">
+													    <label class="custom-file-label text-left" for="customFile" id="filmultPost">Seleccionar archivo</label>
+													    <input type="file" class="custom-file-input" id="multPost" name="multPost" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
+													</div>
                                                 </div>
                                             </div>
                                               <div class="form-group">
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxEstadoPost" name= "cbxEstadoPost" required>
-                                                        <option value= "0">Seleccionar...</option>                                                        
+                                                        <option value= "" selected disabled>Seleccionar...</option>                                                        
                                                         <option value="1">Visible</option>
                                                         <option value="2">No Visible</option>
                                                         <option value="3">Borrador</option>
@@ -95,7 +162,6 @@
 				                            <br>
                                         <div style="text-align:center;"><a href="GestionPublicacion.jsp"><i
                                                     class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
-
                                     </form>
                                 </div>
                             </div>
@@ -127,25 +193,7 @@
 
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
-        
-
-	       
-  	<script>
-		var inputbtn = document.getElementById("multPost");
-	    var customTxt = document.getElementById("labelPost");
-	   		
-		            
-		      inputbtn.addEventListener("change", function () {
-		          if (inputbtn.value) {
-		              customTxt.innerHTML = inputbtn.value.match(
-		                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
-		              )[1];
-		          } else {
-		              customTxt.innerHTML = "Seleccionar archivo...";
-		          }
-		      });
-		</script>
-
+              
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -165,8 +213,28 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+	
+	<script>		
+	    $(document).ready(function() 
+		{
+	    	/////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
 
+	        if(mensaje == "existe")
+	        {
+	            errorAlert('Error', 'El Publicación que esta intentando registrar ya existe en la base de datos!');
+	        }
+	    });
+	 </script>
+		
+ 	 <script>  $('#multPost').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multPost')[0].files[0].name;
+	   console.log(file);
+	      $(this).prev('label').text(file);
 
+	    });
+	</script>
 </body>
-
 </html>

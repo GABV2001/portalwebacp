@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entidades.Banner;
+import negocio.Ng_Banner;
 import datos.Dt_Banner;
 
 /**
@@ -55,27 +57,39 @@ public class Sl_GestionBanner extends HttpServlet {
 		int opc =0;
 		opc = Integer.parseInt(request.getParameter("opcion"));
 		
+		//Construir clases
 		Banner bn = new Banner();
 		Dt_Banner dtb = new Dt_Banner();
-		bn.setBannerID(Integer.parseInt(request.getParameter("bannerID")));
-		bn.setTitulobanner(request.getParameter("txtEditTituloBanner"));
-		bn.setDescripcion(request.getParameter("txtEditDescripcionBanner"));
 		
-	    switch(opc){
+		//Variables
+		int bannerID = Integer.parseInt(request.getParameter("bannerID"));
+		int UsuarioID = Integer.parseInt(request.getParameter("usuarioid"));
+		String txtEditTituloBanner = request.getParameter("txtEditTituloBanner");
+		String txtEditDescripcionBanner = request.getParameter("txtEditDescripcionBanner");
 		
+		if(bannerID==0 || UsuarioID == 0 || txtEditTituloBanner.trim().isEmpty() || txtEditDescripcionBanner.trim().isEmpty()){
+			response.sendRedirect("GestionBanner.jsp?msj=2");
+		}else {
+		//Setear Valores
+		bn.setBannerID(bannerID);
+		bn.setUsuarioID(UsuarioID);
+		bn.setTitulobanner(txtEditTituloBanner);
+		bn.setDescripcion(txtEditDescripcionBanner);
+		
+	    switch(opc){	
 	    case 2:{
-			Date fechaSistema = new Date();
-		    bn.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
-		     
-	 		try {
+	    	   try {
+	       	    Date fechaSistema = new Date();
+	   		    bn.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
+	   		  
 				   if(dtb.modificarInfoBanner(bn)) {
 		        	response.sendRedirect("GestionBanner.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionBanner.jsp?msj=4");
 		        }
-	 		}
-	        catch(Exception e) {
+	   	       }	
+	       catch(Exception e) {
 	        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
@@ -84,6 +98,6 @@ public class Sl_GestionBanner extends HttpServlet {
 			}
 	
 		}
-
-}
+	  }
+	}
 }

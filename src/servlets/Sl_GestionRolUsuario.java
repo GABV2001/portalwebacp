@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_RolUsuario;
 import entidades.RolUsuario;
+import negocio.Ng_RolUsuario;
 
 /**
  * Servlet implementation class Sl_GestionRolUsuario
@@ -55,31 +56,34 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 				
 		//CONSTRUIR EL OBJETO ROL-USER
 		RolUsuario ru = new RolUsuario();		
-		Dt_RolUsuario dtru = new Dt_RolUsuario(); 
+		Dt_RolUsuario dtru = new Dt_RolUsuario();
+		Ng_RolUsuario ngr = new Ng_RolUsuario();
 				
 		ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxUser")));
 		ru.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
-	
+			
 		switch (opc){
 		case 1:{
-			
-		        try {		        	
-			        if(dtru.guardarRolUser(ru)) {
+				try {					
+					if(ngr.existeRolAsignado(ru.getUsuarioid(), ru.getRolid())){
+			        	response.sendRedirect("FormRolUsuario.jsp?msj=existe");
+			        }
+			        else {
+			        	if(dtru.guardarRolUser(ru)) {
 			        	response.sendRedirect("GestionRolUsuario.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionRolUsuario.jsp?msj=2");
-			        }
-			        	
-		        }
+			        }    	
+		          }
+				}
 		        catch(Exception e) {
-		        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
+		        	System.out.println("Sl_GestionRolUsuario, el error es: " + e.getMessage());
 					e.printStackTrace();
 		        }
 		        
 				break;
 			}
-		
 		case 2:{
 				
 			try {
@@ -104,7 +108,7 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 		default:
 			response.sendRedirect("GestionRolUsuario.jsp?msj=5");	
 			break;
+	  }
 	}
-	}
+ }
 
-}

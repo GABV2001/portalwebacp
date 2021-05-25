@@ -61,6 +61,9 @@ public class Sl_GestionPiePagina extends HttpServlet {
 		String extensionFooter = null;
 		String rutaFichero = null;
 		String logoMultimedia = null;
+		
+		//Controlador
+		boolean control = false;
 			
 		try
 		{
@@ -100,6 +103,13 @@ public class Sl_GestionPiePagina extends HttpServlet {
 					}
 				}
 			}
+			//Validar si los campos estan vacios
+			if(FooterID.trim().isEmpty()|| UsuarioID.trim().isEmpty() || direccionFooter.trim().isEmpty() || correoFooter.trim().isEmpty()|| telefonoFooter.trim().isEmpty()||extensionFooter.trim().isEmpty()){
+	        	response.sendRedirect("GestionPiePagina.jsp?msj=2");			
+			}else{
+				control = true;
+			}
+			if(control){
 			for(FileItem item : items)
 			{
 				FileItem uploaded = item;
@@ -146,23 +156,25 @@ public class Sl_GestionPiePagina extends HttpServlet {
 				}	
 			  }
 			}
-						
-			//Setear valores al objeto para guardar en la bd
-			ft.setFooterID(Integer.parseInt(FooterID));
-			ft.setDescripcion(direccionFooter);
-			ft.setCorreo(correoFooter);
-			ft.setTelefono(telefonoFooter);	
-			ft.setExtencion(extensionFooter);	
-			ft.setUsuarioID(Integer.parseInt(UsuarioID));
-			if(ft.getLogo()==null){
-				ft.setLogo(logoMultimedia);
-			}
+		  }			
 		}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
 		
+		if(control){
+		//Setear valores al objeto para guardar en la bd
+		ft.setFooterID(Integer.parseInt(FooterID));
+		ft.setDescripcion(direccionFooter);
+		ft.setCorreo(correoFooter);
+		ft.setTelefono(telefonoFooter);	
+		ft.setExtencion(extensionFooter);	
+		ft.setUsuarioID(Integer.parseInt(UsuarioID));
+		if(ft.getLogo()==null){
+			ft.setLogo(logoMultimedia);
+		}
+
     	switch(opc) {
 		case 1:{
 			
@@ -189,9 +201,7 @@ public class Sl_GestionPiePagina extends HttpServlet {
 		default:
 			response.sendRedirect("GestionPiePagina.jsp?msj=3");	
 			break;
-	}
-		
-		
-	}
-
+	}	
+  }	
+ }
 }

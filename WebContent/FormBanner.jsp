@@ -1,6 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import="entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
+<%
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <html lang="en">
 <head>
     <meta charset="ISO-8859-1">
@@ -24,7 +77,9 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
 
 <body id="page-top">
@@ -56,9 +111,10 @@
                                     </div>
                                     <div class="card-body">
                                         <form class = "Banner"  method="post" action="./Sl_GuardarBanner" enctype="multipart/form-data" > 
-                                         <input name="opcion" type="hidden" value="1" />
+                                     	<input name="usuarioid"  type = "hidden" value="<%=usuarioid%>" />                                                                      	              
                                     	<input name="posicion"  type = "hidden" value="<%=pos%>" />
-                                         <div class="form-group">
+                                    	<input name="opcion" type="hidden" value="1" />              
+                                   	     <div class="form-group">
                                                 <label for="formGroupExampleInput">Titulo:</label>
                                                 <input type="text" class="form-control" name= "txtTituloBanner" id="tituloBanner" minlength="5" maxlength="80" required>
                                             </div>
@@ -146,10 +202,23 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-		<script>		
+	<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>		
 	    $(document).ready(function() 
 		{
-		//Función para previsualizar la imagen del banner
+	    	/////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+
+	        if(mensaje == "existe")
+	        {
+	            errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
+	        }
+	    	
+			//Función para previsualizar la imagen del banner
 	    	Test = {
 	    	        UpdatePreview: function(obj)
 	    	        {
@@ -182,5 +251,4 @@
 		    });
 	</script>
 </body>
-
 </html>

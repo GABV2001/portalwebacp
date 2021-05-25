@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import datos.Dt_Producto;
 import entidades.Producto;
+import negocio.Ng_Producto;
 
 /**
  * Servlet implementation class Sl_GestionProducto
@@ -63,8 +64,8 @@ public class Sl_GestionProducto extends HttpServlet {
 		
 		Dt_Producto dts = new Dt_Producto();
 		Producto pr = new Producto();
-		
-		
+		Ng_Producto ngp = new Ng_Producto();
+				
 		int opc = 0;
 		int productoid =0;
 		String nombreProducto = null;
@@ -72,7 +73,9 @@ public class Sl_GestionProducto extends HttpServlet {
 		String cbxEstadoProducto = null;
 		String cbxTipoProducto = null;
 		String rutaFichero = null;
+		String usuarioid = null;
 		String url_foto = null;
+		boolean control = false;
 		
 		try
 		{
@@ -103,14 +106,21 @@ public class Sl_GestionProducto extends HttpServlet {
 						cbxTipoProducto = valor;
 					}else if(key.equals("url_foto")){
 						url_foto = valor;
+					}else if(key.equals("usuarioid")){
+						usuarioid = valor;
 					}					
 				}
 			}
-
+			if(nombreProducto.trim().isEmpty()||descripcionProducto.trim().isEmpty()){
+		      	response.sendRedirect("GestionProductos.jsp?msj=2");
+			}else{
+				control= true;
+			}
+			
+			if(control){
 			int valorImagen = 0;
 			for(FileItem item : items)
-			{
-			
+			{			
 				FileItem uploaded = item;
 				if(uploaded.getName()!=""){					
 				if(!uploaded.isFormField())
@@ -152,16 +162,19 @@ public class Sl_GestionProducto extends HttpServlet {
 			   	  }
 			   }
 			}
+		  }
 		}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
-			
+		
+		if(control){
 		pr.setProducto(nombreProducto);
 		pr.setDescripcion(descripcionProducto);
 		pr.setEstadoproductoid(Integer.parseInt(cbxEstadoProducto));		
 		pr.setTipoproductoid(Integer.parseInt(cbxTipoProducto));
+		pr.setUsuarioid(Integer.parseInt(usuarioid));
 			if(pr.getMultimedia()==null){
 			pr.setMultimedia(url_foto);
 		}
@@ -172,13 +185,17 @@ public class Sl_GestionProducto extends HttpServlet {
 		        Date fechaSistema = new Date();
 		        pr.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  	     
 		        try {
-		        	if(dts.guardarProducto(pr)) {
-			        	response.sendRedirect("GestionProductos.jsp?msj=1");
-			        }
-			   
-			         else {
-			        	response.sendRedirect("GestionProductos.jsp?msj=2");
-			        }	        	
+		        	if(ngp.existeProducto(pr.getProducto())){
+		        	   	response.sendRedirect("FormProducto.jsp?msj=existe");						  
+		        	}else {
+		        		if(dts.guardarProducto(pr)){
+				        	response.sendRedirect("GestionProductos.jsp?msj=1");
+				        }
+				   
+				         else {
+				        	response.sendRedirect("GestionProductos.jsp?msj=2");
+				        }
+		        	}
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionProducto, el error es: " + e.getMessage());
@@ -210,7 +227,7 @@ public class Sl_GestionProducto extends HttpServlet {
 			default:
 			response.sendRedirect("GestionProductos.jsp?msj=7");	
 			break;
-		}		
+		}
+	  }
 	}
-
 }

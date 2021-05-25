@@ -1,5 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import="entidades.Banner, datos.Dt_Banner, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,13 +112,14 @@
                                         <form class = "Banner"  method="post" action="./Sl_GestionBanner" > 
                                          <input name="opcion" type="hidden" value="2"/>
                                     	<input name="bannerID"  type = "hidden" value="<%=bn.getBannerID()%>" />
-                                         <div class="form-group">
+                                   	   	<input name="usuarioid"  type = "hidden" value="<%=usuarioid%>" />                                                                      	              
+                                        <div class="form-group">
                                                 <label for="formGroupExampleInput">Titulo:</label>
                                                 <input type="text" class="form-control" name= "txtEditTituloBanner" id="txtEditTituloBanner" minlength="5" maxlength="80" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">DescripciÃ³n:</label>
-                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" minlength="5" maxlength="80" required></textarea>
+                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
+                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" minlength="5" maxlength="200" required></textarea>
                                             </div>                                                                                    		                                
                                          	  	<div class="mb-2 text-center">
 					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />

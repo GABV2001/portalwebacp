@@ -100,7 +100,7 @@ public class Dt_Evento {
 					rsEvento.updateString("ubicacion", ev.getUbicacion());		
 					rsEvento.updateTimestamp("fcreacion", ev.getFcreacion());	
 					rsEvento.updateInt("estado", 1);
-					rsEvento.updateInt("usuarioid", 1);
+					rsEvento.updateInt("usuarioid", ev.getUsuarioid());
 					rsEvento.insertRow();
 					rsEvento.moveToCurrentRow();
 					guardado = true;
@@ -196,7 +196,7 @@ public class Dt_Evento {
 							rsEvento.updateString("ubicacion", ev.getUbicacion());		
 							rsEvento.updateTimestamp("fmodificacion", ev.getFmodificacion());	
 							rsEvento.updateInt("estado", 1);
-							rsEvento.updateInt("usuarioid", 1);
+							rsEvento.updateInt("usuarioid", ev.getUsuarioid());
 							rsEvento.updateRow();
 							modificado=true;
 							break;

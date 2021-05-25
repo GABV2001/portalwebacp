@@ -89,7 +89,7 @@ public class Dt_Producto {
 			rsProducto.updateInt("estado", 1);
 			rsProducto.updateTimestamp("fcreacion", pr.getFcreacion());
 			rsProducto.updateInt("tipoproductoid", pr.getTipoproductoid());
-			rsProducto.updateInt("usuarioid", 1);
+			rsProducto.updateInt("usuarioid", pr.getUsuarioid());
 			rsProducto.insertRow();
 			rsProducto.moveToCurrentRow();
 			guardado = true;
@@ -134,6 +134,7 @@ public class Dt_Producto {
 					rsProducto.updateInt("estadoproducto", pr.getEstadoproductoid());	
 					rsProducto.updateInt("tipoproductoid", pr.getTipoproductoid());	
 					rsProducto.updateTimestamp("fmodificacion", pr.getFmodificacion());
+					rsProducto.updateInt("usuarioid", pr.getUsuarioid());
 					rsProducto.updateInt("estado", 2);
 					rsProducto.updateRow();
 					modificado=true;

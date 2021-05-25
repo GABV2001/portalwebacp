@@ -1,5 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
-import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
+import = "entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>
 <!DOCTYPE html>
 <%
 	//Variable de control de mensajes
@@ -33,9 +70,7 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
     
-
 </head>
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -126,9 +161,7 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i>
-                        						
-                        						
+                        						</a></i>                       						                        						
                         						</td>      
                         			          </tr>
                                        		<%
@@ -230,7 +263,11 @@ import = "entidades.Banner, datos.Dt_Banner, java.util.*;"%>
         {
             errorAlert('Exito', 'El elemento ha sido eliminado exitosamente');
         }       
-    
+        if(mensaje == "existe")
+        {
+            errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
+        }
+        
        
     });
     function getValue()
