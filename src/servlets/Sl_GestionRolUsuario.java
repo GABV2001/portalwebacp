@@ -58,13 +58,13 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 		RolUsuario ru = new RolUsuario();		
 		Dt_RolUsuario dtru = new Dt_RolUsuario();
 		Ng_RolUsuario ngr = new Ng_RolUsuario();
-				
-		ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxUser")));
+		
 		ru.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
-			
+		
 		switch (opc){
 		case 1:{
-				try {					
+				ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxUser")));
+					try {					
 					if(ngr.existeRolAsignado(ru.getUsuarioid(), ru.getRolid())){
 			        	response.sendRedirect("FormRolUsuario.jsp?msj=existe");
 			        }
@@ -85,7 +85,7 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 				break;
 			}
 		case 2:{
-				
+			ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxBUser")));	
 			try {
 	        	ru.setIdrol_usuario(Integer.parseInt(request.getParameter("rolusuarioid")))	;
 		        if(dtru.modificarRolUsuario(ru)) {

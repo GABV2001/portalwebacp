@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_Familia;
 import entidades.Familia;
+import negocio.Ng_Familia;
 
 /**
  * Servlet implementation class Sl_GestionFamilia
@@ -56,14 +57,34 @@ public class Sl_GestionFamilia extends HttpServlet {
 		
 		//CONSTRUIR EL OBJETO FAMILIA
 		Dt_Familia dtf = new Dt_Familia();
+		Ng_Familia ngf = new Ng_Familia();
 		Familia fm = new Familia();
 		fm.setNombre(request.getParameter("txtNombreFamilia"));
 		fm.setDescripcion(request.getParameter("txtDescripcionFamilia"));
+		
+		//Variables de control
+		String nombre = request.getParameter("txtNombreFamilia");
+		String desc = request.getParameter("txtDescripcionFamilia");
+		
+		if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+        	response.sendRedirect("GestionFamilia.jsp?msj=2");					
+		}
+		else{
+		//Setear info a objeto
+		fm.setNombre(nombre);
+		fm.setDescripcion(desc);
+		
 		
 		switch (opc){
 		case 1:{
 			
 		        try {
+		        	if(ngf.existeFamilia(fm.getNombre()))
+		        	{
+		        		response.sendRedirect("GestionFamilia.jsp?msj=2");									
+		        	}else {
+		        		        		
+		        	
 			        if(	dtf.guardarFamilia(fm)) {
 			        	response.sendRedirect("GestionFamilia.jsp?msj=1");
 			        }
@@ -71,7 +92,7 @@ public class Sl_GestionFamilia extends HttpServlet {
 			        	response.sendRedirect("GestionFamilia.jsp?msj=2");
 			        }
 			        	
-		        	
+		        }	
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionFamilia, el error es: " + e.getMessage());
@@ -105,6 +126,7 @@ public class Sl_GestionFamilia extends HttpServlet {
 		}
 		
 		}
+	}
 	
 
 }

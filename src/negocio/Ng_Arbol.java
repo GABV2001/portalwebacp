@@ -7,27 +7,27 @@ import java.sql.SQLException;
 
 import datos.PoolConexion;
 
-public class Ng_Distribucion {
-	        //Atributos
+public class Ng_Arbol {
+	//Atributos
 			PoolConexion pc = PoolConexion.getInstance(); 
 			Connection c = null;
 			private ResultSet rs = null;
 			private PreparedStatement ps = null;
 			
-			// Metodo para validar el distribucion 
-			public boolean existeDistribucion(String Distribucion){
+			// Metodo para validar el producto 
+			public boolean existeArbol(String Arbol){
 				boolean existe = false;
 				try{
 					c = PoolConexion.getConnection();
-					ps = c.prepareStatement("select * from distribucion where nombre=? and estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
-					ps.setString(1, Distribucion);
+					ps = c.prepareStatement("select * from arbol where nombrecomun=? and estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps.setString(1, Arbol);
 					rs = ps.executeQuery();
 					if(rs.next()){
 						existe=true;
 					}
 				}
 				catch (Exception e){
-					System.out.println("DATOS ERROR existeDistribucion(): "+ e.getMessage());
+					System.out.println("DATOS ERROR existeArbol(): "+ e.getMessage());
 					e.printStackTrace();
 				}
 				finally{
@@ -49,4 +49,7 @@ public class Ng_Distribucion {
 				}
 				return existe;
 			}
+	
+
 }
+

@@ -62,6 +62,19 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		ds.setDescripcion(request.getParameter("txtDescripcionDistribucion"));
 		ds.setPaisID(Integer.parseInt(request.getParameter("txtNombrePais")));
 		
+		//Variables de control
+		String nombre = request.getParameter("txtNombreDistribucion");
+		String desc = request.getParameter("txtDescripcionDistribucion");
+		
+		if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+        	response.sendRedirect("GestionDistribucion.jsp?msj=2");					
+		}
+		else{
+		//Setear info a objeto
+		ds.setNombre(nombre);
+		ds.setDescripcion(desc);
+		
+		
 		switch (opc){
 		case 1:{
 			
@@ -109,5 +122,6 @@ public class Sl_GestionDistribucion extends HttpServlet {
 			break;
 		}
 		
+		}
 		}
 }

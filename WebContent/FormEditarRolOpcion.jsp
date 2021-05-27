@@ -122,6 +122,7 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 	                                    		}
 	                                    	%>
 	                                    	</select>
+		                                  	<input type="hidden" name="cbxBRol" id="cbxBRol"></input>	                                   		                                    	
 	                                    	</div>
                                             <div class="col-sm-12 mb-3">
                                             <%
@@ -205,6 +206,7 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 	{
 		$("#cbxOpc").val("<%=ro.getId_opc()%>");
 		$("#cbxRol").val("<%=ro.getRolid()%>");
+		$("#cbxBRol").val("<%=ro.getRolid()%>");
 	});
 </script>
 </body>

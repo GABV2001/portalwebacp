@@ -270,7 +270,11 @@
         if(mensaje == "5")
         {
             errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+        }if(mensaje == "colision")
+        {
+            errorAlert('Exito', 'Existe un evento agendado, ya en la misma fecha y hora!');
         }
+
     });
     function getValue()
     {   	

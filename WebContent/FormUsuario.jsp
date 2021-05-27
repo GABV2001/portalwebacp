@@ -202,6 +202,23 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	<script src="jAlert/dist/jAlert-functions.min.js"> //optional!!</script>
     
     <script type="text/javascript">
+    var field = document.querySelector('[name="txtPwd"]');
+	var field2 = document.querySelector('[name="txtPwd2"]');
+	
+	field.addEventListener('keypress', function ( event ) {  
+	   var key = event.keyCode;
+	    if (key === 32) {
+	      event.preventDefault();
+	    }
+	})
+	
+	field2.addEventListener('keypress', function ( event ) {  
+	   var key = event.keyCode;
+	    if (key === 32) {
+	      event.preventDefault();
+	    }
+	})
+    
     function mostrarPassword(){
 		var cambio = document.getElementById("txtPwd");
 		if(cambio.type == "password"){

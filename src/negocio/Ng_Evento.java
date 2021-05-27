@@ -57,18 +57,40 @@ public class Ng_Evento {
 				}
 				return existe;
 			}
-		
-			public boolean validarVisibilidad(){
-				//Bandera
-				 boolean control = false;
-				 ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
-			     Dt_Servicio dts = new Dt_Servicio();
-				 listServicio = dts.listarServicio(); 	 	 
-				 if(listServicio.size() == 0 || listServicio.stream().allMatch(x -> x.getEstadoservicio() == 2)){
-					 control = true;
-				 }else {
-					 control = false;
-				 }	
-				 return control;
-			}	
+			// Metodo para validar la fecha de inicio en evento 
+			public boolean colisionEventoInicio(String fechainicio, String	horainicio){
+				boolean existe = false;
+				try{
+					c = PoolConexion.getConnection();
+					ps = c.prepareStatement("select * from evento where fechainicio=?  and horainicio=? and estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps.setString(1, fechainicio);
+					ps.setString(2, horainicio);
+					rs = ps.executeQuery();
+					if(rs.next()){
+						existe=true;
+					}
+				}
+				catch (Exception e){
+					System.out.println("DATOS ERROR colisionEventoInicio(): "+ e.getMessage());
+					e.printStackTrace();
+				}
+				finally{
+					try {
+						if(rs != null){
+							rs.close();
+						}
+						if(ps != null){
+							ps.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return existe;
+			}
 }

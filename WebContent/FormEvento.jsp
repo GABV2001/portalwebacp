@@ -154,7 +154,7 @@
                                                 <div class="form-group">
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
-                                                      	<option value = "0" selected disabled>Seleccionar...</option>
+                                                      	<option value = "" selected disabled>Seleccionar...</option>
                                                         <option value="1">Agenda Pública</option>
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
@@ -178,10 +178,10 @@
 
                                             <div class="form-group ">
                                                 <label for="formGroupExampleInput ">Ubicación:</label>
-                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento">
+                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento" required>
                                             </div>
                                             <div class="form-group text-center">
-				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" required/>
 				                            </div>
                                         </form>
 
@@ -240,6 +240,13 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <script>
+    $('#datefInicioEvento').datepicker({
+        startDate: '-2m',
+        endDate: '+2d'
+    });
+    </script>
     
 	<script> 
 	$('#multEvento').on("change",function() {

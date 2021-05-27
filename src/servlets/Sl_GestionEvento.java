@@ -209,7 +209,10 @@ public class Sl_GestionEvento extends HttpServlet {
 		        try {
 		        	if(nge.existeEvento(ev.getNombre())) {
 		        		response.sendRedirect("GestionEvento.jsp?msj=2");
-		        	}else {
+		        	}else if(nge.colisionEventoInicio(ev.getFechainicio(),  ev.getHorainicio())){
+		         		response.sendRedirect("GestionEvento.jsp?msj=colision");		    		    
+		        	}
+		        	else {
 		        		if(dte.guardarEventos(ev)) {
 				        	response.sendRedirect("GestionEvento.jsp?msj=1");
 		        	}

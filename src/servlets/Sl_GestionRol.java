@@ -108,7 +108,8 @@ public class Sl_GestionRol extends HttpServlet {
 				r.setIdRol(Integer.parseInt(request.getParameter("idRol")));	
 				if(ngr.existeActualizarRol(r.getIdRol(),r.getRol()))
 				{
-					response.sendRedirect("FormEditarRol.jsp?msj=existe");
+		          	response.sendRedirect("FormEditarRol.jsp?rolID="+r.getIdRol()+"&msj=existe");
+
 				}else{
 				 if(dtr.modificarRol(r)) {
 		        	response.sendRedirect("GestionRol.jsp?msj=3");
@@ -116,7 +117,7 @@ public class Sl_GestionRol extends HttpServlet {
 		        else {
 		        	response.sendRedirect("GestionRol.jsp?msj=4");
 		        }
-			}
+			  }
 		      }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionRol, el error es: " + e.getMessage());

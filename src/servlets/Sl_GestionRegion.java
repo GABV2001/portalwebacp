@@ -63,6 +63,18 @@ public class Sl_GestionRegion extends HttpServlet {
 				rg.setNombre(request.getParameter("txtNombreRegion"));
 				rg.setDescripcion(request.getParameter("txtDescripcionRegion"));
 				
+				//Variables de control
+				String nombre = request.getParameter("txtNombreRegion");
+				String desc = request.getParameter("txtDescripcionRegion");
+				
+				if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+		        	response.sendRedirect("GestionRegion.jsp?msj=2");					
+				}
+				else{
+				//Setear info a objeto
+				rg.setNombre(nombre);
+				rg.setDescripcion(desc);
+				
 				switch (opc){
 				case 1:{
 					
@@ -110,5 +122,6 @@ public class Sl_GestionRegion extends HttpServlet {
 					break;
 				}
 				
-		}		
+		}	
+	}
 }

@@ -97,7 +97,7 @@ public class Sl_GestionUsuario extends HttpServlet {
 			case 1:{
 				
 			        try {
-			        	//PARA GUARDAR LA FECHA Y HORA DE CREACION
+			        		//PARA GUARDAR LA FECHA Y HORA DE CREACION
 				        Date fechaSistema = new Date();
 				        user.setfCreacion(new java.sql.Timestamp(fechaSistema.getTime()));
 				        if(ngu.existeUser(user.getUser())) {
@@ -110,7 +110,7 @@ public class Sl_GestionUsuario extends HttpServlet {
 					        else {
 					        	response.sendRedirect("GestionUsuario.jsp?msj=2");
 					        }
-				        }			        	
+				        }			    	  
 			        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());

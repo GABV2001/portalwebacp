@@ -64,6 +64,19 @@ public class Sl_GestionPais extends HttpServlet {
 		p.setNombre(request.getParameter("txtNombrePais"));
 		p.setDescripcion(request.getParameter("txtDescripcionPais"));
 		p.setRegionID(Integer.parseInt(request.getParameter("txtNombreRegion")));
+		
+		//Variables de control
+		String nombre = request.getParameter("txtNombrePais");
+		String desc = request.getParameter("txtDescripcionPais");
+		
+		if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+        	response.sendRedirect("GestionPais.jsp?msj=2");					
+		}
+		else{
+		//Setear info a objeto
+		p.setNombre(nombre);
+		p.setDescripcion(desc);
+		
 
 		switch (opc){
 		case 1:{
@@ -112,4 +125,5 @@ public class Sl_GestionPais extends HttpServlet {
 		}
 		
 		}
+	}
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entidades.Genero;
 import datos.Dt_Genero;
+import negocio.Ng_Genero;
 
 /**
  * Servlet implementation class Sl_GestionGenero
@@ -57,19 +58,38 @@ public class Sl_GestionGenero extends HttpServlet {
 		
 		//Construir objeto genero
 		Dt_Genero dtg = new Dt_Genero();
+		Ng_Genero ngg = new Ng_Genero();
 		Genero gn = new Genero();
 		gn.setNombre(request.getParameter("txtNombreGenero"));
 		gn.setDescripcion(request.getParameter("txtDescripcionGenero"));		
 		
+		
+		//Variables de control
+		String nombre = request.getParameter("txtNombreGenero");
+		String desc = request.getParameter("txtDescripcionGenero");
+		
+		if(nombre.trim().isEmpty() || desc.trim().isEmpty()){
+        	response.sendRedirect("GestionGenero.jsp?msj=2");					
+		}
+		else{
+		//Setear info a objeto
+	    gn.setNombre(nombre);
+		gn.setDescripcion(desc);
+		
 		switch (opc){
 		case 1:{			
 		        try {
+		        	if(ngg.existeGenero(gn.getNombre()))
+		        	{
+		        		response.sendRedirect("GestionGenero.jsp?msj=2");									
+		        	}else {	        
 			        if(	dtg.guardarGenero(gn)) {
 			        	response.sendRedirect("GestionGenero.jsp?msj=1");
-			        }
+			        } 
 			        else {
 			        	response.sendRedirect("GestionGenero.jsp?msj=2");
-			        }		        		        	
+			        }
+		        	}
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionGenero, el error es: " + e.getMessage());
@@ -100,6 +120,6 @@ public class Sl_GestionGenero extends HttpServlet {
 		}
 		
 	}		
-	
+	}
 
 }

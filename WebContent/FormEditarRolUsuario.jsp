@@ -122,6 +122,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 	                                    		}
 	                                    	%>
 	                                    	</select>
+	                                    	<input type="hidden" name="cbxBUser" id="cbxBUser"></input>	                                    	
 	                                    	</div>
                                             <div class="col-sm-12 mb-3">
                                             <%
@@ -200,10 +201,11 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 	
-	<script>  
+	<script>  	
    $(document).ready(function()
 	{
 		$("#cbxUser").val("<%=ru.getUsuarioid()%>");
+		$("#cbxBUser").val("<%=ru.getUsuarioid()%>");
 		$("#cbxRol").val("<%=ru.getRolid()%>");
 	});
 </script>

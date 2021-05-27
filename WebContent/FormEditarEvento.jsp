@@ -149,7 +149,7 @@
                                                 <div class="form-group">
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
-                                                      	<option value = "0">Seleccionar...</option>
+                                                      	<option value = "">Seleccionar...</option>
                                                         <option value="1">Agenda Pública</option>
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
@@ -169,12 +169,12 @@
                                             </div>
                                             <div class="form-group ">
                                                 <label for="formGroupExampleInput ">Hipervinculo:</label>
-                                                <input type="text" class="form-control " id="txthipervinculoEvento" name = "txthipervinculoEvento">
+                                                <input type="text" class="form-control " id="txthipervinculoEvento" name = "txthipervinculoEvento" required>
                                             </div>
 
                                             <div class="form-group ">
                                                 <label for="formGroupExampleInput ">Ubicación:</label>
-                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento">
+                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento" required>
                                             </div>
                                             <div class="form-group text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />

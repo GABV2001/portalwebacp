@@ -19,7 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import entidades.Arbol;
 import datos.Dt_Arbol;
-
+import negocio.Ng_Arbol;
 /**
  * Servlet implementation class Sl_GestionArbol
  */
@@ -63,6 +63,7 @@ public class Sl_GestionArbol extends HttpServlet {
 		//CONSTRUIR EL OBJETO ARBOL
 		Dt_Arbol dta = new Dt_Arbol();
 		Arbol ar = new Arbol();
+		Ng_Arbol nga = new Ng_Arbol();
 		
 		int opc = 0;
 		int arbolid =0;
@@ -74,10 +75,14 @@ public class Sl_GestionArbol extends HttpServlet {
 		String FloracionID = null;
 		String rutaFichero = null;
 		String usuarioid= null;
-		String url_foto = null;		
+		String url_foto = null;	
+		
+		//Controlador
+		boolean control = false;
 		
 		try
 		{
+			
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			String path = getServletContext().getRealPath("/");
@@ -113,6 +118,11 @@ public class Sl_GestionArbol extends HttpServlet {
 						usuarioid = valor;
 					}					
 				}
+			}
+			if(txtNombreComun.trim().isEmpty() || txtNombreCientifico.trim().isEmpty() || txtDescripcionArbol.trim().isEmpty()){
+	        	response.sendRedirect("GestionArbol.jsp?msj=2");			
+			}else{
+				control = true;
 			}
 
 			int valorImagen = 0;
@@ -165,6 +175,7 @@ public class Sl_GestionArbol extends HttpServlet {
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}	
+		if(control){
 		ar.setNombreComun(txtNombreComun);
 		ar.setNombreCientifico(txtNombreCientifico);
 		ar.setDescripcion(txtDescripcionArbol);
@@ -175,20 +186,24 @@ public class Sl_GestionArbol extends HttpServlet {
 		if(ar.getMultimedia()==null){
 			ar.setMultimedia(url_foto);
 		}
-		
+	
 		switch (opc){
 		case 1:{
 				//PARA GUARDAR LA FECHA Y HORA DE CREACION
 		        Date fechaSistema = new Date();
 		        ar.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
 	            try {
+	            	if(nga.existeArbol(ar.getNombreComun())){
+		        	   	response.sendRedirect("GestionArbol.jsp?msj=2");	
+	            	}else {
 			        if(	dta.guardarArbol(ar)) {
 			        	response.sendRedirect("GestionArbol.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionArbol.jsp?msj=2");
-			        }	        			        	
-		        }
+			        }	  
+		          	}
+	            	}
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
 					e.printStackTrace();
@@ -217,6 +232,7 @@ public class Sl_GestionArbol extends HttpServlet {
 		default:
 			response.sendRedirect("GestionArbol.jsp?msj=5");	
 			break;
-		}					
+		 }
+	   }
 	}
 }

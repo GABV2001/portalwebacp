@@ -60,12 +60,12 @@ public class Sl_GestionRolOpciones extends HttpServlet {
 		Dt_RolOpcion dtro = new Dt_RolOpcion(); 
 		Ng_RolOpcion ngp = new Ng_RolOpcion();
 		
-		ro.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
 		ro.setId_opc(Integer.parseInt(request.getParameter("cbxOpc")));
 
 		switch (opc){
 		case 1:{
 		        try {
+		    		ro.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
 		        	if(ngp.existeOpcionAsignada(ro.getRolid(), ro.getId_opc())){
 			        	response.sendRedirect("FormRolOpcion.jsp?msj=existe");
 			        }
@@ -82,13 +82,13 @@ public class Sl_GestionRolOpciones extends HttpServlet {
 		        	System.out.println("Sl_GestionRolOpcion, el error es: " + e.getMessage());
 					e.printStackTrace();
 		        }
-		        
 				break;
 			}
 		
 		case 2:{
 				
 			try {
+				ro.setRolid(Integer.parseInt(request.getParameter("cbxBRol")));				
 	        	ro.setIdrol_opc(Integer.parseInt(request.getParameter("rolOpcionid")))	;
 		        if(dtro.modificarRolOpcion(ro)) {
 		        	response.sendRedirect("GestionRolOpcion.jsp?msj=3");

@@ -174,22 +174,28 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+       <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
 
 <script>  
    $(document).ready(function()
 	{
 		$("#txtRol").val("<%=r.getRol()%>");
 		$("#txtRolDesc").val("<%=r.getDesc_rol()%>");
+		
+		 var mensaje = "";
+		   mensaje = "<%=varMsj%>";
+
+		   if(mensaje == "existe"){
+		   	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+		   }
 	});
+   
+  
 </script>
 
-<script>
-var mensaje = "";
-mensaje = "<%=varMsj%>";
 
-if(mensaje == "existe"){
-	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
-}
-</script>
 </body>
 </html>
