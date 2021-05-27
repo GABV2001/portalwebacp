@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
 import="vistas.*, entidades.*, datos.*, java.util.*;"%>   
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -36,6 +36,8 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,6 +62,9 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+      <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
 
 </head>
 
@@ -134,14 +139,14 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		                                        <input type="email" class="form-control form-control-user" name="txtEmail" id="txtEmail"
 		                                           minlength="8" maxlength="75"  required>
 		                                    </div>
-		                                    <label class="col-sm-12 mb-3">Contraseña:</label>
+		                                    <label class="col-sm-12 mb-3">ContraseÃ±a:</label>
 		                                    <div class="col-sm-12 mb-3">
 		                                        <input type="password" class="form-control form-control-user" name="txtPwd" id="txtPwd"
-		                                           placeholder="Contraseña" minlength="8" maxlength="32" required>
+		                                           placeholder="ContraseÃ±a" minlength="8" maxlength="32" >
 		                                    </div>
 		                                    <div class="col-sm-12">
 		                                        <input type="password" class="form-control form-control-user" name="txtPwd2" id="txtPwd2"
-		                                           placeholder="Repetir Contraseña" minlength="8" maxlength="32" required>
+		                                           placeholder="Repetir ContraseÃ±a" minlength="8" maxlength="32" >
 		                                    </div>
 		                                </div>
 			                            <hr>
@@ -209,6 +214,10 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+       <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
     <script>  
    $(document).ready(function()
 	{
@@ -217,19 +226,43 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		$("#txtUserName").val("<%=user.getUser()%>");
 		$("#txtEmail").val("<%=user.getEmail()%>");
 		$("#txtTelefono").val("<%=telefono%>");
+		
 	});
 </script>
 <script type="text/javascript">
+		var field = document.querySelector('[name="txtPwd"]');
+		var field2 = document.querySelector('[name="txtPwd2"]');
+		
+		field.addEventListener('keypress', function ( event ) {  
+		   var key = event.keyCode;
+		    if (key === 32) {
+		      event.preventDefault();
+		    }
+		})
+		
+		field2.addEventListener('keypress', function ( event ) {  
+		   var key = event.keyCode;
+		    if (key === 32) {
+		      event.preventDefault();
+		    }
+		})
 	
 	    $(document).ready(function ()
-	    {	        
+	    {
+    	   var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+	
+	        if(mensaje == "existe"){
+	        	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+	        }
+	        
 	        $("#txtPwd2").change(function(){
 	        	var clave = "";
 		        var clave2 = "";
 		        clave = $("#txtPwd").val();
 		        clave2 = $("#txtPwd2").val();
 		        if(clave!=clave2){
-		        	errorAlert('Error', 'Las contraseñas no coinciden');
+		        	errorAlert('Error', 'Las contraseÃ±as no coinciden');
 		        	$("#txtPwd").val("");
 		        	$("#txtPwd2").val("");
 	          	}

@@ -220,7 +220,7 @@ public class Dt_Banner {
 			try
 			{
 				c = PoolConexion.getConnection();
-				this.llenarBanner(c);;
+				this.llenarBanner(c);
 				rsBanner.beforeFirst();
 				while (rsBanner.next())
 				{

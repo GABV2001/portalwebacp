@@ -116,7 +116,7 @@ public class Sl_GuardarBanner extends HttpServlet {
 					List<String> formatos = Arrays.asList("image/jpeg");
 					
 					////// COMPROBAR SI EL TAMAÑO Y FORMATO SON PERMITIDOS //////////
-					int valorPosicion = Integer.parseInt(posicion) + 1; 
+					int valorPosicion = Integer.parseInt(posicion) + 1; 		
 					
 					if(formatos.contains(uploaded.getContentType()))
 					{

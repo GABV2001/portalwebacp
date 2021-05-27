@@ -112,7 +112,7 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 		                                	Dt_Rol dto = new Dt_Rol();
 		                                	listRol = dto.listaRolActivos();
                                 			%>
-	                                    	<select class="form-control" name="cbxRol" id="cbxRol" required>
+	                                    	<select class="form-control" name="cbxRol" id="cbxRol" disabled required>
 	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		
 	                                    	<%
 	                                    		for(Rol r: listRol){

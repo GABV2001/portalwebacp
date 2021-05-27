@@ -51,4 +51,41 @@ public class Ng_Usuario {
 		
 		return existe;
 	}
+	
+	   // Metodo para validar el editar Usuario
+		public boolean existeActualizarUsuario(int usuarioid,String userName){
+			boolean existe = false;
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("SELECT * FROM usuario WHERE usuarioid != ? AND usuario = ? and estado <>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, usuarioid);				
+				ps.setString(2, userName);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS ERROR existeActualizarUsuario(): "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}			
+			return existe;
+		}
 }

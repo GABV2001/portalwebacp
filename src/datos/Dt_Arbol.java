@@ -76,9 +76,6 @@ public class Dt_Arbol {
 				return listArbol;
 			}	
 			
-			
-			
-			
 			//Metodo para almacenar nuevo arbol
 			public boolean guardarArbol(Arbol arbol){
 				boolean guardado = false;
@@ -124,146 +121,146 @@ public class Dt_Arbol {
 				return guardado;
 			}
 			
-			// Metodo para eliminar Arbol
-						public boolean eliminarArbol(int idArbol)
+		// Metodo para eliminar Arbol
+			public boolean eliminarArbol(int idArbol)
+			{
+				boolean eliminado=false;	
+				try
+				{
+					c = PoolConexion.getConnection();
+					this.llenaRsArbol(c);
+					rsArbol.beforeFirst();
+					while (rsArbol.next())
+					{
+						if(rsArbol.getInt(1)==idArbol)
 						{
-							boolean eliminado=false;	
-							try
-							{
-								c = PoolConexion.getConnection();
-								this.llenaRsArbol(c);
-								rsArbol.beforeFirst();
-								while (rsArbol.next())
-								{
-									if(rsArbol.getInt(1)==idArbol)
-									{
-										rsArbol.updateInt("estado", 3);
-										rsArbol.updateRow();
-										eliminado=true;
-										break;
-									}
-								}
-							}
-							catch (Exception e)
-							{
-								System.err.println("ERROR AL ElIMINAR ARBOL "+e.getMessage());
-								e.printStackTrace();
-							}
-							finally
-							{
-								try {
-									if(rsArbol != null){
-										rsArbol.close();
-									}
-									if(c != null){
-										PoolConexion.closeConnection(c);
-									}
-									
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							return eliminado;
+							rsArbol.updateInt("estado", 3);
+							rsArbol.updateRow();
+							eliminado=true;
+							break;
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.err.println("ERROR AL ElIMINAR ARBOL "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rsArbol != null){
+							rsArbol.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
 						}
 						
-						// Metodo para visualizar los datos de un arbol especifico
-						public Arbol getArbol(int idArbol)
-						{
-							Arbol ar = new Arbol();
-							try
-							{
-								c = PoolConexion.getConnection();
-								ps = c.prepareStatement("select arbolid,nombrecientifico,nombrecomun,descripcion,estado,familiaid,generoid,floracionid,multimedia from arbol where estado <> 3 and arbolid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
-								ps.setInt(1, idArbol);
-								rs = ps.executeQuery();
-								if(rs.next())
-								{
-									ar.setArbolID(idArbol);
-									ar.setNombreCientifico(rs.getString("nombrecientifico"));
-									ar.setDescripcion(rs.getString("descripcion"));
-									ar.setMultimedia(rs.getString("multimedia"));
-									ar.setNombreComun(rs.getString("nombrecomun"));
-									ar.setFamiliaID(rs.getInt("familiaid"));									
-									ar.setFloracionID(rs.getInt("floracionid"));									
-									ar.setGeneroID(rs.getInt("generoid"));
-									ar.setEstado(rs.getInt("estado"));
-								}
-							}
-							catch (Exception e)
-							{
-								System.out.println("DATOS ERROR ARBOL: "+ e.getMessage());
-								e.printStackTrace();
-							}
-							finally
-							{
-								try {
-									if(rs != null){
-										rs.close();
-									}
-									if(ps != null){
-										ps.close();
-									}
-									if(c != null){
-										PoolConexion.closeConnection(c);
-									}
-									
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}							
-							return ar;
-						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return eliminado;
+			}
 						
-						public boolean modificarArbol (Arbol ar)
-						{
-							boolean modificado=false;	
-							try
-							{
-								c = PoolConexion.getConnection();
-								this.llenaRsArbol(c);
-								rsArbol.beforeFirst();
-								while (rsArbol.next())
-								{
-									if(rsArbol.getInt(1)==ar.getArbolID())
-									{
-										rsArbol.updateString("nombrecientifico", ar.getNombreCientifico());
-										rsArbol.updateString("nombrecomun", ar.getNombreComun());
-										rsArbol.updateString("descripcion", ar.getDescripcion());
-										rsArbol.updateString("multimedia", ar.getMultimedia());										
-										rsArbol.updateInt("familiaid", ar.getFamiliaID());
-										rsArbol.updateInt("generoid", ar.getGeneroID());
-										rsArbol.updateInt("floracionid", ar.getFloracionID());	
-										rsArbol.updateInt("UsuarioID", ar.getUsuarioId());										
-										rsArbol.updateInt("estado", 2);
-										rsArbol.updateRow();
-										modificado=true;
-										break;
-									}
-								}
-							}
-							catch (Exception e)
-							{
-								System.err.println("ERROR AL ACTUALIZAR FAMILIA"+e.getMessage());
-								e.printStackTrace();
-							}
-							finally
-							{
-								try {
-									if(rsArbol != null){
-										rsArbol.close();
-									}
-									if(c != null){
-										PoolConexion.closeConnection(c);
-									}
-									
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							return modificado;
-						}
-						
+		// Metodo para visualizar los datos de un arbol especifico
+		public Arbol getArbol(int idArbol)
+		{
+			Arbol ar = new Arbol();
+			try
+			{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("select arbolid,nombrecientifico,nombrecomun,descripcion,estado,familiaid,generoid,floracionid,multimedia from arbol where estado <> 3 and arbolid = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, idArbol);
+				rs = ps.executeQuery();
+				if(rs.next())
+				{
+					ar.setArbolID(idArbol);
+					ar.setNombreCientifico(rs.getString("nombrecientifico"));
+					ar.setDescripcion(rs.getString("descripcion"));
+					ar.setMultimedia(rs.getString("multimedia"));
+					ar.setNombreComun(rs.getString("nombrecomun"));
+					ar.setFamiliaID(rs.getInt("familiaid"));									
+					ar.setFloracionID(rs.getInt("floracionid"));									
+					ar.setGeneroID(rs.getInt("generoid"));
+					ar.setEstado(rs.getInt("estado"));
+				}
+			}
+			catch (Exception e)
+			{
+				System.out.println("DATOS ERROR ARBOL: "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}							
+			return ar;
+		}
+		
+		//Metodos para modificar arbol
+		public boolean modificarArbol (Arbol ar)
+		{
+			boolean modificado=false;	
+			try
+			{
+				c = PoolConexion.getConnection();
+				this.llenaRsArbol(c);
+				rsArbol.beforeFirst();
+				while (rsArbol.next())
+				{
+					if(rsArbol.getInt(1)==ar.getArbolID())
+					{
+						rsArbol.updateString("nombrecientifico", ar.getNombreCientifico());
+						rsArbol.updateString("nombrecomun", ar.getNombreComun());
+						rsArbol.updateString("descripcion", ar.getDescripcion());
+						rsArbol.updateString("multimedia", ar.getMultimedia());										
+						rsArbol.updateInt("familiaid", ar.getFamiliaID());
+						rsArbol.updateInt("generoid", ar.getGeneroID());
+						rsArbol.updateInt("floracionid", ar.getFloracionID());	
+						rsArbol.updateInt("UsuarioID", ar.getUsuarioId());										
+						rsArbol.updateInt("estado", 2);
+						rsArbol.updateRow();
+						modificado=true;
+						break;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.err.println("ERROR AL ACTUALIZAR FAMILIA"+e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rsArbol != null){
+						rsArbol.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return modificado;
+		}					
 }

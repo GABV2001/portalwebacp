@@ -64,7 +64,6 @@
 			                 
 			               <p>Floración: <%=a.getNombreFlo() %></p>
 			                        
-			               <p>Distribución: <%=a.getNombreDis() %></p>       
          	   </div>
        		 </div>
        		 <%

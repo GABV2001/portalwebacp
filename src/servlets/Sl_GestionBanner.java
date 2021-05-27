@@ -60,6 +60,7 @@ public class Sl_GestionBanner extends HttpServlet {
 		//Construir clases
 		Banner bn = new Banner();
 		Dt_Banner dtb = new Dt_Banner();
+		Ng_Banner ngb = new Ng_Banner();
 		
 		//Variables
 		int bannerID = Integer.parseInt(request.getParameter("bannerID"));
@@ -79,6 +80,9 @@ public class Sl_GestionBanner extends HttpServlet {
 	    switch(opc){	
 	    case 2:{
 	    	   try {
+	    		if(ngb.existeActualizarBanner(bn.getBannerID(), bn.getTitulobanner())){
+		        	response.sendRedirect("FormEditarBanner.jsp?idB="+bannerID+"&msj=existe");
+	    		}else{
 	       	    Date fechaSistema = new Date();
 	   		    bn.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
 	   		  
@@ -88,8 +92,9 @@ public class Sl_GestionBanner extends HttpServlet {
 		        else {
 		        	response.sendRedirect("GestionBanner.jsp?msj=4");
 		        }
+	    		}
 	   	       }	
-	       catch(Exception e) {
+	    	   catch(Exception e) {
 	        	System.out.println("Sl_GestionBanner, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }

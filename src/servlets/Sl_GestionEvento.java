@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import datos.Dt_Evento;
 import entidades.Evento;
+import negocio.Ng_Evento;
 
 /**
  * Servlet implementation class Sl_GestionEvento
@@ -63,6 +64,7 @@ public class Sl_GestionEvento extends HttpServlet {
 		
 		Dt_Evento dte = new Dt_Evento();
 		Evento ev = new Evento();
+		Ng_Evento nge = new Ng_Evento();
 			
 		int opc = 0;
 		int eventoid =0;
@@ -75,9 +77,10 @@ public class Sl_GestionEvento extends HttpServlet {
 		String cbxTipoEvento = null;
 		String multEvento = null;
 		String txthipervinculoEvento = null;
-		String txtUbicacionEvento = null;	
-		String usuarioid = null;		
+		String txtUbicacionEvento = null;		
 		String rutaFichero = null;
+		String usuarioid = null;
+		boolean control = false;//Variable
 				
 		try
 		{
@@ -120,10 +123,18 @@ public class Sl_GestionEvento extends HttpServlet {
 						txtUbicacionEvento = valor;
 					}else if(key.equals("usuarioid")){
 						usuarioid = valor;
-					}
+					}						
 				}
 			}
+			if(txtNombreEvento.trim().isEmpty()||txtDescripcionEvento.trim().isEmpty()|| cbxTipoEvento.trim().isEmpty()||
+					datefInicioEvento.trim().isEmpty()||timehoraInicioEvento.trim().isEmpty()||
+					datefFinalEvento.trim().isEmpty()||timehoraFinEvento.trim().isEmpty()){
+				response.sendRedirect("GestionEvento.jsp?msj=2");
+			}else {
+				control = true;
+			}
 
+			if(control){
 			int valorImagen = 0;
 			for(FileItem item : items)
 			{			
@@ -169,11 +180,13 @@ public class Sl_GestionEvento extends HttpServlet {
 			   }
 			}
 		}
+	}
 		catch(Exception e)
 		{
 			System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
 		}
-			
+		
+		if(control = true){			
 		ev.setNombre(txtNombreEvento);
 		ev.setDescripcion(txtDescripcionEvento);
 		ev.setFechainicio(datefInicioEvento);
@@ -182,7 +195,7 @@ public class Sl_GestionEvento extends HttpServlet {
 		ev.setHorafin(timehoraFinEvento);
 		ev.setTipoevento(Integer.parseInt(cbxTipoEvento));
 		ev.setHipervinculo(txthipervinculoEvento);
-		ev.setUbicacion(txtUbicacionEvento);	
+		ev.setUbicacion(txtUbicacionEvento);
 		ev.setUsuarioid(Integer.parseInt(usuarioid));
 		if(ev.getMultimedia()==null){
 			ev.setMultimedia(multEvento);
@@ -194,12 +207,16 @@ public class Sl_GestionEvento extends HttpServlet {
 	        Date fechaSistema = new Date();
 	        ev.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
 		        try {
-			        if(dte.guardarEventos(ev)) {
-			        	response.sendRedirect("GestionEvento.jsp?msj=1");
-			        }
+		        	if(nge.existeEvento(ev.getNombre())) {
+		        		response.sendRedirect("GestionEvento.jsp?msj=2");
+		        	}else {
+		        		if(dte.guardarEventos(ev)) {
+				        	response.sendRedirect("GestionEvento.jsp?msj=1");
+		        	}
 			        else {
 			        	response.sendRedirect("GestionEvento.jsp?msj=2");
-			        }			        		        	
+			        }
+		        	}
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionEvento, el error es: " + e.getMessage());
@@ -231,8 +248,7 @@ public class Sl_GestionEvento extends HttpServlet {
 			default:
 			response.sendRedirect("GestionEvento.jsp?msj=5");	
 			break;
-	}//Fin Switch	
-   }				
+			}//Fin Switch	
+		}
+	}
 }
-
-

@@ -44,7 +44,7 @@
                         <div class="error mx-auto" data-text="401">401</div>
                         <p class="lead text-gray-800 mb-5">ACCESO DENEGADO</p>
                         <p class="text-gray-500 mb-0">CONTACTE CON EL ADMINISTRADOR DEL SISTEMA PARA REVISAR SUS PERMISOS</p>
-                        <a href="index2.jsp">&larr; Retornar al Menu Principal</a>
+                        <a href="login.jsp">&larr; Ir al Inicio Sesión</a>
                     </div>
 
             </div>

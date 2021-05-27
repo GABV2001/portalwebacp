@@ -178,12 +178,17 @@ public class Dt_Usuario {
 					if(rsUsuario.getInt(1)==user.getIdUser())
 					{
 						rsUsuario.updateString("usuario", user.getUser());
-						rsUsuario.updateString("contra", user.getPwd());
 						rsUsuario.updateString("nombres", user.getNombre());
 						rsUsuario.updateString("apellidos", user.getApellido());
 						rsUsuario.updateTimestamp("fmodificacion", user.getfModificacion());
 						rsUsuario.updateString("email", user.getEmail());
-						rsUsuario.updateString("telefono",user.getTelefono());						
+						rsUsuario.updateString("telefono",user.getTelefono());	
+						if(user.getPwd().equals(null) || user.getPwd().equals("")){
+							
+						}else {
+						rsUsuario.updateString("contra", user.getPwd());
+						}
+
 						rsUsuario.updateInt("estado", 2);						
 						rsUsuario.updateRow();
 						modificado=true;

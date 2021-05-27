@@ -112,7 +112,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 		                                	Dt_Usuario dtu = new Dt_Usuario();
 											listUser = dtu.listaUserActivos();
                                 			%>
-	                                    	<select class="form-control" name="cbxUser" id="cbxUser" required>
+	                                    	<select class="form-control " name="cbxUser" id="cbxUser" disabled required>
 	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		
 	                                    	<%
 	                                    		for(Usuario u: listUser){

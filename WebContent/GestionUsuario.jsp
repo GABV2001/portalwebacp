@@ -98,8 +98,9 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                       	<a href="FormUsuario.jsp"><i
                                                 class="fas fa-user-plus"></i>&nbsp; Nuevo Usuario
                                         <a href="#">
-	                        			<i class="fas fa-print" title="Imprimir Lista de Usuarios Activos"></i> Imprimir
-	 									<a href="GestionRolUsuario.jsp">
+	                        			<a href="#" onclick="verRptUsuarios();">
+                        				<i class="fas fa-print " title="Imprimir Lista de Usuarios"></i>Imprimir<a>
+                        				<a href="GestionRolUsuario.jsp">
 	                        			<i class="fas fa-user-tag" title="Asignar Rol a Usuarios"></i> Rol-Usuario	                        		
 	                        			</div>
 	                        		</a>
@@ -142,7 +143,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                            		<a id="btn-edita-abrir" href="FormEditarUsuario.jsp?userID=<%=us.getIdUser()%>">
                         							<i class="fas fa-edit" title="Modificar datos del Usuario"></i>
                         						</a>
-                                           	                        						
+                                           	     &nbsp;                   						
                         						<a class="ajax-link" href="javascript:void(0);" 
                                            		onclick="$.jAlert({
                                            		    'type': 'confirm',
@@ -164,9 +165,10 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Usuario"></i>
                         						</a>
-                                           		<a href="#">
+                        						&nbsp;
+                                           		<!-- <a href="#">
                         							<i class="fas fa-eye" title="Visualizar Usuario"></i>
-                        						</a>
+                        						</a> -->
                                            		
                                            		<a href="fotoUser.jsp?idUsuario=<%=us.getIdUser()%>">
                         							<i class="fas fa-camera" title="Registrar Foto del Usuario"></i>
@@ -232,6 +234,11 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
 	<script src="jAlert/dist/jAlert-functions.min.js"> //optional!!</script>
 
 <script>
+	function verRptUsuarios()
+	{
+		window.open("Sl_RptUsuarios", '_blank');
+	}
+
     $(document).ready(function ()
     {
         ////// APLICAMOS FORMATO Y BOTONES A LA TABLA //// INICIAMOS EL PLUGIN DATATABLE
@@ -252,7 +259,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
         if(mensaje == "1")
         {
             successAlert('Exito', 'Los datos han sido registrados exitosamente!');
-        }
+         }
         if(mensaje == "2")
         {
             errorAlert('Error', 'Revise los datos e intente nuevamente!!!');
@@ -262,5 +269,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
         } 
     });
 </script>
+
 </body>
 </html>

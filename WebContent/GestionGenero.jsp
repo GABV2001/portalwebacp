@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" 
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
 import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -44,13 +44,13 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <head>
-    <meta charset=ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Género</title>
+    <title>Portal ACP - GestiÃ³n GÃ©nero</title>
     
       <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -85,18 +85,18 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Género</h1>
+                    <h1 class="h3 mb-2 text-gray-800">GÃ©nero</h1>
 
                     <!-- DataTales -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Género</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">GestiÃ³n GÃ©nero</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormGenero.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Género</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo GÃ©nero</div></a>
                                     <%
                                     	ArrayList<Genero> listGenero = new ArrayList<Genero>();
                                       	Dt_Genero dtu = new Dt_Genero();
@@ -105,14 +105,14 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                     <thead>
                                         <tr>                                         
                                             <th>Nombre</th>
-                                            <th>Descripción</th>                       
+                                            <th>DescripciÃ³n</th>                       
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>                                
                                             <th>Nombre</th>                                            
-                                            <th>Descripción</th>                                                       
+                                            <th>DescripciÃ³n</th>                                                       
                                             <th>Opciones</th>
 
                                         </tr>
@@ -129,7 +129,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este genero?',
+                                           		    'confirmQuestion': 'Â¿EstÃ¡s seguro que deseas eliminar este genero?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here

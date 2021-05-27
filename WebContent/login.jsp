@@ -72,11 +72,14 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="userName" name="userName" aria-describedby="emailHelp"
-                                                placeholder="Correo">
+                                                placeholder="Usuario">
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group input-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="pwd" name="pwd" placeholder="Contraseña">
+                                                <div class="input-group-append">
+									            <button id="show_password" class="border border-dark" type="button" style="opacity: 0.5;" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+									          </div>
                                         </div>
                                          <div class="form-group">
                                             <%
@@ -128,16 +131,26 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
     
 
 	<script>
+	 function mostrarPassword(){
+			var cambio = document.getElementById("pwd");
+			if(cambio.type == "password"){
+				cambio.type = "text";
+				$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+			}else{
+				cambio.type = "password";
+				$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+			}
+		}   
+	 
     $(document).ready(function ()
-    {
-        
+    {        
 	/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
         mensaje = "<%=varMsj%>";
 
         if(mensaje == "403")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente(Usuario o Contraseña Incorrecta)');
+            errorAlert('Error', 'Revise los datos e intente nuevamente');
         }
     });
 	</script>

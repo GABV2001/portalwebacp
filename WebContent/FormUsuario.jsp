@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
 import="vistas.*, entidades.*, datos.*, java.util.*;"%>   
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -102,7 +102,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                     <div class="col-sm-12">
                                        <label>Apellidos:</label>	
                                         <input type="text" class="form-control form-control-user" name="txtApellidos" id="txtApellidos"
-                                           minlength="10" maxlength="100" required>
+                                           minlength="5" maxlength="100" required>
                                     </div>
                                		 <div class="col-sm-12">
                                   	   <label>Telefono(Opcional):</label>                                  
@@ -122,14 +122,17 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                         <input type="email" class="form-control form-control-user" name="txtEmail" id="txtEmail"
                                             minlength="8" maxlength="75" required>
                                     </div>
-                                    <label class="col-sm-12 mb-3">Contraseña:</label>
-                                    <div class="col-sm-12 mb-3">
+                                    <label class="col-sm-12 mb-3 ">ContraseÃ±a:</label>
+                                    <div class="col-sm-12 mb-3 input-group">
                                         <input type="password" class="form-control form-control-user" name="txtPwd" id="txtPwd"
-                                           placeholder="Contraseña" minlength="8" maxlength="32" required>
-                                    </div>
+                                           placeholder="ContraseÃ±a" minlength="8" maxlength="32" required>
+                                   		    <div class="input-group-append">
+									            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+									          </div>	          
+						               </div>
                                     <div class="col-sm-12">
                                         <input type="password" class="form-control form-control-user" name="txtPwd2" id="txtPwd2"
-                                           minlength="8" maxlength="32" placeholder="Repetir Contraseña"  required>
+                                           minlength="8" maxlength="32" placeholder="Repetir ContraseÃ±a"  required>
                                     </div>
                                 </div>
 	                            <hr>
@@ -174,8 +177,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -201,10 +202,19 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	<script src="jAlert/dist/jAlert-functions.min.js"> //optional!!</script>
     
     <script type="text/javascript">
-	
+    function mostrarPassword(){
+		var cambio = document.getElementById("txtPwd");
+		if(cambio.type == "password"){
+			cambio.type = "text";
+			$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+		}else{
+			cambio.type = "password";
+			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+		}
+	}    
 	    $(document).ready(function ()
 	    {
-
+	    	
 			/////////// VARIABLE DE CONTROL MSJ ///////////
 	        var mensaje = "";
 	        mensaje = "<%=varMsj%>";
@@ -219,7 +229,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		        clave = $("#txtPwd").val();
 		        clave2 = $("#txtPwd2").val();
 		        if(clave!=clave2){
-		        	errorAlert('Error', 'Las contraseñas no coinciden');
+		        	errorAlert('Error', 'Las contraseÃ±as no coinciden');
 		        	$("#txtPwd").val("");
 		        	$("#txtPwd2").val("");
 	          	}

@@ -250,7 +250,7 @@ import = "entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario
 	/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
         mensaje = "<%=varMsj%>";
-
+		
         if(mensaje == "1")
         {
             successAlert('Exito', 'El elemento se ha guardado exitosamente');
@@ -267,8 +267,7 @@ import = "entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario
         {
             errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
         }
-        
-       
+               
     });
     function getValue()
     {   	

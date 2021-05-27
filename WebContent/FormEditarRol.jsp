@@ -37,6 +37,8 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	//Variable de control de mensajes
+    String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
 %>
 <html lang="en">
 <head>
@@ -64,6 +66,9 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+      <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
 
 </head>
 
@@ -169,13 +174,22 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    
+
 <script>  
    $(document).ready(function()
 	{
 		$("#txtRol").val("<%=r.getRol()%>");
 		$("#txtRolDesc").val("<%=r.getDesc_rol()%>");
 	});
+</script>
+
+<script>
+var mensaje = "";
+mensaje = "<%=varMsj%>";
+
+if(mensaje == "existe"){
+	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+}
 </script>
 </body>
 </html>

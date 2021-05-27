@@ -48,6 +48,8 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +75,9 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    
+      <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
 
 <body id="page-top">
@@ -181,11 +185,24 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+    
 	 <script>  
 	  $(document).ready(function()
 		{
 			$("#txtEditTituloBanner").val("<%=bn.getTitulobanner()%>");
 			$("#txtEditDescripcionBanner").val("<%=bn.getDescripcion()%>");	
+			
+		   var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+
+	        if(mensaje == "existe")
+	        {
+	            errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
+	        }
 		});
 	 </script> </body>
 </html>

@@ -51,7 +51,7 @@
             	       <%for(ViewArbol a: listArbol){%>
 			                    <div class="col-lg-4 col-sm-6 mb-4">
 					                <div class="card h-100">
-					                    <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>"><img class="card-img-top" src="img/Defecto.jpeg" alt="Arbol <%=a.getNombreComun() %>"></a>
+					                    <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>"><img class="img-fluid" src="<%=a.getMultimedia() %>" alt="Arbol <%=a.getNombreComun() %>"></a>
 					                    <div class="card-body">
 					                        <h4 class="card-title">
 					                            <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>" class="fw-bold text-dark"> <%=a.getNombreComun() %></a>

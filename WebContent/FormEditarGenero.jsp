@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" 
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
 import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -40,14 +40,13 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario Género</title>
+   <title>Portal ACP - Formulario GÃ©nero</title>
   
     <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
@@ -91,7 +90,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Género
+                                            GÃ©nero
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">
@@ -103,7 +102,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                                 <input class="form-control" name = "txtNombreGenero" id ="txtNombreGenero" required>
 
                                                 <div class="form-group">
-                                                    <label>Descripción:</label>
+                                                    <label>DescripciÃ³n:</label>
                                                     <textarea class="form-control" rows="3" name = "txtDescripcionGenero" id = "txtDescripcionGenero" required></textarea>
                                                 </div>
                                             </div>

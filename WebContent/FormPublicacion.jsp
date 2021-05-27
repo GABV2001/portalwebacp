@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import= "entidades.Publicacion, datos.Dt_Publicacion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import= "entidades.Publicacion, datos.Dt_Publicacion, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -52,7 +52,7 @@
     String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 
     <meta charset="utf-8">
@@ -61,7 +61,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario Publicaci髇</title>
+    <title>Portal ACP - Formulario Publicaci贸n</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -117,7 +117,7 @@
 
                                 <div class="card-header">
                                     <h2>
-                                       Formulario Publicaci髇
+                                       Formulario Publicaci贸n
                                     </h2>
 
                                 </div>
@@ -132,7 +132,7 @@
 
                                         </div>
                                         <div class="form-group">      
-                                        <label>Descripci髇:</label>
+                                        <label>Descripci贸n:</label>
                                             <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost" minlegth="10" maxlength="3000" required></textarea>
                                         </div>                                        
                                           <div class="form-group">
@@ -223,7 +223,7 @@
 
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'El Publicaci髇 que esta intentando registrar ya existe en la base de datos!');
+	            errorAlert('Error', 'El Publicaci贸n que esta intentando registrar ya existe en la base de datos!');
 	        }
 	    });
 	 </script>

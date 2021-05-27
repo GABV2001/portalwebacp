@@ -63,19 +63,26 @@ public class Sl_GestionUsuario extends HttpServlet {
 		Ng_Usuario ngu = new Ng_Usuario();
 		
 		//Control Variables
-		String nombres = request.getParameter("txtNombres");
-		String apellidos = request.getParameter("txtApellidos");
-		String usuario = request.getParameter("txtUserName");
-		String pwd= request.getParameter("txtPwd");
-		String email = request.getParameter("txtEmail");
-		String telefono = request.getParameter("txtTelefono");
+		String nombres = null;
+		String apellidos = null;
+		String usuario = null;
+		String pwd= null;
+		String email = null;
+		String telefono = null;
 		
-		if(nombres.trim().isEmpty()|| apellidos.trim().isEmpty()|| usuario.trim().isEmpty() || pwd.trim().isEmpty()){
+		 nombres = request.getParameter("txtNombres");
+		 apellidos = request.getParameter("txtApellidos");
+		 usuario = request.getParameter("txtUserName");
+		 pwd= request.getParameter("txtPwd");
+		 email = request.getParameter("txtEmail");
+		 telefono = request.getParameter("txtTelefono");
+		
+		if(nombres.trim().isEmpty()|| apellidos.trim().isEmpty()|| usuario.trim().isEmpty()){
         	response.sendRedirect("GestionUsuario.jsp?msj=2");
 		}else{
 		user.setNombre(nombres);
 		user.setApellido(apellidos);
-		user.setUser(usuario);
+		user.setUser(usuario);		
 		user.setPwd(pwd);
 		user.setEmail(email);
 		user.setTelefono(telefono);
@@ -93,7 +100,6 @@ public class Sl_GestionUsuario extends HttpServlet {
 			        	//PARA GUARDAR LA FECHA Y HORA DE CREACION
 				        Date fechaSistema = new Date();
 				        user.setfCreacion(new java.sql.Timestamp(fechaSistema.getTime()));
-				        System.out.println("user.getFechaCreacion(): "+user.getfCreacion());
 				        if(ngu.existeUser(user.getUser())) {
 				        	response.sendRedirect("FormUsuario.jsp?msj=existe");
 				        }
@@ -121,14 +127,17 @@ public class Sl_GestionUsuario extends HttpServlet {
 		        	//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
 			        Date fechaSistema = new Date();
 			        user.setfModificacion(new java.sql.Timestamp(fechaSistema.getTime()));
-			        System.out.println("user.getfModificacion(): "+user.getfModificacion());	       			        
+			        System.out.println("user.getfModificacion(): "+user.getfModificacion());	
+			        if(ngu.existeActualizarUsuario(user.getIdUser(),user.getUser())){
+			          	response.sendRedirect("FormEditarUsuario.jsp?userID="+user.getIdUser()+"&msj=existe");
+			        }else {
 			        if(dtu.modificarUser(user)) {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=3");
 			        }
 			        else {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=4");
 			        }
-					
+			        }
 					}
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());
