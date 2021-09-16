@@ -15,7 +15,7 @@ public class Ng_Usuario {
 	private ResultSet rs = null;
 	private PreparedStatement ps = null;
 	
-	// Metodo para validar el username
+	// Metodo para validar usuario
 	public boolean existeUser(String userName){
 		boolean existe = false;
 		try{

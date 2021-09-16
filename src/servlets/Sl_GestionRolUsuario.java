@@ -88,14 +88,18 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 			ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxBUser")));	
 			try {
 	        	ru.setIdrol_usuario(Integer.parseInt(request.getParameter("rolusuarioid")))	;
+	        	
+	        	if(ngr.existeActualizarRolUsuario(ru.getIdrol_usuario(),ru.getUsuarioid(), ru.getRolid())){
+		          	response.sendRedirect("FormEditarRolUsuario.jsp?idRu="+ru.getIdrol_usuario()+"&msj=existe");
+		        }
+	        	else{
 		        if(dtru.modificarRolUsuario(ru)) {
 		        	response.sendRedirect("GestionRolUsuario.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionRolUsuario.jsp?msj=4");
 		        }
-		        	
-	        	
+	        	}       		        	
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());

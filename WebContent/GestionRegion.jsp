@@ -214,15 +214,15 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', '¡Región guardada exitosamente!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Éxito', '¡Región eliminada exitosamente!');
         }
     });
 	</script>

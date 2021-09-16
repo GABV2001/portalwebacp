@@ -51,4 +51,42 @@ public class Ng_RolUsuario {
 			
 			return existe;
 		}
+		
+		// Metodo para validar el editar Rol usuario
+		public boolean existeActualizarRolUsuario(int idrolUsuario, int usuarioid,int rolid){
+			boolean existe = false;
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("select * from rol_usuario where idrol_usuario !=? and usuarioid=? and rolid=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, idrolUsuario);
+				ps.setInt(2, usuarioid);
+				ps.setInt(3, rolid);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS ERROR existeActualizarRolUsuario(): "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}			
+			return existe;
+		}
 }

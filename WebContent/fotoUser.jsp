@@ -1,6 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="vistas.*, entidades.*, datos.*, java.util.*;"%>
-
+    <%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+	
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +48,7 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <meta name="description" content="">
  <meta name="author" content="">
-<title>Nuevo Usuario</title>
+<title>Foto de usuario</title>
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link
@@ -19,8 +58,11 @@
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+ <!-- Icon -->
+<jsp:include page="imgShortIcon.jsp" />  
+
 </head>
-<body class="bg-gradient-primary">
+<body class="bg-dark">
 
 <div class="container">
 
@@ -30,9 +72,9 @@
                 <div class="row">
                     
                     <div class="col-lg-12">
-                        <div class="p-5">
+                        |<div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Registrar Foto de Usuario</h1>
+                                <h1 class="h1 text-gray-900 mb-4">Registrar Foto de Usuario</h1>
                             </div>
                             <div id="foto" class="panel">
 								<form class="form" name="frm-foto" method="post" action="./Sl_FotoUser" enctype="multipart/form-data">
@@ -43,11 +85,11 @@
 									iduser = Integer.parseInt(request.getParameter("idUsuario"));
 									us = dtu.getUsuario(iduser);
 								%>
-								<div class="" align="center">
-									<img id="preview" src="<%=us.getUrl_foto()==null?"#":us.getUrl_foto()%>" name="preview"  alt="Foto Usuario"
-										style="width: 400px; height: 400px; border-bottom-color: white; margin: 2px;"" />
+								<div class="container" align="center">
+									<img id="preview" class="img-fluid" src="<%=us.getUrl_foto()==null?"img/Defecto.jpeg":us.getUrl_foto()%>" name="preview"  alt="Foto Usuario"
+										style="width: 250px; height: 300px; border-bottom-color: white; margin: 2px;"" />
 								</div>
-										
+								<br>		
 								<input type="file" id="foto" name="foto" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required="required" >&nbsp; 
 								
 								<input type="hidden" name="iduser" value="<%=iduser%>">
@@ -56,9 +98,9 @@
 	                            <div class="text-center">
 	                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 	                            </div>
-	                            <div class="text-center">
-	                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-	                            </div>
+	                            <br>
+	                            <div style="text-align: center; "><a href="GestionUsuario.jsp"><i
+                                    class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
 								</form>
 							</div>
                         </div>
@@ -109,7 +151,6 @@
 	    	        }
 	    	    };
 		});
-	</script>
-    
+</script>  
 </body>
 </html>

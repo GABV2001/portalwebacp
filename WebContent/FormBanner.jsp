@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripcionBanner" minlength="5" maxlength="200" required></textarea>
+                                                <textarea rows="4" class="form-control" name = "txtDescripcionBanner" id="descripcionBanner" minlength="5" maxlength="50" required></textarea>
                                             </div>
                                              <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -140,7 +140,7 @@
 					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 					                            </div>
 					                            <div class="mb-2 text-center">
-					                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
+					                                <input class="btn btn-google btn-user btn-block" type="reset" value="Borrar" />
 					                            </div>
 				                            <br>
 				                         

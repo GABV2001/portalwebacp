@@ -37,6 +37,8 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +70,8 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
 </head>
 
 <body id="page-top">
@@ -200,6 +204,10 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+       <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
 	<script>  	
    $(document).ready(function()
@@ -208,8 +216,17 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 		$("#cbxBUser").val("<%=ru.getUsuarioid()%>");
 		$("#cbxRol").val("<%=ru.getRolid()%>");
 	});
-</script>
+  </script>
+  <script> 
+   $(document).ready(function ()
+    {
+   	   var mensaje = "";
+        mensaje = "<%=varMsj%>";
 
+        if(mensaje == "existe"){
+        	errorAlert('Error', '¡Asignación Rol-Usuario ya existe!');
+        }
+    });
+   </script>
 </body>
-
 </html>

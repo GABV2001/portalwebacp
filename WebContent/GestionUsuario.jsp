@@ -36,7 +36,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
 			response.sendRedirect("401.jsp");
 		}	
 	}
-	
 %>
 <!DOCTYPE html>
 <%
@@ -89,19 +88,16 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Usuario</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gestión Usuarios</h6>
                         </div>
                         <div class="card-body">	               
                               <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;">
-                                      	<a href="FormUsuario.jsp"><i
-                                                class="fas fa-user-plus"></i>&nbsp; Nuevo Usuario
-                                        <a href="#">
-	                        			<a href="#" onclick="verRptUsuarios();">
-                        				<i class="fas fa-print " title="Imprimir Lista de Usuarios"></i>Imprimir<a>
-                        				<a href="GestionRolUsuario.jsp">
-	                        			<i class="fas fa-user-tag" title="Asignar Rol a Usuarios"></i> Rol-Usuario	                        		
+                                      	<a href="FormUsuario.jsp"><i class="fas fa-user-plus"></i> Nuevo Usuario</a>&nbsp;                                     
+	                        			<a href="GestionRolUsuario.jsp"><i class="fas fa-user-tag" title="Asignar Rol a Usuarios"></i> Rol-Usuario</a>&nbsp;
+	                        			<a href="#" onclick="verRptUsuarios();"><i class="fas fa-print " title="Imprimir Lista de Usuarios"></i>Imprimir</a>
+                        				                  		
 	                        			</div>
 	                        		</a>
 	                        		<%
@@ -112,9 +108,10 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Login</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
+                                            <th>Usuario</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Teléfono</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
@@ -122,9 +119,10 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Login</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
+                                            <th>Usuario</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Teléfono</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
@@ -132,13 +130,21 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                     <tbody>
                                      	<%
                                        		for(Usuario us: listUser){
+                                       		//Validación Telefóno
+                                       		String validacionTel=null;
+                                       		if(us.getTelefono().equals("-")){
+                                       			validacionTel="-";
+                                       		}else{
+                                       			validacionTel=us.getTelefono();
+                                       		}
                                        	%>
                                        <tr>
                                            <td><%=us.getIdUser() %></td>
                                            <td><%=us.getUser() %></td>
                                            <td><%=us.getNombre() %></td>
                                            <td><%=us.getApellido() %></td>
-                                           <td><%=us.getEstado()==1||us.getEstado()==2?"ACTIVO":"INACTIVO" %></td>
+                                           <td><%=validacionTel%></td>                                           
+                                           <td><%=us.getEstado()==1||us.getEstado()==2?"Activo":"Inactivo" %></td>
                                            <td>
                                            		<a id="btn-edita-abrir" href="FormEditarUsuario.jsp?userID=<%=us.getIdUser()%>">
                         							<i class="fas fa-edit" title="Modificar datos del Usuario"></i>
@@ -258,17 +264,16 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Los datos han sido registrados exitosamente!');
+            successAlert('Éxito', '¡Usuario registrado con éxito!');
          }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente!!!');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }if(mensaje == "5")
         {
-            successAlert('Exito', 'El registro ha sido elimniado exitosamente!');
+            successAlert('Éxito', '¡Usuario eliminado exitosamente!');
         } 
     });
 </script>
-
 </body>
 </html>

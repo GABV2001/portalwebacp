@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" import = "entidades.*, datos.*,vistas.* ,java.util.*;"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles2.css">
     <link rel="stylesheet" href="css/styles4.css">
+    <link rel="stylesheet" href="css/imageMapa.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -39,7 +41,25 @@
     <!-- Menu -->
     <jsp:include page="mainMenus.jsp" />
     
-  
+  	  <%
+    	  ArrayList<ViewCoordenadaArbol> listCoA = new ArrayList<ViewCoordenadaArbol>();
+    	  Dt_CoordenadaArbol dth = new Dt_CoordenadaArbol();
+    	  listCoA = dth.listarCoordenadaArbol();
+        %> 	
+ 	 	 <%for(ViewCoordenadaArbol vcoa: listCoA){%>
+ 	 	   <input type="hidden" class="NombreComun"  value="<%=vcoa.getNombrecomun()%>">	
+ 		   		   
+ 		   <input type="hidden" class="NombreCientifico" value="<%=vcoa.getNombrecientifico()%>">	
+
+		   <input type="hidden" class="Descripcion" value="<%=vcoa.getDescar()%>">	
+
+		   <input type="hidden" class="Multimedia" value="<%=vcoa.getMultimedia()%>">	
+		   
+		   <input type="hidden" class="Latitud" value="<%=vcoa.getLatitud()%>">	
+		   
+		   <input type="hidden" class="Longitud" value="<%=vcoa.getLongitud()%>">	
+		    			 	 		 
+ 	 	 <%}%>
 
     <!--Maps-->
     <div class="container mt-5 mb-5">
@@ -71,6 +91,30 @@
             zoom: 19,
             layers: [Mapa.Basemaps.Calles, Mapa.LayerGroups.Arboles]
         });
+        
+        //test      
+        var PhotoImg = '<img src="https://i.imgur.com/TBFb9zI.jpg" height="150px" width="150px" class="center" />';
+        var PhotoImg1 = '<img src = "https://i.imgur.com/0grafib.jpg" height="150px" width="150px" class="center" />';
+        var PhotoImg2 = '<img src = "https://i.imgur.com/WGGHrxW.jpg" height="150px" width="150px" class="center" />';
+        var LeafIcon = L.Icon.extend({
+            options: {
+                shadowUrl: 'https://i.imgur.com/lsGlWbl.png',
+                iconSize:     [38, 95],
+                shadowSize:   [50, 64],
+                iconAnchor:   [22, 94],
+                shadowAnchor: [4, 62],
+                popupAnchor:  [-3, -76]
+            }
+        });
+        var greenIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/kCbcOsA.png'}),
+        	orangeIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/ANYFjzm.png'});
+        
+       
+        L.marker([12.127055947189353, -86.27032868564129], {icon: greenIcon}).addTo(map).bindPopup("<center><b>ABETO</b></center>" + PhotoImg + "<center><br>Abies alba, el abeto común o abeto blanco es una especie arbórea de la familia de las pináceas, originaria de las regiones montañosas de Europa.</center>");
+        L.marker([12.12678256672591, -86.2705647200346], {icon: greenIcon}).addTo(map).bindPopup("<center><b>CEDRO</b></center>" + PhotoImg1 + "<center><br>Los cedros constituyen un género (Cedrus) de coníferas pináceas. Son árboles de gran tamaño, de madera olorosa y copa cónica o vertical, muy utilizados para ornamentación de parques.</center>" );
+        L.marker([12.126837636194313, -86.27036154270172], {icon: orangeIcon}).addTo(map).bindPopup("<center><b>PEINE DE MICO</b></center>" + PhotoImg2 + "<center><br>Arbusto o árbol mediano, puede alcanzar entre 5 a 25 metros de altura y diámetros de 10 a 30 cm. El tronco irregular, se ramifica a poca altura. Su corteza externa es de color gris y se desprende fácilmente en tiras; la corteza interna amarillenta, exuda una savia mucilaginosa.</center>" );
+
+        //end of the test
 
         // Capas de Arboles y Sectores
         var groupedOverlays = {

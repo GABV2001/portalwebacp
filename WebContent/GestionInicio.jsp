@@ -149,7 +149,7 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getHistoria() %></textarea>
+                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control" minlength="100" maxlength="1000" required><%=hm.getHistoria() %></textarea>
                                             </div>
                                             <h3>Misión</h3>
                                             <hr class="bg-dark w-auto">
@@ -168,7 +168,7 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getMision() %></textarea>
+                                                <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control" minlength="80" maxlength="1000" required><%=hm.getMision() %></textarea>
                                             </div>
 
                                             <h3>Visión</h3>
@@ -188,7 +188,7 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control" minlength="10" maxlength="1000" required><%=hm.getVision() %></textarea>
+                                                <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control" minlength="80" maxlength="1000" required><%=hm.getVision() %></textarea>
                                             </div>
                                       	 	<div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
@@ -280,11 +280,11 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+            successAlert('Éxito','¡Información actualizada exitosamente!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         
         });

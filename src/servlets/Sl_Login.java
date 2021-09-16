@@ -54,7 +54,7 @@ public class Sl_Login extends HttpServlet {
 				vwru = dtu.dtGetRU(usuario);
 				HttpSession hts = request.getSession(true);
 				hts.setAttribute("acceso", vwru);
-				response.sendRedirect("index2.jsp");
+				response.sendRedirect("admin.jsp");
 			}
 			else{
 				response.sendRedirect("login.jsp?msj=403");

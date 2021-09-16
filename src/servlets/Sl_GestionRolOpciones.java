@@ -90,22 +90,27 @@ public class Sl_GestionRolOpciones extends HttpServlet {
 			try {
 				ro.setRolid(Integer.parseInt(request.getParameter("cbxBRol")));				
 	        	ro.setIdrol_opc(Integer.parseInt(request.getParameter("rolOpcionid")))	;
-		        if(dtro.modificarRolOpcion(ro)) {
+	        	if(ngp.existeActualizarRolOpcion(ro.getIdrol_opc(),ro.getRolid(),ro.getId_opc() )){
+		          	response.sendRedirect("FormEditarRolOpcion.jsp?rolopcID="+ro.getIdrol_opc()+"&msj=existe");
+		        }
+	        	else{
+	        	if(dtro.modificarRolOpcion(ro)) {
 		        	response.sendRedirect("GestionRolOpcion.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionRolOpcion.jsp?msj=4");
-		        }	        	
+		        }
+	        	}
 	        }
 	        catch(Exception e) {
-	        	System.out.println("Sl_GestionRolUser, el error es: " + e.getMessage());
+	        	System.out.println("Sl_GestionRolOpciones, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
 				break;
 				
 			}
 		default:
-			response.sendRedirect("GestionRolUsuario.jsp?msj=5");	
+			response.sendRedirect("GestionRolOpciones.jsp?msj=5");	
 			break;
 	}
   }

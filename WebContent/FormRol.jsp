@@ -43,14 +43,13 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario País</title>
+    <title>Portal ACP - Formulario Rol</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -179,7 +178,7 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 	        mensaje = "<%=varMsj%>";
 	
 	        if(mensaje == "existe"){
-	        	errorAlert('Error', 'El Rol que esta intentando registrar ya existe en la base de datos!');
+	        	errorAlert('Error', '¡Rol ingresado ya existe!');
 	        }
 	    });
 	</script>

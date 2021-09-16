@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" import = "entidades.Evento, datos.Dt_Evento ,java.util.*;"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +26,6 @@
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
 
-    
-
     <!-- Calendar CSS -->
     <link rel="stylesheet" href="css/evo-calendar.midnight-blue.min.css">
     <link rel="stylesheet" href="css/evo-calendar.min.css">
@@ -38,14 +35,11 @@
 </head>
 
 <body>
-
     <!-- Menu -->
    <jsp:include page="mainMenus.jsp" />
   
-
     <!-- Contenido -->
     <div class="container">
-    
     	
     	<%
     	  ArrayList<Evento> listEventos = new ArrayList<Evento>();
@@ -122,6 +116,7 @@
 	var fechasJSON = [];	
 	var hipervinculoEvento = [];
    	var ubicacionEvento = [];
+   	var multimediaEvento = [];
     
   	$(document).ready(function (){
   			//Funcion MostrarDatos
@@ -134,7 +129,9 @@
   	    	var horaI = $(".horaInicio");
   	    	var horaF = $(".horaFin");
   	    	var hipervinculo = $(".hipervinculo");  
-  	    	var ubicacion = $(".ubicacion");
+  	    	var ubicacion = $(".ubicacion");  	    
+  	    	var multimedia = $(".multimedia");
+
   	    	
   	    	//Loops para añadir los valores a los arreglos, antes declarados vacios
   	  		for(var i=0; i<fechaInicio.length; i++){
@@ -145,7 +142,8 @@
   	   			horaIevento.push(horaI[i].value);
   	  			horaFevento.push(horaF[i].value);
   	  		    hipervinculoEvento.push(hipervinculo[i].value);
-  	  			ubicacionEvento.push(ubicacion[i].value)
+  	  			ubicacionEvento.push(ubicacion[i].value);
+  	  			multimediaEvento.push(multimedia[i].value);  	  			
   	  		}
   	   	
   	    	//Se añade al arreglo que carga el calendario y se recorre cada arreglo de según el atributo
@@ -155,22 +153,20 @@
   			   				   name: nombreEvento[i], // Event name (required)
   			                   date: [fechasI[i], fechasF[i]],// Event date (required)
   			                   type: "event", // Event type (required)
-  			                   description: "Descripción: " + descripcionEvento[i] + "<br> Duración " + horaIevento[i] + "-" + " "+  horaFevento[i] + "<br> Enlace: " + hipervinculoEvento[i] + "<br> Ubicación: " + ubicacionEvento[i],
+  			                   description: "Descripción: " + descripcionEvento[i] + "<br> Duración " + horaIevento[i] + "-" + " "+  horaFevento[i] + "<br> Enlace: " + hipervinculoEvento[i] + "<br> Ubicación: " + ubicacionEvento[i]
+  			             		+ "<br><br>" +"<img  class=img-thumbnail src="+multimediaEvento[i]+">",
   			                   color: "#ff8303", // Event custom color (optional)  
   							}				
   			);
   			}
-
-  	    }
-  		
+  	    }  		
   		MostrarDatos();
   		
   		   	 $("#calendar").evoCalendar({ 
 	   		 theme: "Midnight Blue",
 	     	  language: "es",
-	     	   calendarEvents: fechasJSON 			  	 	
-	     	
-	   	  });
+	     	   calendarEvents: fechasJSON 		  	 		     	
+	   	  });	
 	   	 
    	});
 

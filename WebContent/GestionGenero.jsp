@@ -214,21 +214,19 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', 'Género guardado con éxito');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Éxito', 'Género eliminado exitosamente');
         }
     });
 	</script>
 	
-
-
 </body>
 
 </html>

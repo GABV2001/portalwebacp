@@ -38,7 +38,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 	}
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -98,7 +98,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                       					<input name="opcion" type="hidden" value="2" />
                       						<input name="idgenero" type="hidden" value="<%=gn.getGeneroID()%>" />
                                          <div class="form-group">
-                                                <label>Nombre del genero:</label>
+                                                <label>Nombre del género:</label>
                                                 <input class="form-control" name = "txtNombreGenero" id ="txtNombreGenero" required>
 
                                                 <div class="form-group">
@@ -109,8 +109,9 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                          	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>  
+				                            <br>
                                             <div style="text-align:center;"><a href="GestionGenero.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

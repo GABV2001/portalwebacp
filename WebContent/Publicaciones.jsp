@@ -28,8 +28,19 @@
    
    <!-- CSS IMAGE -->
   <link rel="stylesheet" href="./css/image.css">
+  
+  <style type="text/css">
+    .ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+     }
+     .footer{
+      	margin-top: 250px;		
+     }
+  </style>
 </head>
-<body>
+<body >
  <!-- Menu -->
   <jsp:include page="mainMenus.jsp" />
 
@@ -41,41 +52,107 @@
             <hr class="bg-dark w-25 ml-0">
             <small></small>
         </h1>
-
-     <div class="row">
-                 		<%
-                      	ArrayList<Publicacion> ListaPost = new ArrayList<Publicacion>();
-                       	Dt_Publicacion dta = new Dt_Publicacion();
-                       	ListaPost = dta.ListaPost();                        	
-                        
-                       	for(Publicacion a: ListaPost){
-            	    	if(a.getEstadopublicacion()==1){
-	                    %>
-		                    <div class="col-md-5 mb-5">
-			                <div class="card h-100">
-			                    <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>"><img class="img-guide" src="<%=a.getMultimedia() %>" alt="Arbol <%=a.getTitulo() %>"></a>
-			                    <div class="card-body">
-			                        <h4 class="card-title">
-			                            <a href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>" class="fw-bold text-dark"> <%=a.getTitulo() %></a>
-			                        </h4>
-			                        <p class="card-text"><%=a.getDescripcion()%></p>
-			                    </div>					       
-			                </div>
-			             </div>		
-			             
-	          		  <%
-            	       }
-			          }
-			        %>    
-   </div>
-   <!-- /.row -->
-    
+   	    <div class="row" >
+  		<%
+       		ArrayList<Publicacion> ListaPost = new ArrayList<Publicacion>();
+        	Dt_Publicacion dta = new Dt_Publicacion();
+        	ListaPost = dta.ListaPost();   
+        	
+        	if(ListaPost.isEmpty()){
+        %>
+       		<div class="card w-75 " style="margin-bottom:20px; border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>    
+		    <div class="card w-75 " style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    
+		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    
+		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    
+		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    
+		    <div class="card w-75"style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    
+		    <div class="card w-75" style="border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>	
+        <%}	
+        	else{         
+        	for(Publicacion a: ListaPost){
+  			if(a.getEstadopublicacion()==1){
+         %>            
+			<div class="card w-75 mt-3" style="border:3px solid; ">
+			<div class="card-body">
+			  <a style="color:black" href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>">
+			  <h5 class="card-title"><%=a.getTitulo() %></h5>
+			  </a>
+			  <p class="card-text ellipsis"><%=a.getDescripcion()%> </p>
+			</div>
+			</div>		                        
+    	<%}%>
+  			<%if(a.getEstadopublicacion()==2){%>
+  	      	<div class="card w-75 " style="margin-bottom:20px; border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>    
+		    <div class="card w-75 " style="margin-bottom:20px;border:3px solid">
+			<div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>
+		    <div class="card-body">
+			  <h5 class="card-title">Card title</h5>
+			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			</div>
+		    </div>		    
+  	   <%}
+         }
+         }
+        %>    
+ 	</div>
+  <!-- /.row -->
 </div>
+
 <!-- /.container -->
 
 <!-- Footer -->
+<div class="footer">
 <jsp:include page="mainFooter.jsp" />
-
+</div>
 <!-- Javascript -->
 <link rel="stylesheet" href="js/bootstrap.min.js">
 <script defer src="./js/index.js"></script>

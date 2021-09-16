@@ -1,7 +1,43 @@
-<%@ page contentType="text/html; charset=UTF-8" import = "entidades.Evento, datos.Dt_Evento ,java.util.*;"%>
+<%@ page contentType="text/html; charset=UTF-8" import = "entidades.Evento, datos.*, vistas.*,java.util.*;"%>
+<%
+	response.setHeader( "Pragma", "no-cache" );
+	response.setHeader( "Cache-Control", "no-store" );
+	response.setDateHeader( "Expires", 0 );
+	response.setDateHeader( "Expires", -1 );
+	
+	ViewRolUsuario vru = new ViewRolUsuario();
+	Dt_RolOpcion dtro = new Dt_RolOpcion();
+	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
+	
+	//OBTENEMOS LA SESION
+	vru = (ViewRolUsuario)session.getAttribute("acceso");
+	if(vru==null){
+		response.sendRedirect("login.jsp?msj=401");
+	}
+	else{
+		//OBTENEMOS LA LISTA DE OPCIONES ASIGNADAS AL ROL
+		listOpc = dtro.listaRolOpc(vru.getRolid());
+		
+		//RECUPERAMOS LA URL = MI OPCION ACTUAL
+		int index = request.getRequestURL().lastIndexOf("/");
+		String miPagina = request.getRequestURL().substring(index+1);
+		boolean permiso = false; //VARIABLE DE CONTROL
+		
+		//VALIDAR SI EL ROL CONTIENE LA OPCION ACTUAL DENTRO DE LA MATRIZ DE OPCIONES
+		for(ViewRolOpcion vrop : listOpc){
+			if(vrop.getOpcion().trim().equals(miPagina.trim())){
+				permiso = true; //ACCESO CONCEDIDO
+				break;
+			}
+		}
+		
+		if(!permiso){
+			response.sendRedirect("401.jsp");
+		}	
+	}
+%>	
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="UTF-8">
@@ -152,6 +188,7 @@
 	var fechasJSON = [];	
 	var hipervinculoEvento = [];
    	var ubicacionEvento = [];
+   	var multimediaEvento = [];
     
   	$(document).ready(function (){
   			//Funcion MostrarDatos
@@ -165,6 +202,7 @@
   	    	var horaF = $(".horaFin");
   	    	var hipervinculo = $(".hipervinculo");  
   	    	var ubicacion = $(".ubicacion");
+  	    	var multimedia = $(".multimedia");
   	    	
   	    	//Loops para añadir los valores a los arreglos, antes declarados vacios
   	  		for(var i=0; i<fechaInicio.length; i++){
@@ -175,7 +213,9 @@
   	   			horaIevento.push(horaI[i].value);
   	  			horaFevento.push(horaF[i].value);
   	  		    hipervinculoEvento.push(hipervinculo[i].value);
-  	  			ubicacionEvento.push(ubicacion[i].value)
+  	  			ubicacionEvento.push(ubicacion[i].value);
+  	  			multimediaEvento.push(multimedia[i].value);    			
+
   	  		}
   	   	
   	    	//Se añade al arreglo que carga el calendario y se recorre cada arreglo de según el atributo
@@ -185,7 +225,8 @@
   			   				   name: nombreEvento[i], // Event name (required)
   			                   date: [fechasI[i], fechasF[i]],// Event date (required)
   			                   type: "event", // Event type (required)
-  			                   description: "Descripción: " + descripcionEvento[i] + "<br> Duración " + horaIevento[i] + "-" + " "+  horaFevento[i] + "<br> Enlace: " + hipervinculoEvento[i] + "<br> Ubicación: " + ubicacionEvento[i],
+  			                   description: "Descripción: " + descripcionEvento[i] + "<br> Duración " + horaIevento[i] + "-" + " "+  horaFevento[i] + "<br> Enlace: " + hipervinculoEvento[i] + "<br> Ubicación: " + ubicacionEvento[i]
+  			                   + "<br><br>" +"<img  class=img-thumbnail src="+multimediaEvento[i]+">",
   			                   color: "#fb3640", // Event custom color (optional)  
   							}				
   			);

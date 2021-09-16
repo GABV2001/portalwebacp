@@ -14,13 +14,13 @@ public class PoolConexion {
 	private static Connection con = null;
 	private static BasicDataSource dataSource;
 	
-	//SERVIDOR LOCAL
-//	private static String db = "portalwebacp";
-//	private static String url = "jdbc:postgresql://165.98.12.158:5432/"+db;
-//	private static String user = "risw";
-//	private static String password = "P0$GR3$2021*";
+	/*//SERVIDOR LOCAL
+	private static String db = "portalwebacp";
+	private static String url = "jdbc:postgresql://165.98.12.158:5432/"+db;
+	private static String user = "risw";
+	private static String password = "P0$GR3$2021*";*/
 	
-	private static String db = "test00";
+	private static String db = "portalwebacp";
 	private static String url = "jdbc:postgresql://localhost:5432/"+db;
 	private static String user = "postgres";
 	private static String password = "Imp2@20";
@@ -137,7 +137,5 @@ public class PoolConexion {
             }
         }
 	*/
-
 	}
-
 }

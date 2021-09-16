@@ -64,117 +64,26 @@ public class Sl_GestionPublicacion extends HttpServlet {
 				Ng_Publicacion  ngp = new Ng_Publicacion();
 				
 				int opc = 0;
-				int publicacionid =0;
 				String txtTituloPost = null;
 				String txtDescripcionPost = null;
-				String cbxEstadoPost = null;
-				String rutaFichero = null;
-				String usuarioid = null;		
-				String url_foto = null;
-				boolean control = false;
+				int cbxEstadoPost = 0;
+				int usuarioid = 0;		
 				
-				try
-				{
-					FileItemFactory factory = new DiskFileItemFactory();
-					ServletFileUpload upload = new ServletFileUpload(factory);
-					String path = getServletContext().getRealPath("/");
-					List<FileItem> items = upload.parseRequest(request);
-					File fichero = null;
-							
-					for(FileItem item: items)
-					{
-						FileItem uploaded = item;
-						if(uploaded.isFormField())
-						{	
-							String key = uploaded.getFieldName();
-							String valor = uploaded.getString();
-							if(key.equals("opcion")){
-								opc = Integer.parseInt(valor);
-							}else if(key.equals("publicacionid")){
-								publicacionid = Integer.parseInt(valor);
-							}else if(key.equals("txtTituloPost")){
-								txtTituloPost = valor;
-							}else if(key.equals("txtDescripcionPost")){
-								txtDescripcionPost = valor;
-							}else if(key.equals("cbxEstadoPost")){
-								cbxEstadoPost = valor;
-							}else if(key.equals("url_foto")){
-								url_foto = valor;
-							}else if(key.equals("usuarioid")){
-								usuarioid = valor;
-							}					
-						}
-					}
-					
-					if(txtTituloPost.trim().isEmpty() || txtDescripcionPost.trim().isEmpty()){
-						response.sendRedirect("GestionServicio.jsp?msj=2"); 
-					}else {
-						control = true;
-					}
-					
-					if(control){
-					int valorImagen = 0;
-					for(FileItem item : items)
-					{
-					
-						FileItem uploaded = item;
-						if(uploaded.getName()!=""){					
-						if(!uploaded.isFormField())
-						{
-							/////////TAMAÑO DEL ARCHIVO ////////
-							long size = uploaded.getSize();
-							System.out.println("size: "+size);
-							
-							/////// GUARDAMOS EN UN ARREGLO LOS FORMATOS QUE SE DESEAN PERMITIR
-							List<String> formatos = Arrays.asList("image/jpeg");
-							
-							////// COMPROBAR SI EL TAMAÑO Y FORMATO SON PERMITIDOS //////////
-						    valorImagen = publicacionid; 
-							
-							if(formatos.contains(uploaded.getContentType()))
-							{
-								System.out.println("Filetype: "+uploaded.getContentType());
-								
-								rutaFichero = "fotosServicio"+valorImagen+".jpg";
-								path = "C:\\payara5\\glassfish\\fotosPublicacionAbra\\";
-								System.out.println(path+rutaFichero);
-								
-								fichero = new File(path+rutaFichero);
-								System.out.println(path+rutaFichero);
-								
-								///////// GUARDAR EN EL SERVIDOR //////////////
-								uploaded.write(fichero);
-								
-								System.out.println("SERVIDOR: FOTO GUARDADA CON EXITO!!!");
-								/////// ACTUALIZAMOS EL CAMPO URLFOTO EN LA BASE DE DATOS
-								String url = "fotosPublicacionAbra/"+rutaFichero;
-								post.setMultimedia(url);
-							}
-							else
-							{
-								System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-								response.sendRedirect("GestionServicio.jsp?msj="+valorImagen+"&guardado=3");						
-							}
-						  }
-					   }
-					}
-				   }
-				 }
-				catch(Exception e)
-				{
-						System.out.println("SERVLET: ERROR AL SUBIR LA FOTO: " + e.getMessage());
-				}
+				opc = Integer.parseInt(request.getParameter("opcion"));
+				txtTituloPost = request.getParameter("txtTituloPost");
+				txtDescripcionPost = request.getParameter("txtDescripcionPost");
+				cbxEstadoPost = Integer.parseInt(request.getParameter("cbxEstadoPost"));
+				usuarioid  = Integer.parseInt(request.getParameter("usuarioid"));
 				
-				if(control){
+				
+				if(txtTituloPost.trim().isEmpty()|| txtDescripcionPost.trim().isEmpty()){
+		        	response.sendRedirect("GestionPublicacion.jsp?msj=2");
+				}else{ 
 				post.setTitulo(txtTituloPost);
 				post.setDescripcion(txtDescripcionPost);
-				if(post.getMultimedia()==null)
-				{
-					post.setMultimedia(url_foto);
-				}
-				post.setEstadopublicacion(Integer.parseInt(cbxEstadoPost));
-				post.setUsuarioid(Integer.parseInt(usuarioid));
-				
+				post.setEstadopublicacion(cbxEstadoPost);
+				post.setUsuarioid(usuarioid);			
+					
 				switch (opc){
 				case 1:{						
 						try {
@@ -201,7 +110,7 @@ public class Sl_GestionPublicacion extends HttpServlet {
 						break;
 					}
 					case 2:{
-						post.setPublicacionid(publicacionid);
+						post.setPublicacionid(Integer.parseInt(request.getParameter("publicacionid")));
 						//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
 				        Date fechaSistema = new Date();
 				        post.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
@@ -217,13 +126,13 @@ public class Sl_GestionPublicacion extends HttpServlet {
 			        	System.out.println("Sl_GestionPublicacion el error es: " + e.getMessage());
 						e.printStackTrace();
 			        }
-						break;
-						
+						break;						
 					}
 					default:
 					response.sendRedirect("GestionPublicacion.jsp?msj=5");	
 					break;
 			}//Fin Switch
 		  }
-	}
+  }
 }
+

@@ -130,7 +130,7 @@
 
                                 </div>
                                 <div class="card-body bg-white rounded">
-                              		   <form class="Publicacion" method="post" action="./Sl_GestionPublicacion" enctype="multipart/form-data">
+                              		   <form class="Publicacion" method="post" action="./Sl_GestionPublicacion">
                       					<input name="opcion" type="hidden" value="2" />
                       					<input name="publicacionid" type="hidden" value="<%=post.getPublicacionid()%>" />  
                       					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                     				
@@ -143,21 +143,9 @@
                                         <label>Descripción:</label>
                                             <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost" minlegth="10" maxlength="3000" required></textarea>
                                         </div>                                        
-                                          <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Archivo</span>
-                                                    </div>
-                                                   <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultPost">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multPost" name="multPost" onchange="Test.UpdatePreview(this)" accept="image/jpeg" >
-											    		<input type="hidden" name="url_foto" value="<%=post.getMultimedia()%>">																			
-													</div>
-                                                </div>
-                                            </div>
+                                          <div class="form-group">                                       
                                               <div class="form-group">
-                                                    <label for="formGroupExampleInput">Tipo de Evento:</label>
+                                                    <label for="formGroupExampleInput">Tipo:</label>
                                                     <select class="form-control" id= "cbxEstadoPost" name= "cbxEstadoPost" required>
                                                         <option value= "0" selected disabled>Seleccionar...</option>                                                        
                                                         <option value="1">Visible</option>

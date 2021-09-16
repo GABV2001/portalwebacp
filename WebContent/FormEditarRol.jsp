@@ -189,7 +189,7 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 		   mensaje = "<%=varMsj%>";
 
 		   if(mensaje == "existe"){
-		   	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+		   	errorAlert('Error', '¡Rol ingresado ya existe!');
 		   }
 	});
    

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" 
 import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -42,13 +42,13 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gesti贸n 脕rbol</title>
+    <title>Portal ACP - Gesti髇 羠bol</title>
 
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -80,21 +80,20 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">脕rbol</h1>
+                    <h1 class="h3 mb-2 text-gray-800">羠bol</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gesti贸n 脕rbol</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gesti髇 羠bol</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive"> 
-                              <div style="text-align:right;"><a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp; Imprimir Reporte de los 谩rboles</div></a>                         
+                              <div style="text-align:right;"><a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp; Imprimir Reporte de los 醨boles</div></a>                         
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo 脕rbol</a>
-                                                <a href="GestionUbicacionArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Distribuci贸n Arbol</div></a></div>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo 羠bol</a>
+                                                <a href="GestionUbicacionArbol.jsp"></div></a></div>
                                     <%
                                     ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
                                     Dt_Arbol dtu = new Dt_Arbol();
@@ -102,25 +101,25 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                     %>
                                     <thead>
                                         <tr>
-                                            <th>Nombre com煤n</th>
-                                            <th>Nombre cient铆fico</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Nombre com鷑</th>
+                                            <th>Nombre cient韋ico</th>
+                                            <th>Descripci髇</th>
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floraci贸n</th>                                                                               
+                                            <th>Floraci髇</th>                                                                               
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Nombre com煤n</th>
-                                            <th>Nombre cient铆fico</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Nombre com鷑</th>
+                                            <th>Nombre cient韋ico</th>
+                                            <th>Descripci髇</th>
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floraci贸n</th>                
+                                            <th>Floraci髇</th>                
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
@@ -143,7 +142,7 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '驴Est谩s seguro que deseas eliminar este Servicio',
+                                           		    'confirmQuestion': '縀st醩 seguro que deseas eliminar este Servicio',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -254,15 +253,15 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Exito', '羠bol guardado con 閤ito');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', 'evise los datos e intente nuevamente !');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Exito', '羠bol eliminado exitosamente');
         }
     });    
 

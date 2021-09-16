@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,entidades.Floracion,datos.Dt_Floracion,entidades.Distribucion,datos.Dt_Distribucion,entidades.Pais,datos.Dt_Pais,datos.Dt_Distribucion,datos.Dt_Region,entidades.Region,entidades.Arbol,datos.Dt_Arbol,
- entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,vistas.ViewArbol,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+import="vistas.*, entidades.*, datos.*, java.util.*;"%>   
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -51,16 +50,16 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
 	}
 %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario √Årbol</title>
+   <title>Portal ACP - Formulario ¡rbol</title>
    
    <!-- Icon -->
    <jsp:include page="imgShortIcon.jsp" />  
@@ -105,7 +104,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
 
                                     <div class="card-header">
                                         <h2>
-                                            Cat√°logo del √°rbol
+                                            Cat·logo del ·rbol
                                         </h2>
 
                                     </div>
@@ -116,17 +115,17 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                         <input name="usuarioid" type="hidden" value="<%=usuarioid %>" />                                     
                                         <input name="arbolid" type="hidden" value="<%=ar.getArbolID()%>" />                                       
                                             <div class="form-group">
-                                                <label>Nombre com√∫n:</label>
+                                                <label>Nombre com˙n:</label>
                                                 <input class="form-control"  name="txtNombreComun" id="txtNombreComun">
 
                                             </div>
                                             <div class="form-group">
-                                                <label>Nombre cient√≠fico:</label>
+                                                <label>Nombre cientÌfico:</label>
                                                 <input class="form-control" name="txtNombreCientifico" id="txtNombreCientifico">
 
                                             </div>
                                             <div class="form-group">
-                                                <label>Descripci√≥n:</label>
+                                                <label>DescripciÛn:</label>
                                                 <textarea class="form-control" rows="3"  name="txtDescripcionArbol" id="txtDescripcionArbol" required></textarea>
                                             </div>
                                              <div class="form-group">
@@ -148,7 +147,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                             Dt_Genero dtu = new Dt_Genero();
                                             listGenero = dtu.listaGenero();
                                             %>
-                                                <label>G√©nero del √°rbol: &nbsp;<a href="GestionGenero.jsp"><i
+                                                <label>GÈnero del ·rbol: &nbsp;<a href="GestionGenero.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>  
                                                 <select class="form-control" name="GeneroID" id="GeneroID">
                                             <%
@@ -166,7 +165,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                             listFamilia = dtuf.listaFamilia();
                                             %>                             
                                             <div class="form-group">
-                                                <label>Familia del √°rbol:  &nbsp;<a href="GestionFamilia.jsp"><i
+                                                <label>Familia del ·rbol:  &nbsp;<a href="GestionFamilia.jsp"><i
                                                 class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control" name="FamiliaID" id="FamiliaID">
                                             <%
@@ -184,7 +183,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                             listFloracion = dtf.listaFloracion();
                                             %>
                                             <div class="form-group">
-                                                <label>Floracion del √°rbol:</label>
+                                                <label>Floracion del ·rbol:</label>
                                                 <select class="form-control" name="FloracionID" id="FloracionID">
                                             <%
                                     		for(Floracion u: listFloracion){
@@ -199,7 +198,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Familia,datos.Dt_Familia,enti
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
                                             <div style="text-align:center;"><a href="GestionArbol.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

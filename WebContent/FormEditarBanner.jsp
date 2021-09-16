@@ -54,7 +54,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" minlength="5" maxlength="200" required></textarea>
+                                                <textarea rows="4" class="form-control" name = "txtEditDescripcionBanner" id="txtEditDescripcionBanner" minlength="5" maxlength="50" required></textarea>
                                             </div>                                                                                    		                                
                                          	  	<div class="mb-2 text-center">
 					                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />

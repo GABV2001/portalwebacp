@@ -123,6 +123,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, da
                                          	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>  
+				                            <br>
                                           <div style="text-align:center;"><a href="GestionPais.jsp"><i
                                                         class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>

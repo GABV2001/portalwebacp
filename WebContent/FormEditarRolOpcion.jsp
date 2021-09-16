@@ -37,12 +37,14 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
 %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -67,7 +69,9 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
 </head>
 
 <body id="page-top">
@@ -201,7 +205,11 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    	<script>  
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
+<script>  
    $(document).ready(function()
 	{
 		$("#cbxOpc").val("<%=ro.getId_opc()%>");
@@ -209,5 +217,16 @@ datos.Dt_Rol,datos.Dt_RolOpcion, entidades.Rol,vistas.ViewRolUsuario, vistas.Vie
 		$("#cbxBRol").val("<%=ro.getRolid()%>");
 	});
 </script>
+ <script> 
+   $(document).ready(function ()
+    {
+   	   var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "existe"){
+        	errorAlert('Error', '¡Asignación Rol-Opción ya existe!');
+        }
+    });
+   </script>
 </body>
 </html>

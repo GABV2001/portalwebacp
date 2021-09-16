@@ -100,7 +100,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 										
 										//Variable
 										String telefono = null;
-										if(user.getTelefono().equals("opcional")){
+										if(user.getTelefono().equals("-")){
 											telefono = "";
 										}else{
 											telefono = user.getTelefono();
@@ -115,22 +115,22 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		                                    <div class="col-sm-12 mb-3">
 		                                        <label>Nombres:</label>
 		                                        <input type="text" class="form-control form-control-user" name="txtNombres" id="txtNombres"
-		                                            minlength="10" maxlength="80"  required>
+		                                            minlength="3" maxlength="80"  required>
 		                                    </div>
 		                                    <div class="col-sm-12">
 		                                       <label>Apellidos:</label>	
 		                                        <input type="text" class="form-control form-control-user" name="txtApellidos" id="txtApellidos"
-		                                          minlength="10" maxlength="100"   required>
+		                                          minlength="3" maxlength="80"   required>
 		                                    </div>
 		                                    <div class="col-sm-12">
-		                                  	   <label>Telefono(Opcional):</label>                                  
-		                                        <input type="text" class="form-control form-control-user" name="txtTelefono" id="txtTelefono"
-		                                          minlength="5" maxlength="15" placeholder="9999-9999">
+		                                  	   <label>Teléfono(Opcional):</label>                                  
+		                                        <input type="tel" class="form-control form-control-user" name="txtTelefono" id="txtTelefono"
+		                                          minlength="8" maxlength="15" pattern="[0-9]{8}" placeholder="-">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group row">
 		                                    <div class="col-sm-12 mb-3">
-		                                  	   <label>Nombre de Usuario:</label>                                  
+		                                  	   <label>Usuario:</label>                                  
 		                                        <input type="text" class="form-control form-control-user" name="txtUserName" id="txtUserName"
 		                                         minlength="4" maxlength="40"  required>
 		                                    </div>
@@ -152,10 +152,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 			                            <hr>
 			                            <div class="text-center form-group">
 			                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-			                            </div>
-			                            <div class="text-center form-group">
-			                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-			                            </div>
+			                            </div>			                          
 		                                <div style="text-align:center;"><a href="GestionUsuario.jsp"><i
 		                                              class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
 		               
@@ -253,7 +250,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	        mensaje = "<%=varMsj%>";
 	
 	        if(mensaje == "existe"){
-	        	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+	        	errorAlert('Error', '¡Usuario ingresado ya existe!');
 	        }
 	        
 	        $("#txtPwd2").change(function(){

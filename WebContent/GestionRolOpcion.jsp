@@ -224,15 +224,15 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito','¡Asignación Rol-Opción registrado con éxito!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error','¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Éxito', '¡Asignación de Rol-Opción eliminado exitosamente!');
         }            
     });
 	</script>

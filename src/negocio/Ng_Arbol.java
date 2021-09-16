@@ -1,10 +1,9 @@
 package negocio;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import datos.PoolConexion;
 
 public class Ng_Arbol {
@@ -49,7 +48,5 @@ public class Ng_Arbol {
 				}
 				return existe;
 			}
-	
-
 }
 

@@ -10,8 +10,9 @@ public class Publicacion {
 	private Timestamp fcreacion;
 	private Timestamp fmodificacion;
 	private Timestamp feliminacion;
-	private String multimedia;
 	private int estadopublicacion;
+	private String multimedia1;
+	private String multimedia2;
 	private int estado;
 	private int usuarioid;
 	
@@ -34,12 +35,6 @@ public class Publicacion {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	public String getMultimedia() {
-		return multimedia;
-	}
-	public void setMultimedia(String multimedia) {
-		this.multimedia = multimedia;
 	}
 	public int getEstadopublicacion() {
 		return estadopublicacion;
@@ -77,4 +72,17 @@ public class Publicacion {
 	public void setFeliminacion(Timestamp feliminacion) {
 		this.feliminacion = feliminacion;
 	}
+	public String getMultimedia1() {
+		return multimedia1;
+	}
+	public void setMultimedia1(String multimedia1) {
+		this.multimedia1 = multimedia1;
+	}
+	public String getMultimedia2() {
+		return multimedia2;
+	}
+	public void setMultimedia2(String multimedia2) {
+		this.multimedia2 = multimedia2;
+	}
+	
 }

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
+import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +46,7 @@
                         <div class="error mx-auto" data-text="401">401</div>
                         <p class="lead text-gray-800 mb-5">ACCESO DENEGADO</p>
                         <p class="text-gray-500 mb-0">CONTACTE CON EL ADMINISTRADOR DEL SISTEMA PARA REVISAR SUS PERMISOS</p>
-                        <a href="login.jsp">&larr; Ir al Inicio Sesión</a>
+                        <a href="login.jsp">&larr; Ir al Inicio SesiÃ³n</a>
                     </div>
 
             </div>

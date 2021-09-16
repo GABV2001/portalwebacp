@@ -48,7 +48,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario Pais</title>
+   <title>Portal ACP - Formulario País</title>
    
     <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
@@ -92,7 +92,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Pais
+                                            País
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
@@ -100,7 +100,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
                       					<input name="opcion" type="hidden" value="2" />
                       						<input name="idpais" type="hidden" value="<%=p.getPaisID()%>" />
                                          <div class="form-group">
-                                                <label>Nombre del pais:</label>
+                                                <label>Nombre del país:</label>
                                                 <input class="form-control" name = "txtNombrePais" id ="txtNombrePais" required>
 
                                                 <div class="form-group">
@@ -125,13 +125,12 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
                                             </select>
                                             </div>
                                             </div>                                           
-                                            
-                                            
                                          	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>  
+				                            </div>				                              
+				                            <br>
                                             <div style="text-align:center;"><a href="GestionPais.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

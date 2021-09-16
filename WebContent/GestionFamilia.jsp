@@ -214,15 +214,15 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', 'Familia guardado con éxito');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+           errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Éxito', 'Familia eliminado exitosamente');
         }
     });
 	</script>

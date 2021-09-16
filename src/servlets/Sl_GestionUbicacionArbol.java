@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_Genero;
 import datos.Dt_UbicacionArbol;
-import entidades.Genero;
+import negocio.Ng_UbicacionArbol;
 import entidades.UbicacionArbol;
 
 /**
@@ -58,15 +58,20 @@ public class Sl_GestionUbicacionArbol extends HttpServlet {
 		opc = Integer.parseInt(request.getParameter("opcion"));
 		
 		//Construir objeto genero
-		Dt_UbicacionArbol dtg = new Dt_UbicacionArbol();
+		Dt_UbicacionArbol dtua = new Dt_UbicacionArbol();
 		UbicacionArbol ua = new UbicacionArbol();
+		Ng_UbicacionArbol ngua = new Ng_UbicacionArbol();
 		ua.setArbolid(Integer.parseInt(request.getParameter("cbxArbol")));
 		ua.setDistribucionid(Integer.parseInt(request.getParameter("cbxDistribucion")));
 		
 		switch (opc){
 		case 1:{			
-		        try {
-			        if(	dtg.guardarArbol(ua)) {
+		        try {		        	
+		        	if(ngua.existeUbicacionArbol(ua.getArbolid(), ua.getDistribucionid()))
+		        	{
+		        		response.sendRedirect("GestionUbicacionArbol.jsp?msj=2");									
+		        	}else
+			        if(dtua.guardarArbol(ua)) {
 			        	response.sendRedirect("GestionUbicacionArbol.jsp?msj=1");
 			        }
 			        else {

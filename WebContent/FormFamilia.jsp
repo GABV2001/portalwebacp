@@ -37,7 +37,7 @@
 	}
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 
     <meta charset="utf-8">
@@ -92,17 +92,19 @@
                                          <div class="form-group">
                                                 <label>Nombre de la familia:</label>
                                                 <input class="form-control" name = "txtNombreFamilia" id ="txtNombreFamilia">
-
+                                                </div>
+                                          <div class="form-group">
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
                                                     <textarea class="form-control" rows="3" name = "txtDescripcionFamilia" id = "txtDescripcionFamilia"></textarea>
                                                 </div>
                                             </div>
-                                         	 <div class="text-center">
+                                         	 <div class="mb-3">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>  
+				                            </div>
+				                            <br>  
                                             <div style="text-align:center;"><a href="GestionFamilia.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

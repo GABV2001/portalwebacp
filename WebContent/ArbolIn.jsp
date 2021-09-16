@@ -52,11 +52,11 @@
 		                <h1 class="text-center"><%=a.getNombreComun() %></h1>
 		                <p class="text-center"><span class="date"><%=a.getNombreCientifico() %> </span></p>
 		                <br>
-		                <img class="img-fluid mx-auto d-block" src="img/Defecto.jpeg">
+		                <img class="img-fluid mx-auto d-block" src="<%=a.getMultimedia()%>">
 		            </div>
 		            <br>
 		            <div class="text-center">
-			                <p><%=a.getDescripcion() %></p>
+			                <p>Descripción:<%=a.getDescripcion() %></p>
 			           
 			               <p>Género:<%=a.getNombreGenero() %></p>
 			           

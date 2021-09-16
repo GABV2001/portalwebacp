@@ -204,7 +204,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 
         if(mensaje == "existe")
         {
-            errorAlert('Error', 'La asignación que esta intentando registrar ya existe en la base de datos!');
+            errorAlert('Error', '¡Asignación Rol-Usuario ya existe!');
         }
 	});
 </script>

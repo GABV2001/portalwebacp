@@ -116,8 +116,7 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
                                 	listRU = dtru.listaRolUser();                                	
                            	      %>	
                                     <thead>
-                                        <tr>                                           
-                                            <th>ID</th>
+                                        <tr>                                                                                   
                                             <th>Usuario</th>
                                             <th>Rol</th>
                                             <th>Opciones</th>
@@ -126,7 +125,6 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ID</th>
                                             <th>Usuario</th>
                                             <th>Rol</th>
                                             <th>Opciones</th>
@@ -137,7 +135,6 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
                                        		for(ViewRolUsuario VU: listRU){
                                        	    %> 
                                         <tr>                                           
-                                       	    <td><%=VU.getIdrol_usuario() %></td>
                                            <td><%=VU.getUsuario() %></td>
                                            <td><%=VU.getRol() %></td>
                                            <td>
@@ -239,15 +236,15 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', '¡Asignación Rol-Usuario registrado con éxito!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Éxito', '¡Asignación de Rol-Usuario eliminado exitosamente!');
         }
     });
 	</script>

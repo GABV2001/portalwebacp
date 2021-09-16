@@ -38,7 +38,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 	}
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -102,8 +102,9 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                             <div class="mb-3">
                                             <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
+                                            <br>
                                             <div style="text-align:center;"><a href="GestionGenero.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

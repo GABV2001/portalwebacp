@@ -205,7 +205,7 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
 	
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'La asignación que esta intentando registrar ya existe en la base de datos!');
+	            errorAlert('Error', '¡Asignación Rol-Opción ya existe!');
 	        }
 		});
 </script>

@@ -38,7 +38,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,en
 	}
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -48,7 +48,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,en
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario Distribucion</title>
+   <title>Portal ACP - Formulario Distribución</title>
    
     <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
@@ -92,7 +92,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,en
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Region
+                                            Región
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
@@ -100,7 +100,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,en
                       					<input name="opcion" type="hidden" value="2" />
                       						<input name="iddistribucion" type="hidden" value="<%=ds.getDistribucionID()%>" />
                                          <div class="form-group">
-                                                <label>Nombre de la distribucion:</label>
+                                                <label>Nombre de la distribución:</label>
                                                 <input class="form-control" name = "txtNombreDistribucion" id ="txtNombreDistribucion" required>
 
                                                 <div class="form-group">
@@ -128,8 +128,9 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Distribucion,en
                                          	 <div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 				                            </div>  
+				                            <br>
                                             <div style="text-align:center;"><a href="GestionDistribucion.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
                                     </div>
                                 </div>

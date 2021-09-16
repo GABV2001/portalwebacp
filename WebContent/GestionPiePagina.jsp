@@ -62,7 +62,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  
-    <title>Portal ACP - Gestión Pie De Página</title>
+    <title>Portal ACP - Gestión Pie de Página</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -131,12 +131,13 @@
                                                 <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" minlength="10" maxlength="75" required>
                                             </div>
                                             <div class="form-group">
-                                                <label>Telefono:</label>
-                                                <input class="form-control" id="telefonoFooter" name = "telefonoFooter" value="<%=ft.getTelefono()%>" minlength="8" maxlength="20" required  >
+                                                <label>Teléfono:</label>
+                                                <input type="tel" class="form-control form-control-user" name="telefonoFooter" id="telefonoFooter" value="<%=ft.getTelefono()%>" minlength="8" maxlength="8" pattern="[0-9]{8}">
                                             </div>
                                             <div class="form-group">
                                                 <label>Extensión:</label>
-                                                <input class="form-control" id= "extensionFooter" name = "extensionFooter" value="<%=ft.getExtencion()%>" minlength="10" required>
+                                                <input type="number" class="form-control form-control-user" name="extensionFooter" id="extensionFooter" value="<%=ft.getExtencion()%>" minlength="1" maxlength="5" >
+                               
                                             </div>
                                            <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -262,11 +263,11 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+            successAlert('Éxito', '¡Información de pie de página actualizada exitosamente!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         });
 </script>

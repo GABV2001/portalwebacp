@@ -105,8 +105,7 @@
                                     <thead>
                                         <tr>
                                             <th>Titulo</th>
-                                            <th>Descripcion</th>
-                                            <th>Multimedia</th>
+                                            <th>Descripción</th>
                                             <th>Fecha</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
@@ -115,8 +114,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Titulo</th>
-                     				        <th>Descripcion</th>
-                                            <th>Multimedia</th>                             
+                     				        <th>Descripción</th>
                                             <th>Fecha</th>
                                             <th>Estado</th>
                                             <th>Opciones</th>
@@ -144,10 +142,8 @@
                                        	%>
                                         <tr>
                                             <td><%=post.getTitulo() %></td>
-                                            <td><%=post.getDescripcion()%></td>
-                                             <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
-                        							<i class="fas fa-camera mostrarImagen" title="<%=post.getMultimedia()%>" onClick="getValue()"></i>
-                        							</a></td>
+                                            <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
+											overflow: hidden;"><%=post.getDescripcion()%></td>                                           
                                             <td><%=fechaCreacion%></td>
                                             <td><%=control%></td>                                                   
                                              <td>
@@ -174,6 +170,8 @@
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
                         						</a></i>  
+                        						&nbsp;&nbsp;<a href="ImagenPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="fas fa-camera"></i></a>   
+                        						&nbsp;&nbsp;<a href="PdfPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="far fa-file-pdf"></i></a>                     						
                                     	    </tr>     
                                         	<%
                                        		}
@@ -188,27 +186,6 @@
 
             </div>
             <!-- End of Main Content -->
-
- 				<!-- MODAL VISUALIZAR IMAGEN -->					
-					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					       <h5 class="modal-title">Visualizar Imagen</h5>				
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Banner"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
-								</div>								
-					      </div>					 
-					    </div>
-					  </div>
-					</div>					
-					<!-- FIN Modal -->
 			
             <!-- Footer -->
           	<jsp:include page="adminFooter.jsp" />  
@@ -263,20 +240,28 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Exito', 'Publicación guardada exitosamente');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'El elemento ha sido eliminado exitosamente');
+            errorAlert('Exito', 'Publicación eliminada exitosamente');
         }       
         if(mensaje == "existe")
         {
-            errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
-        }     
+            errorAlert('Error', 'Titulo ingresado ya existe');
+        } 
+        if(mensaje == "6")
+        {
+        	successAlert('Éxito', 'Imagen guardada con éxito');
+        }  
+        if(mensaje == "7")
+        {
+        	successAlert('Éxito', 'PDF guardado con éxito');
+        }  
     });
     function getValue()
     {   	

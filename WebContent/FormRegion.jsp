@@ -110,14 +110,15 @@ import="entidades.Pais,datos.Dt_Pais,entidades.Rol,vistas.ViewRolUsuario, vistas
                                                 <input class="form-control" name = "txtNombreRegion" id ="txtNombreRegion">
                                             </div>
                                             <div class="form-group">
-                                                <label>Descripcion:</label>                                                
+                                                <label>Descripción:</label>                                                
                                                 <textarea class="form-control" rows="3" name = "txtDescripcionRegion" id ="txtDescripcionRegion"></textarea>
                                             </div>                                     
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
                                             </div>
+                                            <br>
                                             <div style="text-align:center;"><a href="GestionRegion.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
 
                                         </form>
                                     </div>

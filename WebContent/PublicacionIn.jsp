@@ -49,22 +49,35 @@
 		    	if(a.getPublicacionid()==MostrarInfo){%>
 		        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
 		            <div class="intro">
-		                <h3 class="text-center"><%=a.getTitulo() %></h3>
-		                <p class="text-center"><span class="date">Publicado: <%=fechaCreacion %> </span></p>
+		                <h2 class="text-center"><b><%=a.getTitulo() %></b></h2>
 		                <br>
-		                <img class="img-fluid mx-auto d-block" src="<%=a.getMultimedia()%>">		
-		                <br>            
-		                <p class="text-center" ><%=a.getDescripcion()%></p>
+		                <p class="text-center"><span class="date">Publicado: <%=fechaCreacion %> </span></p>		                            
+		                <p class="text-justify" ><%=a.getDescripcion()%></p>
 		                <br>		            
 		            </div>
+		       <%if(a.getMultimedia1()!=null){ %>
+		            <div>
+		            <br>		        		        
+		            <h3 class="text-center">Multimedia</h3>
 		            <br>
-		            <div class="text-center">	            			           	               
-         	   </div>
+		                <img class="img-fluid mx-auto d-block" src="<%=a.getMultimedia1()%>">		
+		            <br>		            					
+		            </div>
+		        <%}%>		       
+		          <%if(a.getMultimedia2()!=null){ %>
+		          <h3 class="text-center">Documento</h3>		          
+		           <div class="container mt-5" align="center">
+		            <a href="<%=a.getMultimedia2()%>" target="_blank"><img id="PDf" class="img-fluid" src="img/pdf.svg"  alt="PDF"
+						style="width: 300px; height: 200px; border-bottom-color: white; margin: 2px;" /></a>	
+		            </div>
+		         <%}%>
        		 </div>
        		 <%
-		    	}
+		      }
        		 } 
        		 %>
+       		 <div class="container" style="margin-top:300px;">
+       		 </div>
     </div>
     <br>
     <br>
@@ -84,8 +97,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
-
-
 </body>
-
 </html>

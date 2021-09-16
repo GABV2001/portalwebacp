@@ -93,11 +93,11 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
                                      <form class="Distribucion" method="post" action="./Sl_GestionDistribucion">
                                         <input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
-                                                <label>Nombre de la distribucion:</label>
+                                                <label>Nombre de la distribución:</label>
                                                 <input class="form-control" name = "txtNombreDistribucion" id ="txtNombreDistribucion">
                                             </div>
                                             <div class="form-group">
-                                                <label>Descripcion:</label>
+                                                <label>Descripción:</label>
                                                 <textarea class="form-control" rows="3" name = "txtDescripcionDistribucion" id ="txtDescripcionDistribucion" required></textarea>
                                             </div>                                             
                                             <div class="form-group">
@@ -120,9 +120,9 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
 
                                             <div class="mb-3">
                                                  <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-                                            </div>
+                                            </div>                                         
                                             <div style="text-align:center;"><a href="GestionDistribucion.jsp"><i
-                                                        class="fas fa-undo"></i>&nbsp;Volver a la tabla</a></div>
+                                                        class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
 
                                         </form>                
                                     </div>

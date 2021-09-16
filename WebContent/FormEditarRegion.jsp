@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
  import="entidades.Region, datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -38,11 +38,11 @@
 	}
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -104,7 +104,7 @@
                                                 <input class="form-control" name = "txtNombreRegion" id ="txtNombreRegion" required>
 
                                                 <div class="form-group">
-                                                    <label>Descripción:</label>
+                                                    <label>DescripciÃ³n:</label>
                                                     <textarea class="form-control" rows="3" name = "txtDescripcionRegion" id = "txtDescripcionRegion" required></textarea>
                                                 </div>                                                
                                          	 <div class="text-center">
@@ -174,9 +174,5 @@
 		
 		});
 	 </script>  
-	 
-
-
 </body>
-
 </html>

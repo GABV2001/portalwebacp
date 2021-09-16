@@ -119,8 +119,7 @@
                                 <div class="card-body">
                                     <p>El equipo de desarrollo Abra, compuesto por Guillermo Antonio Baltodano Vado,
                                         Kevin Fernando González Estrada, Joseph Tadeo Chavarría González, Cesar Antonio
-                                        Collado Baca, Arle Baez estamos agradecidos de
-                                        que nuestro diseño para el portal sea utilizado. Esperamos que la experiencia de
+                                        Collado Baca, Arle Baez, Marwan Flores estamos agradecidos de que nuestro diseño para el portal sea utilizado. Esperamos que la experiencia de
                                         usuario sea positiva, intuitiva y que sea de su agrado.</p>
                                 </div>
                             </div>

@@ -80,6 +80,7 @@ public class Sl_GestionEvento extends HttpServlet {
 		String txtUbicacionEvento = null;		
 		String rutaFichero = null;
 		String usuarioid = null;
+		
 		boolean control = false;//Variable
 				
 		try
@@ -115,15 +116,16 @@ public class Sl_GestionEvento extends HttpServlet {
 						timehoraFinEvento = valor;
 					}else if(key.equals("cbxTipoEvento")){
 						cbxTipoEvento = valor;
-					}else if(key.equals("multEvento")){
+					}else if(key.equals("url_foto")){
 						multEvento = valor;
 					}else if(key.equals("txthipervinculoEvento")){
 						txthipervinculoEvento = valor;
 					}else if(key.equals("txtUbicacionEvento")){
-						txtUbicacionEvento = valor;
+						txtUbicacionEvento = valor;				
 					}else if(key.equals("usuarioid")){
 						usuarioid = valor;
-					}						
+					}
+					
 				}
 			}
 			if(txtNombreEvento.trim().isEmpty()||txtDescripcionEvento.trim().isEmpty()|| cbxTipoEvento.trim().isEmpty()||

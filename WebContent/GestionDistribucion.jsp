@@ -216,7 +216,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', 'Distribución guardada con éxito');
         }
         if(mensaje == "2")
         {

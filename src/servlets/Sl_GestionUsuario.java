@@ -86,9 +86,9 @@ public class Sl_GestionUsuario extends HttpServlet {
 		user.setPwd(pwd);
 		user.setEmail(email);
 		user.setTelefono(telefono);
-		
-		if(user.getTelefono() == null){
-			user.setTelefono("opcional");			
+			
+		if(user.getTelefono() == null || user.getTelefono().isEmpty()){
+			user.setTelefono("-");			
 		}else{
 			user.setTelefono(request.getParameter("txtTelefono"));			
 		}

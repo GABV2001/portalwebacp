@@ -41,7 +41,7 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 
     <meta charset="utf-8">
@@ -171,8 +171,6 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 

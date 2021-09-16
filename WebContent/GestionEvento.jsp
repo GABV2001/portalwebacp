@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -45,13 +45,13 @@
 <html lang="en">
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Portal ACP - Gesti贸n Eventos</title>
+    <title>Portal ACP - Gesti髇 Eventos</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -72,6 +72,10 @@
      <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 
+	<style type="text/css">
+	table td {
+	
+	}</style>
 </head>
 
 <body id="page-top">
@@ -96,7 +100,7 @@
                     <!-- DataTales Evento -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gesti贸n Evento</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gesti髇 Evento</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -109,10 +113,10 @@
                                        		<th>Fecha y Hora de Inicio</th>
                                             <th>Fecha y Hora Final</th>                                          
                                             <th>Nombre</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Descripci髇</th>
                                       	    <th>Tipo de Evento</th>
                                             <th>Multimedia</th>                                       
-                                            <th>Ubicaci贸n</th>
+                                            <th>Ubicaci髇</th>
                                             <th>Hipervinculo</th>
                                             <th>Opciones</th>
                                         </tr>
@@ -122,10 +126,10 @@
                                             <th>Fecha y Hora de Inicio</th>
                                             <th>Fecha y Hora Final</th>                                          
                                             <th>Nombre</th>
-                                            <th>Descripci贸n</th>
+                                            <th>Descripci髇</th>
                                             <th>Tipo de Evento</th>   
                                             <th>Multimedia</th>                                            
-                                            <th>Ubicaci贸n</th>
+                                            <th>Ubicaci髇</th>
                                             <th>Hipervinculo</th>
                                             <th>Opciones</th>
                                         </tr>
@@ -138,8 +142,9 @@
                                           	<td><%=ev.getFechainicio()%> <%=ev.getHorainicio() %></td>
                                            	<td><%=ev.getFechafin()%> <%=ev.getHorafin() %></td>
                                             <td><%=ev.getNombre() %></td>
-                                            <td><%=ev.getDescripcion()%></td>
-                                            <td><%=ev.getTipoevento()==1?"P煤blico":"Privado" %></td>
+                                            <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
+											overflow: hidden;"><%=ev.getDescripcion()%></td>
+                                            <td><%=ev.getTipoevento()==1?"P鷅lico":"Privado" %></td>
                                   			  <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
                         							<i class="fas fa-camera mostrarImagen" title="<%=ev.getMultimedia()%>" onClick="getValue()"></i>
                         							</a></td>
@@ -150,7 +155,7 @@
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '驴Est谩s seguro que deseas eliminar este Evento?',
+                                           		    'confirmQuestion': '縀st醩 seguro que deseas eliminar este Evento?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -257,19 +262,19 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Exito', 'vento guardado con 閤ito!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error','evise los datos e intente nuevamente!');
         }
         if(mensaje == "3")
         {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+            successAlert('Exito', 'vento actualizado exitosamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            errorAlert('Exito', 'Evento eliminado con 閤ito');
         }if(mensaje == "colision")
         {
             errorAlert('Exito', 'Existe un evento agendado, ya en la misma fecha y hora!');

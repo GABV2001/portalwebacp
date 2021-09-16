@@ -63,7 +63,7 @@
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index2.jsp">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.jsp">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-tree"></i>
                 </div>
@@ -162,6 +162,7 @@
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionArbol.jsp">Árbol</a>
+                        <a class="collapse-item" href="GestionUbicacionArbol.jsp">Ubicación Árbol</a>
                         <a class="collapse-item" href="GestionFamilia.jsp">Familia</a>
                         <a class="collapse-item" href="GestionGenero.jsp">Género</a>
                         <a class="collapse-item" href="GestionDistribucion.jsp">Distribución</a>
@@ -237,6 +238,28 @@
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionPublicacion.jsp">Gestión Publicación</a>
+                    </div>
+                </div>
+            </li>
+            
+             <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Gestión Mapa
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
+                    aria-expanded="true" aria-controls="#collapseEight">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Mapa</span>
+                </a>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="GestionMapa.jsp">Gestión Mapa</a>
                     </div>
                 </div>
             </li>
@@ -324,15 +347,17 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!--<a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                 -->
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Configuración
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                 -->
+                                <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="login.jsp" data-toggle="modal"
                                     data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -340,10 +365,7 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
-
-                <!-- Termina Menus -->
+            <!-- Termina Menus -->

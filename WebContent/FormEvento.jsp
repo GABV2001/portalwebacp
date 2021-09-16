@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"
 %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -69,7 +69,7 @@
 	}
 %>
 <head>
-    <meta charset="utf-8">
+    <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -127,7 +127,7 @@
 
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label>DescripciÃ³n:</label>
+                                                    <label>Descripción:</label>
                                                     <textarea class="form-control" rows="3" id ="txtDescripcionEvento" name = "txtDescripcionEvento" required ></textarea>
                                                 </div>
                                             </div>
@@ -155,7 +155,7 @@
                                                     <label for="formGroupExampleInput">Tipo de Evento:</label>
                                                     <select class="form-control" id= "cbxTipoEvento" name= "cbxTipoEvento" required>
                                                       	<option value = "" selected disabled>Seleccionar...</option>
-                                                        <option value="1">Agenda PÃºblica</option>
+                                                        <option value="1">Agenda Pública</option>
                                                         <option value="2">Agenda Privada</option>
                                                     </select>
                                                 </div>
@@ -177,7 +177,7 @@
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="formGroupExampleInput ">UbicaciÃ³n:</label>
+                                                <label for="formGroupExampleInput ">Ubicación:</label>
                                                 <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento" required>
                                             </div>
                                             <div class="form-group text-center">
@@ -257,6 +257,23 @@
 
 	    });
 	</script>	
-</body>
+<script>
+	var fecha = new Date();
+	var anio = fecha.getFullYear();
+	var dia = fecha.getDate();
+	var _mes = fecha.getMonth(); //viene con valores de 0 al 11
+	_mes = _mes + 1; //ahora lo tienes de 1 al 12
+	if (_mes < 10) //ahora le agregas un 0 para el formato date
+	{
+	  var mes = "0" + _mes;
+	} else {
+	  var mes = _mes.toString;
+	}
 
+	let fecha_minimo = anio + '-' + mes + '-' + dia; // Nueva variable
+
+	document.getElementById("datefInicioEvento").setAttribute('min',fecha_minimo);
+	document.getElementById("datefFinalEvento").setAttribute('min',fecha_minimo);
+</script>
+</body>
 </html>

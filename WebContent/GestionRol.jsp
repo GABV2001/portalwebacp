@@ -5,7 +5,7 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 	response.setHeader( "Cache-Control", "no-store" );
 	response.setDateHeader( "Expires", 0 );
 	response.setDateHeader( "Expires", -1 );
-	
+		
 	ViewRolUsuario vru = new ViewRolUsuario();
 	Dt_RolOpcion dtro = new Dt_RolOpcion();
 	ArrayList<ViewRolOpcion> listOpc = new ArrayList<ViewRolOpcion>();
@@ -84,7 +84,7 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Roles</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Mapa</h1>
 
       							   <%
                                 	ArrayList<Rol> listRol = new ArrayList<Rol>();
@@ -94,7 +94,7 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
                     <!-- DataTales Banner -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Roles</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gestión del Mapa</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -125,7 +125,8 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
                                        	%>
                                        <tr>
                                            <td><%=r.getRol() %></td>
-                                           <td><%=r.getDesc_rol() %></td>
+                                           <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
+											overflow: hidden;"><%=r.getDesc_rol()%></td>
                                             <td>
                                            		<a id="btn-edita-abrir" href="FormEditarRol.jsp?rolID=<%=r.getIdRol()%>">
                         							<i class="fas fa-edit" title="Modificar datos del Rol"></i>
@@ -167,32 +168,8 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
-			
-			
-                     <!-- MODAL VISUALIZAR IMAGEN -->					
-					<div class="modal fade" id="modalVisualizarImagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					       <h5 class="modal-title">Visualizar Imagen</h5>				
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Banner"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
-								</div>								
-					      </div>					 
-					    </div>
-					  </div>
-					</div>					
-					<!-- FIN Modal -->
-					
-				
-            </div>
+                <!-- /.container-fluid -->					
+          </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -247,18 +224,16 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', '¡Rol registrado con éxito!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
-        }       
-    
-       
+            errorAlert('Éxito', '¡Rol eliminado exitosamente!');
+        }              
     });
     function getValue()
     {   	

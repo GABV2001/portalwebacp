@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=" pageEncoding="ISO-8859-1"
 import = "entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -253,19 +253,23 @@ import = "entidades.Banner, datos.Dt_Banner, entidades.Rol,vistas.ViewRolUsuario
 		
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            successAlert('Éxito', '¡Elemento guardado con éxito!');
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
         }
+        if(mensaje == "3")
+        {
+            successAlert('Éxito', '¡Elemento actualizado exitosamente!');
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'El elemento ha sido eliminado exitosamente');
+            errorAlert('Exito', '¡Elemento eliminado exitosamente!');
         }       
         if(mensaje == "existe")
         {
-            errorAlert('Error', 'El Titulo que esta intentando registrar ya existe en la base de datos!');
+            errorAlert('Error', '¡Elemento ya existe!');
         }
                
     });

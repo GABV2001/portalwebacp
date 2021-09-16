@@ -97,23 +97,23 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                     <div class="col-sm-12 mb-3">
                                         <label>Nombres:</label>
                                         <input type="text" class="form-control form-control-user" name="txtNombres" id="txtNombres"
-                                            minlength="10" maxlength="80" required>
+                                            minlength="3" maxlength="80" required>
                                     </div>
                                     <div class="col-sm-12">
                                        <label>Apellidos:</label>	
                                         <input type="text" class="form-control form-control-user" name="txtApellidos" id="txtApellidos"
-                                           minlength="5" maxlength="100" required>
-                                    </div>
+                                           minlength="3" maxlength="80" required>
+                                    </div><br>
                                		 <div class="col-sm-12">
-                                  	   <label>Telefono(Opcional):</label>                                  
-                                        <input type="text" class="form-control form-control-user" name="txtTelefono" id="txtTelefono"
-                                          minlength="5" maxlength="15" >
+                                  	   <label>Teléfono(Opcional):</label>                                  
+                                        <input type="tel" class="form-control form-control-user" name="txtTelefono" id="txtTelefono"
+                                          minlength="8" maxlength="15" pattern="[0-9]{8}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                 
                                     <div class="col-sm-12 mb-3">
-                                  	   <label>Nombre de Usuario:</label>                                  
+                                  	   <label>Usuario:</label>                                  
                                         <input type="text" class="form-control form-control-user" name="txtUserName" id="txtUserName"
                                           minlength="4" maxlength="40"  required>
                                     </div>
@@ -138,31 +138,24 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	                            <hr>
 	                            <div class="text-center form-group">
 	                                <input class="btn btn-primary btn-user btn-block" type="submit"  value="Guardar" />
-	                            </div>
-	                            <div class="text-center form-group">
-	                                <input class="btn btn-google btn-user btn-block" type="reset" value="Cancelar" />
-	                            </div>
-                                <div style="text-align:center;"><a href="GestionUsuario.jsp"><i
-                                              class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
-               
-                           		 </form>
+	                            </div>	                           
+	                            <div style="text-align:center;"><a href="GestionUsuario.jsp"><i
+                                              class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>               
+                           	</form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
    				    <!-- Termina Formulario -->
-
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
+            
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
-        
-
+       
         </div>
         <!-- End of Content Wrapper -->
 
@@ -237,7 +230,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	        mensaje = "<%=varMsj%>";
 	
 	        if(mensaje == "existe"){
-	        	errorAlert('Error', 'El Nombre de Usuario que esta intentando registrar ya existe en la base de datos!');
+	        	errorAlert('Error', '¡Usuario ingresado ya existe!');
 	        }
 	        
 	        $("#txtPwd2").change(function(){
