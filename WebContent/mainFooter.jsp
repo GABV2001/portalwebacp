@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"%>
+    pageEncoding="utf-8" import = "entidades.Footer, datos.Dt_Footer, java.util.*;"%>  
+<div class="footer">  
 		<!-- footer -->
         <footer class="footer-clean bg-success">
             <div class="container">
@@ -10,11 +11,11 @@
 					Dt_Footer dtf = new Dt_Footer();
 					listFooter = dtf.listFooter();
 						
-					String Descripcion = null;
-					String Correo = null;
-					String Telefono = null;
-					String Extencion =null ;
-					String Logo = null;
+					String Descripcion = "";
+					String Correo = "";
+					String Telefono = "";
+					String Extencion = "" ;
+					String Logo = "";
 					
 					for(Footer ft : listFooter){
 						Descripcion = ft.getDescripcion();
@@ -45,8 +46,8 @@
                             <li><%=Correo%> </li>
                         </ul>
                     </div>
-                    <div class="col-sm-4 col-md-3 mt-auto item">
-                        <img src="<%=Logo%>" alt="" class="img-fluid rounded mx-auto d-block" id="imgLogo">
+                    <div class="col-sm-4 col-md-3 item ">
+                        <img src="<%=Logo + "?t="+System.currentTimeMillis()%>" alt="Imagen Pie de pagina " class="img-fluid rounded mx-auto d-block marco fill ocultar" id="imgLogo">
                     </div>
                 </div>                
                 <%
@@ -54,8 +55,8 @@
 			    int year=cal.get(Calendar.YEAR);
 			    %>                
                 <div>
-                    <p class="copyright">Arboreto Carmelo Palma © <%=year %></p>
+                    <p class="copyright">Arboreto Carmelo Palma © <%=year%></p>
                 </div>
                 </div>
         </footer>
-</html>
+</div>

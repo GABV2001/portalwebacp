@@ -65,8 +65,7 @@ public class Sl_GestionInicio extends HttpServlet {
 		String multVision = null;
 		
 		//Controlador
-		boolean control = false;
-		
+		boolean control = false;		
 					
 		try
 		{
@@ -210,8 +209,7 @@ public class Sl_GestionInicio extends HttpServlet {
 		}
 						
 			switch(opc) {
-			case 1:{
-				
+			case 1:{				
 				try {
 					Date fechaSistema = new Date();
 				    hm.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));						     		    
@@ -226,10 +224,8 @@ public class Sl_GestionInicio extends HttpServlet {
 		        	System.out.println("Sl_GestionInicio, el error es: " + e.getMessage());
 					e.printStackTrace();
 		        }
-					break;
-					
-				}
-			
+					break;					
+				}			
 			default:
 				response.sendRedirect("GestionIncio.jsp?msj=3");	
 				break;

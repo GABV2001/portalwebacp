@@ -48,7 +48,7 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-    <title>Portal ACP - Formulario Rol-Usuario</title>
+    <title>Portal ACP - Formulario Ubicación Árbol</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -89,7 +89,7 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Formulario Ubicación Arbol
+                                            Formulario Ubicación Árbol
                                         </h2>
 
                                     </div>
@@ -103,13 +103,13 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
 		                                	Dt_Arbol dtu = new Dt_Arbol();
 		                                	listUbicacionArbol = dtu.listaArbol();
                                 			%>
-                                			<label>Arbol:</label>                                			
+                                			<label>Árbol:</label>                                			
 	                                    	<select class="form-control" name="cbxArbol" id="cbxArbol" required>
 	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		
 	                                    	<%
-	                                    		for(ViewArbol u: listUbicacionArbol){
+	                                    		for(ViewArbol lua: listUbicacionArbol){
 	                                    	%>	
-	                                    		<option value="<%=u.getArbolID()%>"><%=u.getNombreComun()%></option>
+	                                    		<option value="<%=lua.getArbolID()%>"><%=lua.getNombreComun()%></option>
 	                                    	<%
 	                                    		}
 	                                    	%>
@@ -125,9 +125,9 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
 	                                    	<select class="form-control" name="cbxDistribucion" id="cbxDistribucion" required>
 											<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                    			<%
-	                                    		for(ViewDistribucion r: listDistribucion){
+	                                    		for(ViewDistribucion dr: listDistribucion){
 	                                    	%>	
-	                                    		<option value="<%=r.getDistribucionID()%>"><%=r.getDistribucion()%></option>
+	                                    		<option value="<%=dr.getDistribucionID()%>"><%=dr.getDistribucion()%></option>
 	                                    	<%
 	                                    		}
 	                                    	%>                                    	
@@ -156,11 +156,8 @@ datos.Dt_RolUsuario, vistas.ViewArbol, vistas.ViewDistribucion, datos.Dt_Distrib
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->

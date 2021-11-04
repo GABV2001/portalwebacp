@@ -50,13 +50,19 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	//Recuperar informacion del Pie de pagina
+	ArrayList<Footer> listFooter = new ArrayList<Footer>();
+	Dt_Footer dtf = new Dt_Footer();
+	listFooter = dtf.listFooter();										
+    String Logo = null;									
+	Footer ft = new Footer();
+	ft = listFooter.get(0);	
 %>
 <!DOCTYPE html>
 <html lang="en">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,8 +71,7 @@
     <title>Portal ACP - Gestión Pie de Página</title>
     
      <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
-	
+	 <jsp:include page="imgShortIcon.jsp" />  	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -85,103 +90,84 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
      <!-- Menus -->
 	<jsp:include page="adminMenus.jsp" />      
 	
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                    <!-- Formulario -->
-        		 <div class="container">
-                        <div class="row ">
-                            <div class="col-lg-11 m-auto">
-                                <div class="card rounded shadow border-0">
+               <!-- Formulario -->
+      		 <div class="container">
+                      <div class="row ">
+                          <div class="col-lg-11 m-auto">
+                              <div class="card rounded shadow border-0">									 
+				 			  <div class="card-header">
+                                      <h2>
+                                          Pie de Página
+                                      </h2>
+                                  </div>
+                                  <div class="card-body bg-white rounded">
+                                      <form class="PiePagina" method="post" action="./Sl_GestionPiePagina" enctype="multipart/form-data">
+                                      	<!-- El valor de estos input es para el Servlet opcion editar -->                			
+                                      	<input name="idFooter" type="hidden" value="<%=ft.getFooterID()%>" />
+                                      	<input name="idUsuario" type="hidden" value="<%=usuarioid%>" />  
+                                      	<input name="opcion" type="hidden" value="1" />
+                                      	                                      	
+                                          <div class="form-group">
+                                              <label>Dirección:</label>
+                                              <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" minlength="10" maxlength="150" required>
+                                          	<small id="message"></small>                                            	
+                                          </div>
+                                          <div class="form-group">
+                                              <label>Correo:</label>
+                                              <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" minlength="10" maxlength="75" required>
+                                          </div>
+                                          <div class="form-group">
+                                              <label>Teléfono:</label>
+                                              <input type="tel" class="form-control form-control-user" name="telefonoFooter" id="telefonoFooter" value="<%=ft.getTelefono()%>" minlength="8" maxlength="8" pattern="[0-9]{8}">
+                                          </div>
+                                          <div class="form-group">
+                                              <label>Extensión:</label>
+                                              <input type="text" class="form-control form-control-user" name="extensionFooter" id="extensionFooter" value="<%=ft.getExtencion()%>" minlength="1" maxlength="5" >
+                                          </div>
+                                         <div class="form-group">
+                                              <label for="custom-file">Imagen:</label>
+                                              <div class="input-group mb-3">
+                                                  <div class="input-group-prepend">
+                                                      <span class="input-group-text">Archivo</span>
+                                                  </div>
+                                                 <div class="custom-file">
+											    <label class="custom-file-label text-left" for="customFile" id="filmultFooter">ImagenFooter.png</label>
+											    <input type="file" class="custom-file-input" id="multFooter" name="multFooter" onchange="Test.UpdatePreview(this)" accept="image/png" title="ImagenFooter.png">
+											</div>
+                                              </div>
+                                          </div> 
+                                            <div class="m-3" align="center">
+										<img id="preview" src="<%=ft.getLogo()+"?t="+System.currentTimeMillis()%>" name="preview"  alt="Imagen Footer"
+											class="img-fluid bg-dark" alt="Responsive image" style="width: 300px; height: 200px; border-bottom-color: white; margin: 2px;" />
+										<input type="hidden" name="url_foto" value="<%=ft.getLogo()%>">
+									</div>										
+                                    	 <div class="text-center">
+		                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
+		                            </div>                             
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                <!-- Termina Formulario -->
+              </div>
+              <!-- /.container-fluid -->
 
-									<%
-									ArrayList<Footer> listFooter = new ArrayList<Footer>();
-									Dt_Footer dtf = new Dt_Footer();
-									listFooter = dtf.listFooter();										
-								    	String Logo = null;									
-										Footer ft = new Footer();
-										ft = listFooter.get(0);									
-									 %>
-									 
-						 			  <div class="card-header">
-                                        <h2>
-                                            Pie de Página
-                                        </h2>
-                                    </div>
-                                    <div class="card-body bg-white rounded">
-                                        <form class="PiePagina" method="post" action="./Sl_GestionPiePagina" enctype="multipart/form-data">
-                                        	<!-- El valor de estos input es para el Servlet opcion editar -->                			
-                                        	<input name="idFooter" type="hidden" value="<%=ft.getFooterID()%>" />
-                                        	<input name="idUsuario" type="hidden" value="<%=usuarioid%>" />  
-                                        	<input name="opcion" type="hidden" value="1" />
-                                        	                                      	
-                                            <div class="form-group">
-                                                <label>Dirección:</label>
-                                                <input class="form-control" id="direccionFooter" name = "direccionFooter" value="<%=ft.getDescripcion()%>" minlength="10" maxlength="150" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Correo:</label>
-                                                <input class="form-control" id = "correoFooter" name = "correoFooter" value="<%=ft.getCorreo()%>" minlength="10" maxlength="75" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Teléfono:</label>
-                                                <input type="tel" class="form-control form-control-user" name="telefonoFooter" id="telefonoFooter" value="<%=ft.getTelefono()%>" minlength="8" maxlength="8" pattern="[0-9]{8}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Extensión:</label>
-                                                <input type="number" class="form-control form-control-user" name="extensionFooter" id="extensionFooter" value="<%=ft.getExtencion()%>" minlength="1" maxlength="5" >
-                               
-                                            </div>
-                                           <div class="form-group">
-                                                <label for="custom-file">Imagen:</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Archivo</span>
-                                                    </div>
-                                                   <div class="custom-file">
-													    <label class="custom-file-label text-left" for="customFile" id="filmultFooter">ImagenFooter.png</label>
-													    <input type="file" class="custom-file-input" id="multFooter" name="multFooter" onchange="Test.UpdatePreview(this)" accept="image/png" title="ImagenFooter.png">
-													</div>
-                                                </div>
-                                            </div> 
-                                              <div class="m-3" align="center">
-												<img id="preview" src="<%=ft.getLogo()%>" name="preview"  alt="Imagen Footer"
-													class="img-fluid bg-dark" alt="Responsive image" style="width: 400px; height: 324px; border-bottom-color: white; margin: 2px;" />
-												<input type="hidden" name="url_foto" value="<%=ft.getLogo()%>">
-											</div>										
-                                      	 <div class="text-center">
-				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>                             
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Termina Formulario -->
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-              <!-- Footer -->
-			<jsp:include page="adminFooter.jsp" />   
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+	          </div>
+	           <!-- End of Main Content -->
+	
+	           <!-- Footer -->
+			  <jsp:include page="adminFooter.jsp" />   
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -191,11 +177,7 @@
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
-	
-
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -217,12 +199,38 @@
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
     
-    
-    <!--File Custom JS -->
-	<script>		
+<script>		
 	    $(document).ready(function() 
 		{
-		//Función para previsualizar la imagen del banner
+	    	
+		 /////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+
+	        if(mensaje == "1")
+	        {
+	            $.jAlert({
+	                'title': 'Éxito',
+	                'content': '¡Información de pie de página actualizada exitosamente!',
+	                'theme': 'green',
+	                'onClose': function(OnClose) {               
+	                    window.location = "GestionPiePagina.jsp";
+	                }
+	              });
+	        }
+	        if(mensaje == "2")
+	        {
+	            $.jAlert({
+	                'title': 'Error',
+	                'content': '¡Revise los datos e intente nuevamente!',
+	                'theme': 'red',
+	                'onClose': function(OnClose) {               
+	                    window.location = "GestionPiePagina.jsp";
+	                }
+	              });
+	        }
+	        
+		 //Función para previsualizar la imagen del banner
 	    	Test = {
 	    	        UpdatePreview: function(obj)
 	    	        {
@@ -247,29 +255,30 @@
 	    	    };
 		});
 	    
-	    $('#multFooter').on("change",function() {
+	   //Actualizar nombre del archivo 
+	   $('#multFooter').on("change",function() {
 		     var i = $(this).prev('label').clone();
 		      var file = $('#multFooter')[0].files[0].name;
 		      $(this).prev('label').text(file);
-
-		    });
-</script>
-<script>
-    $(document).ready(function ()
-    {        
-	/////////// VARIABLE DE CONTROL MSJ ///////////
-        var mensaje = "";
-        mensaje = "<%=varMsj%>";
-
-        if(mensaje == "1")
-        {
-            successAlert('Éxito', '¡Información de pie de página actualizada exitosamente!');
-        }
-        if(mensaje == "2")
-        {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
-        }
-        });
+		 });
+	   
+	  //Funcion para mostrar maximo de caracteres en los inputs y textarea
+	   $('#direccionFooter').on("keydown", function(e) {
+	       var textLength = $('#direccionFooter').val().replace(' ', '1').length + 1;
+	       var maxValue = 150;	       
+	       console.log(e.keyCode);
+	       if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+	       }	
+	    });
+	   
+	   $('#direccionFooter').on("keyup", function(e) {
+	       var textLength = $('#direccionFooter').val().replace(' ', '1').length;
+	       var maxValue = 150;	
+	       $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");	      
+	   });     
 </script>
 </body>
 </html>

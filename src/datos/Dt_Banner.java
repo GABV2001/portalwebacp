@@ -30,7 +30,7 @@ public class Dt_Banner {
 			}
 		}
 		
-		//Metodo para visualizar Banners
+		//Metodo para visualizar Banner
 		public ArrayList<Banner> ListarBanner(){
 
 			//Crear lista de arreglos
@@ -165,7 +165,7 @@ public class Dt_Banner {
 
 		
 		
-		// Metodo para modificar Banner
+		//Metodo para modificar Banner
 		public boolean modificarInfoBanner(Banner bn)
 		{
 			boolean modificado=false;	

@@ -81,7 +81,7 @@ public class Sl_GestionFamilia extends HttpServlet {
 		        try {
 		        	if(ngf.existeFamilia(fm.getNombre()))
 		        	{
-		        		response.sendRedirect("GestionFamilia.jsp?msj=2");									
+		        		response.sendRedirect("GestionFamilia.jsp?msj=existe");									
 		        	}else {
 		        		        		
 		        	
@@ -103,16 +103,20 @@ public class Sl_GestionFamilia extends HttpServlet {
 			}
 		case 2:{
 			fm.setFamiliaID(Integer.parseInt(request.getParameter("idfamilia")));
+			
      		try {
+     			if(ngf.existeActualizarFamilia(fm.getFamiliaID(),fm.getNombre())){
+		          	response.sendRedirect("GestionFamilia.jsp?msj=existe");
+		        }else {     			
 				   if(dtf.modificarFamilia(fm)) {
 		        	response.sendRedirect("GestionFamilia.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionFamilia.jsp?msj=4");
 		        }
-		        
-	        	
-	        }
+	        	}
+     		}
+	        
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionFamilia, el error es: " + e.getMessage());
 				e.printStackTrace();
@@ -127,6 +131,4 @@ public class Sl_GestionFamilia extends HttpServlet {
 		
 		}
 	}
-	
-
 }

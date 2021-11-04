@@ -1,22 +1,12 @@
 package servlets;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import datos.Dt_Publicacion;
 import entidades.Publicacion;
 import negocio.Ng_Publicacion;
@@ -64,6 +54,7 @@ public class Sl_GestionPublicacion extends HttpServlet {
 				Ng_Publicacion  ngp = new Ng_Publicacion();
 				
 				int opc = 0;
+				int publicacionid = 0;
 				String txtTituloPost = null;
 				String txtDescripcionPost = null;
 				int cbxEstadoPost = 0;
@@ -115,12 +106,16 @@ public class Sl_GestionPublicacion extends HttpServlet {
 				        Date fechaSistema = new Date();
 				        post.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
 						try {
+							if(ngp.existeActualizarPublicacion(post.getPublicacionid(), post.getTitulo())){
+					        	response.sendRedirect("GestionPublicacion.jsp?idP="+publicacionid+"&msj=existe");
+				    		}else {
 							   if(dtp.modificarPublicacion(post)) {
 					        	response.sendRedirect("GestionPublicacion.jsp?msj=3");
 					        }
 					        else {
 					        	response.sendRedirect("GestionPublicacion.jsp?msj=4");
-					        }        		        	
+					        }
+				    		}
 				        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionPublicacion el error es: " + e.getMessage());

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Arboreto Carmelo Palma - Publicación</title>
+    <title>Portal Arboreto Carmelo Palma - Publicaciones</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -35,12 +35,17 @@
       white-space: nowrap;
       overflow: hidden;
      }
-     .footer{
-      	margin-top: 250px;		
-     }
+     html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	}
   </style>
 </head>
-<body >
+<body>
+<div class="wrapper">	
  <!-- Menu -->
   <jsp:include page="mainMenus.jsp" />
 
@@ -65,7 +70,8 @@
 			  <h5 class="card-title">Card title</h5>
 			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
 			</div>
-		    </div>    
+		    </div> 
+		       
 		    <div class="card w-75 " style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
 			  <h5 class="card-title">Card title</h5>
@@ -101,7 +107,7 @@
 			</div>
 		    </div>
 		    
-		    <div class="card w-75" style="border:3px solid">
+		    <div class="card w-75 mb-5" style="border:3px solid">
 			<div class="card-body">
 			  <h5 class="card-title">Card title</h5>
 			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -112,7 +118,7 @@
         	for(Publicacion a: ListaPost){
   			if(a.getEstadopublicacion()==1){
          %>            
-			<div class="card w-75 mt-3" style="border:3px solid; ">
+			<div class="card w-75 ml-2 mt-3" style="border:3px solid; ">
 			<div class="card-body">
 			  <a style="color:black" href="PublicacionIn.jsp?publicacionid=<%=a.getPublicacionid()%>">
 			  <h5 class="card-title"><%=a.getTitulo() %></h5>
@@ -133,26 +139,18 @@
 			  <h5 class="card-title">Card title</h5>
 			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
 			</div>
-		    </div>
-		    <div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			</div>
-		    </div>		    
+		    </div>				    
   	   <%}
          }
          }
         %>    
  	</div>
-  <!-- /.row -->
-</div>
-
-<!-- /.container -->
-
+ 	</div>
+ </div>
+ 	
 <!-- Footer -->
-<div class="footer">
 <jsp:include page="mainFooter.jsp" />
-</div>
+
 <!-- Javascript -->
 <link rel="stylesheet" href="js/bootstrap.min.js">
 <script defer src="./js/index.js"></script>

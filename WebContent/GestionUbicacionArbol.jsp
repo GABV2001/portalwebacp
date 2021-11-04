@@ -94,9 +94,9 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
                                     <div style="text-align:right;"><a href="FormUbicacionArbol.jsp"><i
                                                 class="fas fa-plus-square"></i>&nbsp; Nueva ubicación árbol</a>
                                     <%
-                                    ArrayList<ViewUbicacionArbol> listArbol = new ArrayList<ViewUbicacionArbol>();
+                                    ArrayList<ViewUbicacionArbol> listUArbol = new ArrayList<ViewUbicacionArbol>();
                                     Dt_UbicacionArbol dtu = new Dt_UbicacionArbol();
-                                    listArbol = dtu.listViewUbicacionArbol();
+                                    listUArbol = dtu.listViewUbicacionArbol();
                                     %>
                                     <thead>
                                         <tr>
@@ -120,16 +120,16 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
                                     </tfoot>
                                     <tbody>
                                          <%
-                                         	for(ViewUbicacionArbol us: listArbol ){
+                                         	for(ViewUbicacionArbol lua: listUArbol ){
                                          %>
                                        	<tr> 
-                                       	    <td><%=us.getNombrecientifico()%></td>                                       	    
-                                       	    <td><%=us.getNombrecomun()%></td>   
-                                       	    <td><%=us.getNombredistribucion()%></td>                                        	    
-                                       	    <td><%=us.getNombrepais()%></td>                                       	                                           	    
-                                       	    <td><%=us.getNombreregion()%></td>                                      
-                                            <td>         
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                       	    <td><%=lua.getNombrecientifico()%></td>                                       	    
+                                       	    <td><%=lua.getNombrecomun()%></td>   
+                                       	    <td><%=lua.getNombredistribucion()%></td>                                        	    
+                                       	    <td><%=lua.getNombrepais()%></td>                                       	                                           	    
+                                       	    <td><%=lua.getNombreregion()%></td>                                      
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar este registro',
@@ -137,7 +137,7 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionUbicacionArbol?idUA=<%=us.getUbicacionarbolid()%>';
+                                           		      window.location.href = 'Sl_GestionUbicacionArbol?idUA=<%=lua.getUbicacionarbolid()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -149,8 +149,9 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td>            
- 													</tr>
+                        						</a>
+                        						</td> 
+                        						</tr>
                                           <%
                                        		}
                                            %>                            
@@ -169,10 +170,8 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
             <!-- Footer -->
         	<jsp:include page="adminFooter.jsp" />   
 
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -218,17 +217,60 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', '!Ubicación guardada exitosamente!');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Ubicación del árbol guardado con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionUbicacionArbol.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '!Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionUbicacionArbol.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Ubicación del árbol actializado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionUbicacionArbol.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Éxito', '¡Ubicación eliminada exitosamente!');
-        }
-    });
-	</script>
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Ubicación del árbol eliminado exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionUbicacionArbol.jsp";
+                 }
+               });       
+        }       
+	    if(mensaje == "existe")
+	    {
+	        $.jAlert({
+	            'title': 'Error',
+	            'content': '¡Ubicación árbol ingresada ya existe!',
+	            'theme': 'red',
+	            'onClose': function(OnClose) {               
+	                window.location = "GestionUbicacionArbol.jsp";
+	            }
+	          });
+	    }
+	    });    
+</script>
 </body>
 </html>

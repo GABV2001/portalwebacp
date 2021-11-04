@@ -178,7 +178,8 @@ public class Sl_GestionProducto extends HttpServlet {
 			if(pr.getMultimedia()==null){
 			pr.setMultimedia(url_foto);
 		}
-				
+			
+			
 		switch (opc){
 		case 1:{
 				//PARA GUARDAR LA FECHA Y HORA DE CREACION
@@ -210,20 +211,25 @@ public class Sl_GestionProducto extends HttpServlet {
 	        Date fechaSistema = new Date();
 	        pr.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));		
      		try {
-				   if(dts.modificarProducto(pr)) {
+     			if(ngp.existeActualizarProducto(pr.getProductoid(), pr.getProducto())){
+		        	response.sendRedirect("FormEditarProducto.jsp?idP="+productoid+"&msj=existe");
+	    		}else{   
+     			if(dts.modificarProducto(pr)) {
 		        	response.sendRedirect("GestionProductos.jsp?msj=3");
 		        }
+				   
 		        else {
 		        	response.sendRedirect("GestionProductos.jsp?msj=4");
-		        }  	
+		        }}  	
 	        }
 	        catch(Exception e) {
-	        	System.out.println("Sl_GestionProductos, el error es: " + e.getMessage());
+	        	System.out.println("Sl_GestionProducto, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
 				break;
 				
 			}
+	   	
 			default:
 			response.sendRedirect("GestionProductos.jsp?msj=7");	
 			break;

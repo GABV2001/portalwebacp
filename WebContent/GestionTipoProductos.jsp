@@ -137,7 +137,7 @@
                                         <tr>
                                            <td><%=tp.getNombre()%></td>                                           
                                            <td><%=tp.getDescripcion() %></td>                                                                                   
-                                           <td>&nbsp;&nbsp;<a href="FormEditarTipoProducto.jsp?idTp=<%=tp.getTipoproducotid()%>"><i class="fas fa-edit"></i></a>&nbsp;
+                                           <td>&nbsp;&nbsp;<a href="FormEditarTipoProducto.jsp?idTp=<%=tp.getTipoproductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -147,7 +147,7 @@
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionTipoProducto?idTp=<%=tp.getTipoproducotid()%>';
+                                           		      window.location.href = 'Sl_GestionTipoProducto?idTp=<%=tp.getTipoproductoid()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -228,17 +228,71 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Los datos han sido registrados exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡El tipo de producto se ha guardado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
+
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+           	$.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡El tipo de producto se ha actualizado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
+        }  
+        if(mensaje == "4")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
-        }
-
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Publicacion eliminada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
+        }   
+        if(mensaje == "existe")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡El tipo de Producto ingresado ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionTipoProductos.jsp";
+                }
+              });
+        } 
     });
 </script>    
 </body>

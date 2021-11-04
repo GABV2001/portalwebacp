@@ -66,7 +66,7 @@ public class Ng_Usuario {
 				}
 			}
 			catch (Exception e){
-				System.out.println("DATOS ERROR existeActualizarUsuario(): "+ e.getMessage());
+				System.out.println("DATOS error existeActualizarUsuario(): "+ e.getMessage());
 				e.printStackTrace();
 			}
 			finally{
@@ -86,6 +86,79 @@ public class Ng_Usuario {
 					e.printStackTrace();
 				}
 			}			
+			return existe;
+		}
+		
+		// Metodo para validar correo
+		public boolean existeCorreoUsuario(String correo){
+			boolean existe = false;
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("select * from usuario where email=? and estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setString(1, correo);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS error existeCorreoUsuario(): "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			return existe;
+		}
+		// Metodo para validar el actualizar del correo
+		public boolean existeActualizarCorreoUsuario(int usuarioid, String correo){
+			boolean existe = false;
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("SELECT * FROM usuario WHERE usuarioid != ? AND email = ? and estado <>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, usuarioid);				
+				ps.setString(2, correo);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS error existeActualizarCorreoUsuario(): "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}		
 			return existe;
 		}
 }

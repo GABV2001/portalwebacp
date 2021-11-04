@@ -20,7 +20,7 @@ public class Dt_RolUsuario {
 	// Metodo para llenar el RusultSet
 	public void llenaRsRolUser(Connection c){
 		try{
-			ps = c.prepareStatement("select idrol_usuario, usuarioid, rolid from rol_usuario", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps = c.prepareStatement("select idrol_usuario, usuarioid, rolid, confirmemail from rol_usuario", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 			rsRolUser = ps.executeQuery();
 		}
 		catch (Exception e){
@@ -84,6 +84,7 @@ public class Dt_RolUsuario {
 			rsRolUser.moveToInsertRow();
 			rsRolUser.updateInt("usuarioid", ru.getUsuarioid());
 			rsRolUser.updateInt("rolid", ru.getRolid());
+			rsRolUser.updateInt("confirmemail",1);
 			rsRolUser.insertRow();
 			rsRolUser.moveToCurrentRow();
 			guardado = true;
@@ -238,4 +239,48 @@ public class Dt_RolUsuario {
 			}
 			return modificado;
 		}	
+		
+		// Metodo para actualizar estado y confirmar envio de correo de rol-usuario
+		public boolean confirmEmail(int rolusuarioid)
+		{
+			boolean actualizado = false;		
+			try
+			{
+				c = PoolConexion.getConnection();
+				this.llenaRsRolUser(c);	
+				rsRolUser.beforeFirst();
+				while(rsRolUser.next())
+				{
+					if(rsRolUser.getInt(1)==rolusuarioid)
+					{						
+						rsRolUser.updateInt("confirmemail", 2);
+						rsRolUser.updateRow();
+						actualizado = true;
+						break;
+					}
+				}
+			}
+			catch (Exception e) 
+			{
+				System.err.println("ERROR AL ACTUALIZAR ESTADO ROL-USUARIO "+e.getMessage());
+				e.printStackTrace();
+			}
+			finally
+			{
+				try {
+					if(rsRolUser != null){
+						rsRolUser.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			return actualizado;
+		}
 }

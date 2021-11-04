@@ -49,7 +49,7 @@ public class Dt_ViewHead {
 						}
 					}
 					catch (Exception e){
-						System.out.println("DATOS: ERROR en listar elementos del head "+ e.getMessage());
+						System.out.println("Datos: Error en listar elementos del head "+ e.getMessage());
 						e.printStackTrace();
 					}
 					finally{
@@ -72,6 +72,4 @@ public class Dt_ViewHead {
 					}
 					return listHead;
 				}
-
-
 }

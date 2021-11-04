@@ -36,6 +36,18 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	ViewRolUsuario vrgu = new ViewRolUsuario();
+	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+	
+	//Control Usuario
+	int usuarioid =0;
+	
+	if((ViewRolUsuario) session.getAttribute("acceso") == null){
+		
+	}else{
+		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
+		usuarioid = vrgu.getUsuarioid();
+	}
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
@@ -70,6 +82,19 @@
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 
+<style type="text/css">	
+	.marco {
+	  width: 600px;
+	  height: 350px;
+	  border: 1px solid #000;
+	  margin: 10px 0;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+</style>
+
 </head>
 
 <body id="page-top">
@@ -92,7 +117,7 @@
                                 	listPost = dtp.ListaPost();                               	                   
                                 %>
 
-                    <!-- DataTales Publicacion  -->
+                    <!-- DataTales Publicación  -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Gestión Publicación</h6>
@@ -104,7 +129,7 @@
                                                 class="fas fa-plus-square"></i>&nbsp; Nueva Publicación</div></a>
                                     <thead>
                                         <tr>
-                                            <th>Titulo</th>
+                                            <th>Título</th>
                                             <th>Descripción</th>
                                             <th>Fecha</th>
                                             <th>Estado</th>
@@ -113,7 +138,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Titulo</th>
+                                            <th>Título</th>
                      				        <th>Descripción</th>
                                             <th>Fecha</th>
                                             <th>Estado</th>
@@ -147,6 +172,10 @@
                                             <td><%=fechaCreacion%></td>
                                             <td><%=control%></td>                                                   
                                              <td>
+                                        		&nbsp;&nbsp;<a href="ImagenPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="fas fa-camera"></i></a>   
+                        						&nbsp;&nbsp;<a href="PdfPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="far fa-file-pdf"></i></a>
+                        						&nbsp;&nbsp;<a href="VideoPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="fas fa-video"></i></a>                        						                     						
+                                    	
                                                  &nbsp;&nbsp;<a href="FormEditarPublicacion.jsp?idP=<%=post.getPublicacionid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;                                       
                                                  
                                                  <a class="ajax-link" href="javascript:void(0);" 
@@ -170,9 +199,7 @@
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
                         						</a></i>  
-                        						&nbsp;&nbsp;<a href="ImagenPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="fas fa-camera"></i></a>   
-                        						&nbsp;&nbsp;<a href="PdfPublicacion.jsp?idIP=<%=post.getPublicacionid()%>"><i class="far fa-file-pdf"></i></a>                     						
-                                    	    </tr>     
+                        				    </tr>     
                                         	<%
                                        		}
                                            %>                             
@@ -240,34 +267,100 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Publicación guardada exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Publicación guardada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
+
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+           	$.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
+        }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Publicación actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
+        }  
+        if(mensaje == "4")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡La Publicación que desea actualizar ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Publicación eliminada exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Publicación eliminada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
         }       
         if(mensaje == "existe")
         {
-            errorAlert('Error', 'Titulo ingresado ya existe');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Publicación ingresada ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
         } 
         if(mensaje == "6")
         {
-        	successAlert('Éxito', 'Imagen guardada con éxito');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Imagen guardada con exito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
         }  
         if(mensaje == "7")
         {
-        	successAlert('Éxito', 'PDF guardado con éxito');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡PDF guardado con exito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPublicacion.jsp";
+                }
+              });
         }  
     });
     function getValue()
     {   	
         var a= event.srcElement.title;
+        console.log(a);
         document.getElementById("preview").src = a;
-    }  
+    }   
 	</script>
 </body>	
 </html>

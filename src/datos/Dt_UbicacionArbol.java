@@ -29,12 +29,12 @@ public class Dt_UbicacionArbol {
 					}
 				}
 				
-		    //Metodo para visualizar region
+		    //Metodo para visualizar ubicacion arbol
 			public ArrayList<ViewUbicacionArbol> listViewUbicacionArbol(){
 				ArrayList<ViewUbicacionArbol> listViewUbicacionArbol = new ArrayList<ViewUbicacionArbol>();
 				try{
 					c = PoolConexion.getConnection();
-					ps = c.prepareStatement("select * from viewubicacionarbol", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("select * from viewubicacionarbol where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rs = ps.executeQuery();
 					while(rs.next()){
 						ViewUbicacionArbol vua = new ViewUbicacionArbol();

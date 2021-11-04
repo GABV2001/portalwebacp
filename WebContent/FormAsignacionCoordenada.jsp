@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Rol, entidades.Coordenada , datos.Dt_CoordenadaArbol,datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, 
-vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.Dt_Arbol,java.util.*;"%>
+import="datos.*,entidades.*,negocio.*,vistas.*,java.util.*;"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -83,7 +82,44 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
     <div id="wrapper">
 
         <!-- Menus -->
-  		 <jsp:include page="adminMenus.jsp" />    
+  		 <jsp:include page="adminMenus.jsp" />  
+  		 
+  		   <%
+    	  ArrayList<Coordenada> listC = new ArrayList<Coordenada>();
+    	  Dt_CoordenadaArbol dth = new Dt_CoordenadaArbol();
+    	  listC = dth.listarCoordenadas();
+        %> 	
+ 	 	 <%for(Coordenada ca: listC){%>
+ 	 	   <input type="hidden" class="Nombre" value="<%=ca.getNombre()%>">	
+		 	 	 		 	 		   
+		   <input type="hidden" class="Latitud" value="<%=ca.getLatitud()%>">	
+		   
+		   <input type="hidden" class="Longitud" value="<%=ca.getLongitud()%>">	
+		   
+		   
+		    			 	 		 
+ 	 	 <%}%>	
+ 	 	 
+ 	    <%
+    	  ArrayList<ViewCoordenadaArbol> listCoA = new ArrayList<ViewCoordenadaArbol>();
+    	  Dt_CoordenadaArbol dth1 = new Dt_CoordenadaArbol();
+    	  listCoA = dth.listarCoordenadaArbol();
+        %> 
+ 	 	 
+ 	 	  <%for(ViewCoordenadaArbol vcoa: listCoA){%>
+ 	 	   <input type="hidden" class="NombreComun"  value="<%=vcoa.getNombrecomun()%>">	
+ 		   		   
+ 		   <input type="hidden" class="NombreCientifico" value="<%=vcoa.getNombrecientifico()%>">	
+
+		   <input type="hidden" class="Descripcion" value="<%=vcoa.getDescar()%>">	
+
+		   <input type="hidden" class="Multimedia" value="<%=vcoa.getMultimedia()%>">	
+		   
+		   <input type="hidden" class="Latitud" value="<%=vcoa.getLatitud()%>">	
+		   
+		   <input type="hidden" class="Longitud" value="<%=vcoa.getLongitud()%>">	
+		    			 	 		 
+ 	 	 <%}%>  
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -112,7 +148,8 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
 		                                	Dt_CoordenadaArbol dtco = new Dt_CoordenadaArbol();
 		                                	listCo = dtco.listarCoordenadas();
                                 			%>
-	                                    	<select class="form-control" name="cbxCoordenada" id="cbxCoordenada" required>
+                                			<label for="formGroupExampleInput">Coordenada:</label>
+	                                    	<select class="form-control" name="cbxCoordenada" id="cbxCoordenada" required>	                                    	
 	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		
 	                                    	<%
 	                                    		for(Coordenada c: listCo){
@@ -129,6 +166,7 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
 		                                	Dt_Arbol dta = new Dt_Arbol();
 		                                	listArbol = dta.listaArbol();
 	                                		%>
+	                                		<label for="formGroupExampleInput">Arbol:</label>
 	                                    	<select class="form-control" name="cbxArbol" id="cbxArbol" required>
 											<option value="" selected disabled>Seleccionar</option>                                    			                                            	
                                    			<%
@@ -214,6 +252,7 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
     <script>
         var map = L.map('map', {
             center: [12.126932040970864, -86.27038300037383],
+            maxNativeZoom: 19,
             zoom: 19,
             layers: [Mapa.Basemaps.Calles, Mapa.LayerGroups.Arboles]
         });
@@ -232,20 +271,27 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
         var greenIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/kCbcOsA.png'}),
         	orangeIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/ANYFjzm.png'});
         
-       
-        L.marker([12.127055947189353, -86.27032868564129], {icon: greenIcon}).addTo(map).bindPopup("<center><b>Ubicación 1</b></center>");
-        L.marker([12.12678256672591, -86.2705647200346], {icon: greenIcon}).addTo(map).bindPopup("<center><b>Ubicación 2</b></center>" );
-        L.marker([12.126837636194313, -86.27036154270172], {icon: orangeIcon}).addTo(map).bindPopup("<center><b>Ubicación 3</b></center>" );
-        L.marker([12.126947775097026, -86.27054393291472], {icon: orangeIcon}).addTo(map).bindPopup("<center><b>Ubicación 4</b></center>" );
-        L.marker([12.126973998638585, -86.27022743225098], {icon: orangeIcon}).addTo(map).bindPopup("<center><b>Ubicación 5</b></center>" );
-        //end of the test
+        var nombre = document.getElementsByClassName('Nombre');
+        var latitud = document.getElementsByClassName('Latitud');
+        var longitud = document.getElementsByClassName('Longitud');
+        var nombreComun = document.getElementsByClassName('NombreComun');
+        var nombreCientifico = document.getElementsByClassName('NombreCientifico');
+        var multimedia = document.getElementsByClassName('Multimedia');
+        var descripcion = document.getElementsByClassName('Descripcion');
+        	
+        
+        for (let step = 0; step < nombre.length; step++) { 
+        	la = parseFloat (latitud[step].value);
+        	lo = parseFloat (longitud[step].value);       	
+        	L.marker([lo, la], {icon: greenIcon}).addTo(map).bindPopup("<center><b>"+nombre[step].value+"</b></center>"
+     		);
+     	     
+        }   
+        
 
-        // Capas de Arboles y Sectores
+
+        // Capa para ver en vista satelite 
         var groupedOverlays = {
-            "Capas": {
-                "Árboles": Mapa.LayerGroups.Arboles,
-                "Sectores": Mapa.LayerGroups.Sectores
-            }
         };
 
         //Controlador de groudLayers"
@@ -261,8 +307,27 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, vistas.ViewArbol, datos.D
 	        var mensaje = "";
 	        mensaje = "<%=varMsj%>";
 	
-	        if(mensaje == "existe"){
-	        	errorAlert('Error', '¡Rol ingresado ya existe!');
+	        if(mensaje == "existe")
+	        {
+	        	 $.jAlert({
+	                 'title': 'Error',
+	                 'content': '¡Asignación de coordenada ya existe!',
+	                 'theme': 'red',
+	                 'onClose': function(OnClose) {               
+	                     window.location = "FormAsignacionCoordenada.jsp";
+	                 }
+	               });
+	        }
+	        if(mensaje == "existe1")
+	        {
+	        	 $.jAlert({
+	                 'title': 'Error',
+	                 'content': '¡La asignación del arbol ya existe!',
+	                 'theme': 'red',
+	                 'onClose': function(OnClose) {               
+	                     window.location = "FormAsignacionCoordenada.jsp";
+	                 }
+	               });
 	        }
 	    });
 	</script>

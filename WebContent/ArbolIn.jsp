@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "vistas.ViewArbol,datos.Dt_Arbol, java.util.*"%>
+    pageEncoding="ISO-8859-1" import = "vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, vistas.ViewArbol, datos.Dt_Arbol, java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,22 +24,40 @@
   
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
-
+    
+        <style type="text/css">
+    .ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+     }
+     html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	}
+  </style>
+                                                  
+ <%											
+ ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
+ Dt_Arbol dta = new Dt_Arbol();
+                 	listArbol = dta.listaArbol();    
+                 	
+                 		
+ %> 
 </head>
 
 <body>
+<div class="wrapper">
  <!-- Menu -->
  <jsp:include page="mainMenus.jsp" />
  
     <br>
     <br>
-						<%											
-					 	ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
-						Dt_Arbol dta = new Dt_Arbol();
-                       	listArbol = dta.listaArbol();    
-                       	
-                       		
-						%> 
+						
+						
 		    <div class="row">
 		    	<%
 		    	String arbolid = "";
@@ -56,13 +74,14 @@
 		            </div>
 		            <br>
 		            <div class="text-center">
-			                <p>Descripción:<%=a.getDescripcion() %></p>
+			                <p>Descripción: <%=a.getDescripcion() %></p>
 			           
-			               <p>Género:<%=a.getNombreGenero() %></p>
+			               <p>Género: <%=a.getNombreGenero() %></p>
 			           
 			               <p>Familia: <%=a.getNombreFam() %></p>
 			                 
-			               <p>Floración: <%=a.getNombreFlo() %></p>
+			               <p>Floración: <%=a.getNombreFlo() %></p>              		               
+			               
 			                        
          	   </div>
        		 </div>
@@ -73,6 +92,7 @@
     </div>
     <br>
     <br>
+    </div>
 
     <!-- footer -->
     <jsp:include page="mainFooter.jsp" />
@@ -89,8 +109,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
-
-
 </body>
-
 </html>

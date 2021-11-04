@@ -82,7 +82,7 @@ public class Sl_GestionPais extends HttpServlet {
 		case 1:{
 			    try {
 	        	if(ngp.existePais(p.getNombre())){
-		        	response.sendRedirect("GestionPais.jsp?msj=2");
+		        	response.sendRedirect("GestionPais.jsp?msj=existe");
 		        }
 		        else {			        
 			        if(	dtp.guardarPais(p)) {
@@ -102,15 +102,18 @@ public class Sl_GestionPais extends HttpServlet {
 			}
 		case 2:{
 			p.setPaisID(Integer.parseInt(request.getParameter("idpais")));
-     		try {
+     		try { 
+     			if(ngp.existeActualizarPais(p.getPaisID(),p.getNombre())){
+		          	response.sendRedirect("GestionPais.jsp?msj=existe");
+		        }else {
 				   if(dtp.modificarPais(p)) {
 		        	response.sendRedirect("GestionPais.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionPais.jsp?msj=4");
 		        }
+		        }
 		        
-	        	
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionPais, el error es: " + e.getMessage());

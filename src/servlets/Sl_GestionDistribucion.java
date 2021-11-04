@@ -80,7 +80,7 @@ public class Sl_GestionDistribucion extends HttpServlet {
 			
 		        try {
 		        	if(ngd.existeDistribucion(ds.getNombre())){
-			        	response.sendRedirect("GestionDistribucion.jsp?msj=2");
+			        	response.sendRedirect("GestionDistribucion.jsp?msj=existe");
 			        }
 			        else {	
 			        if(	dtf.guardarDistribucion(ds)) {
@@ -101,6 +101,9 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		case 2:{
 			ds.setDistribucionID(Integer.parseInt(request.getParameter("iddistribucion")));
      		try {
+     			if(ngd.existeActualizarDistribucion(ds.getDistribucionID(),ds.getNombre())){
+		          	response.sendRedirect("GestionDistribucion.jsp?msj=existe");
+		        }else {
 				   if(dtf.modificarDistribucion(ds)) {
 		        	response.sendRedirect("GestionDistribucion.jsp?msj=3");
 		        }
@@ -108,14 +111,13 @@ public class Sl_GestionDistribucion extends HttpServlet {
 		        	response.sendRedirect("GestionDistribucion.jsp?msj=4");
 		        }
 		        
-	        	
+		        }
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionDistribucion, el error es: " + e.getMessage());
 				e.printStackTrace();
 	        }
-				break;
-				
+				break;				
 			}
 		default:
 			response.sendRedirect("GestionDistribucion.jsp?msj=7");	

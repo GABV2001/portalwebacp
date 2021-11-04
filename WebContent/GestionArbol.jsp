@@ -67,6 +67,19 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 
 	 <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
+	<style type="text/css">	
+	.marco {
+	  width: 550px;
+	  height: 350px;
+	  border: 1px solid #000;
+	  margin: 10px 0;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+</style>
 </head>
 <body id="page-top">
 
@@ -88,12 +101,13 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                             <h6 class="m-0 font-weight-bold text-primary">Gestión Árbol</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive"> 
-                              <div style="text-align:right;"><a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp; Imprimir Reporte de los árboles</div></a>                         
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <div style="text-align:right;"><a href="FormArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</a>
-                                                <a href="GestionUbicacionArbol.jsp"></div></a></div>
+                            <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">  
+                                <div class="text-right">
+                                <a href="FormArbol.jsp"><i class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</a>
+                                <a href="RestaurarArbol.jsp"><i class="fas fa-redo"></i>&nbsp; Restaurar Árbol</a>
+                                <a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp;Imprimir</a>
+                                </div>                               
                                     <%
                                     ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
                                     Dt_Arbol dtu = new Dt_Arbol();
@@ -107,7 +121,8 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>                                                                               
+                                            <th>Floración</th>
+                                            <th>Estado</th>         
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -119,25 +134,27 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                             <th>Multimedia</th>
                                             <th>Genero</th>
                                             <th>Familia</th>
-                                            <th>Floración</th>                
+                                            <th>Floración</th>
+                                            <th>Estado</th>         
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                          <%
-                                         	for(ViewArbol us: listArbol){
+                                         	for(ViewArbol us: listArbol){                                         	
                                          %>
                                        	<tr> 
                                        	    <td><%=us.getNombreComun() %></td>
                                        	    <td><%=us.getNombreCientifico() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>                                 
-                                            <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
-                        							<i class="fas fa-camera mostrarImagen" title="<%=us.getMultimedia()%>" onClick="getValue()"></i>
-                        							</a></td>
-                                         <td><%=us.getNombreGenero() %></td>                                            
-                                            <td><%=us.getNombreFam() %></td>
-                                            <td><%=us.getNombreFlo() %></td>                                                                                                                                                                                                                 
-                        			       <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idA=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
+                                            <td>&nbsp;&nbsp;<a href="#">
+                        							<i class="fas fa-camera mostrarImagen" title="<%=us.getMultimedia() + "?t="+System.currentTimeMillis()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
+                        					</a></td>
+                                         	<td><%=us.getNombreGenero() %></td>                                            
+                                            <td><%=us.getNombreFam()%></td>
+                                            <td><%=us.getNombreFlo()%></td>
+                                            <td><%="Activo"%></td>
+                                            <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idA=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -159,10 +176,11 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td>            
- 													</tr>
+                        						</a></td>                        					           
+ 											    </tr>
                                            <%
-                                       		}
+                                         	} 
+                                       		
                                            %>                            
                                     </tbody>
                                 </table>
@@ -184,8 +202,7 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 					      </div>
 					      <div class="modal-body">
 					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Arbol"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;"/>
+									<img id="preview" src="" name="preview"  alt="Imagen Arbol" class="img-fluid fill marco"/>
 								</div>								
 					      </div>					 
 					    </div>
@@ -199,11 +216,6 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
             <!-- Footer -->
         	<jsp:include page="adminFooter.jsp" />   
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -215,8 +227,6 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 
 
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -253,15 +263,49 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Árbol guardado con éxito');
+              $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Árbol guardado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionArbol.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente !');
+              $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionArbol.jsp";
+                }
+              });
+            
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Árbol eliminado exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Árbol eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionArbol.jsp";
+                }
+              });
+        }
+        if(mensaje == "existe")
+        {
+              $.jAlert({
+                'title': 'Error',
+                'content': '¡Árbol ingresado ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionArbol.jsp";
+                }
+              });
+            
         }
     });    
 

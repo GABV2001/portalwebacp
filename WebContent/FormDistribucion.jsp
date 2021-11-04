@@ -63,6 +63,10 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -85,33 +89,37 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
 
                                     <div class="card-header">
                                         <h2>
-                                            Distribución del árbol
+                                            Formulario Distribución
                                         </h2>
-
                                     </div>
                                     <div class="card-body bg-white rounded">
                                      <form class="Distribucion" method="post" action="./Sl_GestionDistribucion">
                                         <input name="opcion" type="hidden" value="1" />
                                             <div class="form-group">
                                                 <label>Nombre de la distribución:</label>
-                                                <input class="form-control" name = "txtNombreDistribucion" id ="txtNombreDistribucion">
+                                                <input class="form-control" name = "txtNombreDistribucion" id ="txtNombreDistribucion" minlength="5" maxlength="150" required>
+                                                 <small id="message"></small>
                                             </div>
                                             <div class="form-group">
                                                 <label>Descripción:</label>
-                                                <textarea class="form-control" rows="3" name = "txtDescripcionDistribucion" id ="txtDescripcionDistribucion" required></textarea>
-                                            </div>                                             
+                                                <textarea class="form-control" rows="3" name = "txtDescripcionDistribucion" id ="txtDescripcionDistribucion" minlength="5" maxlength="250"></textarea>
+                                                    <small id="message2"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
+                                                </div>          
+                                            </div>                                                
                                             <div class="form-group">
                                             <%                                            
                                             ArrayList<Pais> listPais = new ArrayList<Pais>();
                                             Dt_Pais dtu = new Dt_Pais();
                                             listPais = dtu.listaPais();
                                             %>                     
-                                                <label>Pais:</label>
+                                                <label>País:</label>
                                                 <select class="form-control" name = "txtNombrePais" id ="txtNombrePais">
                                              <%
-                                    		for(Pais u: listPais){
+                                    		for(Pais p: listPais){
                                     	    %>	
-                                    		<option value="<%=u.getPaisID()%>"><%=u.getNombre()%></option>
+                                    		<option value="<%=p.getPaisID()%>"><%=p.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>                                      	
@@ -141,11 +149,8 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -177,8 +182,68 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
+    <script>  
+	
+	    $('#txtNombreDistribucion').on("keydown", function(e) {
+	        var textLength = $('#txtNombreDistribucion').val().replace(' ', '1').length + 1;
+	        var maxValue = 150;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
 
+	     });
+	    $('#txtNombreDistribucion').on("keyup", function(e) {
+	        var textLength = $('#txtNombreDistribucion').val().replace(' ', '1').length;
+	        var maxValue = 150;
 
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
+	    });
+	    
+	    $('#txtDescripcionDistribucion').on("keydown", function(e) {
+	        var textLength = $('#txtDescripcionDistribucion').val().replace(' ', '1').length + 1;
+	        var maxValue = 250;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtDescripcionDistribucion').on("keyup", function(e) {
+	        var textLength = $('#txtDescripcionDistribucion').val().replace(' ', '1').length;
+	        var maxValue = 250;
+
+	        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+	        
+	        var percent = (textLength * 100) / maxValue;
+	        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	        $('#circle1').circleProgress({
+	            animationStartValue: $('#oldValue').val(),
+	            value: circlePercent,
+	            size: 30,
+	            fill: {
+	                gradient: ["green", "lime"]
+	            },
+	        });
+
+	        percent = percent > 100 ? 100 : percent;
+
+	        $("#percent1").text(percent+"%");
+	        $('#oldValue').val(circlePercent);
+	       
+	    });
+	 </script>  
 </body>
-
 </html>

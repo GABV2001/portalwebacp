@@ -38,21 +38,24 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
 	}
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-
+	
+	//Cargar arreglo de objetos Rol Opcion
+	ArrayList<ViewRolOpcion> listRolOpc = new ArrayList<ViewRolOpcion>();
+  	Dt_RolOpcion dtro = new Dt_RolOpcion();
+  	listRolOpc = dtro.listaRolOpcion();                                	
+   
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Portal ACP - Gestión Rol-Opcion</title>
+    <title>Portal ACP - Gestión Rol-Opción</title>
     
      <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
-	
+	 <jsp:include page="imgShortIcon.jsp" />  	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -82,23 +85,16 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Roles Opciones</h1>
-
-   							   <%
-                             	ArrayList<ViewRolOpcion> listRolOpc = new ArrayList<ViewRolOpcion>();
-                             	Dt_RolOpcion dtro = new Dt_RolOpcion();
-                             	listRolOpc = dtro.listaRolOpcion();                                	
-                               %>
-                    <!-- DataTales Banner -->
+                    <h1 class="h3 mb-2 text-gray-800">Rol-Opción</h1>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Roles Opciones</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gestión Rol-Opción</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormRolOpcion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Rol-Opcion</a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Rol-Opción</a>
                                        </div>                                               
                                     <thead>
                                         <tr>
@@ -167,19 +163,13 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
                 </div>
                 <!-- /.container-fluid -->
            	 <div style="text-align:center;"><a href="GestionRol.jsp"><i class="fas fa-arrow-circle-left"></i>&nbsp;Volver</a></div>
-       
+       		<br>
 				
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-			<jsp:include page="adminFooter.jsp" />      
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+			<jsp:include page="adminFooter.jsp" />     
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -189,10 +179,7 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
     <!-- Logout Modal-->
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
-	
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -214,7 +201,7 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
-	<script>
+<script>
     $(document).ready(function ()
     {
         
@@ -224,17 +211,38 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
 
         if(mensaje == "1")
         {
-            successAlert('Éxito','¡Asignación Rol-Opción registrado con éxito!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación Rol-Opción registrado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolOpcion.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error','¡Revise los datos e intente nuevamente!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolOpcion.jsp";
+                }
+              });            
         }
         if(mensaje == "5")
         {
-            errorAlert('Éxito', '¡Asignación de Rol-Opción eliminado exitosamente!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación de Rol-Opción eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolOpcion.jsp";
+                }
+              });       
         }            
     });
-	</script>
+</script>
 </body>
 </html>

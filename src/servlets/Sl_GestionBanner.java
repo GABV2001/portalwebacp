@@ -100,8 +100,7 @@ public class Sl_GestionBanner extends HttpServlet {
 	        }
 				break;
 				
-			}
-	
+			}	
 		}
 	  }
 	}

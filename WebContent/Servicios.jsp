@@ -28,10 +28,30 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
 
-  <!-- CSS IMAGE -->
-  <link rel="stylesheet" href="./css/image.css">
+  <!-- CSS IMAGE -->  
+  <style type="text/css">	
+	.marco {
+	  width: 600px;
+	  height: 350px;
+	  border: 1px solid #000;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+	
+    html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	  margin-bottom: -50px;
+	}
+</style>
 </head>
 <body>
+<div class="wrapper mb-5">
 <!-- Menu -->
 <jsp:include page="mainMenus.jsp" />
 
@@ -92,8 +112,7 @@
                    </div> <!-- bottom-wrap.// -->
                </figure>
 	           </div> <!-- col // -->
-	       </div> <!-- row.// -->
-	    </div>
+	       </div> <!-- row.// -->	    
 	    <!--container.//-->     	    
 	      <%}else{   
 	     	 ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
@@ -102,39 +121,37 @@
 		   	
 	     	  for(Servicio sr: listServicio){                    	
 	          if(sr.getEstadoservicio()==1){
-	          String desc = sr.getDescripcion();
-	          desc = desc.substring(0,25);
+	          String desc = sr.getDescripcion();	    
 	          %>			          
 			  
 			  <div class="col-md-4">
 			    <figure class="card card-product border border-dark">
-			        <div class="card-img-top">
-			        <img class="img-guide" src="<%=sr.getMultimedia()%>">
+			        <div class="card-img">
+			        <img class="img-fluid marco fill" src="<%=sr.getMultimedia()%>">
 			        </div>
 			        <figcaption class="info-wrap">
 			            <h4 class="card-title"><%=sr.getNombre()%></h4>
-			            <p class="card-text descServicio" onClick="getValue()" title="<%=sr.getDescripcion()%>"><%=desc%>...</p>
+			            <p class="card-text descServicio" onClick="getValue()" title="<%=sr.getDescripcion()%>"><%=desc%></p>
 			        </figcaption>
 			        <div class="bottom-wrap">
 			            <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
 			        </div> <!-- bottom-wrap.// -->
 			    </figure>
-					</div> <!-- col // -->				       
+				</div> <!-- col // -->				       
 			<%
 			  }//Fin if
 		     }//Fin For
 		    }//Fin else
 		   %>  
 		</div>	            
-      </div> <!-- row.// -->
-    </div>
-<!--container.//-->	
-
+<!--container.//-->
+</div>
+</div>	
+	
 <!-- footer -->
 <jsp:include page="mainFooter.jsp" />
 
 <!-- Javascript -->
-<link rel="stylesheet" href="js/bootstrap.min.js">
 <script defer src="./js/index.js"></script>
 
 <!-- BOOTSTRAP V.4 -->
@@ -144,18 +161,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
   integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
   crossorigin="anonymous"></script>
-
-<script>
- function getValue()
-    {   	
-        var b = document.getElementsByClassName("descServicio");         
-        for(var i=0; i<b.length; i++){
-        	var a = b[i].title;
-        	var c = b[i].innerHTML;
-        	b[i].innerHTML = a;
-        	b[i].title=c;
-        	}
-    }  
-</script>
 </body>
 </html>

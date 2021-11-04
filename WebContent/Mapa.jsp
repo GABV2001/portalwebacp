@@ -36,7 +36,30 @@
 
 </head>
 
+ <style type="text/css">
+	html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	  margin-bottom: -50px;
+	}	
+	.marco {
+	  width: 200px;
+	  height: 100px;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+	
+	
+	</style>
+
 <body class="bg-faded">
+
+<div class="wrapper mb-5">
 
     <!-- Menu -->
     <jsp:include page="mainMenus.jsp" />
@@ -59,7 +82,7 @@
 		   
 		   <input type="hidden" class="Longitud" value="<%=vcoa.getLongitud()%>">	
 		    			 	 		 
- 	 	 <%}%>
+ 	 	 <%}%>	
 
     <!--Maps-->
     <div class="container mt-5 mb-5">
@@ -74,9 +97,9 @@
             <div id="map" style="height: 610px; padding: 0; margin: 0; "></div>
         </div>
     </div>
+    </div>
 
-    <!-- footer -->
-     <jsp:include page="mainFooter.jsp" />
+
    
 
     <!-- Js Mapa Source -->
@@ -109,28 +132,45 @@
         var greenIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/kCbcOsA.png'}),
         	orangeIcon = new LeafIcon({iconUrl: 'https://i.imgur.com/ANYFjzm.png'});
         
-       
-        L.marker([12.127055947189353, -86.27032868564129], {icon: greenIcon}).addTo(map).bindPopup("<center><b>ABETO</b></center>" + PhotoImg + "<center><br>Abies alba, el abeto común o abeto blanco es una especie arbórea de la familia de las pináceas, originaria de las regiones montañosas de Europa.</center>");
-        L.marker([12.12678256672591, -86.2705647200346], {icon: greenIcon}).addTo(map).bindPopup("<center><b>CEDRO</b></center>" + PhotoImg1 + "<center><br>Los cedros constituyen un género (Cedrus) de coníferas pináceas. Son árboles de gran tamaño, de madera olorosa y copa cónica o vertical, muy utilizados para ornamentación de parques.</center>" );
-        L.marker([12.126837636194313, -86.27036154270172], {icon: orangeIcon}).addTo(map).bindPopup("<center><b>PEINE DE MICO</b></center>" + PhotoImg2 + "<center><br>Arbusto o árbol mediano, puede alcanzar entre 5 a 25 metros de altura y diámetros de 10 a 30 cm. El tronco irregular, se ramifica a poca altura. Su corteza externa es de color gris y se desprende fácilmente en tiras; la corteza interna amarillenta, exuda una savia mucilaginosa.</center>" );
+       	
+        var nombreComun = document.getElementsByClassName('NombreComun');
+        var nombreCientifico = document.getElementsByClassName('NombreCientifico');
+        var descripcion = document.getElementsByClassName('Descripcion');
+        var multimedia = document.getElementsByClassName('Multimedia');
+        var latitud = document.getElementsByClassName('Latitud');
+        var longitud = document.getElementsByClassName('Longitud');
 
-        //end of the test
+        
+        for (let step = 0; step < nombreComun.length; step++) { 
+        	la = parseFloat (latitud[step].value);
+        	lo = parseFloat (longitud[step].value);   
+        	var marker1 = L.marker([lo, la], {icon: greenIcon});
+        	marker1.addTo(map);
+        	marker1.on('mouseover', function(e){
+        	    e.target.bindPopup("<center><b>"+nombreComun[step].value+"</b></center><center>"+nombreCientifico[step].value+
+            			"</center>"+"<img class=center border border-dark height=80px width=100px src="+multimedia[step].value+">"+"<center>"+descripcion[step].value+"</center>").openPopup();
+  
+        	  }); 
+        	
+     	     
+        }
+        
+      //end of the test
 
-        // Capas de Arboles y Sectores
+        // Capa para ver en vista satelite 
         var groupedOverlays = {
-            "Capas": {
-                "Árboles": Mapa.LayerGroups.Arboles,
-                "Sectores": Mapa.LayerGroups.Sectores
-            }
         };
 
         //Controlador de groudLayers"
         L.control.groupedLayers(Mapa.Basemaps, groupedOverlays).addTo(map);
     </script>
-
+      	
     <!-- Javascript -->
     <link rel="stylesheet" href="js/bootstrap.min.js">
     <script defer src="./js/index.js"></script>
+    
+        <!-- footer -->
+     <jsp:include page="mainFooter.jsp" />
 
     <!-- BOOTSTRAP V.4 -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
@@ -139,8 +179,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
-
-
 </body>
-
 </html>

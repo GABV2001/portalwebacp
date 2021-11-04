@@ -38,17 +38,25 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 		}	
 	}
 	//Variable de control de mensajes
-    String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
+    String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	//Obtener ID del Rol
+   	String rol = "";
+	rol = request.getParameter("rolID")==null?"0":request.getParameter("rolID");
+	
+	//Recuperar datos del Rol
+	Rol r = new Rol();
+	Dt_Rol dtr = new Dt_Rol();
+	r = dtr.getRol(Integer.parseInt(rol));
+
 %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
   
-    <title>Portal ACP - Formulario País</title>
+    <title>Portal ACP - Formulario Editar Rol</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -69,6 +77,10 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
     
       <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
+	
+	<!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -82,24 +94,14 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                
-               			   <%
-                            	String rol = "";
-								rol = request.getParameter("rolID")==null?"0":request.getParameter("rolID");
-														
-								Rol r = new Rol();
-								Dt_Rol dtr = new Dt_Rol();
-								r = dtr.getRol(Integer.parseInt(rol));
-                            %>
-
-                    <!-- Formulario -->
+                  <!-- Formulario -->
    			   		 <div class="container">
                         <div class="row">
                             <div class="col-lg-10 mx-auto m-auto">
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Formulario Rol
+                                            Formulario Editar Rol
                                         </h2>
 
                                     </div>
@@ -108,12 +110,16 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
                       			 	<input name="idRol" type="hidden" value="<%=r.getIdRol()%>" />
                             		<input name="opcion" type="hidden" value="2" />
                              	     <div class="form-group">
+                             	     			<div>
                                                 <label>Rol:</label>
-                                                <input class="form-control" name = "txtRol" id ="txtRol">
-
+                                                <input class="form-control" name = "txtRol" id ="txtRol" minlength="4" maxlength="80">
+												<small id="message"></small>												
+												</div>
+												<br>
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3" name = "txtRolDesc" id = "txtRolDesc"></textarea>
+                                                    <textarea class="form-control" rows="3" name = "txtRolDesc"  id = "txtRolDesc" minlength="8" maxlength="250"></textarea>
+                                           			<small id="message1"></small>                                                
                                                 </div>
                                             </div>
                                          	 <div class="text-center">
@@ -136,16 +142,9 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <jsp:include page="adminFooter.jsp" />    
-        
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
+    <!-- Footer -->
+    <jsp:include page="adminFooter.jsp" />    
+   
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -155,8 +154,6 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
     <jsp:include page="adminLogOutModal.jsp" />    
         
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -178,6 +175,8 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
     
+     <!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
 
 <script>  
    $(document).ready(function()
@@ -189,13 +188,49 @@ import="entidades.Rol, datos.Dt_Rol,  entidades.Rol,vistas.ViewRolUsuario, vista
 		   mensaje = "<%=varMsj%>";
 
 		   if(mensaje == "existe"){
-		   	errorAlert('Error', '¡Rol ingresado ya existe!');
+		   	$.jAlert({
+                'title': 'Error',
+                'content': '¡Rol ingresado ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+	                   window.location = "FormEditarRol.jsp?rolID=" + <%=r.getIdRol()%> ;
+                }
+              });
 		   }
 	});
    
-  
+   $('#txtRol').on("keydown", function(e) {
+       var textLength = $('#txtRol').val().replace(' ', '1').length + 1;
+       var maxValue = 80;
+       
+       console.log(e.keyCode);
+       if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+       }
+    });
+   $('#txtRol').on("keyup", function(e) {
+       var textLength = $('#txtRol').val().replace(' ', '1').length;
+       var maxValue = 80;
+       $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+   });
+   
+   $('#txtRolDesc').on("keydown", function(e) {
+       var textLength = $('#txtRolDesc').val().replace(' ', '1').length + 1;
+       var maxValue = 250;       
+       console.log(e.keyCode);
+       if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+       }
+    });
+   $('#txtRolDesc').on("keyup", function(e) {
+       var textLength = $('#txtRolDesc').val().replace(' ', '1').length;
+       var maxValue = 250;
+       $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");      
+   });
 </script>
-
-
 </body>
 </html>

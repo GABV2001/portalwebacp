@@ -49,4 +49,41 @@ public class Ng_Publicacion {
 			}	
 			return existe;
 		}
+		
+		// Metodo para validar el actualizar del Nombre Titulo
+		public boolean existeActualizarPublicacion(int publicacionid, String titulo){
+			boolean existe = false;
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("SELECT * FROM publicacion WHERE publicacionid != ? AND titulo = ? and estado <>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				ps.setInt(1, publicacionid);				
+				ps.setString(2, titulo);
+				rs = ps.executeQuery();
+				if(rs.next()){
+					existe=true;
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS ERROR existeActualizarPublicacion(): "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}		
+			return existe;
+		}
 }

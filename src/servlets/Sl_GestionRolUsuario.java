@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_RolUsuario;
+import datos.Dt_Usuario;
+import datos.Dt_enviarEmailUsuario;
+import datos.Encrypt;
 import entidades.RolUsuario;
+import vistas.ViewRolUsuario;
 import negocio.Ng_RolUsuario;
 
 /**
@@ -57,27 +61,52 @@ public class Sl_GestionRolUsuario extends HttpServlet {
 		//CONSTRUIR EL OBJETO ROL-USER
 		RolUsuario ru = new RolUsuario();		
 		Dt_RolUsuario dtru = new Dt_RolUsuario();
+		Dt_enviarEmailUsuario dte = new Dt_enviarEmailUsuario();
+		Dt_Usuario dtu = new Dt_Usuario();
+		ViewRolUsuario vu = new ViewRolUsuario();
+		Encrypt enc = new Encrypt();
 		Ng_RolUsuario ngr = new Ng_RolUsuario();
 		
-		ru.setRolid(Integer.parseInt(request.getParameter("cbxRol")));
-		
+		//Recuperamos la id del rol
+		ru.setRolid(Integer.parseInt(request.getParameter("cbxRol")));		
+				
 		switch (opc){
 		case 1:{
-				ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxUser")));
+					ru.setUsuarioid(Integer.parseInt(request.getParameter("cbxUser")));
+				
 					try {					
 					if(ngr.existeRolAsignado(ru.getUsuarioid(), ru.getRolid())){
 			        	response.sendRedirect("FormRolUsuario.jsp?msj=existe");
 			        }
 			        else {
-			        	if(dtru.guardarRolUser(ru)) {
-			        	response.sendRedirect("GestionRolUsuario.jsp?msj=1");
-			        }
-			        else {
-			        	response.sendRedirect("GestionRolUsuario.jsp?msj=2");
-			        }    	
+			        		boolean control = false;
+			        		if(dtru.guardarRolUser(ru)) {
+			        			control=true;
+				        	}
+				        	else {
+				        	response.sendRedirect("GestionRolUsuario.jsp?msj=2");
+				        	} 
+			        		if(control){
+			        			if(ngr.existeAsignacionRol(ru.getUsuarioid())){			        			
+					    			response.sendRedirect("GestionRolUsuario.jsp?msj=1");
+			        			}else{
+			        				vu = dtu.getVwUsuarioRol(ru.getUsuarioid());
+									
+									vu.setContra(enc.getAESDecrypt(vu.getContra(), vu.getKey_encriptacion()));					
+									
+				        			if(dte.enviarEmailVerificacion(vu.getUsuario(), vu.getContra(), vu.getEmail(), vu.getCod_verificacion(),vu.getRol())){
+				        				if(dtru.confirmEmail(vu.getIdrol_usuario())){
+					        			    response.sendRedirect("GestionRolUsuario.jsp?msj=em");
+				        				}				        				
+						    		}else {
+						        	response.sendRedirect("GestionRolUsuario.jsp?msj=2");
+						    		}				        			
+			        			}
+			        		}
+			    		}
+			        	  	
 		          }
-				}
-		        catch(Exception e) {
+				catch(Exception e) {
 		        	System.out.println("Sl_GestionRolUsuario, el error es: " + e.getMessage());
 					e.printStackTrace();
 		        }

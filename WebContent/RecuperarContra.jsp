@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" %>
+<%
+//Variable de control de mensajes
+String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,6 +29,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles1.css">
 
+	<!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
+		
+	<!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 </head>
 
 <body>
@@ -49,18 +56,22 @@
                                         <h1 class="h4 text-gray-900 mb-2">
                                             ¿Olvidaste tu contraseña?</h1>
                                         <p class="mb-4">Lo entendemos, pasan cosas. Sólo tienes que introducir tu
-                                            dirección de correo electrónico a continuación
-                                            ¡y le enviaremos un enlace para restablecer su contraseña!</p>
+                                            usuario y  dirección de correo electrónico a continuación
+                                            ¡Y le enviaremos un enlace para restablecer su contraseña!</p>
                                     </div>
-                                    <form class="user">
-                                        <div class="form-group">
+                                    <form class="user" method="post" action="./Sl_RecuperarContra">
+                                       <input type="hidden" name="opcion" value="1">  
+                                        <div class="form-group">                                       
+                                         <input type="text" class="form-control form-control-user"
+                                                id="user" name="user"
+                                                placeholder="Ingresa usuario" required>
+                                         </div>
+                                          <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Ingresa Correo electrónico">
-                                        </div>
-                                        <a href="login.html" class="btn btn-success btn-user btn-block">
-                                            Restaurar Contraseña
-                                        </a>
+                                                id="email" name="email"
+                                                placeholder="Ingresa Correo electrónico" required>
+                                        </div> 
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Recuperar contraseña">
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -87,6 +98,43 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	<script>
+	  $(document).ready(function ()
+	    {
+	        
+		/////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+	                             
+	        if(mensaje == "1")
+	        {
+	            $.jAlert({
+	                'title': 'Éxito',
+	                'content': '¡Se ha enviado un correo electronico. Sigue las instrucciones para restablecer la contraseña!',
+	                'theme': 'green',
+	                'onClose': function(OnClose) {               
+	                    window.location = "RecuperarContra.jsp";
+	                }
+	              });
+	        }
+	        if(mensaje == "2")
+	        {
+	            $.jAlert({
+	                'title': 'Error',
+	                'content': '¡Revise los datos e intente nuevamente!',
+	                'theme': 'red',
+	                'onClose': function(OnClose) {               
+	                    window.location = "RecuperarContra.jsp";
+	                }
+	              });
+	        }
+	  }); 
+	</script>
 
 </body>
 

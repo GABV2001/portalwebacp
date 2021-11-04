@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+ <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
  import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +25,32 @@
    
     <!-- CSS IMAGE -->
     <link rel="stylesheet" href="./css/image.css">
+    
+    <style type="text/css">
+	html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	  margin-bottom: -50px;
+	}	
+	.marco {
+	  width: 200px;
+	  height: 100px;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+	
+	
+	</style>
+    
 </head>
 <body>
+
+<div class="wrapper mb-5">
 <!-- Menu -->
 <jsp:include page="mainMenus.jsp" />   
 

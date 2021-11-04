@@ -5,6 +5,7 @@ public class RolUsuario {
 	private int idrol_usuario;
 	private int usuarioid;	
 	private int rolid;
+	private int confirmemail;
 	
 	//Metodos
 	public int getIdrol_usuario() {
@@ -24,5 +25,11 @@ public class RolUsuario {
 	}
 	public void setRolid(int rolid) {
 		this.rolid = rolid;
+	}
+	public int getConfirmemail() {
+		return confirmemail;
+	}
+	public void setConfirmemail(int confirmemail) {
+		this.confirmemail = confirmemail;
 	}
 }

@@ -69,12 +69,11 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Menus -->
-  		 <jsp:include page="adminMenus.jsp" />    
+     <!-- Menus -->
+	 <jsp:include page="adminMenus.jsp" />    
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -86,11 +85,11 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Usuario
+                                           Formulario Usuario
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
-                                <form class="user" method="post" action="./Sl_GestionUsuario" >
+                                <form class="usuario" name="usuario" method="post" action="./Sl_GestionUsuario" onsubmit="return comprobarContra()">
 								<!-- El valor de este input es para el Servlet opcion guardar -->
                             	<input name="opcion" type="hidden" value="1" />
                             	<div class="form-group row">
@@ -98,24 +97,26 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                         <label>Nombres:</label>
                                         <input type="text" class="form-control form-control-user" name="txtNombres" id="txtNombres"
                                             minlength="3" maxlength="80" required>
+                                            <small id="message"></small> 
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 mb-3">
                                        <label>Apellidos:</label>	
                                         <input type="text" class="form-control form-control-user" name="txtApellidos" id="txtApellidos"
-                                           minlength="3" maxlength="80" required>
-                                    </div><br>
-                               		 <div class="col-sm-12">
+                                           minlength="3" maxlength="100" required>
+                                           <small id="message1"></small> 
+                                    </div>                                   
+                               		 <div class="col-sm-12 ">
                                   	   <label>Teléfono(Opcional):</label>                                  
                                         <input type="tel" class="form-control form-control-user" name="txtTelefono" id="txtTelefono"
                                           minlength="8" maxlength="15" pattern="[0-9]{8}">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                
+                                <div class="form-group row">                                
                                     <div class="col-sm-12 mb-3">
                                   	   <label>Usuario:</label>                                  
                                         <input type="text" class="form-control form-control-user" name="txtUserName" id="txtUserName"
                                           minlength="4" maxlength="40"  required>
+                                          <small id="message2"></small> 
                                     </div>
                                     <div class="col-sm-12 mb-3">
                                        <label>Correo:</label>                                                              
@@ -147,7 +148,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                             </div>
                         </div>
                     </div>
-   				    <!-- Termina Formulario -->
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -156,12 +156,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
        
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -194,24 +188,46 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"> //optional!!</script>
     
-    <script type="text/javascript">
-    var field = document.querySelector('[name="txtPwd"]');
-	var field2 = document.querySelector('[name="txtPwd2"]');
+<script>
+	$(document).ready(function ()
+    {    	
+		/////////// VARIABLE DE CONTROL MSJ ///////////
+        var mensaje = "";
+        mensaje = "<%=varMsj%>";
+		
+        if(mensaje == "existe"){
+        	$.jAlert({
+	               'title': 'Error',
+	               'content': '¡Usuario ingresado ya existe!',
+	               'theme': 'red',
+	               'onClose': function(OnClose) {               
+	                   window.location = "FormUsuario.jsp";
+	               }
+	        });        	
+        }
+        if(mensaje == "existec"){
+        	$.jAlert({
+	               'title': 'Error',
+	               'content': '¡Correo ingresado ya existe!',
+	               'theme': 'red',
+	               'onClose': function(OnClose) {               
+	                   window.location = "FormUsuario.jsp";
+	               }
+	        });        	
+        } 
+    });
 	
-	field.addEventListener('keypress', function ( event ) {  
-	   var key = event.keyCode;
-	    if (key === 32) {
-	      event.preventDefault();
-	    }
-	})
+	//Validar contrasena
+	function comprobarContra(){
+	    clave1 = document.usuario.txtPwd.value;
+	    clave2 = document.usuario.txtPwd2.value;	
+	    if (clave1 != clave2){
+	    	errorAlert('Error', '¡Contraseña no coinciden!');
+	    	return false;
+	    }	    
+	}
 	
-	field2.addEventListener('keypress', function ( event ) {  
-	   var key = event.keyCode;
-	    if (key === 32) {
-	      event.preventDefault();
-	    }
-	})
-    
+	//Mostrar contrasena en los inputs
     function mostrarPassword(){
 		var cambio = document.getElementById("txtPwd");
 		if(cambio.type == "password"){
@@ -221,30 +237,34 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 			cambio.type = "password";
 			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
 		}
-	}    
-	    $(document).ready(function ()
-	    {
-	    	
-			/////////// VARIABLE DE CONTROL MSJ ///////////
-	        var mensaje = "";
-	        mensaje = "<%=varMsj%>";
-	
-	        if(mensaje == "existe"){
-	        	errorAlert('Error', '¡Usuario ingresado ya existe!');
-	        }
-	        
-	        $("#txtPwd2").change(function(){
-	        	var clave = "";
-		        var clave2 = "";
-		        clave = $("#txtPwd").val();
-		        clave2 = $("#txtPwd2").val();
-		        if(clave!=clave2){
-		        	errorAlert('Error', 'Las contraseñas no coinciden');
-		        	$("#txtPwd").val("");
-		        	$("#txtPwd2").val("");
-	          	}
-	        });  
-	    });
-	</script>
+		var cambio2 = document.getElementById("txtPwd2");
+ 		if(cambio2.type == "password"){
+ 			cambio2.type = "text";
+ 			$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+ 		}else{
+ 			cambio2.type = "password";
+ 			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+ 		}
+	}  
+        
+  //Funcion para mostrar maximo de caracteres en los inputs y textareas    
+    $('#txtNombres').on("keyup", function(e) {
+        var textLength = $('#txtNombres').val().replace(' ', '1').length;
+        var maxValue = 80;
+        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+       
+    });
+    $('#txtApellidos').on("keyup", function(e) {
+        var textLength = $('#txtApellidos').val().replace(' ', '1').length;
+        var maxValue = 100;
+        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+       
+    });
+    $('#txtUserName').on("keyup", function(e) {
+        var textLength = $('#txtUserName').val().replace(' ', '1').length;
+        var maxValue = 40;
+        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");       
+    });
+</script>
 </body>
 </html>

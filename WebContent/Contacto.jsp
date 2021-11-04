@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%	//Variable de control de mensajes
+String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
   <meta charset="ISO-8859-1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Web Aboreto Carmelo Palma - Contacto</title>
+  <title>Portal Web Aboreto Carmelo Palma - Contactanos</title>
   
   <!-- Icon -->
   <jsp:include page="imgShortIcon.jsp" />  
@@ -22,7 +24,10 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
 
-
+  <!-- jAlert css  -->
+  <link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+  
+  
 </head>
 
 <body>
@@ -32,38 +37,39 @@
 
   <!-- Contenido -->
   <div class="container contact">
+    <form class = "Contacto"  method="post" action="./Sl_EnviarCorreoContacto">       
     <div class="row">
       <div class="col-md-3">
         <div class="contact-info text-light ">
           <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image" />
-          <h4>Contactonos</h4>
-          <h4>¡Estamos a tu disposición!</h4>
+          <h4>Contactanos</h4>
+          <h4>Â¡Estamos a tu disposiciÃ³n!</h4>
         </div>
       </div>
       <div class="col-md-9">
         <div class="contact-form">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="fname">Nombres:</label>
+            <label class="control-label col-sm-2" for="nombres">Nombres:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="fname" placeholder="" name="fname">
+              <input type="text" class="form-control" id="nombres" name="nombres" minlength="3" maxlength="80" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="lname">Apellidos:</label>
+            <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="lname" placeholder="" name="lname">
+              <input type="text" class="form-control" id="apellidos"  name="apellidos" minlength="3" maxlength="80" required>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2" for="email">Correo:</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="email" placeholder="" name="email">
+              <input type="email" class="form-control" id="email" name="email" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="Descripción">Descripción:</label>
+            <label class="control-label col-sm-2" for="desc">DescripciÃ³n:</label>
             <div class="col-sm-10">
-              <textarea class="form-control" rows="5" id="comment"></textarea>
+              <textarea class="form-control" rows="5" id="desc" name="desc" minlength="5" maxlength="500" required></textarea>
             </div>
           </div>
           <div class="form-group"><br>
@@ -73,13 +79,19 @@
           </div>
         </div>
       </div>
+      </form>      
     </div>
-  </div>
+    </div>
+  
 </body>
 
 <!-- Javascript -->
 <link rel="stylesheet" href="js/bootstrap.min.js">
 <script defer src="./js/index.js"></script>
+
+<!-- jAlert js -->
+<script src="jAlert/dist/jAlert.min.js"></script>
+<script src="jAlert/dist/jAlert-functions.min.js"></script>
 
 <!-- Boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
@@ -87,4 +99,37 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
   integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 
+
+<script>
+$(document).ready(function ()
+	    {   
+		/////////// VARIABLE DE CONTROL MSJ ///////////
+	        var mensaje = "";
+	        mensaje = "<%=varMsj%>";
+
+	        if(mensaje == "1")
+	        {
+	            $.jAlert({
+	                'title': 'Ã‰xito',
+	                'content': 'Â¡Mensaje enviado!',
+	                'theme': 'green',
+	                'onClose': function(OnClose) {               
+	                    window.location = "Contacto.jsp";
+	                }
+	             });
+	         }
+	        if(mensaje == "2")
+	        {
+	            $.jAlert({
+	                'title': 'Error',
+	                'content': 'Â¡Revise e intente nuevamente!',
+	                'theme': 'reed',
+	                'onClose': function(OnClose) {               
+	                    window.location = "Contacto.jsp";
+	                }
+	             });
+	         }
+	      
+	    });
+</script>
 </html>

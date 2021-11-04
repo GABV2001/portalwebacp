@@ -61,7 +61,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>Portal ACP - Formulario Publicación</title>
+    <title>Portal ACP - Formulario Editar Publicación</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -78,6 +78,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -125,7 +129,7 @@
 
                                 <div class="card-header">
                                     <h2>
-                                        Formulario Publicación
+                                        Formulario Editar Publicación
                                     </h2>
 
                                 </div>
@@ -136,12 +140,17 @@
                       					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                     				
                                         <div class="form-group">
                                             <label>Titulo:</label>
-                                            <input class="form-control" id = "txtTituloPost" name = "txtTituloPost" minlegth="10" maxlength="300" required>
+                                        <input type="text" class="form-control" name= "txtTituloPost" id="txtTituloPost" minlength="10" maxlength="300" required>
+                                            	 <small id="message"></small>
 
                                         </div>
                                         <div class="form-group">      
                                         <label>Descripción:</label>
-                                            <textarea class="form-control" rows="6" id = "txtDescripcionPost" name = "txtDescripcionPost" minlegth="10" maxlength="3000" required></textarea>
+                                            <textarea rows="4" class="form-control" name = "txtDescripcionPost" id="txtDescripcionPost" minlength="10" maxlength="3000" required></textarea>
+                                            	 <small id="message1"></small>
+	                                             <div id="circle1" data-value="0" data-size="3000">
+	                              						<small id="percent1"></small>
+	                        					  </div>
                                         </div>                                        
                                           <div class="form-group">                                       
                                               <div class="form-group">
@@ -210,6 +219,9 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+        	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
 
 
 	 `<script>  
@@ -241,8 +253,63 @@
 	      $(this).prev('label').text(file);
 
 	    });
-	</script>
-	
-	
+ 	 
+ 	$('#txtTituloPost').on("keydown", function(e) {
+        var textLength = $('#txtTituloPost').val().replace(' ', '1').length + 1;
+        var maxValue = 300;
+        
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+        }
+
+     });
+    $('#txtTituloPost').on("keyup", function(e) {
+        var textLength = $('#txtTituloPost').val().replace(' ', '1').length;
+        var maxValue = 300;
+
+        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+       
+    });
+    
+    $('#txtDescripcionPost').on("keydown", function(e) {
+        var textLength = $('#txtDescripcionPost').val().replace(' ', '1').length + 1;
+        var maxValue = 3000;
+
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}               	        	
+        }
+
+     });
+    
+    $('#txtDescripcionPost').on("keyup", function(e) {
+        var textLength = $('#txtDescripcionPost').val().replace(' ', '1').length;
+        var maxValue = 3000;
+
+        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+
+        var percent = (textLength * 100) / maxValue;
+        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+        $('#circle1').circleProgress({
+            animationStartValue: $('#oldValue').val(),
+            value: circlePercent,
+            size: 30,
+            fill: {
+                gradient: ["green", "lime"]
+            },
+        });
+
+        percent = percent > 100 ? 100 : percent;
+
+        $("#percent1").text(percent.toFixed(2)+"%");
+        $('#oldValue').val(circlePercent);
+    });	
+	</script>	
 </body>
 </html>

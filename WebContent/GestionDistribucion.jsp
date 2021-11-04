@@ -77,16 +77,16 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+    
         <!-- Menu -->
-    	<jsp:include page="adminMenus.jsp" />  
-
+    	<jsp:include page="adminMenus.jsp" /> 
+    	
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Distribución</h1>
-
+                    
                     <!-- DataTales -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -96,7 +96,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormDistribucion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Distribución</div></a>
+                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Distribución</a></div>
                                                   <%
                                                   	ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
                                                     Dt_Distribucion dtu = new Dt_Distribucion();
@@ -120,23 +120,24 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                                     </tfoot>
                                     <tbody>
                                            <%
-                                       		for(ViewDistribucion us: listDistribucion){
+                                       		for(ViewDistribucion ld: listDistribucion){
                                        	%>
                                        	<tr> 
-                                       	    <td><%=us.getDistribucion() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>
-                                             <td><%=us.getPais()%></td>
-                         		       <td>&nbsp;&nbsp;<a href="FormEditarDistribucion.jsp?idD=<%=us.getDistribucionID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                                                        
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                       	    <td><%=ld.getDistribucion() %></td>                                           
+                                            <td><%=ld.getDescripcion() %></td>
+                                             <td><%=ld.getPais()%></td>
+                         		       <td>&nbsp;&nbsp;
+                         		            <a href="FormEditarDistribucion.jsp?idD=<%=ld.getDistribucionID()%>"><i class="fas fa-edit" title="Modificar datos de la distribución"></i></a>
+                         		            &nbsp;&nbsp;                         		            
+                         		            <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta distribucion?',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta distribución?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionDistribucion?idD=<%=us.getDistribucionID()%>';
+                                           		      window.location.href = 'Sl_GestionDistribucion?idD=<%=ld.getDistribucionID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -146,9 +147,12 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    }
-                                           		  });">
+                                           		  });">                                           		  
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td></tr>
+                        						</a>
+                        						
+                        						</td>
+                        						</tr>
                                        		<%
                                        		}
                                            %>                                      
@@ -160,16 +164,14 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-         	 <jsp:include page="adminFooter.jsp" />  
-         	 
-        </div>
-        <!-- End of Content Wrapper -->
-
     </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <jsp:include page="adminFooter.jsp" />      	 
+        
+    <!-- End of Content Wrapper -->
+
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -216,17 +218,61 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', 'Distribución guardada con éxito');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Distribución guardada con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionDistribucion.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionDistribucion.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Distribución actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionDistribucion.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
-        }
-    });
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Distribución eliminada exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionDistribucion.jsp";
+                 }
+               });       
+        }       
+	    if(mensaje == "existe")
+	    {
+	        $.jAlert({
+	            'title': 'Error',
+	            'content': '¡Distribución ya existe!',
+	            'theme': 'red',
+	            'onClose': function(OnClose) {               
+	                window.location = "GestionDistribucion.jsp";
+	            }
+	          });
+	    }
+	    });
+
 	</script>
 </body>
 </html>

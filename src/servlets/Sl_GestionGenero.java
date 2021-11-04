@@ -81,7 +81,7 @@ public class Sl_GestionGenero extends HttpServlet {
 		        try {
 		        	if(ngg.existeGenero(gn.getNombre()))
 		        	{
-		        		response.sendRedirect("GestionGenero.jsp?msj=2");									
+		        		response.sendRedirect("GestionGenero.jsp?msj=existe");									
 		        	}else {	        
 			        if(	dtg.guardarGenero(gn)) {
 			        	response.sendRedirect("GestionGenero.jsp?msj=1");
@@ -100,12 +100,16 @@ public class Sl_GestionGenero extends HttpServlet {
 		case 2:{
 			gn.setGeneroID(Integer.parseInt(request.getParameter("idgenero")));
      		try {
+     			if(ngg.existeActualizarGenero(gn.getGeneroID(),gn.getNombre())){
+		          	response.sendRedirect("GestionGenero.jsp?msj=existe");
+		        }else {
 				   if(dtg.modificarGenero(gn)) {
 		        	response.sendRedirect("GestionGenero.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionGenero.jsp?msj=4");
-		        }       	
+		        }
+		        }
 	        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionGenero, el error es: " + e.getMessage());

@@ -207,12 +207,17 @@ public class Sl_GestionServicio extends HttpServlet {
 		        Date fechaSistema = new Date();
 		        sr.setFmodificacion(new java.sql.Timestamp(fechaSistema.getTime()));
 				try {
+					if(ngs.existeServicioActualizar(sr.getServicioid(), sr.getNombre())){
+			          	response.sendRedirect("FormEditarServicio.jsp?idS="+sr.getServicioid()+"&msj=existe");
+
+		        	}else {
 					   if(dts.modificarServicio(sr)) {
 			        	response.sendRedirect("GestionServicio.jsp?msj=3");
 			        }
 			        else {
 			        	response.sendRedirect("GestionServicio.jsp?msj=4");
-			        }        		        	
+			        }
+		        	}
 		        }
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionServicio, el error es: " + e.getMessage());

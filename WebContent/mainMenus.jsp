@@ -17,7 +17,7 @@ import = "vistas.ViewHead,datos.Dt_ViewHead, java.util.*;"%>
  <!-- Menu -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="" style="width: 60px; height: 40px;" id="imgLogo"><%=titulo %></a>
+            <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="LogoACP" style="width: 100px; height: 40px;" id="imgLogo"><%=titulo %></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@ import = "vistas.ViewHead,datos.Dt_ViewHead, java.util.*;"%>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.jsp">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="index.jsp">Quiénes somos</a>
                     </li>                 
                           <%
                            	for(ViewHead Vwhead: listViewHead){		
@@ -37,7 +37,7 @@ import = "vistas.ViewHead,datos.Dt_ViewHead, java.util.*;"%>
                              }
                             %>
                      <li class="nav-item">
-                        <a class="nav-link" href="Contacto.jsp">Contactos</a>
+                        <a class="nav-link" href="Contacto.jsp">Contactanos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="login.jsp"><i class="fas fa-user"></i></a>

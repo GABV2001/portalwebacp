@@ -11,6 +11,10 @@ public class ViewRolUsuario {
 	private String nombres;
 	private String apellidos;
 	private String url_foto;
+	private String email;
+	private String telefono;
+	private String cod_verificacion;
+	private String key_encriptacion;
 	
 	//Metodos
 	public int getIdrol_usuario() {
@@ -67,4 +71,29 @@ public class ViewRolUsuario {
 	public void setUrl_foto(String url_foto) {
 		this.url_foto = url_foto;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public String getKey_encriptacion() {
+		return key_encriptacion;
+	}
+	public void setKey_encriptacion(String key_encriptacion) {
+		this.key_encriptacion = key_encriptacion;
+	}
+	public String getCod_verificacion() {
+		return cod_verificacion;
+	}
+	public void setCod_verificacion(String cod_verificacion) {
+		this.cod_verificacion = cod_verificacion;
+	}
+	
 }

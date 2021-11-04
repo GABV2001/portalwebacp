@@ -48,20 +48,24 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	//Recuperar informacion del Inicio
+	ArrayList<Home> listHome = new ArrayList<Home>();
+	Dt_Home dth = new Dt_Home();
+	listHome = dth.ListarHome();									
+	Home hm = new Home();
+	hm = listHome.get(0);	
 %>
 <!DOCTYPE html>
 <html lang="en">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <head>
 <meta charset="ISO-8859-1">
  <title>Portal ACP - Gestión Inicio</title>
     
      <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
-	
+	 <jsp:include page="imgShortIcon.jsp" />	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -77,8 +81,7 @@
      <title>Portal ACP - Gestión Inicio</title>
     
      <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
-	
+	 <jsp:include page="imgShortIcon.jsp" />  	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -94,9 +97,13 @@
     
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
+	<!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
+	
 </head>
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -118,22 +125,14 @@
                                         <h2 class="card-title text-center">Inicio</h2>
                                     </div>
                                     <div class="card-body">
-                                    
-									<%
-									ArrayList<Home> listHome = new ArrayList<Home>();
-									Dt_Home dth = new Dt_Home();
-									listHome = dth.ListarHome();									
-									Home hm = new Home();
-									hm = listHome.get(0);												
-									%>
                                         <form class="Inicio" method="post" action="./Sl_GestionInicio" enctype="multipart/form-data">
-                						<!-- El valor de estos input es para el Servlet opcion editar -->                			
+                							<!-- El valor de estos input es para el Servlet opcion editar -->                			
                                         	<input name="idInicio" type="hidden" value="<%=hm.getHomeID()%>" />
                                         	<input name="idUsuario" type="hidden" value="<%=usuarioid%>" />                                        	
                             				<input name="opcion" type="hidden" value="1" />
+                            				<input type="hidden" id="oldValue" value="0">  
                                             <h3>Historia</h3>
                                             <hr class="bg-dark w-auto">
-                                            <div class="form-group">
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
                                                 <div class="input-group mb-3">
@@ -149,7 +148,11 @@
                                             </div> 
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionHis" name = "descripcionHis"  rows="8" class="form-control" minlength="100" maxlength="1000" required><%=hm.getHistoria() %></textarea>
+                                                <textarea id="descripcionHis" name = "descripcionHis"   rows="8" class="form-control" minlength="100" maxlength="1000" required><%=hm.getHistoria() %></textarea>
+                                            	 <small id="message"></small>
+	                                             <div id="circle" data-value="0" data-size="30">
+	                              						<small id="percent"></small>
+	                        					  </div>					  	                                                                	
                                             </div>
                                             <h3>Misión</h3>
                                             <hr class="bg-dark w-auto">
@@ -169,6 +172,10 @@
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
                                                 <textarea id="descripcionMis" 	name = "descripcionMis" rows="8" class="form-control" minlength="80" maxlength="1000" required><%=hm.getMision() %></textarea>
+                                            	<small id="message1"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
+	                        					  </div>
                                             </div>
 
                                             <h3>Visión</h3>
@@ -189,6 +196,10 @@
                                             <div class="mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
                                                 <textarea id="descripcionVis" name = "descripcionVis" rows="8" class="form-control" minlength="80" maxlength="1000" required><%=hm.getVision() %></textarea>
+                               	                <small id="message2"></small>
+	                                             <div id="circle2" data-value="0" data-size="30">
+	                              						<small id="percent2"></small>
+	                        					  </div>                                           	
                                             </div>
                                       	 	<div class="text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
@@ -227,8 +238,6 @@
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -249,30 +258,12 @@
     <!-- jAlert js -->
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
-    
 	
-    <script>  
-    $('#multHistoria').on("change",function() {
-	     var i = $(this).prev('label').clone();
-	      var file = $('#multHistoria')[0].files[0].name;
-	      $(this).prev('label').text(file);
-
-	    });
-    $('#multMision').on("change",function() {
-	     var i = $(this).prev('label').clone();
-	      var file = $('#multMision')[0].files[0].name;
-	      $(this).prev('label').text(file);
-
-	    });
-    $('#multVision').on("change",function() {
-	     var i = $(this).prev('label').clone();
-	      var file = $('#multVision')[0].files[0].name;
-	      $(this).prev('label').text(file);
-
-	    });  
-</script>
-<script>
-    $(document).ready(function ()
+	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+    
+<script>  
+   $(document).ready(function ()
     {      
 	/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
@@ -280,14 +271,137 @@
 
         if(mensaje == "1")
         {
-            successAlert('Éxito','¡Información actualizada exitosamente!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Información actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionInicio.jsp";
+                }
+             });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionInicio.jsp";
+                }
+             });
+        }        
+     });
+   
+   //Actualizar nombre del archivo 
+   $('#multHistoria').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multHistoria')[0].files[0].name;
+	      $(this).prev('label').text(file);
+   });
+   
+   $('#multMision').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multMision')[0].files[0].name;
+	      $(this).prev('label').text(file);
+    });
+   
+   $('#multVision').on("change",function() {
+	     var i = $(this).prev('label').clone();
+	      var file = $('#multVision')[0].files[0].name;
+	      $(this).prev('label').text(file);
+    });  	    
+  
+   //Funcion para mostrar maximo de caracteres en los inputs y textarea
+    $('#descripcionHis').on("keydown", function(e) {
+        var textLength = $('#descripcionHis').val().replace(' ', '1').length + 1;
+        var maxValue = 1000;
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                      	
         }
-        
+     });
+   
+    $('#descripcionHis').on("keyup", function(e) {
+        var textLength = $('#descripcionHis').val().replace(' ', '1').length;
+        var maxValue = 1000;
+        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+        var percent = (textLength * 100) / maxValue;
+        var circlePercent = ((textLength * 100) / maxValue) / 100;
+        $('#circle').circleProgress({
+            animationStartValue: $('#oldValue').val(),
+            value: circlePercent,
+            size: 30,
+            fill: {
+                gradient: ["green", "lime"]
+            },
         });
-	</script>
+        percent = percent > 100 ? 100 : percent;
+        $("#percent").text(percent+"%");
+        $('#oldValue').val(circlePercent);
+    });	
+        
+    $('#descripcionMis').on("keydown", function(e) {
+        var textLength = $('#descripcionMis').val().replace(' ', '1').length + 1;
+        var maxValue = 1000;
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+		}	                        	
+        }
+     });
+    
+    $('#descripcionMis').on("keyup", function(e) {
+        var textLength = $('#descripcionMis').val().replace(' ', '1').length;
+        var maxValue = 1000;
+        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+        var percent = (textLength * 100) / maxValue;
+        var circlePercent = ((textLength * 100) / maxValue) / 100;
+        $('#circle1').circleProgress({
+            animationStartValue: $('#oldValue').val(),
+            value: circlePercent,
+            size: 30,
+            fill: {
+                gradient: ["green", "lime"]
+            },
+        });
+        percent = percent > 100 ? 100 : percent;
+        $("#percent1").text(percent+"%");
+        $('#oldValue').val(circlePercent);
+    });
+    
+    $('#descripcionVis').on("keydown", function(e) {
+        var textLength = $('#descripcionVis').val().replace(' ', '1').length + 1;
+        var maxValue = 1000;
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}	                        	
+        }
+     });
+    
+    $('#descripcionVis').on("keyup", function(e) {
+        var textLength = $('#descripcionVis').val().replace(' ', '1').length;
+        var maxValue = 1000;
+        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+        var percent = (textLength * 100) / maxValue;
+        var circlePercent = ((textLength * 100) / maxValue) / 100;
+        $('#circle2').circleProgress({
+            animationStartValue: $('#oldValue').val(),
+            value: circlePercent,
+            size: 30,
+            fill: {
+                gradient: ["green", "lime"]
+            },
+        });
+        percent = percent > 100 ? 100 : percent;
+        $("#percent2").text(percent+"%");
+        $('#oldValue').val(circlePercent);
+    });
+</script>
 </body>
 </html>

@@ -49,11 +49,11 @@ public class Sl_RptUsuarios extends HttpServlet {
 			ServletContext context = getServletContext();
 			String path = context.getRealPath("/");
 			System.out.println("Path: "+path);
-			String template = "reportes\\reporteUsuarios.jasper";
+			String template = "reportes\\RptUsuario.jasper";
 			Exporter exporter = new JRPdfExporter();
 			JasperPrint jasperPrint = JasperFillManager.fillReport(path+template, hm, c);
 			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition", "inline; filename=\"reportesUsuarios.pdf");
+			response.setHeader("Content-Disposition", "inline; filename=\"RptUsuario.pdf");
 			exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
 			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(otps));
 			exporter.exportReport();

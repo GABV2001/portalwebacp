@@ -2,17 +2,17 @@ package entidades;
 
 public class TipoProducto {
 	//Atributos
-	private int tipoproducotid;
+	private int tipoproductoid;
 	private String nombre;
 	private String descripcion;
 	private int estado;
 	
 	//Metodos
-	public int getTipoproducotid() {
-		return tipoproducotid;
+	public int getTipoproductoid() {
+		return tipoproductoid;
 	}
 	public void setTipoproducotid(int tipoproducotid) {
-		this.tipoproducotid = tipoproducotid;
+		this.tipoproductoid = tipoproducotid;
 	}
 	public String getNombre() {
 		return nombre;

@@ -36,13 +36,14 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+
 %>
 <!DOCTYPE html>
 <html lang="es">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
+
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -118,14 +119,14 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                                     </tfoot>
                                     <tbody>
                                            <%
-                                           	for(Region us: listRegion){
+                                           	for(Region lr: listRegion){
                                            %>
                                        	<tr> 
-                                       	    <td><%=us.getNombre() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>                                             
-                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=us.getRegionID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                                                        
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                       	    <td><%=lr.getNombre() %></td>                                           
+                                            <td><%=lr.getDescripcion() %></td>                                             
+                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=lr.getRegionID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;    
+                                                   <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta region?',
@@ -133,7 +134,7 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionRegion?idR=<%=us.getRegionID()%>';
+                                           		      window.location.href = 'Sl_GestionRegion?idR=<%=lr.getRegionID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -145,7 +146,9 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td></tr>
+                        						</a>
+                        						</td>
+                        						</tr>
                                        		<%
                                        		}
                                            %>                                                                                  
@@ -163,11 +166,8 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />  
     
-
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -214,17 +214,61 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', '¡Región guardada exitosamente!');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Región guardada con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionRegion.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionRegion.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Región actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRegion.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Éxito', '¡Región eliminada exitosamente!');
-        }
-    });
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Región eliminada exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionRegion.jsp";
+                 }
+               });       
+        }       
+	    if(mensaje == "existe")
+	    {
+	        $.jAlert({
+	            'title': 'Error',
+	            'content': '¡Región ya existe!',
+	            'theme': 'red',
+	            'onClose': function(OnClose) {               
+	                window.location = "GestionRegion.jsp";
+	            }
+	          });
+	    }
+	    });  
+
 	</script>
 </body>
 </html>

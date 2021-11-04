@@ -14,7 +14,7 @@ public class Ng_Region {
 		private ResultSet rs = null;
 		private PreparedStatement ps = null;
 		
-		// Metodo para validar el producto 
+		// Metodo para validar region 
 		public boolean existeRegion(String Region){
 			boolean existe = false;
 			try{
@@ -49,4 +49,41 @@ public class Ng_Region {
 			}
 			return existe;
 		}
+		
+		// Metodo para validar actualizar region
+					public boolean existeActualizarRegion(int regionid, String nombre){
+						boolean existe = false;
+						try{
+							c = PoolConexion.getConnection();
+							ps = c.prepareStatement("SELECT * FROM region WHERE regionid != ? AND nombre = ? and estado <>3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+							ps.setInt(1, regionid);				
+							ps.setString(2, nombre);
+							rs = ps.executeQuery();
+							if(rs.next()){
+								existe=true;
+							}
+						}
+						catch (Exception e){
+							System.out.println("DATOS ERROR existeActualizarRegion(): "+ e.getMessage());
+							e.printStackTrace();
+						}
+						finally{
+							try {
+								if(rs != null){
+									rs.close();
+								}
+								if(ps != null){
+									ps.close();
+								}
+								if(c != null){
+									PoolConexion.closeConnection(c);
+								}
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}			
+						return existe;
+					}
 }

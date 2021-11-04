@@ -49,9 +49,8 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
-%>
-<!DOCTYPE html>
-<%            	
+	
+	//Cargar arreglo de objetos eventos
 	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
 	Dt_Servicio dts = new Dt_Servicio();
 	listServicio = dts.listarServicio();
@@ -71,20 +70,18 @@
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
   
-      <title>Portal ACP - Formulario Servicio</title>
+    <title>Portal ACP - Formulario Servicio</title>
       
      <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
 	
-  
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -99,6 +96,10 @@
     
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
+	<!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -131,12 +132,17 @@
                       					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                      					
                                       <div class="form-group">
                                                 <label for="nombreS" class="form-label fw-bolder">Nombre:</label>
-                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" minlength="10" maxlength="200" required>
+                                                <input type="text" class="form-control" id="nombreServicio" name="nombreServicio" minlength="5" maxlength="200" required>
+                                            	<small id="message"></small>                                             	
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónS"
                                                     class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripciónServicio" name= "descripcionServicio"rows="4" class="form-control" minlength="25" maxlength="350" required ></textarea>
+                                                <textarea id="descripcionServicio" name= "descripcionServicio" rows="4" class="form-control" minlength="5" maxlength="350" required ></textarea>
+                                            		 <small id="message1"></small>
+                                 					  <div id="circle1" data-value="0" data-size="30">
+                    								<small id="percent1"></small>
+                    								</div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -146,7 +152,7 @@
                                                     </div>
                                                    <div class="custom-file">
 													    <label class="custom-file-label text-left" for="customFile" id="filmultSer">Seleccionar archivo</label>
-													    <input type="file" class="custom-file-input" id="multSer" name="multSer" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required>
+													    <input type="file" class="custom-file-input" id="multSer" name="multSer" accept="image/jpeg" required>
 													</div>
                                                 </div>
                                             </div>
@@ -170,23 +176,16 @@
                         </div>
                     </div>
                     <!-- Termina Formulario -->
-
-                </div>
+                
+                </div>                              
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <jsp:include page="adminFooter.jsp" />    
+     <!-- Footer -->
+     <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -195,8 +194,6 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -217,11 +214,14 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-		<!-- jAlert js -->
+	<!-- jAlert js -->
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
-	<script>		
+	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+		
+<script>		
 	    $(document).ready(function() 
 		{
 	    	/////////// VARIABLE DE CONTROL MSJ ///////////
@@ -230,18 +230,60 @@
 
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'El servicio que esta intentando registrar ya existe en la base de datos!');
+	            $.jAlert({
+	                'title': 'Error',
+	                'content': '¡Servicio ingresado ya existe!',
+	                'theme': 'red',
+	                'onClose': function(OnClose) {               
+	                    window.location = "FormServicio.jsp";
+	                }
+	              });
 	        }
 	    });
-	 </script>
-		
- 	 <script>  $('#multSer').on("change",function() {
-	     var i = $(this).prev('label').clone();
-	      var file = $('#multSer')[0].files[0].name;
-	   console.log(file);
-	      $(this).prev('label').text(file);
-
+	    $('#multSer').on("change",function() {
+	        var i = $(this).prev('label').clone();
+	        var file = $('#multSer')[0].files[0].name;
+	       console.log(file);
+	        $(this).prev('label').text(file);
+	       });
+	 
+	    //Funcion para mostrar maximo de caracteres en los inputs y textarea
+	    $('#nombreServicio').on("keyup", function(e) {
+	        var textLength = $('#nombreServicio').val().replace(' ', '1').length;
+	        var maxValue = 200;
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
 	    });
-	</script>
+	    
+	    $('#descripcionServicio').on("keydown", function(e) {
+		      var textLength = $('#descripcionServicio').val().replace(' ', '1').length + 1;
+		      var maxValue = 350;
+		      console.log(e.keyCode);
+		      if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}               	        	
+		      }
+		   });
+			    
+		   $('#descripcionServicio').on("keyup", function(e) {
+		       var textLength = $('#descripcionServicio').val().replace(' ', '1').length;
+		       var maxValue = 350;
+		       $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+		       var percent = (textLength * 100) / maxValue;
+		       var circlePercent = ((textLength * 100) / maxValue) / 100;
+		       $('#circle1').circleProgress({
+		           animationStartValue: $('#oldValue').val(),
+		           value: circlePercent,
+		           size: 30,
+		           fill: {
+		               gradient: ["green", "lime"]
+		           },
+		       });
+		       percent = percent > 100 ? 100 : percent;
+		       $("#percent1").text(percent.toFixed(2)+"%");
+		       $('#oldValue').val(circlePercent);
+		   });		
+</script>		
 </body>
 </html>

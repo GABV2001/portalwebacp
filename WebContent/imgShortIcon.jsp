@@ -1,1 +1,1 @@
- <link rel="shortcut icon" href="img/logo_jesuita.png">
+ <link rel="shortcut icon" class="img-thumbnail" href="img/LogoACP.png">

@@ -58,8 +58,7 @@ public class Sl_GestionArbol extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
+				
 		//CONSTRUIR EL OBJETO ARBOL
 		Dt_Arbol dta = new Dt_Arbol();
 		Arbol ar = new Arbol();
@@ -194,8 +193,11 @@ public class Sl_GestionArbol extends HttpServlet {
 		        ar.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
 	            try {
 	            	if(nga.existeArbol(ar.getNombreComun())){
-		        	   	response.sendRedirect("GestionArbol.jsp?msj=2");	
+		        	   	response.sendRedirect("GestionArbol.jsp?msj=existe");	
 	            	}else {
+	            		if(nga.existeNombre(ar.getNombreCientifico())){
+			        	   	response.sendRedirect("GestionArbol.jsp?msj=existe");	
+		            	}else {	
 			        if(	dta.guardarArbol(ar)) {
 			        	response.sendRedirect("GestionArbol.jsp?msj=1");
 			        }
@@ -204,6 +206,7 @@ public class Sl_GestionArbol extends HttpServlet {
 			        }	  
 		          	}
 	            	}
+	            }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
 					e.printStackTrace();
@@ -212,16 +215,22 @@ public class Sl_GestionArbol extends HttpServlet {
 			}
 		case 2:{
 			try {
-	        	ar.setArbolID(arbolid);
+				ar.setArbolID(arbolid);
+				if(nga.existeActualizarArbol(ar.getArbolID(),ar.getNombreComun())){
+		          	response.sendRedirect("GestionArbol.jsp?msj=existe");
+		        }else {
+		        	if(nga.existeActualizarNombre(ar.getArbolID(),ar.getNombreCientifico())){
+			          	response.sendRedirect("GestionArbol.jsp?msj=existe");
+			        }else {
 		        if(dta.modificarArbol(ar)) {
 		        	response.sendRedirect("GestionArbol.jsp?msj=3");
 		        }
 		        else {
 		        	response.sendRedirect("GestionArbol.jsp?msj=4");
+		        }        
+				}
 		        }
-		        
-	        	
-	        }
+			}
 	        catch(Exception e) {
 	        	System.out.println("Sl_GestionArbol, el error es: " + e.getMessage());
 				e.printStackTrace();
@@ -229,6 +238,7 @@ public class Sl_GestionArbol extends HttpServlet {
 				break;
 				
 			}
+		
 		default:
 			response.sendRedirect("GestionArbol.jsp?msj=5");	
 			break;

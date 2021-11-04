@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+	pageEncoding="utf-8" import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -48,26 +48,26 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Cargar arreglo de objetos Rol Usuario 
+  	ArrayList<ViewRolUsuario> listRU = new ArrayList<ViewRolUsuario>();
+  	Dt_RolUsuario dtru = new Dt_RolUsuario();
+  	listRU = dtru.listaRolUser();                                	
+	
+  	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
 <html lang="es">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Portal ACP - Gestión Rol Usuarios</title>
+    <title>Portal ACP - Gestión Rol-Usuario</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
 	
-
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -92,106 +92,94 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
 	<!-- Menu -->
     <jsp:include page="adminMenus.jsp" />  
     
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Roles Usuarios</h1>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Roles Usuarios</h1>
+                <!-- DataTales -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Gestión Roles Usuarios</h6>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <div style="text-align:right;"><a href="FormRolUsuario.jsp"><i
+                                            class="fas fa-plus-square"></i>&nbsp; Asignar Rol a Usuarios</div></a>                             	
+                                <thead>
+                                    <tr>                                                                                   
+                                        <th>Usuario</th>
+                                        <th>Rol</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th>Rol</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                        <%
+                                   		for(ViewRolUsuario VU: listRU){
+                                   	    %> 
+                                    <tr>                                           
+                                       <td><%=VU.getUsuario() %></td>
+                                       <td><%=VU.getRol() %></td>
+                                       <td>
+                                       		<a id="btn-edita-abrir" href="FormEditarRolUsuario.jsp?idRu=<%=VU.getIdrol_usuario()%>">
+                    							<i class="fas fa-edit" title="Modificar datos"></i>
+                    						</a>
+                    						&nbsp;&nbsp;
+                                       		<a class="ajax-link" href="javascript:void(0);" 
+                                       		onclick="$.jAlert({
+                                       		    'type': 'confirm',
+                                       		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                       		    'onConfirm': function(e, btn){
+                                       		      e.preventDefault();
+                                       		      //do something here
 
-                    <!-- DataTales -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión Roles Usuarios</h6>
-                        </div>
-                        
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <div style="text-align:right;"><a href="FormRolUsuario.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Asignar Rol a Usuarios</div></a>
-                                   <%
-                                	ArrayList<ViewRolUsuario> listRU = new ArrayList<ViewRolUsuario>();
-                                	Dt_RolUsuario dtru = new Dt_RolUsuario();
-                                	listRU = dtru.listaRolUser();                                	
-                           	      %>	
-                                    <thead>
-                                        <tr>                                                                                   
-                                            <th>Usuario</th>
-                                            <th>Rol</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Usuario</th>
-                                            <th>Rol</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                            <%
-                                       		for(ViewRolUsuario VU: listRU){
-                                       	    %> 
-                                        <tr>                                           
-                                           <td><%=VU.getUsuario() %></td>
-                                           <td><%=VU.getRol() %></td>
-                                           <td>
-                                           		<a id="btn-edita-abrir" href="FormEditarRolUsuario.jsp?idRu=<%=VU.getIdrol_usuario()%>">
-                        							<i class="fas fa-edit" title="Modificar datos"></i>
-                        						</a>
-                        						&nbsp;&nbsp;
-                                           		<a class="ajax-link" href="javascript:void(0);" 
-                                           		onclick="$.jAlert({
-                                           		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
-                                           		    'onConfirm': function(e, btn){
-                                           		      e.preventDefault();
-                                           		      //do something here
-
-                                           		      window.location.href = 'Sl_GestionRolUsuario?idRU=<%=VU.getIdrol_usuario()%>';
-                                           		      btn.parents('.jAlert').closeAlert();
-                                           		      return false;
-                                           		    },
-                                           		    'onDeny': function(e, btn){
-                                           		      e.preventDefault();
-                                           		      //do something here
-                                           		      btn.parents('.jAlert').closeAlert();
-                                           		      return false;
-                                           		    }
-                                           		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Rol a Usuario"></i>
-                        						</a>
-                                           		<!-- <a href="#">
-                        							<i class="fas fa-eye" title="Visualizar"></i>
-                        						</a>  -->
-                                      	     </td>
-                                    		   </tr>
-                                       		<%
-                                       		}
-                                           %>
-                                    </tbody>
-                                </table>
-                            </div>
+                                       		      window.location.href = 'Sl_GestionRolUsuario?idRU=<%=VU.getIdrol_usuario()%>';
+                                       		      btn.parents('.jAlert').closeAlert();
+                                       		      return false;
+                                       		    },
+                                       		    'onDeny': function(e, btn){
+                                       		      e.preventDefault();
+                                       		      //do something here
+                                       		      btn.parents('.jAlert').closeAlert();
+                                       		      return false;
+                                       		    }
+                                       		  });">
+                    							<i class="fas fa-trash-alt" title="Eliminar Rol a Usuario"></i>
+                    						</a>
+                                       		<!-- <a href="#">
+                    							<i class="fas fa-eye" title="Visualizar"></i>
+                    						</a>  -->
+                                  	     </td>
+                                		   </tr>
+                                   		<%
+                                   		}
+                                       %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
- 			 <div style="text-align:center;"><a href="GestionUsuario.jsp"><i class="fas fa-arrow-circle-left"></i>&nbsp;Volver</a></div>
-                                
             </div>
-            
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <jsp:include page="adminFooter.jsp" />  
-
+                            
+       	  <!-- /.container-fluid -->
+		  <div style="text-align:center;"><a href="GestionUsuario.jsp"><i class="fas fa-arrow-circle-left"></i>&nbsp;Volver</a></div>
+          
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+     <!-- Footer -->
+     <jsp:include page="adminFooter.jsp" />  
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -236,15 +224,47 @@ import="vistas.ViewRolUsuario,datos.Dt_RolUsuario, entidades.Rol,vistas.ViewRolU
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', '¡Asignación Rol-Usuario registrado con éxito!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación Rol-Usuario registrado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolUsuario.jsp";
+              }
+            });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolUsuario.jsp";
+              }
+            });
         }
         if(mensaje == "5")
         {
-            errorAlert('Éxito', '¡Asignación de Rol-Usuario eliminado exitosamente!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación de Rol-Usuario eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolUsuario.jsp";
+              }
+            });
+        }
+        if(mensaje == "em")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación Rol-Usuario registrado con éxito, se ha enviado un correo para el proceso de verificación al usuario!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolUsuario.jsp";
+              }
+            });
         }
     });
 	</script>

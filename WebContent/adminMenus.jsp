@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+    pageEncoding="ISO-8859-1" import="entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion,
+     datos.Dt_Rol,datos.Dt_RolOpcion,datos.Dt_Usuario, entidades.Usuario, java.util.*;"%>
  
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -41,23 +42,26 @@
 	ViewRolUsuario vrgu = new ViewRolUsuario();
 	
 	//Datos del Usuario
+	int usuarioid = 0;
 	String NombreApellido = null;
     String url_foto = null;	
-    
-	if((ViewRolUsuario) session.getAttribute("acceso") == null){
 	
-	}else{
-		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
-		 NombreApellido = vrgu.getNombres() + " "+ vrgu.getApellidos();
-	     url_foto = vrgu.getUrl_foto();		  
-	}
-	
+    if(vru != null){
+		usuarioid = vru.getUsuarioid();
+		Usuario user = new Usuario();
+		Dt_Usuario dtu = new Dt_Usuario();
+		user = dtu.getUsuario((usuarioid));
+		
+		//Cargar perfil
+		NombreApellido = user.getNombre() + " "+ user.getApellido();
+	    url_foto = user.getUrl_foto();			
+    }
     if(NombreApellido == null){
-    	NombreApellido = "Anonimo"; 
+    	NombreApellido = "Desconocido"; 
     }
     if(url_foto ==null){
     	url_foto = "img/undraw_profile.svg";
-    }
+    }  
 %>
  <!-- Sidebar -->
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -149,7 +153,7 @@
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Gestión Árbol
+                    Gestión Árboles
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -225,7 +229,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Gestión Publicación
+                Gestión Publicaciones
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -233,11 +237,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
                     aria-expanded="true" aria-controls="collapseSeven">
                     <i class="fas fa-bullhorn"></i>
-                    <span>Publicación</span>
+                    <span>Publicaciones</span>
                 </a>
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="GestionPublicacion.jsp">Gestión Publicación</a>
+                        <a class="collapse-item" href="GestionPublicacion.jsp">Gestión Publicaciones</a>
                     </div>
                 </div>
             </li>
@@ -260,6 +264,7 @@
                 <div id="collapseEight" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionMapa.jsp">Gestión Mapa</a>
+                        <a class="collapse-item" href="GestionCoordenada.jsp">Gestión Coordenada</a>                        
                     </div>
                 </div>
             </li>
@@ -311,7 +316,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -334,15 +338,14 @@
                                     </div>
                                 </form>
                             </div>
-                        </li>
-						
+                        </li>						
 						
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=NombreApellido%></span>
-                                <img class="img-profile rounded-circle" src=<%=url_foto %>>
+                                <img class="img-profile rounded-circle" id="imgUsuario" src=<%=url_foto +"?time="+System.currentTimeMillis()%>>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -352,11 +355,14 @@
                                     Perfil
                                 </a>
                                  -->
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Configuración
+                                 <a class="dropdown-item" href="Perfil.jsp">
+                                 <i class="fas fa-user-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
                                 </a>
-                                 -->
+                                <a class="dropdown-item" href="AdminCambiarContra.jsp">
+                                 <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cambiar contraseña 
+                                </a>                                
                                 <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="login.jsp" data-toggle="modal"
                                     data-target="#logoutModal">
@@ -369,3 +375,4 @@
                 </nav>
                 <!-- End of Topbar -->
             <!-- Termina Menus -->
+ 

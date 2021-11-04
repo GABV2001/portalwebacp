@@ -48,7 +48,20 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
+	
+	String arID = "";
+ 	arID = request.getParameter("idA")==null?"0":request.getParameter("idA");
+	    					
+	Arbol ar = new Arbol();
+	Dt_Arbol dta = new Dt_Arbol();
+	ar = dta.getArbol(Integer.parseInt(arID));	
 %>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +72,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario Árbol</title>
+   <title>Portal ACP - Formulario Editar Árbol</title>
    
    <!-- Icon -->
    <jsp:include page="imgShortIcon.jsp" />  
@@ -75,6 +88,14 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
+	
+	 <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
 
 </head>
 
@@ -88,14 +109,8 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                               <%
-                               String arID = "";
-							 	arID = request.getParameter("idA")==null?"0":request.getParameter("idA");
-														
-								Arbol ar = new Arbol();
-								Dt_Arbol dta = new Dt_Arbol();
-								ar = dta.getArbol(Integer.parseInt(arID));						
-                         	   %>
+                               					
+                         	   
                     <!-- Formulario -->
    					<div class="container">
                         <div class="row">
@@ -104,7 +119,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
                                     <div class="card-header">
                                         <h2>
-                                            Catálogo del árbol
+                                            Formulario Editar Árbol
                                         </h2>
 
                                     </div>
@@ -116,18 +131,23 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                         <input name="arbolid" type="hidden" value="<%=ar.getArbolID()%>" />                                       
                                             <div class="form-group">
                                                 <label>Nombre común:</label>
-                                                <input class="form-control"  name="txtNombreComun" id="txtNombreComun">
+                                                <input class="form-control"  name="txtNombreComun" id="txtNombreComun" minlength="5" maxlength="150" required>
+                                                 <small id="message"></small>
 
                                             </div>
                                             <div class="form-group">
                                                 <label>Nombre científico:</label>
-                                                <input class="form-control" name="txtNombreCientifico" id="txtNombreCientifico">
+                                                <input class="form-control" name="txtNombreCientifico" id="txtNombreCientifico" minlength="5" maxlength="150" required>
+                                                 <small id="message1"></small>
 
                                             </div>
                                             <div class="form-group">
                                                 <label>Descripción:</label>
-                                                <textarea class="form-control" rows="3"  name="txtDescripcionArbol" id="txtDescripcionArbol" required></textarea>
-                                            </div>
+                                                <textarea class="form-control" rows="3"  name="txtDescripcionArbol" id="txtDescripcionArbol" minlength="5" maxlength="500"></textarea>
+                                                    <small id="message2"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
+                                                </div>  
                                              <div class="form-group">
                                                 <label for="custom-file">Multimedia:</label>
                                                 <div class="input-group mb-3">
@@ -151,9 +171,9 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                                 class="fas fa-plus-square"></i></a></label>  
                                                 <select class="form-control" name="GeneroID" id="GeneroID">
                                             <%
-                                    		for(Genero u: listGenero){
+                                    		for(Genero lg: listGenero){
                                     	    %>	
-                                    		<option value="<%=u.getGeneroID()%>"><%=u.getNombre()%></option>
+                                    		<option value="<%=lg.getGeneroID()%>"><%=lg.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>  
@@ -169,9 +189,9 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                                 class="fas fa-plus-square"></i></a></label>
                                                 <select class="form-control" name="FamiliaID" id="FamiliaID">
                                             <%
-                                    		for(Familia u: listFamilia){
+                                    		for(Familia lfam: listFamilia){
                                     	    %>	
-                                    		<option value="<%=u.getFamiliaID()%>"><%=u.getNombre()%></option>
+                                    		<option value="<%=lfam.getFamiliaID()%>"><%=lfam.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>  
@@ -183,12 +203,12 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                             listFloracion = dtf.listaFloracion();
                                             %>
                                             <div class="form-group">
-                                                <label>Floracion del árbol:</label>
+                                                <label>Floración del árbol:</label>
                                                 <select class="form-control" name="FloracionID" id="FloracionID">
                                             <%
-                                    		for(Floracion u: listFloracion){
+                                    		for(Floracion lflo: listFloracion){
                                     	    %>	
-                                    		<option value="<%=u.getFloracionID()%>"><%=u.getNombre()%></option>
+                                    		<option value="<%=lflo.getFloracionID()%>"><%=lflo.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>  
@@ -215,11 +235,9 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
-        
-        </div>
+
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -251,8 +269,18 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
+		<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
 
 	<script> 
+	
+
 	$('#multArbol').on("change",function() {
 	     var i = $(this).prev('label').clone();
 	      var file = $('#multArbol')[0].files[0].name;
@@ -260,8 +288,13 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	      $(this).prev('label').text(file);
 
 	    });
+	
+	  
+
 	</script>	
 	<script>  
+	
+	
 	  $(document).ready(function()
 		{
 			$("#txtNombreComun").val("<%=ar.getNombreComun()%>");
@@ -272,7 +305,84 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 			$("#FloracionID").val("<%=ar.getFloracionID()%>");
 			$("#Multimedia").val("<%=ar.getMultimedia()%>");
 		});
+	  
+	  
+	  $('#txtNombreComun').on("keydown", function(e) {
+	        var textLength = $('#txtNombreComun').val().replace(' ', '1').length + 1;
+	        var maxValue = 150;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtNombreComun').on("keyup", function(e) {
+	        var textLength = $('#txtNombreComun').val().replace(' ', '1').length;
+	        var maxValue = 150;
+
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
+	    });
+	    
+		  $('#txtNombreCientifico').on("keydown", function(e) {
+		        var textLength = $('#txtNombreCientifico').val().replace(' ', '1').length + 1;
+		        var maxValue = 150;
+		        
+		        console.log(e.keyCode);
+		        if (textLength > maxValue) {
+					if(e.keyCode != 8){
+					e.preventDefault();
+					}                     	
+		        }
+
+		     });
+		    $('#txtNombreCientifico').on("keyup", function(e) {
+		        var textLength = $('#txtNombreCientifico').val().replace(' ', '1').length;
+		        var maxValue = 150;
+
+		        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+		       
+		    });
+	    
+	    $('#txtDescripcionArbol').on("keydown", function(e) {
+	        var textLength = $('#txtDescripcionArbol').val().replace(' ', '1').length + 1;
+	        var maxValue = 500;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtDescripcionArbol').on("keyup", function(e) {
+	        var textLength = $('#txtDescripcionArbol').val().replace(' ', '1').length;
+	        var maxValue = 500;
+
+	        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+	        
+	        var percent = (textLength * 100) / maxValue;
+	        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	        $('#circle1').circleProgress({
+	            animationStartValue: $('#oldValue').val(),
+	            value: circlePercent,
+	            size: 30,
+	            fill: {
+	                gradient: ["green", "lime"]
+	            },
+	        });
+
+	        percent = percent > 100 ? 100 : percent;
+
+	        $("#percent1").text(percent+"%");
+	        $('#oldValue').val(circlePercent);
+	       
+	    });
 	 </script>  
 </body>
-
 </html>

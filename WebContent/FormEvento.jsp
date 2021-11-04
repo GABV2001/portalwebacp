@@ -49,10 +49,8 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
-%>
-<!DOCTYPE html>
-<html lang="en">
-<%            	
+	
+	//Cargar arreglo de objetos eventos
 	ArrayList<Evento> listEvento = new ArrayList<Evento>();
 	Dt_Evento dte = new Dt_Evento();
 	listEvento = dte.listarEventos();
@@ -68,6 +66,8 @@
 		eventoid = ev.getEventoid() + 1;		
 	}
 %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -89,7 +89,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    
+    <!-- Caracteres -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>    
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -122,13 +125,17 @@
                       					<input name="usuarioid" type="hidden" value="<%=usuarioid%>" />                 					                            
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput">Nombre:</label>
-                                                <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" required>
+                                                <input type="text" class="form-control" id="txtNombreEvento" name = "txtNombreEvento" minlength="3" maxlength="200" required>
+                                            	 <small id="message1"></small>
                                             </div>
-
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3" id ="txtDescripcionEvento" name = "txtDescripcionEvento" required ></textarea>
+                                                    <textarea class="form-control" rows="3" id ="txtDescripcionEvento" name = "txtDescripcionEvento"  minlength="3" maxlength="500" required ></textarea>
+                                                	 <small id="message"></small>
+                                                <div id="circle" data-value="0" data-size="30">
+                              						<small id="percent"></small>
+                                                </div>
                                                 </div>
                                             </div>
 
@@ -178,7 +185,8 @@
 
                                             <div class="form-group ">
                                                 <label for="formGroupExampleInput ">Ubicación:</label>
-                                                <input type="text " class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento" required>
+                                                <input type="text" class="form-control " id="txtUbicacionEvento" name= "txtUbicacionEvento" minlength="3" maxlength="250" required>
+                                            	<small id="message2"></small>                                            	
                                             </div>
                                             <div class="form-group text-center">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" required/>
@@ -201,15 +209,8 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <jsp:include page="adminFooter.jsp" />    
-        
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+    <!-- Footer -->
+    <jsp:include page="adminFooter.jsp" />    
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -219,8 +220,6 @@
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-  	
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -241,14 +240,10 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    <script>
-    $('#datefInicioEvento').datepicker({
-        startDate: '-2m',
-        endDate: '+2d'
-    });
-    </script>
-    
-	<script> 
+    <!-- Circle progress -->
+    <script src="js/circle-progress.js"></script>  
+  
+  <script> 
 	$('#multEvento').on("change",function() {
 	     var i = $(this).prev('label').clone();
 	      var file = $('#multEvento')[0].files[0].name;
@@ -256,24 +251,88 @@
 	      $(this).prev('label').text(file);
 
 	    });
-	</script>	
+	
+	 //Caracteres Nombre
+	$('#txtNombreEvento').on("keyup", function(e) {
+            var textLength = $('#txtNombreEvento').val().replace(' ', '1').length;
+            var maxValue = 200;
+
+     $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+     });
+	 
+	 //Caracteres Descripcion 
+	 $('#txtDescripcionEvento').on("keydown", function(e) {
+         var textLength = $('#txtDescripcionEvento').val().replace(' ', '1').length + 1;
+         var maxValue = 500;
+
+         console.log(e.keyCode);
+         if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}	                       	
+         }
+      });
+	 $('#txtDescripcionEvento').on("keyup", function(e) {
+         var textLength = $('#txtDescripcionEvento').val().replace(' ', '1').length;
+         var maxValue = 500;
+
+         $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+
+         var percent = (textLength * 100) / maxValue;
+         var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+         $('#circle').circleProgress({
+             animationStartValue: $('#oldValue').val(),
+             value: circlePercent,
+             size: 30,
+             fill: {
+                 gradient: ["green", "lime"]
+             },
+         });
+
+         percent = percent > 100 ? 100 : percent;
+
+         $("#percent").text(percent+"%");
+         $('#oldValue').val(circlePercent);
+     });
+	 
+	 //Caracteres Ubicacion
+	  $('#txtUbicacionEvento').on("keyup", function(e) {
+            var textLength = $('#txtUbicacionEvento').val().replace(' ', '1').length;
+            var maxValue = 250;
+
+       $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+       });
+</script>
+
 <script>
-	var fecha = new Date();
-	var anio = fecha.getFullYear();
-	var dia = fecha.getDate();
-	var _mes = fecha.getMonth(); //viene con valores de 0 al 11
-	_mes = _mes + 1; //ahora lo tienes de 1 al 12
-	if (_mes < 10) //ahora le agregas un 0 para el formato date
-	{
-	  var mes = "0" + _mes;
-	} else {
-	  var mes = _mes.toString;
-	}
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    $('#datefInicioEvento').attr('min', maxDate);
+});
+</script>
+<script>
+var start = document.getElementById('datefInicioEvento');
+var end = document.getElementById('datefFinalEvento');
 
-	let fecha_minimo = anio + '-' + mes + '-' + dia; // Nueva variable
-
-	document.getElementById("datefInicioEvento").setAttribute('min',fecha_minimo);
-	document.getElementById("datefFinalEvento").setAttribute('min',fecha_minimo);
+start.addEventListener('change', function() {
+    if (start.value)
+        end.min = start.value;
+}, false);
+end.addEventLiseter('change', function() {
+    if (end.value)
+        start.max = end.value;
+}, false);
 </script>
 </body>
 </html>

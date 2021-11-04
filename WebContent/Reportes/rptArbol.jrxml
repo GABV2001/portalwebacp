@@ -1,333 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptArbol" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="cd3df208-1f01-461e-9efe-3ee6c21a9dcb">
-	<property name="template.engine" value="tabular_template"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dsArbol"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptArbol" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Reporte Árboles"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="479"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<style name="Table">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-			<topPen lineWidth="1.0" lineColor="#000000"/>
-			<leftPen lineWidth="1.0" lineColor="#000000"/>
-			<bottomPen lineWidth="1.0" lineColor="#000000"/>
-			<rightPen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TH" mode="Transparent" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
-			<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
-			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
-			<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Transparent" forecolor="#B89F7D" backcolor="#70A9C6">
-		<box>
-			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
-			<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Transparent" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#CCCCCC"/>
-			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#CCCCCC"/>
-			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH_Label" style="SubTitle" mode="Opaque" forecolor="#FFFFFF" backcolor="#666666" fontSize="16" isBold="true">
-		<box leftPadding="2"/>
-	</style>
-	<subDataset name="tableDataset" uuid="3154df5b-7b71-4a38-bd81-b0bea68949dd">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dsArbol"/>
-		<queryString language="SQL">
-			<![CDATA[select arbolid,nombrecomun,nombrecientifico,descripcion,nombrefam,nombregenero,nombreflo from viewarbol where estado <> 3]]>
-		</queryString>
-		<field name="arbolid" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.name" value="arbolid"/>
-			<property name="com.jaspersoft.studio.field.label" value="arbolid"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="nombrecomun" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="nombrecomun"/>
-			<property name="com.jaspersoft.studio.field.label" value="nombrecomun"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="nombrecientifico" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="nombrecientifico"/>
-			<property name="com.jaspersoft.studio.field.label" value="nombrecientifico"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="descripcion" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
-			<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="nombrefam" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="nombrefam"/>
-			<property name="com.jaspersoft.studio.field.label" value="nombrefam"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="nombregenero" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="nombregenero"/>
-			<property name="com.jaspersoft.studio.field.label" value="nombregenero"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-		<field name="nombreflo" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="nombreflo"/>
-			<property name="com.jaspersoft.studio.field.label" value="nombreflo"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
-		</field>
-	</subDataset>
-	<queryString>
-		<![CDATA[]]>
+	<queryString language="SQL">
+		<![CDATA[SELECT viewarbol.arbolid,
+	viewarbol.nombrecomun,
+	viewarbol.multimedia,
+	viewarbol.nombrecientifico,
+	viewarbol.descripcion,
+	viewarbol.nombrefam,
+	viewarbol.nombregenero,
+	viewarbol.nombreflo
+FROM viewarbol
+WHERE 
+	 viewarbol.estado <> 3]]>
 	</queryString>
+	<field name="arbolid" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="arbolid"/>
+		<property name="com.jaspersoft.studio.field.label" value="arbolid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="nombrecomun" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombrecomun"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombrecomun"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="multimedia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="multimedia"/>
+		<property name="com.jaspersoft.studio.field.label" value="multimedia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="nombrecientifico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombrecientifico"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombrecientifico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="nombrefam" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombrefam"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombrefam"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="nombregenero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombregenero"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombregenero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
+	<field name="nombreflo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreflo"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreflo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viewarbol"/>
+	</field>
 	<background>
 		<band height="575" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="475" width="105" height="100" backcolor="#666666" uuid="c43bcaab-2004-4343-bc81-ffa62c8e2de6"/>
+				<reportElement mode="Opaque" x="-20" y="490" width="110" height="85" backcolor="#666666" uuid="6eb7cb61-0dd7-47a8-8475-5fa6c3a348dc"/>
 				<textField>
-					<reportElement style="Column header" x="0" y="0" width="104" height="73" forecolor="#000000" uuid="556559f9-238c-4b08-acd0-f8cd3e750500"/>
+					<reportElement style="Column header" x="2" y="0" width="104" height="73" forecolor="#000000" uuid="bd3512a9-8595-4d94-bda6-0264c480b003"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="58" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="0" y="77" width="104" height="20" forecolor="#000000" uuid="a0923ef1-0a31-42cd-80c8-b714e4c8a4af"/>
-					<box leftPadding="4" rightPadding="4"/>
-					<textElement textAlignment="Center">
-						<font size="16" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<line>
-					<reportElement mode="Transparent" x="42" y="73" width="20" height="1" backcolor="#FFFFFF" uuid="1022d58b-595a-4931-810c-2820c25386ac"/>
-				</line>
 			</frame>
 		</band>
 	</background>
 	<title>
-		<band height="104" splitType="Stretch">
+		<band height="109" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="77e5f357-287f-46bb-a2ca-428ae6225aa5"/>
+				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="1dcadd54-7d50-4470-85ed-189e4d910b25"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="54" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Reportes de Arboles ACP]]></text>
+				<text><![CDATA[Reporte de Árboles]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="232" y="67" width="568" height="37" uuid="862cb50c-5a5e-4906-a495-226e25115fb6"/>
+				<textElement textAlignment="Right">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Portal Arboreto Carmelo Palma]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="10" width="170" height="60" uuid="8beb0ea5-c755-4525-9d81-21501d2b99fd"/>
+				<imageExpression><![CDATA["Logo IICN.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="80" y="2" width="682" height="20" backcolor="#666666" uuid="35d90a9b-bb7e-4ec4-bfa2-68be1967d6b2"/>
+				<staticText>
+					<reportElement style="Column header" x="14" y="3" width="100" height="15" uuid="13d58189-61e5-4916-8e8f-115e2c4fa749">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ccaa7902-25ec-4810-b328-522fe4951de6"/>
+					</reportElement>
+					<text><![CDATA[Nombre Común]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="114" y="3" width="120" height="15" uuid="c29dde0d-2c57-4e4f-9bb7-d45d71d7cdc3">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c2b47cca-8ee9-429a-820b-eded1016301f"/>
+					</reportElement>
+					<text><![CDATA[Nombre Científico]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="247" y="3" width="130" height="15" uuid="adbd39ac-f32c-4b68-9666-c7ae4b829dbf">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73f50ca7-6b33-4274-8078-100f5841d98b"/>
+					</reportElement>
+					<text><![CDATA[Descripción]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="370" y="3" width="100" height="15" uuid="66563e60-9f51-45fb-9cc4-b6e0e440a7a4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="06015174-9b2e-4bde-94e4-02018dbd95b4"/>
+					</reportElement>
+					<text><![CDATA[Familia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="467" y="3" width="100" height="15" uuid="e44592cc-9f6a-4790-b1d2-e6dcefc45e80">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e67655cf-8bf5-4542-9243-935bf70b1248"/>
+					</reportElement>
+					<text><![CDATA[Género]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="563" y="3" width="100" height="15" uuid="397d9e26-6229-49ee-ac7a-9e6b2590f2c4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f976fe8c-993f-4f2d-9b5f-1303f7868697"/>
+					</reportElement>
+					<text><![CDATA[Floración]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement x="-60" y="0" width="802" height="15" uuid="89a3da05-fdde-4ffe-965f-cc476f72e3ab"/>
+				<textField>
+					<reportElement style="Detail" x="150" y="10" width="100" height="31" uuid="4e4c6e0e-3390-460c-a08b-78aee694484e">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ccaa7902-25ec-4810-b328-522fe4951de6"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nombrecomun}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="257" y="10" width="100" height="30" uuid="d545650a-287a-4951-8118-b36b608296e1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c2b47cca-8ee9-429a-820b-eded1016301f"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nombrecientifico}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" x="373" y="10" width="130" height="40" uuid="e269df98-f808-43e0-a8ed-9b079691c093">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73f50ca7-6b33-4274-8078-100f5841d98b"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="502" y="10" width="90" height="30" uuid="3d285754-41cc-4d61-b2fd-68636cd93421">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="06015174-9b2e-4bde-94e4-02018dbd95b4"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nombrefam}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="600" y="10" width="90" height="30" uuid="e0cb5451-d53d-45a5-8884-00152af7d42d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e67655cf-8bf5-4542-9243-935bf70b1248"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nombregenero}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="702" y="10" width="100" height="30" uuid="d74f3847-4690-4b95-9c75-4bcbbe0bfde1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f976fe8c-993f-4f2d-9b5f-1303f7868697"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{nombreflo}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
 	<pageFooter>
-		<band height="39" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="671" y="0" width="131" height="20" forecolor="#000000" uuid="cc434357-2dc8-4be7-ba91-1828360d1ee6"/>
+				<reportElement style="Column header" x="671" y="0" width="131" height="20" forecolor="#000000" uuid="95484ca0-40b4-4752-95d8-1afbc33c820b"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="96" y="0" width="267" height="20" uuid="63d2e7ac-31ff-4ef3-949f-0d116927def9"/>
+				<reportElement x="90" y="0" width="387" height="20" uuid="0ec52099-dcd7-42f4-8baa-f3874f05208a"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Waves Title Report]]></text>
+				<text><![CDATA[Reporte de árboles]]></text>
 			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="90" y="0" width="712" height="1" uuid="e5f21b91-7f24-498e-97a1-0e93db9225a4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="200" splitType="Stretch">
-			<property name="local_mesure_unitheight" value="pixel"/>
-			<componentElement>
-				<reportElement x="96" y="0" width="703" height="200" uuid="f19d0e56-1ec7-41e2-ace5-1d344623f570">
-					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-				</reportElement>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="tableDataset" uuid="49835d1f-ac9e-467e-9263-7781d002bcf3">
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="50" uuid="726f6780-0627-496f-aa05-78dd0c7a1a0b">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="50" height="25" uuid="1bfe24d0-44c4-4320-9ff9-81e9b6a2bae9"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Arbol ID]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="50" height="25" uuid="0f70e609-3724-46f7-a2c5-86e813a0c54f"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{arbolid}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="140" uuid="62258c48-742d-4613-b730-07c7a7d802bb">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="140" height="25" uuid="5d46ee5b-858b-44c3-8a26-46ca5d0fd1cc"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Nombre Común]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="140" height="25" uuid="d20ec7fb-66a5-45a1-8fee-61a37ccd535a"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombrecomun}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="140" uuid="bdbc6c33-1a48-4472-ae3e-575175195370">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="140" height="25" uuid="f3c11f53-8de1-4949-b50f-2c0740e423db"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Nombre Cientifico]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="140" height="25" uuid="6e88c99e-d01e-450d-b568-8fc1e760ce9c"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombrecientifico}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="120" uuid="72398511-ba7d-43b0-9d51-a05171f18e65">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="120" height="25" uuid="d1897510-b886-4dbb-8ad8-98f9da60571e"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Descripción]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="120" height="25" uuid="37a3bd68-26f2-455a-b712-b752c89734fb"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="90" uuid="b26e8f09-d05f-4b88-a71e-f52f7b987a2e">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="90" height="25" uuid="0055d47f-e76d-4ab2-a7fb-2f1701c6e975"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Familia]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="90" height="25" uuid="e16cc216-0df7-429b-84b2-32816d462d8b"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombrefam}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="80" uuid="69665598-9eb4-4c65-8914-775f3fb69fd2">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="80" height="25" uuid="029110c0-0abe-4c0d-91ec-e358e2193e87"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Género]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="80" height="25" uuid="9077863a-8f04-47d6-8e0c-e9031e9a93ba"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombregenero}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="80" uuid="5f416f54-b8ca-4433-b41a-d7d6ee5f0416">
-						<jr:tableFooter style="Table_TH" height="30"/>
-						<jr:columnHeader style="Table_CH" height="25">
-							<staticText>
-								<reportElement key="" style="Table_CH_Label" x="0" y="0" width="80" height="25" uuid="72273d53-f860-4e0b-b16c-c2c3271cf989"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="16" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Floración]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:columnFooter style="Table_CH" height="30"/>
-						<jr:detailCell style="Table_TD" height="25">
-							<textField>
-								<reportElement style="Detail" x="0" y="0" width="80" height="25" uuid="fe016f80-d9ef-491f-b10d-d3f649f19a18"/>
-								<box leftPadding="2"/>
-								<textElement>
-									<font fontName="Arial" size="12"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombreflo}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
-		</band>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

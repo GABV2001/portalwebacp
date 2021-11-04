@@ -13,6 +13,7 @@ public class Publicacion {
 	private int estadopublicacion;
 	private String multimedia1;
 	private String multimedia2;
+	private String multimedia3;
 	private int estado;
 	private int usuarioid;
 	
@@ -84,5 +85,10 @@ public class Publicacion {
 	public void setMultimedia2(String multimedia2) {
 		this.multimedia2 = multimedia2;
 	}
-	
+	public String getMultimedia3() {
+		return multimedia3;
+	}
+	public void setMultimedia3(String multimedia3) {
+		this.multimedia3 = multimedia3;
+	}
 }

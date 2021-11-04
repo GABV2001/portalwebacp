@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
- import="entidades.TipoProducto, datos.Dt_TipoProducto,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+	pageEncoding="utf-8" import="entidades.TipoProducto, datos.Dt_TipoProducto,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -69,6 +69,11 @@
 
 	 <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
+	<!-- Caracteres -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
+	
 </head>
 
 <body id="page-top">
@@ -99,13 +104,20 @@
                       					<input name="opcion" type="hidden" value="1" />
                                         <div class="form-group">
                                                 <label for="TP" class="form-label fw-bolder">Tipo de Producto:</label>
-                                                <input type="text" class="form-control" id="nombreTipoProducto" name="nombreTipoProducto">
+                                                <input type="text" class="form-control" name= "nombreTipoProducto" id="nombreTipoProducto" minlength="3" maxlength="200" required>
+                                            	 <small id="message"></small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="descripciónTP"
                                                     class="form-label fw-bolder">Descripción</label>
-                                                <textarea id="descripcionTipoProducto" name="descripcionTipoProducto" rows="4" class="form-control"></textarea>
+                                                 <textarea rows="4" class="form-control" name = "descripcionTipoProducto" id="descripcionTipoProducto" minlength="3" maxlength="350" required></textarea>
+                                            	 <small id="message1"></small>
+	                                             <div id="circle1" data-value="0" data-size="350">
+	                              						<small id="percent1"></small>
+	                        					  </div>
+                                           
                                             </div>
+                                            
                                             <div class="mb-3">
                                                 <button class="btn btn-primary" style="width: 100%;">Guardar</button>
                                             </div>
@@ -168,6 +180,9 @@
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
+	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
 	<script>		
 	    $(document).ready(function() 
 		{
@@ -177,10 +192,66 @@
 
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'El Tipo Producto que esta intentando registrar ya existe en la base de datos!');
+	            errorAlert('Error', 'El Tipo Producto ingresado ya existe!');
 	        }
 	    });
+	    
+	    $('#nombreTipoProducto').on("keydown", function(e) {
+	        var textLength = $('#nombreTipoProducto').val().replace(' ', '1').length + 1;
+	        var maxValue = 200;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#nombreTipoProducto').on("keyup", function(e) {
+	        var textLength = $('#nombreTipoProducto').val().replace(' ', '1').length;
+	        var maxValue = 200;
+
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
+	    });
+	    
+	    $('#descripcionTipoProducto').on("keydown", function(e) {
+	        var textLength = $('#descripcionTipoProducto').val().replace(' ', '1').length + 1;
+	        var maxValue = 350;
+
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}               	        	
+	        }
+
+	     });
+	    
+	    $('#descripcionTipoProducto').on("keyup", function(e) {
+	        var textLength = $('#descripcionTipoProducto').val().replace(' ', '1').length;
+	        var maxValue = 350;
+
+	        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+
+	        var percent = (textLength * 100) / maxValue;
+	        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	        $('#circle1').circleProgress({
+	            animationStartValue: $('#oldValue').val(),
+	            value: circlePercent,
+	            size: 30,
+	            fill: {
+	                gradient: ["green", "lime"]
+	            },
+	        });
+
+	        percent = percent > 100 ? 100 : percent;
+
+	        $("#percent1").text(percent.toFixed(2)+"%");
+	        $('#oldValue').val(circlePercent);
+	    });	
 	 </script>
 </body>
-
 </html>

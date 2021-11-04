@@ -37,7 +37,6 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
-	
 	ViewRolUsuario vru1 = new ViewRolUsuario();
 	vru1 =(ViewRolUsuario) session.getAttribute("acceso");
 %>
@@ -71,76 +70,70 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 	
     <!-- Menus -->
 	<jsp:include page="adminMenus.jsp" />      
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+              <!-- Begin Page Content -->
+              <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Sección de Administración</h1>
-                    </div>
+                  <!-- Page Heading -->
+                  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                      <h1 class="h3 mb-0 text-gray-800">Sección de Administración</h1>
+                  </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
+                  <!-- Content Row -->
+                  <div class="row">
 
-                        <div class="col-lg-12 mb-4">
+                      <div class="col-lg-12 mb-4">
 
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Bienvenida</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="">
-                                    </div>
-                                    <p>Bienvenido, usted ha iniciado en la parte administrativa del Portal Web Carmelo
-                                        Palma, diríjase al menú que ve a su izquierda para comenzar con las gestiones
-                                        administrativas, donde podrás gestionar toda la información no solo del catálogo
-                                        de árboles, eventos y productos, sino también la información extra como la
-                                        Misión y visión.</p>
-                                    <a target="_blank" rel="nofollow" href="index.jsp">Portal Web Arboreto Carmelo
-                                        Palma &rarr;</a>
-                                </div>
-                            </div>
+                          <!-- Illustrations -->
+                          <div class="card shadow mb-4">
+                              <div class="card-header py-3">
+                                  <h6 class="m-0 font-weight-bold text-primary">Bienvenida</h6>
+                              </div>
+                              <div class="card-body">
+                                  <div class="text-center">
+                                      <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                          src="img/undraw_posting_photo.svg" alt="">
+                                  </div>
+                                  <p>Bienvenido, usted ha iniciado en la parte administrativa del Portal Web Carmelo
+                                      Palma, diríjase al menú que ve a su izquierda para comenzar con las gestiones
+                                      administrativas, donde podrás gestionar toda la información no solo del catálogo
+                                      de árboles, eventos y productos, sino también la información extra como la
+                                      Misión y visión.</p>
+                                  <a target="_blank" rel="nofollow" href="index.jsp">Portal Web Arboreto Carmelo
+                                      Palma &rarr;</a>
+                              </div>
+                          </div>
 
-                            <!-- Approach -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Equipo</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p>El equipo de desarrollo Abra, compuesto por Guillermo Antonio Baltodano Vado,
-                                        Kevin Fernando González Estrada, Joseph Tadeo Chavarría González, Cesar Antonio
-                                        Collado Baca, Arle Baez, Marwan Flores estamos agradecidos de que nuestro diseño para el portal sea utilizado. Esperamos que la experiencia de
-                                        usuario sea positiva, intuitiva y que sea de su agrado.</p>
-                                </div>
-                            </div>
+                          <!-- Approach -->
+                          <div class="card shadow mb-4">
+                              <div class="card-header py-3">
+                                  <h6 class="m-0 font-weight-bold text-primary">Equipo</h6>
+                              </div>
+                              <div class="card-body">
+                                  <p>El equipo de desarrollo Abra, compuesto por Guillermo Antonio Baltodano Vado,
+                                      Kevin Fernando González Estrada, Joseph Tadeo Chavarría González, Cesar Antonio
+                                      Collado Baca, Marwan Flores estamos agradecidos de que nuestro diseño para el portal sea utilizado. Esperamos que la experiencia de
+                                      usuario sea positiva, intuitiva y que sea de su agrado.</p>
+                              </div>
+                          </div>
 
-                        </div>
-                    </div>
+                      </div>
+                  </div>
 
-                </div>
-                <!-- /.container-fluid -->
+              </div>
+              <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
+          </div>
+          <!-- End of Main Content -->
 
-            <!-- Footer -->
-			<jsp:include page="adminFooter.jsp" />      
+       <!-- Footer -->
+	  <jsp:include page="adminFooter.jsp" />      
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -168,5 +161,4 @@
     <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
-
 </html>

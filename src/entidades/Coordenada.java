@@ -7,6 +7,7 @@ public class Coordenada {
 	private String Descripcion;
 	private String Longitud;
 	private String Latitud;
+	private int UsuarioID;
 	private int Estado;
 	
 	//Metodos
@@ -45,5 +46,11 @@ public class Coordenada {
 	}
 	public void setEstado(int estado) {
 		Estado = estado;
-	}		
+	}	
+	public int getUsuarioID() {
+		return UsuarioID;
+	}
+	public void setUsuarioID(int usuarioID) {
+		UsuarioID = usuarioID;
+	}
 }

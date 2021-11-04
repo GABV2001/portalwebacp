@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import vistas.ViewCoordenadaArbol;
 import entidades.Coordenada;
-import entidades.RolOpcion;
 import entidades.CoordenadaArbol;
 
 public class Dt_CoordenadaArbol {
@@ -22,7 +21,7 @@ public class Dt_CoordenadaArbol {
 	// Metodo para llenar el RusultSet
 			public void llenaRsCoordenadaArbol(Connection c){
 				try{
-					ps = c.prepareStatement("SELECT coordenadaarbolid, coordenadaid, arbolid FROM coordenadaarbol;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("SELECT coordenadaarbolid, coordenadaid, arbolid,estado FROM coordenadaarbol;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsCoordenadaArbol = ps.executeQuery();
 				}
 				catch (Exception e){
@@ -128,6 +127,7 @@ public class Dt_CoordenadaArbol {
 					rsCoordenadaArbol.moveToInsertRow();
 					rsCoordenadaArbol.updateInt("coordenadaid", ca.getCoordenadaid());
 					rsCoordenadaArbol.updateInt("arbolid", ca.getArbolid());
+					rsCoordenadaArbol.updateInt("estado", 1);
 					rsCoordenadaArbol.insertRow();
 					rsCoordenadaArbol.moveToCurrentRow();
 					guardado = true;

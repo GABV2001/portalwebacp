@@ -39,6 +39,16 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 	}
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
+	
+	//Obtener ID del Rol-Usuario
+	String rolUsuarioID = "";
+	rolUsuarioID = request.getParameter("idRu")==null?"0":request.getParameter("idRu");
+							
+	//Cargar arreglo de objetos Rol Usuario 
+	RolUsuario ru = new RolUsuario();
+	Dt_RolUsuario dtrg = new Dt_RolUsuario();
+	ru = dtrg.getRolUsuario(Integer.parseInt(rolUsuarioID));
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,8 +58,6 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
   
     <title>Portal ACP - Formulario Rol-Usuario</title>
     
@@ -84,17 +92,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                
-         			 <%
-                  	String rolUsuarioID = "";
-         			rolUsuarioID = request.getParameter("idRu")==null?"0":request.getParameter("idRu");
-											
-					RolUsuario ru = new RolUsuario();
-					Dt_RolUsuario dtrg = new Dt_RolUsuario();
-					ru = dtrg.getRolUsuario(Integer.parseInt(rolUsuarioID));
-		            %>
-
-                    <!-- Formulario -->
+                     <!-- Formulario -->
    			   		 <div class="container">
                         <div class="row">
                             <div class="col-lg-10 mx-auto m-auto">
@@ -103,7 +101,6 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
                                         <h2>
                                             Formulario Rol-Usuario
                                         </h2>
-
                                     </div>
                                     <div class="card-body bg-white rounded">
                                        <form class="Rol-Usuario" method="post" action="./Sl_GestionRolUsuario">
@@ -111,6 +108,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
                       					<input name="opcion" type="hidden" value="2" />                               
                                          <div class="form-group">
                                            <div class="col-sm-12 mb-3">
+                                             <label>Usuario:</label>                                           
                                             <%
 		                                	ArrayList<Usuario> listUser = new ArrayList<Usuario>();
 		                                	Dt_Usuario dtu = new Dt_Usuario();
@@ -129,6 +127,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 	                                    	<input type="hidden" name="cbxBUser" id="cbxBUser"></input>	                                    	
 	                                    	</div>
                                             <div class="col-sm-12 mb-3">
+                                            <label>Rol:</label>
                                             <%
 		                                	ArrayList<Rol> listRol = new ArrayList<Rol>();
 		                                	Dt_Rol dtr = new Dt_Rol();
@@ -167,14 +166,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
-        
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
+       
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -183,11 +175,7 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -211,22 +199,26 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 	
 	<script>  	
    $(document).ready(function()
-	{
+	{	
+	   	//Setear valores
 		$("#cbxUser").val("<%=ru.getUsuarioid()%>");
 		$("#cbxBUser").val("<%=ru.getUsuarioid()%>");
 		$("#cbxRol").val("<%=ru.getRolid()%>");
-	});
-  </script>
-  <script> 
-   $(document).ready(function ()
-    {
-   	   var mensaje = "";
+		
+		var mensaje = "";
         mensaje = "<%=varMsj%>";
 
         if(mensaje == "existe"){
-        	errorAlert('Error', '¡Asignación Rol-Usuario ya existe!');
+			$.jAlert({
+                'title': 'Error',
+                'content': '¡Asignación Rol-Usuario ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "FormEditarRolUsuario.jsp?idRu=" + <%=ru.getIdrol_usuario()%>;
+              }
+            });
         }
-    });
-   </script>
+	});
+  </script>
 </body>
 </html>

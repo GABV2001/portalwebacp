@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" import="entidades.Familia, datos.Dt_Familia,   entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion,java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -35,6 +35,17 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	
+	
+	//Variable de control de mensajes
+		String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
+	
+		String fmID = "";
+	 	fmID = request.getParameter("idF")==null?"0":request.getParameter("idF");
+								
+		Familia fm = new Familia();
+		Dt_Familia dtf = new Dt_Familia();
+		fm = dtf.getFamilia(Integer.parseInt(fmID));
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,6 +74,13 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
+	
+	 <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
 
 </head>
 
@@ -75,15 +93,7 @@
   		 <jsp:include page="adminMenus.jsp" />    
         
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-                                <%
-                            	String fmID = "";
-							 	fmID = request.getParameter("idF")==null?"0":request.getParameter("idF");
-														
-								Familia fm = new Familia();
-								Dt_Familia dtf = new Dt_Familia();
-								fm = dtf.getFamilia(Integer.parseInt(fmID));						
-                         	   %>
+                <div class="container-fluid"> 
                     <!-- Formulario -->
                       <div class="container">
                         <div class="row ">
@@ -91,20 +101,25 @@
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Familia
+                                            Formulario Editar Familia
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
                                         <form role="form" class = "Familia" method="post" action="./Sl_GestionFamilia">
-                      					<input name="opcion" type="hidden" value="2" />
-                      						<input name="idfamilia" type="hidden" value="<%=fm.getFamiliaID()%>" />
+                      					<input name="opcion" type="hidden" value="2"/>
+                      						<input name="idfamilia" type="hidden" value="<%=fm.getFamiliaID()%>"/>
+                      					
                                          <div class="form-group">
                                                 <label>Nombre de la familia:</label>
-                                                <input class="form-control" name = "txtNombreFamilia" id ="txtNombreFamilia" required>
-
+                                                 <input class="form-control" name = "txtNombreFamilia" id ="txtNombreFamilia" minlength="5" maxlength="150" required>
+                                                <small id="message"></small>
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3" name = "txtDescripcionFamilia" id = "txtDescripcionFamilia" required></textarea>
+                                                   <textarea class="form-control" rows="3" name = "txtDescripcionFamilia" id = "txtDescripcionFamilia" minlength="5" maxlength="250"></textarea>
+                                                    <small id="message2"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
+                                                </div>
                                                 </div>
                                             </div>
                                          	 <div class="text-center">
@@ -130,11 +145,8 @@
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -167,16 +179,82 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    <script>  
+    	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
+			<!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+	
+	
+    
+    <script> 
+    
+    
 	  $(document).ready(function()
 		{
 			$("#txtNombreFamilia").val("<%=fm.getNombre()%>");
 			$("#txtDescripcionFamilia").val("<%=fm.getDescripcion()%>");
 		
 		});
-	 </script>  
-	 
+	  
+	    
+	    $('#txtNombreFamilia').on("keydown", function(e) {
+	        var textLength = $('#txtNombreFamilia').val().replace(' ', '1').length + 1;
+	        var maxValue = 150;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
 
+	     });
+	    $('#txtNombreFamilia').on("keyup", function(e) {
+	        var textLength = $('#txtNombreFamilia').val().replace(' ', '1').length;
+	        var maxValue = 150;
 
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
+	    });
+	    
+	    $('#txtDescripcionFamilia').on("keydown", function(e) {
+	        var textLength = $('#txtDescripcionFamilia').val().replace(' ', '1').length + 1;
+	        var maxValue = 250;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtDescripcionFamilia').on("keyup", function(e) {
+	        var textLength = $('#txtDescripcionFamilia').val().replace(' ', '1').length;
+	        var maxValue = 250;
+
+	        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+	        
+	        var percent = (textLength * 100) / maxValue;
+	        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	        $('#circle1').circleProgress({
+	            animationStartValue: $('#oldValue').val(),
+	            value: circlePercent,
+	            size: 30,
+	            fill: {
+	                gradient: ["green", "lime"]
+	            },
+	        });
+
+	        percent = percent > 100 ? 100 : percent;
+
+	        $("#percent1").text(percent+"%");
+	        $('#oldValue').val(circlePercent);
+	       
+	    });
+	    </script>
 </body>
 </html>

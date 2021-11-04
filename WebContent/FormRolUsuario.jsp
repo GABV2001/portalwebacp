@@ -91,13 +91,13 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
                                         <h2>
                                             Formulario Rol-Usuario
                                         </h2>
-
                                     </div>
                                     <div class="card-body bg-white rounded">
                                        <form class="Rol-Usuario" method="post" action="./Sl_GestionRolUsuario">
                                    		<input name="opcion" type="hidden" value="1" />
                                          <div class="form-group">
                                            <div class="col-sm-12 mb-3">
+                                            <label>Usuario:</label>
                                             <%
 		                                	ArrayList<Usuario> listUser = new ArrayList<Usuario>();
 		                                	Dt_Usuario dtu = new Dt_Usuario();
@@ -113,8 +113,9 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 	                                    		}
 	                                    	%>
 	                                    	</select>
-	                                    	</div>
+	                                    	</div>	                                    	
                                             <div class="col-sm-12 mb-3">
+                                            <label>Rol:</label>                                            
                                             <%
 		                                	ArrayList<Rol> listRol = new ArrayList<Rol>();
 		                                	Dt_Rol dtr = new Dt_Rol();
@@ -153,13 +154,6 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
-        
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -169,8 +163,6 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
         
-
-
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -204,7 +196,14 @@ datos.Dt_RolUsuario, datos.Dt_Rol,java.util.*;" %>
 
         if(mensaje == "existe")
         {
-            errorAlert('Error', '¡Asignación Rol-Usuario ya existe!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Asignación Rol-Usuario ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "FormRolUsuario.jsp";
+              }
+            });
         }
 	});
 </script>

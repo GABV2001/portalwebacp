@@ -69,7 +69,7 @@ public class Sl_GestionUbicacionArbol extends HttpServlet {
 		        try {		        	
 		        	if(ngua.existeUbicacionArbol(ua.getArbolid(), ua.getDistribucionid()))
 		        	{
-		        		response.sendRedirect("GestionUbicacionArbol.jsp?msj=2");									
+		        		response.sendRedirect("GestionUbicacionArbol.jsp?msj=existe");									
 		        	}else
 			        if(dtua.guardarArbol(ua)) {
 			        	response.sendRedirect("GestionUbicacionArbol.jsp?msj=1");

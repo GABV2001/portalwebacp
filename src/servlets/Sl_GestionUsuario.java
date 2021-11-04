@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import datos.Encrypt;
 import entidades.Usuario;
 import negocio.Ng_Usuario;
 import datos.Dt_Usuario;
+import datos.Dt_enviarEmailUsuario;
 
 /**
  * Servlet implementation class Sl_GestionUsuario
@@ -60,6 +61,7 @@ public class Sl_GestionUsuario extends HttpServlet {
 		//CONSTRUIR EL OBJETO USUARIO
 		Dt_Usuario dtu = new Dt_Usuario();
 		Usuario user = new Usuario();
+		Encrypt enc = new Encrypt();
 		Ng_Usuario ngu = new Ng_Usuario();
 		
 		//Control Variables
@@ -69,6 +71,7 @@ public class Sl_GestionUsuario extends HttpServlet {
 		String pwd= null;
 		String email = null;
 		String telefono = null;
+		String url_foto = null;
 		
 		 nombres = request.getParameter("txtNombres");
 		 apellidos = request.getParameter("txtApellidos");
@@ -76,7 +79,8 @@ public class Sl_GestionUsuario extends HttpServlet {
 		 pwd= request.getParameter("txtPwd");
 		 email = request.getParameter("txtEmail");
 		 telefono = request.getParameter("txtTelefono");
-		
+		 url_foto = request.getParameter("url_foto");
+	 
 		if(nombres.trim().isEmpty()|| apellidos.trim().isEmpty()|| usuario.trim().isEmpty()){
         	response.sendRedirect("GestionUsuario.jsp?msj=2");
 		}else{
@@ -86,8 +90,16 @@ public class Sl_GestionUsuario extends HttpServlet {
 		user.setPwd(pwd);
 		user.setEmail(email);
 		user.setTelefono(telefono);
-			
-		if(user.getTelefono() == null || user.getTelefono().isEmpty()){
+		user.setUrl_foto(url_foto);		
+		/////// ENCRIPTACION DE LA PWD //////////
+		String key = "";
+		String pwdEncrypt = "";
+		key=enc.generarLLave();
+		pwdEncrypt = enc.getAES(user.getPwd(),key);
+		user.setPwd(pwdEncrypt);
+		user.setKey_encriptacion(key);
+
+	    if(user.getTelefono() == null || user.getTelefono().isEmpty()){
 			user.setTelefono("-");			
 		}else{
 			user.setTelefono(request.getParameter("txtTelefono"));			
@@ -97,19 +109,27 @@ public class Sl_GestionUsuario extends HttpServlet {
 			case 1:{
 				
 			        try {
-			        		//PARA GUARDAR LA FECHA Y HORA DE CREACION
+			        	
+			        	 //GENERAMOS EL CODIGO DE VERIFICACION Y LO ASIGNAMOS AL OBJETO
+			    		user.setCod_verificacion(dtu.randomAlphaNumeric(10)); // 10 PORQUE ES LA CANTIDAD DE CARACTERES QUE SOPORTA LA BD
+			    	
+			        	//PARA GUARDAR LA FECHA Y HORA DE CREACION
 				        Date fechaSistema = new Date();
 				        user.setfCreacion(new java.sql.Timestamp(fechaSistema.getTime()));
 				        if(ngu.existeUser(user.getUser())) {
 				        	response.sendRedirect("FormUsuario.jsp?msj=existe");
 				        }
 				        else {
-				        	if(dtu.guardarUser(user)) {
-					        	response.sendRedirect("GestionUsuario.jsp?msj=1");
-					        }
-					        else {
-					        	response.sendRedirect("GestionUsuario.jsp?msj=2");
-					        }
+				        	if(ngu.existeCorreoUsuario(user.getEmail())){
+					        	response.sendRedirect("FormUsuario.jsp?msj=existec");
+				        	}else{
+					        	if(dtu.guardarUser(user)) {
+					        		response.sendRedirect("GestionUsuario.jsp?msj=1");
+						        }
+						        else {
+						        	response.sendRedirect("GestionUsuario.jsp?msj=2");
+						        }
+				        	}
 				        }			    	  
 			        }
 			        catch(Exception e) {
@@ -131,13 +151,17 @@ public class Sl_GestionUsuario extends HttpServlet {
 			        if(ngu.existeActualizarUsuario(user.getIdUser(),user.getUser())){
 			          	response.sendRedirect("FormEditarUsuario.jsp?userID="+user.getIdUser()+"&msj=existe");
 			        }else {
-			        if(dtu.modificarUser(user)) {
+		        	if(ngu.existeActualizarCorreoUsuario(user.getIdUser(),user.getEmail())){
+			        	response.sendRedirect("FormEditarUsuario.jsp?userID="+user.getIdUser()+"&msj=existec");
+		        	}else{
+		        		if(dtu.modificarUser(user)) {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=3");
-			        }
-			        else {
+			        	}
+		        		else {
 			        	response.sendRedirect("GestionUsuario.jsp?msj=4");
-			        }
-			        }
+			        	}
+		        	  }
+			         }
 					}
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());

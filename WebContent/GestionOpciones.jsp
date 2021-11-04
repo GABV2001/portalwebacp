@@ -51,23 +51,16 @@ import="entidades.Opcion, datos.Dt_Opcion, entidades.Rol,vistas.ViewRolUsuario, 
 %>
 <!DOCTYPE html>
 <html lang="es">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Gestión Opciones</title>
     
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
 	
-
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -82,9 +75,7 @@ import="entidades.Opcion, datos.Dt_Opcion, entidades.Rol,vistas.ViewRolUsuario, 
     
       <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
-    
-    
-
+   
 </head>
 
 <body id="page-top">
@@ -155,12 +146,6 @@ import="entidades.Opcion, datos.Dt_Opcion, entidades.Rol,vistas.ViewRolUsuario, 
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />  
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -171,8 +156,6 @@ import="entidades.Opcion, datos.Dt_Opcion, entidades.Rol,vistas.ViewRolUsuario, 
 
 
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -193,6 +176,5 @@ import="entidades.Opcion, datos.Dt_Opcion, entidades.Rol,vistas.ViewRolUsuario, 
     <!-- jAlert js -->
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
-
 </body>
 </html>

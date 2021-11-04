@@ -134,9 +134,9 @@
                                         <tr>
                                      	   <td><%=pr.getProducto()%></td>          
                                      	   <td><%=pr.getDescripcion()%></td>   
-                                     	     <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
-                        							<i class="fas fa-camera mostrarImagen" title="<%=pr.getMultimedia()%>" onClick="getValue()"></i>
-                        							</a></td>
+                                     	     <td>&nbsp;&nbsp;<a href="#">
+         									<i class="fas fa-camera mostrarImagen" title="<%=pr.getMultimedia() + "?t="+System.currentTimeMillis()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
+         									</a></td> 
                                   		   <td><%=pr.getEstadoproductoid()==1?"Disponible":"No disponible" %></td>
                                            <td><%=pr.getTipoproducto()%></td>     
 				                           <td>&nbsp;&nbsp;<a href="FormEditarProducto.jsp?idP=<%=pr.getProductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
@@ -185,8 +185,7 @@
 					      </div>
 					      <div class="modal-body">
 					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Banner"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
+									<img id="preview" src="" name="preview"  alt="Imagen Banner" class="img-fluid fill marco"/>
 								</div>								
 					      </div>					 
 					    </div>
@@ -243,26 +242,66 @@
 		<script>
     $(document).ready(function ()
     {
-		/////////// VARIABLE DE CONTROL MSJ ///////////
+/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
         mensaje = "<%=varMsj%>";
-
+  		
         if(mensaje == "1")
         {
-            successAlert('Exito', 'Los datos han sido registrados exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Producto guardado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionProductos.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionProductos.jsp";
+                }
+              });
         }
         if(mensaje == "3")
         {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
-        }
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Producto actualizado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionProductos.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Producto eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionProductos.jsp";
+                }
+              });
+        }       
+        if(mensaje == "existe")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Elemento ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionProductos.jsp";
+                }
+              });
         }
+               
     });
     function getValue()
     {   	

@@ -1,11 +1,15 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import datos.Dt_TipoProducto;
 import entidades.TipoProducto;
@@ -53,12 +57,15 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 		
 				//Obtenemos el valor de opcion
 				int opc = 0;
+				int tipoproductoid =0;
 				opc = Integer.parseInt(request.getParameter("opcion"));
 				
+				
 				//Construir objeto estudiante
-				Dt_TipoProducto dtp = new Dt_TipoProducto();
+				Dt_TipoProducto dttp = new Dt_TipoProducto();
 				TipoProducto tp = new TipoProducto();
 				Ng_TipoProducto ngtp = new Ng_TipoProducto();
+				
 				
 				//Variables de control
 				String nombre = request.getParameter("nombreTipoProducto");
@@ -80,7 +87,7 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 				        	   	response.sendRedirect("FormTipoProducto.jsp?msj=existe");									
 				        	}else {
 				        	
-				        	if(dtp.guardarTipoProducto(tp)) {
+				        	if(dttp.guardarTipoProducto(tp)) {
 					        	response.sendRedirect("GestionTipoProductos.jsp?msj=1");
 					        }
 					   
@@ -96,14 +103,19 @@ public class Sl_GestionTipoProducto extends HttpServlet {
 						break;
 					}
 				case 2:{
-					tp.setTipoproducotid(Integer.parseInt(request.getParameter("idTipoProducto")));
+					tipoproductoid = Integer.parseInt(request.getParameter("idTipoProducto"));
+					tp.setTipoproducotid(tipoproductoid);
 		     		try {
-						   if(dtp.modificarTipoProducto(tp)) {
+		     			if(ngtp.existeActualizarTipoProducto(tp.getTipoproductoid(), tp.getNombre())){
+				        	response.sendRedirect("FormEditarTipoProducto.jsp?idTp="+tipoproductoid+"&msj=existe");
+			    		}else {   
+		     			if(dttp.modificarTipoProducto(tp)) {
 				        	response.sendRedirect("GestionTipoProductos.jsp?msj=3");
 				        }
 				        else {
 				        	response.sendRedirect("GestionTipoProductos.jsp?msj=4");
 				        }
+			    		}
 			        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionTipoProducto, el error es: " + e.getMessage());

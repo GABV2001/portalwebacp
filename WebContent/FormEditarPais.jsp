@@ -48,7 +48,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <title>Portal ACP - Formulario País</title>
+   <title>Portal ACP - Formulario Editar País</title>
    
     <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
@@ -64,6 +64,10 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -92,7 +96,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            País
+                                          Formulario Editar País
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
@@ -101,12 +105,16 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
                       						<input name="idpais" type="hidden" value="<%=p.getPaisID()%>" />
                                          <div class="form-group">
                                                 <label>Nombre del país:</label>
-                                                <input class="form-control" name = "txtNombrePais" id ="txtNombrePais" required>
-
+                                                <input class="form-control" name = "txtNombrePais" id ="txtNombrePais" minlength="5" maxlength="150" required>
+                                                 <small id="message"></small>
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3" name = "txtDescripcionPais" id = "txtDescripcionPais" required></textarea>
-                                                </div>
+                                                    <textarea class="form-control" rows="3" name = "txtDescripcionPais" id = "txtDescripcionPais" inlength="5" maxlength="250"></textarea>
+                                                    <small id="message2"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
+                                                </div>          
+                                            </div>               
                                                  <div class="form-group">
                                             <%                                            
                                             ArrayList<Region> listRegion = new ArrayList<Region>();
@@ -185,6 +193,9 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+    	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+    
     <script>  
 	  $(document).ready(function()
 		{
@@ -192,6 +203,63 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, en
 			$("#txtDescripcionPais").val("<%=p.getDescripcion()%>");
 			$("#txtNombreRegion").val("<%=p.getRegionID()%>");	
 		});
+	  
+	    $('#txtNombrePais').on("keydown", function(e) {
+	        var textLength = $('#txtNombrePais').val().replace(' ', '1').length + 1;
+	        var maxValue = 150;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtNombrePais').on("keyup", function(e) {
+	        var textLength = $('#txtNombrePais').val().replace(' ', '1').length;
+	        var maxValue = 150;
+
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	       
+	    });
+	    
+	    $('#txtDescripcionGenero').on("keydown", function(e) {
+	        var textLength = $('#txtDescripcionGenero').val().replace(' ', '1').length + 1;
+	        var maxValue = 250;
+	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+
+	     });
+	    $('#txtDescripcionPais').on("keyup", function(e) {
+	        var textLength = $('#txtDescripcionPais').val().replace(' ', '1').length;
+	        var maxValue = 250;
+
+	        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+	        
+	        var percent = (textLength * 100) / maxValue;
+	        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	        $('#circle1').circleProgress({
+	            animationStartValue: $('#oldValue').val(),
+	            value: circlePercent,
+	            size: 30,
+	            fill: {
+	                gradient: ["green", "lime"]
+	            },
+	        });
+
+	        percent = percent > 100 ? 100 : percent;
+
+	        $("#percent1").text(percent+"%");
+	        $('#oldValue').val(circlePercent);
+	       
+	    });
 	 </script>  
 </body>
 </html>

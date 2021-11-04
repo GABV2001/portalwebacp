@@ -118,7 +118,7 @@ public class Dt_TipoProducto {
 					rsTipoProducto.beforeFirst();
 					while (rsTipoProducto.next())
 					{
-						if(rsTipoProducto.getInt(1)==tp.getTipoproducotid())
+						if(rsTipoProducto.getInt(1)==tp.getTipoproductoid())
 						{
 							rsTipoProducto.updateString("nombre", tp.getNombre());
 							rsTipoProducto.updateString("descripcion", tp.getDescripcion());

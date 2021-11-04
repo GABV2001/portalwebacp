@@ -36,13 +36,14 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	//Variable de control de mensajes
+		String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+
 %>
 <!DOCTYPE html>
 <html lang="es">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
+
+	
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -123,15 +124,15 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                                     </tfoot>
                                     <tbody>
                                             <%
-                                       		for(ViewPais us: listPais){
+                                       		for(ViewPais lp: listPais){
                                        	    %> 
                                         <tr>                                           
-                                       	    <td><%=us.getNombre() %></td>                                           
-                                            <td><%=us.getDescripcion() %></td>
-                                            <td><%=us.getRegion() %></td>                                            
-                                          <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=us.getPaisID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                                                        
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                       	    <td><%=lp.getNombre() %></td>                                           
+                                            <td><%=lp.getDescripcion() %></td>
+                                            <td><%=lp.getRegion() %></td>                                            
+                                          <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=lp.getPaisID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                      &nbsp;&nbsp;  
+                                                   <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar este país?',
@@ -139,7 +140,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionPais?idP=<%=us.getPaisID()%>';
+                                           		      window.location.href = 'Sl_GestionPais?idP=<%=lp.getPaisID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -151,7 +152,8 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td>
+                        						</a>
+                        						</td>
                         						</tr>   
                                             <%
                                        		}
@@ -170,10 +172,8 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />  
 
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -219,17 +219,60 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', 'País guardado exitosamente!');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡País guardado con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionPais.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionPais.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡País actualizado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionPais.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Éxito', 'País eliminado exitosamente!');
-        }
-    });
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡País eliminado exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionPais.jsp";
+                 }
+               });       
+        }       
+	    if(mensaje == "existe")
+	    {
+	        $.jAlert({
+	            'title': 'Error',
+	            'content': '¡País ya existe!',
+	            'theme': 'red',
+	            'onClose': function(OnClose) {               
+	                window.location = "GestionPais.jsp";
+	            }
+	          });
+	    }
+	    });  
 	</script>
 </body>
 </html>

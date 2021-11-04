@@ -1,4 +1,4 @@
-package servlets;
+	package servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -80,7 +80,7 @@ public class Sl_GestionRegion extends HttpServlet {
 					
 				        try {
 				        	if(ngr.existeRegion(rg.getNombre())){
-					        	response.sendRedirect("GestionRegion.jsp?msj=2");
+					        	response.sendRedirect("GestionRegion.jsp?msj=existe");
 					        }
 					        else {
 					        if(	dtf.guardarRegion(rg)) {
@@ -101,14 +101,17 @@ public class Sl_GestionRegion extends HttpServlet {
 				case 2:{
 					rg.setRegionID(Integer.parseInt(request.getParameter("idregion")));
 		     		try {
-						   if(dtf.modificarRegion(rg)) {
+		     			if(ngr.existeActualizarRegion(rg.getRegionID(),rg.getNombre())){
+				          	response.sendRedirect("GestionRegion.jsp?msj=existe");
+				        }else {
+		     			   if(dtf.modificarRegion(rg)) {
 				        	response.sendRedirect("GestionRegion.jsp?msj=3");
 				        }
 				        else {
 				        	response.sendRedirect("GestionRegion.jsp?msj=4");
 				        }
 				        
-			        	
+				        }
 			        }
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionRegion, el error es: " + e.getMessage());

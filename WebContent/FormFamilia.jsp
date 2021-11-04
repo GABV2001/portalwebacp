@@ -62,6 +62,10 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -83,7 +87,7 @@
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Familia
+                                           Formulario Familia
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
@@ -91,18 +95,21 @@
                       					<input name="opcion" type="hidden" value="1" />
                                          <div class="form-group">
                                                 <label>Nombre de la familia:</label>
-                                                <input class="form-control" name = "txtNombreFamilia" id ="txtNombreFamilia">
+                                                <input class="form-control" name = "txtNombreFamilia" id ="txtNombreFamilia" minlength="5" maxlength="150" required>
+                                                <small id="message"></small> 
                                                 </div>
                                           <div class="form-group">
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
-                                                    <textarea class="form-control" rows="3" name = "txtDescripcionFamilia" id = "txtDescripcionFamilia"></textarea>
+                                                    <textarea class="form-control" rows="3" name = "txtDescripcionFamilia" id = "txtDescripcionFamilia" minlength="5" maxlength="250"></textarea>
+                                                    <small id="message2"></small>
+	                                             <div id="circle1" data-value="0" data-size="30">
+	                              						<small id="percent1"></small>
                                                 </div>
                                             </div>
                                          	 <div class="mb-3">
 				                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
-				                            </div>
-				                            <br>  
+				                            </div> 
                                             <div style="text-align:center;"><a href="GestionFamilia.jsp"><i
                                                         class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
                                         </form>
@@ -122,11 +129,8 @@
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
         <!-- End of Content Wrapper -->
-
-    </div>
+        
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -158,8 +162,68 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
+    <script>	
+    
+    $('#txtNombreFamilia').on("keydown", function(e) {
+        var textLength = $('#txtNombreFamilia').val().replace(' ', '1').length + 1;
+        var maxValue = 150;
+        
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+        }
 
+     });
+    $('#txtNombreFamilia').on("keyup", function(e) {
+        var textLength = $('#txtNombreFamilia').val().replace(' ', '1').length;
+        var maxValue = 150;
 
+        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+       
+    });
+    
+    $('#txtDescripcionFamilia').on("keydown", function(e) {
+        var textLength = $('#txtDescripcionFamilia').val().replace(' ', '1').length + 1;
+        var maxValue = 250;
+        
+        console.log(e.keyCode);
+        if (textLength > maxValue) {
+			if(e.keyCode != 8){
+			e.preventDefault();
+			}                     	
+        }
+
+     });
+    $('#txtDescripcionFamilia').on("keyup", function(e) {
+        var textLength = $('#txtDescripcionFamilia').val().replace(' ', '1').length;
+        var maxValue = 250;
+
+        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");
+        
+        var percent = (textLength * 100) / maxValue;
+        var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+        $('#circle1').circleProgress({
+            animationStartValue: $('#oldValue').val(),
+            value: circlePercent,
+            size: 30,
+            fill: {
+                gradient: ["green", "lime"]
+            },
+        });
+
+        percent = percent > 100 ? 100 : percent;
+
+        $("#percent1").text(percent+"%");
+        $('#oldValue').val(circlePercent);
+       
+    });
+    </script>	
 </body>
-
 </html>

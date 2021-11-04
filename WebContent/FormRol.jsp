@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+	pageEncoding="utf-8" import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -41,16 +41,13 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-  
+ 
     <title>Portal ACP - Formulario Rol</title>
-    
+        
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
     
@@ -70,6 +67,10 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
     
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+	
+	<!-- Caracteres -->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="css/progressCircle.css" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -92,18 +93,21 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
                                         <h2>
                                             Formulario Rol
                                         </h2>
-
                                     </div>
                                     <div class="card-body bg-white rounded">
                                        <form class="Pais" method="post" action="./Sl_GestionRol">
                       					<input name="opcion" type="hidden" value="1" />
                                          <div class="form-group">
+                                         		<div>
                                                 <label>Rol:</label>
-                                                <input class="form-control" name = "txtRol" id ="txtRol" minlength="4" maxlength="150">
-
+                                                <input class="form-control" name = "txtRol" id ="txtRol" minlength="4" maxlength="80">
+												<small id="message"></small>
+												</div>
+												<br>
                                                 <div class="form-group">
                                                     <label>Descripción:</label>
                                                     <textarea class="form-control" rows="3" name = "txtRolDesc"  id = "txtRolDesc" minlength="8" maxlength="250"></textarea>
+                                                	<small id="message1"></small>
                                                 </div>
                                             </div>
                                          	 <div class="text-center">
@@ -129,13 +133,6 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -145,8 +142,6 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
     <jsp:include page="adminLogOutModal.jsp" />    
         
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -168,6 +163,10 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
+	<!-- Circle Progress -->
+	<script src="js/circle-progress.js"></script>
+	
+	
 	<script type="text/javascript">
 	
 	    $(document).ready(function ()
@@ -178,8 +177,48 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 	        mensaje = "<%=varMsj%>";
 	
 	        if(mensaje == "existe"){
-	        	errorAlert('Error', '¡Rol ingresado ya existe!');
+				  $.jAlert({
+	                  'title': 'Error',
+	                  'content': '¡Rol ingresado ya existe!',
+	                  'theme': 'red',
+	                  'onClose': function(OnClose) {               
+	                      window.location = "FormRol.jsp";
+	                  }
+	                });
 	        }
+	    });
+	 	
+	  //Funcion para mostrar maximo de caracteres en los inputs y textarea
+	    $('#txtRol').on("keydown", function(e) {
+	        var textLength = $('#txtRol').val().replace(' ', '1').length + 1;
+	        var maxValue = 80;	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+	     });
+	    $('#txtRol').on("keyup", function(e) {
+	        var textLength = $('#txtRol').val().replace(' ', '1').length;
+	        var maxValue = 80;
+	        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");	       
+	    });
+	    
+	    $('#txtRolDesc').on("keydown", function(e) {
+	        var textLength = $('#txtRolDesc').val().replace(' ', '1').length + 1;
+	        var maxValue = 250;	        
+	        console.log(e.keyCode);
+	        if (textLength > maxValue) {
+				if(e.keyCode != 8){
+				e.preventDefault();
+				}                     	
+	        }
+	     });
+	    $('#txtRolDesc').on("keyup", function(e) {
+	        var textLength = $('#txtRolDesc').val().replace(' ', '1').length;
+	        var maxValue = 250;
+	        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");	       
 	    });
 	</script>
 </body>

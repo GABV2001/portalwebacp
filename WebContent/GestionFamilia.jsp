@@ -120,14 +120,14 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                                     </tfoot>                                    
                                     <tbody>
                                    		<%
-                                       		for(Familia us: listFamilia){
+                                       		for(Familia lfam: listFamilia){
                                        	%>
                                        <tr>        
-                                           <td><%=us.getNombre() %></td>                                           
-                                           <td><%=us.getDescripcion() %></td>                                
-                                           <td>&nbsp;&nbsp;<a href="FormEditarFamilia.jsp?idF=<%=us.getFamiliaID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                                                        
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                           <td><%=lfam.getNombre() %></td>                                           
+                                           <td><%=lfam.getDescripcion() %></td>                                
+                                           <td>&nbsp;&nbsp;<a href="FormEditarFamilia.jsp?idF=<%=lfam.getFamiliaID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                                   &nbsp;&nbsp; 
+                                                   <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta familia?',
@@ -135,7 +135,7 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		      window.location.href = 'Sl_GestionFamilia?idF=<%=us.getFamiliaID()%>';
+                                           		      window.location.href = 'Sl_GestionFamilia?idF=<%=lfam.getFamiliaID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -147,7 +147,9 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                                            		    }
                                            		  });">
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td></tr>
+                        						</a>
+                        						</td>
+                        						</tr>
                                        		<%
                                        		}
                                            %>                                 
@@ -165,10 +167,8 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
             <!-- Footer -->
            <jsp:include page="adminFooter.jsp" />  
 
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -214,17 +214,61 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', 'Familia guardado con éxito');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Familia guardada con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionFamilia.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-           errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionFamilia.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Familia actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionFamilia.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Éxito', 'Familia eliminado exitosamente');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Familia eliminada exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionFamilia.jsp";
+                 }
+               });       
+        }      
+        if(mensaje == "existe")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Familia ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionFamilia.jsp";
+                }
+              });
         }
-    });
+    });    
+
 	</script>
 	
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import datos.Dt_CoordenadaArbol;
 import entidades.CoordenadaArbol;
+import negocio.Ng_Mapa;
 
 /**
  * Servlet implementation class Sl_GestionCoordenadasArbol
@@ -51,7 +52,8 @@ public class Sl_GestionCoordenadasArbol extends HttpServlet {
 		//obtenemos el valor de opcion
 		int opc = 0;
 		opc = Integer.parseInt(request.getParameter("opcion"));
-		
+		Ng_Mapa ngm = new Ng_Mapa();
+
 		//CONSTRUIR EL OBJETO ROL-USER
 		CoordenadaArbol coa = new CoordenadaArbol();		
 		Dt_CoordenadaArbol dtcoa = new Dt_CoordenadaArbol(); 
@@ -61,13 +63,20 @@ public class Sl_GestionCoordenadasArbol extends HttpServlet {
 
 		switch (opc){
 		case 1:{
-		        try {		        				      
+		        try {
+		        	if(ngm.existeAsignacionCoordenadaArbol(coa.getCoordenadaid(), coa.getArbolid())){
+			        	response.sendRedirect("FormAsignacionCoordenada.jsp?msj=existe");
+			        }else if(ngm.existeArbolCor(coa.getCoordenadaid())) {
+			        	response.sendRedirect("FormAsignacionCoordenada.jsp?msj=existe1");
+			        }
+		        	else {
 			        if(dtcoa.guardarCoordenadaArbol(coa)) {
 			        	response.sendRedirect("GestionMapa.jsp?msj=1");
 			        }
 			        else {
 			        	response.sendRedirect("GestionMapa.jsp?msj=2");
 			        }
+		        	}
 		        }
 		        catch(Exception e) {
 		        	System.out.println("Sl_GestionCoordenadasArbol, el error es: " + e.getMessage());
@@ -76,7 +85,7 @@ public class Sl_GestionCoordenadasArbol extends HttpServlet {
 				break;
 			}
 		default:
-			response.sendRedirect("GestionRolOpciones.jsp?msj=5");	
+			response.sendRedirect("GestionMapa.jsp?msj=5");	
 			break;
 		
   }

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 
-import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+	pageEncoding="utf-8" import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -36,25 +36,26 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 			response.sendRedirect("401.jsp");
 		}	
 	}
-%>
-<!DOCTYPE html>
-<%
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	//Cargar arreglo de objetos Rol
+	ArrayList<Rol> listRol = new ArrayList<Rol>();
+  	Dt_Rol dtr = new Dt_Rol();
+  	listRol = dtr.listaRolActivos(); 
 %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Portal ACP - Gestión Rol</title>
-    
+        
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
 	
-
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -69,7 +70,6 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
     
     <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
-
 </head>
 
 <body id="page-top">
@@ -80,106 +80,89 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
     <!-- Menus -->
 	<jsp:include page="adminMenus.jsp" />      
 	
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+              <!-- Begin Page Content -->
+              <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Mapa</h1>
+                  <!-- Page Heading -->
+                  <h1 class="h3 mb-2 text-gray-800">Rol</h1>
+                  <!-- DataTales Banner -->
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Gestión Rol</h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                  <div style="text-align:right;"><a href="FormRol.jsp"><i
+                                              class="fas fa-plus-square"></i>&nbsp; Nuevo Rol</a>
+                                   <a href="GestionRolOpcion.jsp">
+                       				<i class="far fa-file" title="Asignar Rol a Opcion"></i> Rol-Opcion	 
+                                    </div>	                                              
+                                  <thead>
+                                      <tr>
+                                          <th>Rol</th>
+                                          <th>Descripcion</th>
+                                          <th>Opciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tfoot>
+                                      <tr>
+                                         	<th>Rol</th>
+                                          <th>Descripcion</th>
+                                          <th>Opciones</th>
+                                      </tr>
+                                  </tfoot>
+                                  <tbody>
+                                 		<%
+                                     		for(Rol r: listRol){
+                                     	%>
+                                     <tr>
+                                         <td><%=r.getRol() %></td>
+                                         <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
+										 overflow: hidden;"><%=r.getDesc_rol()%></td>
+                                          <td>
+                                         		<a id="btn-edita-abrir" href="FormEditarRol.jsp?rolID=<%=r.getIdRol()%>">
+                      							<i class="fas fa-edit" title="Modificar datos del Rol"></i>
+                      						</a>
+                      						&nbsp;
+                                         		<a class="ajax-link" href="javascript:void(0);" 
+                                         		onclick="$.jAlert({
+                                         		    'type': 'confirm',
+                                         		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                         		    'onConfirm': function(e, btn){
+                                         		      e.preventDefault();
+                                         		      //do something here
 
-      							   <%
-                                	ArrayList<Rol> listRol = new ArrayList<Rol>();
-                                	Dt_Rol dtr = new Dt_Rol();
-                                	listRol = dtr.listaRolActivos();                                	
-                               	    %>
-                    <!-- DataTales Banner -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestión del Mapa</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <div style="text-align:right;"><a href="FormRol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Rol</a>
-                                     <a href="GestionRolOpcion.jsp">
-	                        			<i class="far fa-file" title="Asignar Rol a Opcion"></i> Rol-Opcion	 
-                                      </div>
-                                                
-                                    <thead>
-                                        <tr>
-                                            <th>Rol</th>
-                                            <th>Descripcion</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                           	<th>Rol</th>
-                                            <th>Descripcion</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                   		<%
-                                       		for(Rol r: listRol){
-                                       	%>
-                                       <tr>
-                                           <td><%=r.getRol() %></td>
-                                           <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
-											overflow: hidden;"><%=r.getDesc_rol()%></td>
-                                            <td>
-                                           		<a id="btn-edita-abrir" href="FormEditarRol.jsp?rolID=<%=r.getIdRol()%>">
-                        							<i class="fas fa-edit" title="Modificar datos del Rol"></i>
-                        						</a>
-                        						&nbsp;
-                                           		<a class="ajax-link" href="javascript:void(0);" 
-                                           		onclick="$.jAlert({
-                                           		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
-                                           		    'onConfirm': function(e, btn){
-                                           		      e.preventDefault();
-                                           		      //do something here
-
-                                           		      window.location.href = 'Sl_GestionRol?idR=<%=r.getIdRol()%>';
-                                           		      btn.parents('.jAlert').closeAlert();
-                                           		      return false;
-                                           		    },
-                                           		    'onDeny': function(e, btn){
-                                           		      e.preventDefault();
-                                           		      //do something here
-                                           		      btn.parents('.jAlert').closeAlert();
-                                           		      return false;
-                                           		    }
-                                           		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Rol"></i>
-                        						</a>
-
-                                           		<!-- <a href="#">
-                        							<i class="fas fa-eye" title="Visualizar Rol"></i>
-                        						</a> -->                                           
-                                           </td>
-                                       </tr>
-                                       	<%
-                                       }
+                                         		      window.location.href = 'Sl_GestionRol?idR=<%=r.getIdRol()%>';
+                                         		      btn.parents('.jAlert').closeAlert();
+                                         		      return false;
+                                         		    },
+                                         		    'onDeny': function(e, btn){
+                                         		      e.preventDefault();
+                                         		      //do something here
+                                         		      btn.parents('.jAlert').closeAlert();
+                                         		      return false;
+                                         		    }
+                                         		  });">
+                      							<i class="fas fa-trash-alt" title="Eliminar Rol"></i>
+                      						</a>                                    
+                                         </td>
+                                     </tr>
+                                     <%
+                                      }
                                       %>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->					
-          </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-			<jsp:include page="adminFooter.jsp" />      
-
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.container-fluid -->					
         </div>
-        <!-- End of Content Wrapper -->
+       <!-- End of Main Content -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+    <!-- Footer -->
+	<jsp:include page="adminFooter.jsp" />      
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -190,10 +173,7 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 	<jsp:include page="adminLogOutModal.jsp" /> 
 
 	
-    <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
-    <!-- Bootstrap core JavaScript-->
+    <!-- JAVASCRIPTS -->    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -224,22 +204,38 @@ import="entidades.Rol, datos.Dt_Rol, entidades.Rol,vistas.ViewRolUsuario, vistas
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', '¡Rol registrado con éxito!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Rol registrado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRol.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRol.jsp";
+                }
+              });            
         }
         if(mensaje == "5")
         {
-            errorAlert('Éxito', '¡Rol eliminado exitosamente!');
-        }              
-    });
-    function getValue()
-    {   	
-        var a= event.srcElement.title;
-        document.getElementById("preview").src = a;
-    }  
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Rol eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRol.jsp";
+                }
+              });        
+         }              
+    });  
 	</script>
 </body>
 </html>

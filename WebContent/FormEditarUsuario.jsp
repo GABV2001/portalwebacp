@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
-import="vistas.*, entidades.*, datos.*, java.util.*;"%>   
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+	pageEncoding="utf-8" import="vistas.*, entidades.*, datos.*, java.util.*;"%>   
 <%
 	response.setHeader( "Pragma", "no-cache" );
 	response.setHeader( "Cache-Control", "no-store" );
@@ -38,6 +38,23 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	}
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
+	
+	//Recuperar ID del usuario
+	String usuarioid = "";
+	usuarioid = request.getParameter("userID")==null?"0":request.getParameter("userID");
+	
+	//Recuperar datos del usuario seleccionado
+	Usuario user = new Usuario();
+	Dt_Usuario dtu = new Dt_Usuario();
+	user = dtu.getUsuario(Integer.parseInt(usuarioid));
+	
+	//Variable
+	String telefono = null;
+	if(user.getTelefono().equals("-")){
+		telefono = "";
+	}else{
+		telefono = user.getTelefono();
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +63,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   <title>Portal ACP - Formulario Usuario</title>
+   <title>Portal ACP - Formulario Editar Usuario</title>
    
     <!-- Icon -->
 	<jsp:include page="imgShortIcon.jsp" />  
@@ -65,7 +82,6 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     
       <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />	
-
 </head>
 
 <body id="page-top">
@@ -73,8 +89,8 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Menus -->
-  		 <jsp:include page="adminMenus.jsp" />    
+     <!-- Menus -->
+	 <jsp:include page="adminMenus.jsp" />    
         
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -86,41 +102,28 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                                 <div class="card rounded shadow border-0">
                                     <div class="card-header">
                                         <h2>
-                                            Editar Usuario
+                                           Formulario Editar Usuario
                                         </h2>
                                     </div>
                                     <div class="card-body bg-white rounded">                           
-		                               <%
-		                            	String us = "";
-										us = request.getParameter("userID")==null?"0":request.getParameter("userID");
-																
-										Usuario user = new Usuario();
-										Dt_Usuario dtu = new Dt_Usuario();
-										user = dtu.getUsuario(Integer.parseInt(us));
-										
-										//Variable
-										String telefono = null;
-										if(user.getTelefono().equals("-")){
-											telefono = "";
-										}else{
-											telefono = user.getTelefono();
-										}
-		                          	     %>
                            	   	        <div class="card-body bg-white rounded">                           
-		                                <form class="user" method="post" action="./Sl_GestionUsuario" >
+		                                <form class="usuario" name="usuario" method="post" action="./Sl_GestionUsuario" onsubmit="return comprobarContra()">
 										<!-- El valor de este input es para el Servlet opcion guardar -->
 										<input name="idUsuario" type="hidden" value="<%=user.getIdUser()%>" />								
 		                            	<input name="opcion" type="hidden" value="2" />
+		                            	<input name="url_foto" type="hidden" value="" />		                            	
 		                            	<div class="form-group row">
 		                                    <div class="col-sm-12 mb-3">
 		                                        <label>Nombres:</label>
 		                                        <input type="text" class="form-control form-control-user" name="txtNombres" id="txtNombres"
 		                                            minlength="3" maxlength="80"  required>
+		                                            <small id="message"></small> 
 		                                    </div>
-		                                    <div class="col-sm-12">
+		                                    <div class="col-sm-12 mb-3">
 		                                       <label>Apellidos:</label>	
 		                                        <input type="text" class="form-control form-control-user" name="txtApellidos" id="txtApellidos"
-		                                          minlength="3" maxlength="80"   required>
+		                                          minlength="3" maxlength="100"   required>
+		                                          <small id="message1"></small> 
 		                                    </div>
 		                                    <div class="col-sm-12">
 		                                  	   <label>Teléfono(Opcional):</label>                                  
@@ -133,6 +136,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		                                  	   <label>Usuario:</label>                                  
 		                                        <input type="text" class="form-control form-control-user" name="txtUserName" id="txtUserName"
 		                                         minlength="4" maxlength="40"  required>
+		                                         <small id="message2"></small> 
 		                                    </div>
 		                                    <div class="col-sm-12 mb-3">
 		                                       <label>Correo:</label>                                                              
@@ -140,9 +144,12 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 		                                           minlength="8" maxlength="75"  required>
 		                                    </div>
 		                                    <label class="col-sm-12 mb-3">Contraseña:</label>
-		                                    <div class="col-sm-12 mb-3">
+		                                    <div class="col-sm-12 mb-3 input-group" >
 		                                        <input type="password" class="form-control form-control-user" name="txtPwd" id="txtPwd"
 		                                           placeholder="Contraseña" minlength="8" maxlength="32" >
+		                                           <div class="input-group-append">
+									            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+									          </div>	
 		                                    </div>
 		                                    <div class="col-sm-12">
 		                                        <input type="password" class="form-control form-control-user" name="txtPwd2" id="txtPwd2"
@@ -154,8 +161,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 			                                <input class="btn btn-primary btn-user btn-block" type="submit" value="Guardar" />
 			                            </div>			                          
 		                                <div style="text-align:center;"><a href="GestionUsuario.jsp"><i
-		                                              class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>
-		               
+		                                              class="fas fa-arrow-circle-left"></i>&nbsp;Volver a la tabla</a></div>		               
 		                           		 </form>
                                     </div>
                                    </div>
@@ -168,18 +174,11 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
+     </div>
+     <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <jsp:include page="adminFooter.jsp" />    
-        
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+     <!-- Footer -->
+     <jsp:include page="adminFooter.jsp" />    
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -188,9 +187,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
-        
-
-
+    
     <!-- JAVASCRIPTS -->
     <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
 
@@ -215,56 +212,78 @@ import="vistas.*, entidades.*, datos.*, java.util.*;"%>
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
     
-    <script>  
+<script>  
    $(document).ready(function()
 	{
+	   	//Setear valores
 		$("#txtNombres").val("<%=user.getNombre()%>");
 		$("#txtApellidos").val("<%=user.getApellido()%>");
 		$("#txtUserName").val("<%=user.getUser()%>");
 		$("#txtEmail").val("<%=user.getEmail()%>");
 		$("#txtTelefono").val("<%=telefono%>");
 		
+		var mensaje = "";
+        mensaje = "<%=varMsj%>";
+
+        if(mensaje == "existec"){
+        	$.jAlert({
+	               'title': 'Error',
+	               'content': '¡Usuario ingresado ya existe!',
+	               'theme': 'red',
+	               'onClose': function(OnClose) {               
+	                   window.location = "FormEditarUsuario.jsp?userID=" + <%=user.getIdUser()%> ;
+	               }
+	        }); 
+        }
 	});
+
+   //Funcion para mostrar maximo de caracteres en los inputs y textareas    
+    $('#txtNombres').on("keyup", function(e) {
+        var textLength = $('#txtNombres').val().replace(' ', '1').length;
+        var maxValue = 80;
+        $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");	       
+    });
+    
+    $('#txtApellidos').on("keyup", function(e) {
+        var textLength = $('#txtApellidos').val().replace(' ', '1').length;
+        var maxValue = 100;
+        $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");	       
+    });
+    
+    $('#txtUserName').on("keyup", function(e) {
+        var textLength = $('#txtUserName').val().replace(' ', '1').length;
+        var maxValue = 40;
+        $("#message2").text(textLength+" de "+maxValue+" carácteres permitidos");	       
+    });
+    
+  	//Mostrar contrasena en los inputs
+    function mostrarPassword(){
+		var cambio = document.getElementById("txtPwd");
+		if(cambio.type == "password"){
+			cambio.type = "text";
+			$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+		}else{
+			cambio.type = "password";
+			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+		}
+		var cambio2 = document.getElementById("txtPwd2");
+ 		if(cambio2.type == "password"){
+ 			cambio2.type = "text";
+ 			$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+ 		}else{
+ 			cambio2.type = "password";
+ 			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+ 		}
+	}  
+  //Validar contrasena
+	function comprobarContra(){
+	    clave1 = document.usuario.txtPwd.value;
+	    clave2 = document.usuario.txtPwd2.value;	
+	    if (clave1 != clave2){
+	    	errorAlert('Error', '¡Contraseña no coinciden!');
+	    	return false;
+	    }	    
+	}
 </script>
-<script type="text/javascript">
-		var field = document.querySelector('[name="txtPwd"]');
-		var field2 = document.querySelector('[name="txtPwd2"]');
-		
-		field.addEventListener('keypress', function ( event ) {  
-		   var key = event.keyCode;
-		    if (key === 32) {
-		      event.preventDefault();
-		    }
-		})
-		
-		field2.addEventListener('keypress', function ( event ) {  
-		   var key = event.keyCode;
-		    if (key === 32) {
-		      event.preventDefault();
-		    }
-		})
-	
-	    $(document).ready(function ()
-	    {
-    	   var mensaje = "";
-	        mensaje = "<%=varMsj%>";
-	
-	        if(mensaje == "existe"){
-	        	errorAlert('Error', '¡Usuario ingresado ya existe!');
-	        }
-	        
-	        $("#txtPwd2").change(function(){
-	        	var clave = "";
-		        var clave2 = "";
-		        clave = $("#txtPwd").val();
-		        clave2 = $("#txtPwd2").val();
-		        if(clave!=clave2){
-		        	errorAlert('Error', 'Las contraseñas no coinciden');
-		        	$("#txtPwd").val("");
-		        	$("#txtPwd2").val("");
-	          	}
-	        });  
-	    });
-	</script>
 </body>
 </html>

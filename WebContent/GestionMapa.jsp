@@ -220,15 +220,36 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', '¡Coordenada registrada con éxito!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Coordenada registrada con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionMapa.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionMapa.jsp";
+                 }
+               });
         }
         if(mensaje == "3")
         {
-            errorAlert('Éxito', '¡Coordenada eliminada exitosamente!');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Coordenada eliminada exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionMapa.jsp";
+                 }
+               });
         }              
     }); 
 	</script>

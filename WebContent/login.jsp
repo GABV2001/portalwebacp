@@ -12,11 +12,12 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
 	HttpSession hts = request.getSession(false);
 	hts.removeAttribute("acceso");
 	hts.invalidate();
-
-%>
-<%
+	
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	String codigo = request.getParameter("codverif");
+	codigo=codigo==null?"":codigo;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,12 +46,10 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
     <link rel="stylesheet" href="css/styles1.css">
     
      <!-- jAlert css  -->
-	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
-    
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />    
 </head>
 
 <body>
-
     <div class="container">
 
         <!-- Outer Row -->
@@ -70,6 +69,7 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
                                     </div>
                                     <form class="user" method="post" action="./Sl_Login">
                                         <div class="form-group">
+                                        	<input type="hidden" name="codverificacion" value="<%=codigo%>">
                                             <input type="text" class="form-control form-control-user"
                                                 id="userName" name="userName" aria-describedby="emailHelp"
                                                 placeholder="Usuario">
@@ -104,7 +104,7 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.jsp">¿Olvidar contraseña?</a>
+                                        <a class="small" href="RecuperarContra.jsp">¿Olvidar contraseña?</a>
                                     </div>
                                 </div>
                             </div>
@@ -147,10 +147,28 @@ import="entidades.Rol, datos.Dt_Rol, java.util.*;"%>
 	/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
         mensaje = "<%=varMsj%>";
-
+	
+        if(mensaje == "1")
+        {
+            $.jAlert({
+	               'title': 'Éxito',
+	               'content': '¡Contraseña actualizada exitosamente!',
+	               'theme': 'green',
+	               'onClose': function(OnClose) {               
+	                   window.location = "login.jsp";
+	               }
+	         });
+        }
         if(mensaje == "403")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            $.jAlert({
+	               'title': 'Error',
+	               'content': '¡Revise los datos e intente nuevamente!',
+	               'theme': 'red',
+	               'onClose': function(OnClose) {               
+	                   window.location = "login.jsp";
+	               }
+	         });            
         }
     });
 	</script>

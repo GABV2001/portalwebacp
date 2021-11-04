@@ -36,13 +36,15 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	
+	//Variable de control de mensajes
+		String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>
 <!DOCTYPE html>
 <html lang="es">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
+
+	
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -119,14 +121,15 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                     </tfoot>
                                     <tbody>                                        
                                         <%
-									 	for(Genero us: listGenero){
+									 	for(Genero lg: listGenero){
                                          %>
                                        	<tr> 
-                                       	    <td><%=us.getNombre()%></td>                                           
-                                            <td><%=us.getDescripcion()%></td>                                      
-                                            <td>&nbsp;&nbsp;<a href="FormEditarGenero.jsp?idG=<%=us.getGeneroID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                                                        
-                                                   &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
+                                       	    <td><%=lg.getNombre()%></td>                                           
+                                            <td><%=lg.getDescripcion()%></td>                                      
+                                            <td>&nbsp;&nbsp;
+                                            <a href="FormEditarGenero.jsp?idG=<%=lg.getGeneroID()%>"><i class="fas fa-edit"></i></a>                                            
+                                                   &nbsp;&nbsp;      
+                                                 <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
                                            		    'confirmQuestion': '¿Estás seguro que deseas eliminar este genero?',
@@ -134,7 +137,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      e.preventDefault();
                                            		      //do something here
 
-                                           		       window.location.href = 'Sl_GestionGenero?idG=<%=us.getGeneroID()%>';
+                                           		       window.location.href = 'Sl_GestionGenero?idG=<%=lg.getGeneroID()%>';
                                            		      btn.parents('.jAlert').closeAlert();
                                            		      return false;
                                            		    },
@@ -145,8 +148,10 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      return false;
                                            		    }
                                            		  });">
+                                           		  
                         							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
-                        						</a></i></td> 
+                        						</a>
+                        						</td> 
                                         </tr>
                                            <%
                                        		}
@@ -159,16 +164,14 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
+    </div>
+    <!-- End of Main Content -->
 
-            <!-- Footer -->
+    <!-- Footer -->
           	 <jsp:include page="adminFooter.jsp" />  
 
-        </div>
         <!-- End of Content Wrapper -->
 
-    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -214,17 +217,62 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
 
         if(mensaje == "1")
         {
-            successAlert('Éxito', 'Género guardado con éxito');
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Género guardado con éxito!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionGenero.jsp";
+                 }
+               });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', '¡Revise los datos e intente nuevamente!');
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionGenero.jsp";
+                 }
+               });
         }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Género actualizado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionGenero.jsp";
+                }
+              });
+        }  
         if(mensaje == "5")
         {
-            errorAlert('Éxito', 'Género eliminado exitosamente');
-        }
+        	 $.jAlert({
+                 'title': 'Éxito',
+                 'content': '¡Género eliminado exitosamente!',
+                 'theme': 'green',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionGenero.jsp";
+                 }
+               });       
+        }      
+    if(mensaje == "existe")
+    {
+        $.jAlert({
+            'title': 'Error',
+            'content': '¡Género ingresado ya existe!',
+            'theme': 'red',
+            'onClose': function(OnClose) {               
+                window.location = "GestionGenero.jsp";
+            }
+          });
+    }
     });
+      
+
 	</script>
 	
 </body>

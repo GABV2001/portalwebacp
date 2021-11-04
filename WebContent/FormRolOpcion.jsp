@@ -42,12 +42,9 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
   
     <title>Portal ACP - Formulario Rol-Opciones</title>
     
@@ -99,6 +96,7 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
                                    		<input name="opcion" type="hidden" value="1" />
                                          <div class="form-group">
                                            <div class="col-sm-12 mb-3">
+                                            <label>Rol:</label>                                           
                                             <%
 		                                	ArrayList<Rol> listRol = new ArrayList<Rol>();
 		                                	Dt_Rol dto = new Dt_Rol();
@@ -116,6 +114,7 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
 	                                    	</select>
 	                                    	</div>
                                             <div class="col-sm-12 mb-3">
+                                            <label>Opción:</label>
                                             <%
 		                                	ArrayList<Opcion> listOpccbx = new ArrayList<Opcion>();
 		                                	Dt_Opcion dtr = new Dt_Opcion();
@@ -155,13 +154,6 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
             <!-- Footer -->
             <jsp:include page="adminFooter.jsp" />    
         
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -169,12 +161,8 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
 
     <!-- Logout Modal-->
     <jsp:include page="adminLogOutModal.jsp" />    
-        
-
 
     <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -205,7 +193,14 @@ import="entidades.Rol,entidades.Opcion,datos.Dt_Opcion,datos.Dt_Rol, entidades.R
 	
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', '¡Asignación Rol-Opción ya existe!');
+	            $.jAlert({
+	                'title': 'Error',
+	                'content': '¡Asignación Rol-Opción ya existe!',
+	                'theme': 'red',
+	                'onClose': function(OnClose) {               
+	                    window.location = "FormRolOpcion.jsp";
+	                }
+	              });
 	        }
 		});
 </script>

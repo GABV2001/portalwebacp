@@ -37,6 +37,9 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	
+		
+	
 	ViewRolUsuario vrgu = new ViewRolUsuario();
 	vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 	
@@ -49,8 +52,12 @@
 		vrgu =(ViewRolUsuario) session.getAttribute("acceso");
 		usuarioid = vrgu.getUsuarioid();
 	}
+	//Variable de control de mensajes
+		String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>   
 <!DOCTYPE html>
+
+
 <html lang="en">
 
 <head>
@@ -58,7 +65,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-     <title>Portal ACP - Formulario Producto</title>
+     <title>Portal ACP - Formulario Editar Producto</title>
      
      <!-- Icon -->
 	 <jsp:include page="imgShortIcon.jsp" />  
@@ -75,6 +82,11 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- jAlert css  -->
+	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
+    
+    
 
 </head>
 
@@ -107,7 +119,7 @@
                                 <div class="card rounded shadow border-0">
 
                                     <div class="card-header">
-                                        <h3 class="card-title text-left">Formulario Productos</h3>
+                                        <h3 class="card-title text-left">Formulario Editar Producto</h3>
                                     </div>
                                     <div class="card-body">
                                         <form class="Producto" method="post" action="./Sl_GestionProducto" enctype="multipart/form-data">
@@ -117,10 +129,17 @@
                                           <div class="mt-1 mb-3">
                                                 <label for="nombreCP" class="form-label fw-bolder">Nombre:</label>
                                                 <input type="text" class="form-control" id="nombreProducto" name= "nombreProducto" minlength="5" maxlength="200" required>
+                                            	<small id="message"></small>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="nombreCP" class="form-label fw-bolder">Descripción:</label>
-                                                <textarea id="descripcionProducto" name= "descripcionProducto" rows="4" class="form-control" minlength="10" maxlength="200" required></textarea>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label>Descripción:</label>
+ 												<textarea class="form-control" rows="3" id ="descripcionProducto" name = "descripcionProducto"  minlength="3" maxlength="500" required ></textarea>                                               	
+ 												 <small id="message1"></small>
+                                                <div id="circle" data-value="0" data-size="30">
+                              						<small id="percent"></small>
+                                                </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="custom-file">Imagen:</label>
@@ -155,7 +174,7 @@
                                     	    <%
                                     		for(TipoProducto tp: listTipoProducto){
                                     	    %>	
-                                    		<option value="<%=tp.getTipoproducotid()%>"><%=tp.getNombre()%></option>
+                                    		<option value="<%=tp.getTipoproductoid()%>"><%=tp.getNombre()%></option>
                                     	    <%
                                     		}
                                     	    %>    </select>
@@ -220,6 +239,13 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
+    <!-- Circle progress -->
+    <script src="js/circle-progress.js"></script>
+    
+    <!-- jAlert js -->
+	<script src="jAlert/dist/jAlert.min.js"></script>
+	<script src="jAlert/dist/jAlert-functions.min.js"></script>
+    
     
     <script>  
 	  $(document).ready(function()
@@ -227,8 +253,27 @@
 			$("#nombreProducto").val("<%=pr.getProducto()%>");
 			$("#descripcionProducto").val("<%=pr.getDescripcion()%>");	
 			$("#cbxEstadoProducto").val("<%=pr.getEstadoproductoid()%>");	
-			$("#cbxTipoProducto").val("<%=pr.getTipoproductoid()%>");	
+			$("#cbxTipoProducto").val("<%=pr.getTipoproductoid()%>");
+			
+		       var mensaje = "";
+		       mensaje = "<%=varMsj%>";
+		
+		       if(mensaje == "existe")
+		       {
+		           $.jAlert({
+		               'title': 'Error',
+		               'content': '¡Producto ingresado ya existe!',
+		               'theme': 'red',
+		               'onClose': function(OnClose) {               
+		            	   window.location = "FormEditarProducto.jsp?idP=" + <%=pr.getProductoid()%> ;
+		               }
+		        	});
+		       }
+	    
+			
 		});
+	  
+
 	 </script>  
 	 
      <script>  $('#multPro').on("change",function() {
@@ -238,6 +283,48 @@
 	      $(this).prev('label').text(file);
 
 	    });
+     //Caracteres Nombre
+		$('#nombreProducto').on("keyup", function(e) {
+	            var textLength = $('#nombreProducto').val().replace(' ', '1').length;
+	            var maxValue = 200;
+
+	     $("#message").text(textLength+" de "+maxValue+" carácteres permitidos");
+	     });
+		 //Caracteres Descripcion 
+		 $('#descripcionProducto').on("keydown", function(e) {
+	         var textLength = $('#descripcionProducto').val().replace(' ', '1').length + 1;
+	         var maxValue = 500;
+
+	         console.log(e.keyCode);
+	         if (textLength > maxValue) {
+					if(e.keyCode != 8){
+					e.preventDefault();
+					}	                       	
+	         }
+	      });
+		 $('#descripcionProducto').on("keyup", function(e) {
+	         var textLength = $('#descripcionProducto').val().replace(' ', '1').length;
+	         var maxValue = 500;
+
+	         $("#message1").text(textLength+" de "+maxValue+" carácteres permitidos");
+
+	         var percent = (textLength * 100) / maxValue;
+	         var circlePercent = ((textLength * 100) / maxValue) / 100;
+
+	         $('#circle').circleProgress({
+	             animationStartValue: $('#oldValue').val(),
+	             value: circlePercent,
+	             size: 30,
+	             fill: {
+	                 gradient: ["green", "lime"]
+	             },
+	         });
+
+	         percent = percent > 100 ? 100 : percent;
+
+	         $("#percent").text(percent+"%");
+	         $('#oldValue').val(circlePercent);
+	     });
 	</script>
 </body>
 

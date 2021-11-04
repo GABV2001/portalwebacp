@@ -21,7 +21,7 @@ public class Dt_Arbol {
 	// Metodo para llenar el RusultSet
 			public void llenaRsArbol(Connection c){
 				try{
-					ps = c.prepareStatement("select arbolid,nombrecientifico,nombrecomun,descripcion,estado,familiaid,generoid,floracionid,multimedia,fcreacion,fmodificacion,feliminacion,usuarioid from arbol where estado <> 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+					ps = c.prepareStatement("select arbolid,nombrecientifico,nombrecomun,descripcion,estado,familiaid,generoid,floracionid,multimedia,fcreacion,fmodificacion,feliminacion,usuarioid from arbol", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 					rsArbol = ps.executeQuery();
 				}
 				catch (Exception e){
@@ -87,8 +87,7 @@ public class Dt_Arbol {
 					rsArbol.updateString("NombreComun", arbol.getNombreComun());
 					rsArbol.updateString("NombreCientifico", arbol.getNombreCientifico());					
 					rsArbol.updateString("Descripcion", arbol.getDescripcion());
-					rsArbol.updateString("Multimedia", arbol.getMultimedia());
-					//rsArbol.updateString("Geom", "");
+					rsArbol.updateString("Multimedia", arbol.getMultimedia());					
 					rsArbol.updateInt("FloracionID", arbol.getFloracionID());
 					rsArbol.updateInt("FamiliaID", arbol.getFamiliaID());
 					rsArbol.updateInt("GeneroID", arbol.getGeneroID());					
@@ -120,7 +119,50 @@ public class Dt_Arbol {
 				
 				return guardado;
 			}
-			
+			 // Metodo para restaurar arbol
+			public boolean restaurarArbol(int idArbol)
+			{
+				boolean actualizado = false;
+				
+				try
+				{
+					c = PoolConexion.getConnection();
+					this.llenaRsArbol(c);	
+					rsArbol.beforeFirst();
+					while(rsArbol.next())
+					{
+						if(rsArbol.getInt(1)==idArbol)
+						{							
+							rsArbol.updateInt("estado", 1);
+							rsArbol.updateRow();
+							actualizado = true;
+							break;
+						}
+					}
+				}
+				catch (Exception e) 
+				{
+					System.err.println("ERROR AL RESTAURAR ARBOL "+e.getMessage());
+					e.printStackTrace();
+				}
+				finally
+				{
+					try {
+						if(rsArbol != null){
+							rsArbol.close();
+						}
+						if(c != null){
+							PoolConexion.closeConnection(c);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				return actualizado;
+			}	
 		// Metodo para eliminar Arbol
 			public boolean eliminarArbol(int idArbol)
 			{
@@ -263,4 +305,52 @@ public class Dt_Arbol {
 			}
 			return modificado;
 		}					
+		//Metodo para visualizar vista arbol para restaurar
+		public ArrayList<ViewArbol> listaArbolR(){
+			ArrayList<ViewArbol> listArbolR = new ArrayList<ViewArbol>();
+			try{
+				c = PoolConexion.getConnection();
+				ps = c.prepareStatement("select arbolid,nombrecomun,nombrecientifico,descripcion,nombrefam,nombregenero,estado,multimedia,nombreflo from viewarbol where estado = 3", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+				rs = ps.executeQuery();
+				while(rs.next()){
+					ViewArbol arbol = new ViewArbol();
+					arbol.setArbolID(rs.getInt("arbolid"));
+					arbol.setNombreComun(rs.getString("NombreComun"));
+					arbol.setNombreCientifico(rs.getString("NombreCientifico"));
+					arbol.setDescripcion(rs.getString("Descripcion"));					
+					arbol.setMultimedia(rs.getString("Multimedia"));	
+					arbol.setNombreFam(rs.getString("NombreFam"));
+					arbol.setNombreFlo(rs.getString("NombreFlo"));
+					arbol.setNombreGenero(rs.getString("NombreGenero"));						
+					arbol.setEstado(rs.getInt("Estado"));		
+					listArbolR.add(arbol);
+				}
+			}
+			catch (Exception e){
+				System.out.println("DATOS: ERROR EN LISTAR viewARBOL "+ e.getMessage());
+				e.printStackTrace();
+			}
+			finally{
+				try {
+					if(rs != null){
+						rs.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+					if(c != null){
+						PoolConexion.closeConnection(c);
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			return listArbolR;
+		}	
+		
+		
+   
 }

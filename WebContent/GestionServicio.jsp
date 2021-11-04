@@ -36,26 +36,22 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
+	
+	//Variable de control de mensajes
+	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
 %>	
 <!DOCTYPE html>
 <html lang="en">
-<%
-	//Variable de control de mensajes
-	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
-%>
 <head>
     <meta charset="ISO-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Gestión Servicios</title>
     
-     <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
+    <!-- Icon -->
+	<jsp:include page="imgShortIcon.jsp" />  
 	
-
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -125,8 +121,8 @@
                                         <tr>
                                            <td><%=sr.getNombre()%></td>                                           
                                             <td><%=sr.getDescripcion()%></td>                                                                                   
-                                            <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
-                        							<i class="fas fa-camera mostrarImagen" title="<%=sr.getMultimedia()%>" onClick="getValue()"></i>
+                                            <td>&nbsp;&nbsp;<a href="#">
+                        							<i class="fas fa-camera mostrarImagen" title="<%=sr.getMultimedia() + "?t="+System.currentTimeMillis()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
                         							</a></td>
                                            <td><%=sr.getEstadoservicio()==1?"Disponible":"No disponible" %></td>
                                            <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit"></i></a>
@@ -192,13 +188,6 @@
             <!-- Footer -->
          	<jsp:include page="adminFooter.jsp" />  
 
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -241,29 +230,55 @@
 
         if(mensaje == "1")
         {
-            successAlert('Exito', 'El elemento se ha guardado exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡El elemento se ha guardado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionServicio.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error', 'Revise los datos e intente nuevamente');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionServicio.jsp";
+                }
+              });
         }
         if(mensaje == "3")
         {
-            successAlert('Exito', 'Los datos han sido actualizados exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Los datos han sido actualizados exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionServicio.jsp";
+                }
+              });
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Los datos han sido eliminado exitosamente');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Los datos han sido eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionServicio.jsp";
+                }
+              });
         }
     });
-	</script>
-	
-	<script type="text/javascript">
+    
     function getValue()
     {   	
         var a= event.srcElement.title;
         document.getElementById("preview").src = a;
     }
-    </script>
+</script>
 </body>
 </html>

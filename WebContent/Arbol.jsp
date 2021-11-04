@@ -19,10 +19,36 @@
     <link rel="stylesheet" href="./style/style.css">
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/78a455df4c.js" crossorigin="anonymous"></script>
+    
+    <style type="text/css">
+    .ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+     }
+     html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	}
+	
+	.marco {
+	  width: 200px;
+	  height: 100px;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+  </style>
+    
 </head>
 
 <body>
     <!-- Menu -->
+    <div class="wrapper">	
    <jsp:include page="mainMenus.jsp" />
    
     <!-- Contenido -->
@@ -83,7 +109,7 @@
                	else{for(ViewArbol a: listArbol){%>
                <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="card h-100">
-                    <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>"><img class="img-fluid" src="<%=a.getMultimedia() %>" alt="Arbol <%=a.getNombreComun() %>"></a>
+                    <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>"><img class="img-fluid fill marco" src="<%=a.getMultimedia() %>" alt="Arbol <%=a.getNombreComun() %>"></a>
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="ArbolIn.jsp?arbolid=<%=a.getArbolID()%>" class="fw-bold text-dark"> <%=a.getNombreComun() %></a>
@@ -97,7 +123,7 @@
         <!-- /.row -->
     </div>
     <!-- /.container -->
-
+</div>
     <!-- footer -->
      <jsp:include page="mainFooter.jsp" />
    

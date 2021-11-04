@@ -31,10 +31,33 @@
     <link rel="stylesheet" href="css/evo-calendar.min.css">
     <!-- Add jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    
+    <style type="text/css">
+	html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.wrapper {
+	  min-height: 100%;
+	  margin-bottom: -50px;
+	}	
+	.marco {
+	  width: 200px;
+	  height: 100px;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+	
+	
+	</style>
 
 </head>
 
 <body>
+
+<div class="wrapper mb-5">
     <!-- Menu -->
    <jsp:include page="mainMenus.jsp" />
   
@@ -96,7 +119,7 @@
     </div>
     <!-- Fin Contenido -->
 
-
+</div>
     <!-- footer -->
      <jsp:include page="mainFooter.jsp" />
    
@@ -185,7 +208,5 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
 
-
 </body>
-
 </html>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"import = "entidades.Evento, datos.Dt_Evento,entidades.Rol,vistas.ViewRolUsuario, vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;"%>
 <%
 	response.setHeader( "Pragma", "no-cache" );
@@ -36,26 +36,26 @@
 			response.sendRedirect("401.jsp");
 		}	
 	}
-%>
-<!DOCTYPE html>
-<%
+	
 	//Variable de control de mensajes
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");
+	
+	//Cargar arreglo de objetos Eventos
+	ArrayList<Evento> listEventos = new ArrayList<Evento>();
+	Dt_Evento dth = new Dt_Evento();
+	listEventos = dth.listarEventos(); 
 %>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Portal ACP - Gestión Eventos</title>
     
      <!-- Icon -->
-	 <jsp:include page="imgShortIcon.jsp" />  
-	
+	 <jsp:include page="imgShortIcon.jsp" />  	
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -71,11 +71,19 @@
     
      <!-- jAlert css  -->
 	<link rel="stylesheet" href="jAlert/dist/jAlert.css" />
-
-	<style type="text/css">
-	table td {
 	
-	}</style>
+	<style type="text/css">	
+	.marco {
+	  width: 600px;
+	  height: 350px;
+	  border: 1px solid #000;
+	  margin: 10px 0;
+	}
+		
+	.fill {
+	  object-fit: fill;
+	}
+</style>
 </head>
 
 <body id="page-top">
@@ -91,13 +99,8 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Eventos</h1>
-               				     <%
-                                	ArrayList<Evento> listEventos = new ArrayList<Evento>();
-                                	Dt_Evento dth = new Dt_Evento();
-                                	listEventos = dth.listarEventos();                               	
-                                %>
-
-                    <!-- DataTales Evento -->
+               				   
+					<!-- DataTales Evento -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Gestión Evento</h6>
@@ -145,9 +148,9 @@
                                             <td style="max-width: 120px;white-space: nowrap;text-overflow: ellipsis;word-break: break-all;
 											overflow: hidden;"><%=ev.getDescripcion()%></td>
                                             <td><%=ev.getTipoevento()==1?"Público":"Privado" %></td>
-                                  			  <td>&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#modalVisualizarImagen" >
-                        							<i class="fas fa-camera mostrarImagen" title="<%=ev.getMultimedia()%>" onClick="getValue()"></i>
-                        							</a></td>
+                                  			  <td>&nbsp;&nbsp;<a href="#">
+                        							<i class="fas fa-camera mostrarImagen" title="<%=ev.getMultimedia()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
+                        					</a></td>                                        	
                                                 <td><%=ev.getUbicacion() %></td>
                                             <td><%=ev.getHipervinculo() %></td>
                                             <td>&nbsp;&nbsp;<a href="FormEditarEvento.jsp?idE=<%=ev.getEventoid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
@@ -176,14 +179,12 @@
                                      	   </tr>
 											<%
                                       	 	}
-                                            %>   
-                                       
+                                            %>                                       
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
                 
@@ -198,10 +199,9 @@
 					        </button>
 					      </div>
 					      <div class="modal-body">
-					    	<div align="center">
-									<img id="preview" src="" name="preview"  alt="Imagen Banner"
-										class = "img-fluid"; border-bottom-color: white; margin: 2px;" />
-								</div>								
+					    	<div class="container" align="center">
+									<img id="preview" src="" name="preview"  alt="Imagen Evento" class="img-fluid fill marco"/>
+							</div>								
 					      </div>					 
 					    </div>
 					  </div>
@@ -211,14 +211,8 @@
             </div>
             <!-- End of Main Content -->
 
-           <!-- Footer -->
-			<jsp:include page="adminFooter.jsp" />    
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+    <!-- Footer -->
+	<jsp:include page="adminFooter.jsp" />    
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -228,9 +222,7 @@
    <!-- Logout Modal-->
    	<jsp:include page="adminLogOutModal.jsp" />  
 
-    <!-- JAVASCRIPTS -->
-    <link rel="stylesheet" href="vendor/datatables/jquery.dataTables.js">
-
+    <!-- JAVASCRIPTS -->    
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -252,41 +244,77 @@
 	<script src="jAlert/dist/jAlert.min.js"></script>
 	<script src="jAlert/dist/jAlert-functions.min.js"></script>
 	
-	<script>
+<script>
     $(document).ready(function ()
     {
         
 	/////////// VARIABLE DE CONTROL MSJ ///////////
         var mensaje = "";
         mensaje = "<%=varMsj%>";
-
+                             
         if(mensaje == "1")
         {
-            successAlert('Exito', '¡Evento guardado con éxito!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Evento guardado con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });
         }
         if(mensaje == "2")
         {
-            errorAlert('Error','¡Revise los datos e intente nuevamente!');
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Revise los datos e intente nuevamente!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });
         }
         if(mensaje == "3")
         {
-            successAlert('Exito', '¡Evento actualizado exitosamente!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Evento actualizado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });
         }
         if(mensaje == "5")
         {
-            errorAlert('Exito', 'Evento eliminado con éxito');
-        }if(mensaje == "colision")
-        {
-            errorAlert('Exito', 'Existe un evento agendado, ya en la misma fecha y hora!');
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '!Evento eliminado con éxito¡',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });
         }
-
-    });
+        if(mensaje == "colision")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Existe un evento agendado, ya en la misma fecha y hora!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });            
+        }		              
+    }); 
+    
     function getValue()
     {   	
         var a= event.srcElement.title;
-        document.getElementById("preview").src = a;
-    }  
-	</script>
+        console.log(a);
+        document.getElementById("preview").src = a+"?t=" + new Date().getTime();
+    }
+</script>
 </body>
-
 </html>
