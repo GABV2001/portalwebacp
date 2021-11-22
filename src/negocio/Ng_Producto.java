@@ -4,8 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import datos.Dt_Producto;
+import datos.Dt_Servicio;
 import datos.PoolConexion;
+import entidades.Producto;
+import entidades.Servicio;
+import vistas.ViewProducto;
 
 public class Ng_Producto {
 		//Atributos
@@ -48,6 +54,20 @@ public class Ng_Producto {
 				}
 			}
 			return existe;
+		}
+		// Metodo para validar visibilidad del producto
+		public boolean validarVisibilidadProd(){
+			//Bandera
+			 boolean control = false;
+			 ArrayList<ViewProducto> listProd = new ArrayList<ViewProducto>();
+		     Dt_Producto dtp = new Dt_Producto();
+			 listProd = dtp.listarProductos(); 	 	 
+			 if(listProd.size() == 0 || listProd.stream().allMatch(x -> x.getEstadoproductoid() == 2)){
+				 control = true;
+			 }else {
+				 control = false;
+			 }	
+			 return control;
 		}
 		
 		// Metodo para validar el actualizar del Nombre Titulo

@@ -151,7 +151,8 @@ public class Sl_GestionPiePagina extends HttpServlet {
 					else
 					{						
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionPiePagina.jsp?msj="+valorImagen+"&guardado=3");						
+						response.sendRedirect("GestionPiePagina.jsp?msj=2");				
+						control=false;
 					}							
 				}	
 			  }

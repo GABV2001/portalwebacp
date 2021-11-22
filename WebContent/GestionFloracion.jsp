@@ -47,7 +47,7 @@ import="entidades.Floracion, datos.Dt_Floracion, entidades.Rol,vistas.ViewRolUsu
                     <!-- DataTales -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Ver floración</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Gestión floración</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -79,7 +79,7 @@ import="entidades.Floracion, datos.Dt_Floracion, entidades.Rol,vistas.ViewRolUsu
                                        	<tr> 
                                        	    <td><%=us.getNombre() %></td>                                           
                                             <td><%=us.getDescripcion() %></td>
-                                             <td><%=us.getTemporada()==1||us.getTemporada()==2?"Temporada lluviosa":"Temporada seca" %></td>                                        
+                                             <td><%=us.getTemporada()==1?"Temporada lluviosa":"Temporada seca" %></td>                                        
                                        </tr>
                                            <%
                                        		}

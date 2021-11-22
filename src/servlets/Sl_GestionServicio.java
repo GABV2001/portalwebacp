@@ -154,7 +154,8 @@ public class Sl_GestionServicio extends HttpServlet {
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionServicio.jsp?msj="+valorImagen+"&guardado=3");						
+						response.sendRedirect("GestionServicio.jsp?msj=2");
+						control = false;
 					}
 				  }
 			   }

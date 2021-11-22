@@ -31,9 +31,8 @@
   <!-- CSS IMAGE -->  
   <style type="text/css">	
 	.marco {
-	  width: 600px;
-	  height: 350px;
-	  border: 1px solid #000;
+	  width: 200px;
+	  height: 100px;
 	}
 		
 	.fill {
@@ -120,7 +119,7 @@
 			 listServicio = dts.listarServicio(); 
 		   	
 	     	  for(Servicio sr: listServicio){                    	
-	          if(sr.getEstadoservicio()==1){
+	          if(sr.getEstadoservicio()!=2){
 	          String desc = sr.getDescripcion();	    
 	          %>			          
 			  

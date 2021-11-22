@@ -164,7 +164,8 @@ public class Sl_GestionArbol extends HttpServlet {
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionArbol.jsp?msj="+valorImagen+"&guardado=3");						
+						response.sendRedirect("GestionArbol.jsp?msj=2");
+						control = false;
 					}
 				  }
 			   }

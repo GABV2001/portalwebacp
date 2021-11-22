@@ -202,7 +202,7 @@
 	        {
 	            $.jAlert({
 		               'title': 'Error',
-		               'content': '¡Elemento ingresado ya existe!',
+		               'content': '¡Titulo ingresado ya existe!',
 		               'theme': 'red',
 		               'onClose': function(OnClose) {               
 		                   window.location = "FormEditarBanner.jsp?idB=" + <%=bn.getBannerID()%>;

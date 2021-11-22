@@ -96,19 +96,19 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Roles Usuarios</h1>
+                <h1 class="h3 mb-2 text-gray-800">Rol Usuario</h1>
 
                 <!-- DataTales -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Gestión Roles Usuarios</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Gestión Rol Usuario</h6>
                     </div>
                     
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <div style="text-align:right;"><a href="FormRolUsuario.jsp"><i
-                                            class="fas fa-plus-square"></i>&nbsp; Asignar Rol a Usuarios</div></a>                             	
+                                            class="fas fa-plus-square" title="Asignar Rol a Usuario"></i>&nbsp; Asignar Rol a Usuario</div></a>                             	
                                 <thead>
                                     <tr>                                                                                   
                                         <th>Usuario</th>
@@ -133,13 +133,13 @@
                                        <td><%=VU.getRol() %></td>
                                        <td>
                                        		<a id="btn-edita-abrir" href="FormEditarRolUsuario.jsp?idRu=<%=VU.getIdrol_usuario()%>">
-                    							<i class="fas fa-edit" title="Modificar datos"></i>
+                    							<i class="fas fa-edit" title="Editar asignación rol usuario"></i>
                     						</a>
                     						&nbsp;&nbsp;
                                        		<a class="ajax-link" href="javascript:void(0);" 
                                        		onclick="$.jAlert({
                                        		    'type': 'confirm',
-                                       		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                       		    'confirmQuestion': '¿Realmente desea eliminar esta asignación rol a usuario?',
                                        		    'onConfirm': function(e, btn){
                                        		      e.preventDefault();
                                        		      //do something here
@@ -155,7 +155,7 @@
                                        		      return false;
                                        		    }
                                        		  });">
-                    							<i class="fas fa-trash-alt" title="Eliminar Rol a Usuario"></i>
+                    							<i class="fas fa-trash-alt" title="Eliminar asignación Rol a Usuario"></i>
                     						</a>
                                        		<!-- <a href="#">
                     							<i class="fas fa-eye" title="Visualizar"></i>
@@ -233,7 +233,7 @@
               }
             });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
             $.jAlert({
                 'title': 'Error',
@@ -243,6 +243,27 @@
                     window.location = "GestionRolUsuario.jsp";
               }
             });
+        }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación de Rol-Usuario actualizada exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolUsuario.jsp";
+              }
+            });
+        } if(mensaje == "4")
+        {
+        	 $.jAlert({
+                 'title': 'Error',
+                 'content': '¡Revise los datos e intente nuevamente!',
+                 'theme': 'red',
+                 'onClose': function(OnClose) {               
+                     window.location = "GestionRolUsuario.jsp";
+               }
+             });
         }
         if(mensaje == "5")
         {

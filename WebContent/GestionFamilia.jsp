@@ -96,7 +96,7 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormFamilia.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nueva Familia</div></a>
+                                                class="fas fa-plus-square" title="Nueva Familia"></i>&nbsp; Nueva Familia</div></a>
                                      <%
                                 	ArrayList<Familia> listFamilia = new ArrayList<Familia>();
                                 	Dt_Familia dtu = new Dt_Familia();
@@ -125,7 +125,7 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                                        <tr>        
                                            <td><%=lfam.getNombre() %></td>                                           
                                            <td><%=lfam.getDescripcion() %></td>                                
-                                           <td>&nbsp;&nbsp;<a href="FormEditarFamilia.jsp?idF=<%=lfam.getFamiliaID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                           <td>&nbsp;&nbsp;<a href="FormEditarFamilia.jsp?idF=<%=lfam.getFamiliaID()%>"><i class="fas fa-edit" title = "Editar Familia"></i></a>&nbsp;&nbsp;
                                                    &nbsp;&nbsp; 
                                                    <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -223,7 +223,7 @@ import="entidades.Familia, datos.Dt_Familia,  entidades.Rol,vistas.ViewRolUsuari
                  }
                });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
         	 $.jAlert({
                  'title': 'Error',

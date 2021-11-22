@@ -115,7 +115,9 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, datos.Dt_Pais, entidades.
                                             listPais = dtu.listaPais();
                                             %>                     
                                                 <label>País:</label>
-                                                <select class="form-control" name = "txtNombrePais" id ="txtNombrePais">
+                                                <select class="form-control" name = "txtNombrePais" id ="txtNombrePais" required>
+       	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		
+                                            
                                              <%
                                     		for(Pais p: listPais){
                                     	    %>	

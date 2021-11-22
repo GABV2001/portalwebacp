@@ -130,7 +130,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                                        	    <td><%=lp.getNombre() %></td>                                           
                                             <td><%=lp.getDescripcion() %></td>
                                             <td><%=lp.getRegion() %></td>                                            
-                                          <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=lp.getPaisID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                            <td>&nbsp;&nbsp;<a href="FormEditarPais.jsp?idP=<%=lp.getPaisID()%>"><i class="fas fa-edit" title="Editar País"></i></a>&nbsp;&nbsp;
                                                       &nbsp;&nbsp;  
                                                    <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -151,7 +151,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      return false;
                                            		    }
                                            		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar País"></i>
                         						</a>
                         						</td>
                         						</tr>   
@@ -228,7 +228,7 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, vi
                  }
                });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
         	 $.jAlert({
                  'title': 'Error',

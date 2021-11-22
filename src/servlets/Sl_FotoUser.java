@@ -108,17 +108,17 @@ public class Sl_FotoUser extends HttpServlet {
 						
 						if(dtu.guardarFotoUser(Integer.parseInt(idusuario),url))
 						{
-							response.sendRedirect("GestionUsuario.jsp?msj="+idusuario+"&guardado=1");
+							response.sendRedirect("GestionUsuario.jsp?msj=3");
 						}
 						else
 						{
-							response.sendRedirect("GestionUsuario.jsp?msj="+idusuario+"&guardado=2");
+							response.sendRedirect("GestionUsuario.jsp?msj=4");
 						}
 					}
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionUsuario.jsp?msj="+idusuario+"&guardado=3");						
+						response.sendRedirect("GestionUsuario.jsp?msj=4");						
 					}
 				}	
 			}

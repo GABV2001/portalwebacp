@@ -122,13 +122,13 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
                                            <td><%=vrp.getOpcion() %></td>                                           
                                               <td>
                                            		<a id="btn-edita-abrir" href="FormEditarRolOpcion.jsp?rolopcID=<%=vrp.getIdrol_opc()%>">
-                        							<i class="fas fa-edit" title="Modificar asignación de Opcion"></i>
+                        							<i class="fas fa-edit" title="Editar asignación rol opcion"></i>
                         						</a>
                         						&nbsp;&nbsp;
                                            		<a class="ajax-link" href="javascript:void(0);" 
                                            		onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                           		    'confirmQuestion': '¿Realmente desea eliminar esta asignación rol a opción?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -220,7 +220,7 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
                 }
               });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje =="4")
         {
             $.jAlert({
                 'title': 'Error',
@@ -230,6 +230,17 @@ import="vistas.ViewRolOpcion, datos.Dt_RolOpcion,  entidades.Rol,vistas.ViewRolU
                     window.location = "GestionRolOpcion.jsp";
                 }
               });            
+        }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Asignación Rol-Opción actualizada con éxito!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRolOpcion.jsp";
+                }
+              });
         }
         if(mensaje == "5")
         {

@@ -110,7 +110,7 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormTipoProducto.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Tipo Producto</div></a>
+                                                class="fas fa-plus-square" title="Nuevo Tipo Producto"></i>&nbsp; Nuevo Tipo Producto</div></a>
                                     <%
                                 	ArrayList<TipoProducto> listTipoProducto = new ArrayList<TipoProducto>();
                                 	Dt_TipoProducto dtp = new Dt_TipoProducto();
@@ -137,12 +137,12 @@
                                         <tr>
                                            <td><%=tp.getNombre()%></td>                                           
                                            <td><%=tp.getDescripcion() %></td>                                                                                   
-                                           <td>&nbsp;&nbsp;<a href="FormEditarTipoProducto.jsp?idTp=<%=tp.getTipoproductoid()%>"><i class="fas fa-edit"></i></a>&nbsp;
+                                           <td>&nbsp;&nbsp;<a href="FormEditarTipoProducto.jsp?idTp=<%=tp.getTipoproductoid()%>"><i class="fas fa-edit" title="Editar Tipo Producto"></i></a>&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Registro',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Tipo de Producto?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -158,7 +158,7 @@
                                            		      return false;
                                            		    }
                                            		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Tipo Producto"></i>
                         						</a></i></td>            
                                    	     </tr>   
                                          <%
@@ -275,7 +275,7 @@
         {
             $.jAlert({
                 'title': 'Éxito',
-                'content': '¡Publicacion eliminada exitosamente!',
+                'content': '¡Tipo Producto eliminado exitosamente!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionTipoProductos.jsp";

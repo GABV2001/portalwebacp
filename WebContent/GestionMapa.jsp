@@ -222,7 +222,7 @@ vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_RolOpcion, java.util.*;" %>
         {
             $.jAlert({
                 'title': 'Éxito',
-                'content': '¡Coordenada registrada con éxito!',
+                'content': '¡Asignación mapa registrada con éxito!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionMapa.jsp";

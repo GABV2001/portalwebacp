@@ -59,8 +59,7 @@ datos.Dt_Region, entidades.Region,vistas.ViewRolOpcion, datos.Dt_Rol,datos.Dt_Ro
 		apellidos = user.getApellido();
 		telefono = user.getTelefono();
 	}		
-	
-	
+		
 	String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj");	
 %>
 <!DOCTYPE html>

@@ -176,7 +176,8 @@ public class Sl_GestionEvento extends HttpServlet {
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionEvento.jsp?msj="+valorImagen+"&guardado=3");						
+						response.sendRedirect("GestionEvento.jsp?msj=2");				
+						control = false; 
 					}
 				}
 			   }
@@ -210,7 +211,7 @@ public class Sl_GestionEvento extends HttpServlet {
 	        ev.setFcreacion(new java.sql.Timestamp(fechaSistema.getTime()));			  
 		        try {
 		        	if(nge.existeEvento(ev.getNombre())) {
-		        		response.sendRedirect("GestionEvento.jsp?msj=2");
+		        		response.sendRedirect("GestionEvento.jsp?msj=existe");
 		        	}else if(nge.colisionEventoInicio(ev.getFechainicio(),  ev.getHorainicio())){
 		         		response.sendRedirect("GestionEvento.jsp?msj=colision");		    		    
 		        	}

@@ -65,8 +65,8 @@ public class Sl_GestionInicio extends HttpServlet {
 		String multVision = null;
 		
 		//Controlador
-		boolean control = false;		
-					
+		boolean control = false; 
+		
 		try
 		{
 			FileItemFactory factory = new DiskFileItemFactory();
@@ -178,7 +178,8 @@ public class Sl_GestionInicio extends HttpServlet {
 					{	
 						//url_foto = logoMultimedia;
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionInicio.jsp?msj="+valorImagen+"&guardado=3");						
+						response.sendRedirect("GestionInicio.jsp?msj=2");
+						control=false;
 					}	
 				}
 		   	  }
@@ -227,7 +228,7 @@ public class Sl_GestionInicio extends HttpServlet {
 					break;					
 				}			
 			default:
-				response.sendRedirect("GestionIncio.jsp?msj=3");	
+				response.sendRedirect("GestionIncio.jsp?msj=2");	
 				break;
 		}
 	}

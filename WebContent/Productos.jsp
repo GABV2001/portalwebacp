@@ -1,5 +1,5 @@
  <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
- import="vistas.ViewProducto, datos.Dt_Producto, java.util.*;" %>
+ import="vistas.ViewProducto, datos.Dt_Producto, negocio.Ng_Producto, entidades.Producto, java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,13 +60,11 @@
 <h2 class="text-center">Catálogo de Productos</h2>
   <hr>
 <div class="row">   
-   	 <%
-     	 ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
-     	 Dt_Producto dtp = new Dt_Producto();
-     	 listProducto = dtp.listarProductos();                     	                         
-     	            
-       if(listProducto.size() == 0){%>
-   	   <div class="row">
+   	 <%       			
+		//Construir objecto negocio
+		Ng_Producto ngs = new Ng_Producto();
+		if(ngs.validarVisibilidadProd()){%>
+		<div class="row">
           <div class="col-md-4">
               <figure class="card card-product">
                   <div class="img-wrap"><img class="img-guide" src="img/Defecto.jpeg"></div>
@@ -115,30 +113,41 @@
       </div> <!-- row.// -->
    </div>
    <!--container.//-->     	       	
-        <%}else{
-      	 for(ViewProducto pr: listProducto){
-      	 if(pr.getEstadoproductoid()!=2){%>        
-	    <div class="col-md-4" >
-	      <figure class="card card-product border border-dark" >
-	      <div><img class= "img-guide" src="<%=pr.getMultimedia()%>"></div>
-	      <figcaption class="info-wrap">
-	         <h4 class="title"><%=pr.getProducto()%></h4>
-	         <h6>Tipo de producto: <%=pr.getTipoproducto()%></h6>  
-	         <p class="desc"><%=pr.getDescripcion()%></p>	         
-	      </figcaption>
-	         <div class="bottom-wrap">
-	         <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
-	    </div> <!-- bottom-wrap.// -->
-	    <figure>
-     		</div> <!-- col // -->				       
-		   <%
-		 }//Fin if
-       }//Fin For
-      }//Fin else
-     %> 
-	 </div>  
-</div> <!-- row.// -->
+      <%}else{   
+    	  ArrayList<ViewProducto> listProducto = new ArrayList<ViewProducto>();
+      	 Dt_Producto dtp = new Dt_Producto();
+      	 listProducto = dtp.listarProductos(); 	    
+      	 
+      		  for(ViewProducto sr: listProducto){                    	
+	          if(sr.getEstadoproductoid()==1){
+	          String desc = sr.getDescripcion();
+	          %>
+	          
+	          <div class="col-md-4">
+			    <figure class="card card-product border border-dark">
+			        <div class="card-img">
+			        <img class="img-guide" src="<%=sr.getMultimedia()%>">
+			        </div>
+			        <figcaption class="info-wrap">
+			         <h4 class="card-title"><%=sr.getProducto()%></h4>			        
+			            <p class="card-text descServicio" onClick="getValue()" title="<%=sr.getDescripcion()%>"><%=desc%></p>
+			            <h6>Tipo de producto: <%=sr.getTipoproducto()%></h6>			            
+			        </figcaption>
+			        <div class="bottom-wrap">
+			            <a href="Contacto.jsp" class="btn btn-sm btn-primary float-right">Contactar</a>
+			        </div> <!-- bottom-wrap.// -->
+			    </figure>
+				</div> <!-- col // -->	
+	          
+	          <%
+			  }//Fin if
+		     }//Fin For
+		    }//Fin else
+		   %>  
+		</div>
 <!--container.//-->
+</div>
+</div>	
 
 <!-- footer -->
 <jsp:include page="mainFooter.jsp" />

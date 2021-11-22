@@ -97,7 +97,7 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormRegion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nueva Región</div></a>
+                                                class="fas fa-plus-square" title="Nueva Región"></i>&nbsp; Nueva Región</div></a>
                                     <%
                                     	ArrayList<Region> listRegion = new ArrayList<Region>();
                                         Dt_Region dtu = new Dt_Region();
@@ -124,12 +124,12 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                                        	<tr> 
                                        	    <td><%=lr.getNombre() %></td>                                           
                                             <td><%=lr.getDescripcion() %></td>                                             
-                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=lr.getRegionID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                              <td>&nbsp;&nbsp;<a href="FormEditarRegion.jsp?idR=<%=lr.getRegionID()%>"><i class="fas fa-edit" title="Editar Región"></i></a>&nbsp;&nbsp;
                                                     &nbsp;&nbsp;    
                                                    <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta region?',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar esta región?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -145,7 +145,7 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      return false;
                                            		    }
                                            		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Región"></i>
                         						</a>
                         						</td>
                         						</tr>
@@ -223,7 +223,7 @@ import="entidades.Region,datos.Dt_Region,entidades.Rol,vistas.ViewRolUsuario, vi
                  }
                });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
         	 $.jAlert({
                  'title': 'Error',

@@ -67,50 +67,50 @@
         %>
        		<div class="card w-75 " style="margin-bottom:20px; border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div> 
 		       
 		    <div class="card w-75 " style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>
 		    
 		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>
 		    
 		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>
 		    
 		    <div class="card w-75 "style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>
 		    
 		    <div class="card w-75"style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>
 		    
 		    <div class="card w-75 mb-5" style="border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>	
         <%}	
@@ -130,14 +130,14 @@
   			<%if(a.getEstadopublicacion()==2){%>
   	      	<div class="card w-75 " style="margin-bottom:20px; border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>    
 		    <div class="card w-75 " style="margin-bottom:20px;border:3px solid">
 			<div class="card-body">
-			  <h5 class="card-title">Card title</h5>
-			  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			  <h5 class="card-title">Tarjeta Prueba</h5>
+			  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 		    </div>				    
   	   <%}

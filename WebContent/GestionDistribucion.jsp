@@ -96,7 +96,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormDistribucion.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Distribución</a></div>
+                                                class="fas fa-plus-square" title= "Nueva Distribución"></i>&nbsp; Nueva Distribución</a></div>
                                                   <%
                                                   	ArrayList<ViewDistribucion> listDistribucion = new ArrayList<ViewDistribucion>();
                                                     Dt_Distribucion dtu = new Dt_Distribucion();
@@ -127,7 +127,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                                             <td><%=ld.getDescripcion() %></td>
                                              <td><%=ld.getPais()%></td>
                          		       <td>&nbsp;&nbsp;
-                         		            <a href="FormEditarDistribucion.jsp?idD=<%=ld.getDistribucionID()%>"><i class="fas fa-edit" title="Modificar datos de la distribución"></i></a>
+                         		            <a href="FormEditarDistribucion.jsp?idD=<%=ld.getDistribucionID()%>"><i class="fas fa-edit" title="Editar distribución"></i></a>
                          		            &nbsp;&nbsp;                         		            
                          		            <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -148,7 +148,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                                            		      return false;
                                            		    }
                                            		  });">                                           		  
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Distribución"></i>
                         						</a>
                         						
                         						</td>
@@ -227,7 +227,7 @@ import="vistas.ViewDistribucion,datos.Dt_Distribucion, entidades.Rol,vistas.View
                  }
                });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
         	 $.jAlert({
                  'title': 'Error',

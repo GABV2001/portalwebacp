@@ -17,7 +17,7 @@ import = "vistas.ViewHead,datos.Dt_ViewHead, java.util.*;"%>
  <!-- Menu -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="LogoACP" style="width: 100px; height: 40px;" id="imgLogo"><%=titulo %></a>
+            <a class="navbar-brand" href="index.jsp">   <img src="img/<%=logo%>" alt="LogoACP" style="width: 200px; height: 70px;" id="imgLogo"><%=titulo %></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

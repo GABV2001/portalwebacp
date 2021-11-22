@@ -60,12 +60,15 @@
 	  border: none;
 	}
 	.marco {
+	  width: 200px;
+	  height: 100px; 
+	}
+	.marco1 {
 	  width: 550px;
 	  height: 400px;
 	  border: 1px solid #000;
 	  margin: 10px 0;
-	}
-		
+	}	
 	.fill {
 	  object-fit: fill;
 	}
@@ -86,7 +89,7 @@
 		                <h3 class="text-center"><b><%=a.getTitulo() %></b></h3>
 		                <br>
 		                <p class="text-center"><span class="date">Publicado: <%=fechaCreacion %> </span></p>		                            
-		                <p class="text-justify" ><%=a.getDescripcion()%></p>
+		                <p class="text-center" ><%=a.getDescripcion()%></p>
 		                <br>		            
 		            </div>
 		       <%if(a.getMultimedia1()!=null){%>
@@ -95,7 +98,7 @@
 		            <h3 class="text-center">Multimedia</h3>
 		            <br>
 		            <div>
-		                <img class="img-fluid mx-auto d-block fill marco" src="<%=a.getMultimedia1()%>">		
+		                <img class="img-fluid mx-auto d-block fill marco1" src="<%=a.getMultimedia1()%>">		
 		            <br>		            					
 		            </div>
 		        <%}%>		       

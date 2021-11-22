@@ -49,21 +49,21 @@ String varMsj = request.getParameter("msj")==null?"":request.getParameter("msj")
       <div class="col-md-9">
         <div class="contact-form">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="nombres">Nombres:</label>
+            <label>Nombre Completo:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nombres" name="nombres" minlength="3" maxlength="80" required>
+              <input type="text" class="form-control" id="nombrescompleto" name="nombrescompleto" minlength="3" maxlength="80" required>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="apellidos"  name="apellidos" minlength="3" maxlength="80" required>
-            </div>
-          </div>
+          </div>          
           <div class="form-group">
             <label class="control-label col-sm-2" for="email">Correo:</label>
             <div class="col-sm-10">
               <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="apellidos">Asunto:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="asunto"  name="asunto" minlength="3" maxlength="100" required>
             </div>
           </div>
           <div class="form-group">

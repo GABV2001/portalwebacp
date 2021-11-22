@@ -94,9 +94,9 @@
                           <div class="table-responsive">
                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                   <div style="text-align:right;"><a href="FormRol.jsp"><i
-                                              class="fas fa-plus-square"></i>&nbsp; Nuevo Rol</a>
+                                              class="fas fa-plus-square" title="Nuevo Rol"></i>&nbsp; Nuevo Rol</a>
                                    <a href="GestionRolOpcion.jsp">
-                       				<i class="far fa-file" title="Asignar Rol a Opcion"></i> Rol-Opcion	 
+                       				<i class="far fa-file" title="Asignar Rol a Opción"></i> Rol-Opción	 
                                     </div>	                                              
                                   <thead>
                                       <tr>
@@ -122,13 +122,13 @@
 										 overflow: hidden;"><%=r.getDesc_rol()%></td>
                                           <td>
                                          		<a id="btn-edita-abrir" href="FormEditarRol.jsp?rolID=<%=r.getIdRol()%>">
-                      							<i class="fas fa-edit" title="Modificar datos del Rol"></i>
+                      							<i class="fas fa-edit" title="Editar Rol"></i>
                       						</a>
                       						&nbsp;
                                          		<a class="ajax-link" href="javascript:void(0);" 
                                          		onclick="$.jAlert({
                                          		    'type': 'confirm',
-                                         		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                         		    'confirmQuestion': '¿Realmente desea eliminar este rol?',
                                          		    'onConfirm': function(e, btn){
                                          		      e.preventDefault();
                                          		      //do something here
@@ -213,12 +213,23 @@
                 }
               });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje =="4")
         {
             $.jAlert({
                 'title': 'Error',
                 'content': '¡Revise los datos e intente nuevamente!',
                 'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionRol.jsp";
+                }
+              });            
+        }
+        if(mensaje == "3")
+        {
+            $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Rol actualizado exitosamente!',
+                'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionRol.jsp";
                 }

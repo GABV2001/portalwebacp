@@ -109,8 +109,7 @@
         	 %>    </div>
           <div class="carousel-inner ">		
 	       <div class="carousel-item active">
-                <img src="<%=listBanner.get(0).getMultimedia()%>" class="d-block w-100 h-50" alt="Imagen Banner 1">
-                   <div class="carousel-caption d-none d-md-block">
+ 			<img src="<%=listBanner.get(0).getMultimedia()+"?t="+System.currentTimeMillis()%>" class="d-block w-100 h-50" alt="Imagen Banner 1">                   <div class="carousel-caption d-none d-md-block">
 			        <h5 class= "fw-light"><%=listBanner.get(0).getTitulobanner() %></h5>
 			         <p  class= "fw-light"><%=listBanner.get(0).getDescripcion()%></p>
 				   </div>
@@ -119,8 +118,8 @@
 		    for (int counter = 1; counter < listBanner.size(); counter++) {
             %>
              <div class="carousel-item ">
-                <img src="<%=listBanner.get(counter).getMultimedia() %>" class="d-block w-100 h-50" alt="imagen <%=counter %>>">
-                 <div class="carousel-caption d-none d-md-block">
+			<img src="<%=listBanner.get(counter).getMultimedia() +"?t="+System.currentTimeMillis()%>" class="d-block w-100 h-50" alt="imagen <%=counter %>>">
+                <div class="carousel-caption d-none d-md-block">
 			        <h5 class= "fw-light"><%=listBanner.get(counter).getTitulobanner() %></h5>
 					<p class= "fw-light"><%=listBanner.get(counter).getDescripcion()%></p>	
 				  </div>

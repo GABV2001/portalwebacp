@@ -142,7 +142,8 @@ public class Sl_GuardarBanner extends HttpServlet {
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionBanner.jsp?msj="+valorPosicion+"&guardado=3");						
+						response.sendRedirect("GestionBanner.jsp?msj=2");
+						control=false;
 					}
 				}					
 			}

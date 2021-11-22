@@ -140,7 +140,7 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                         			       		&nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas restaurar este árbol',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas restaurar este árbol?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here

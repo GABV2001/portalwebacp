@@ -204,7 +204,7 @@
 	       {
 	           $.jAlert({
 	               'title': 'Error',
-	               'content': '¡El nombre de la coordenada, por favor ingrese un nombre distinto!',
+	               'content': '¡El nombre de la coordenada ya existe, por favor ingrese un nombre distinto!',
 	               'theme': 'red',
 	               'onClose': function(OnClose) {               
 	                   window.location = "FormCoordenada.jsp";

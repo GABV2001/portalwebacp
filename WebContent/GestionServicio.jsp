@@ -90,7 +90,7 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormServicio.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Servicio</div></a>
+                                                class="fas fa-plus-square" title="Nuevo Servicio"></i>&nbsp; Nuevo Servicio</div></a>
                                     <%
                                 	ArrayList<Servicio> listServicio = new ArrayList<Servicio>();
                                 	Dt_Servicio dts = new Dt_Servicio();
@@ -125,12 +125,12 @@
                         							<i class="fas fa-camera mostrarImagen" title="<%=sr.getMultimedia() + "?t="+System.currentTimeMillis()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
                         							</a></td>
                                            <td><%=sr.getEstadoservicio()==1?"Disponible":"No disponible" %></td>
-                                           <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit"></i></a>
+                                           <td>&nbsp;&nbsp;<a href="FormEditarServicio.jsp?idS=<%=sr.getServicioid()%>"><i class="fas fa-edit" title="Editar Servicio"></i></a>
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Servicio',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Servicio?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -146,7 +146,7 @@
                                            		      return false;
                                            		    }
                                            		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Servicio"></i>
                         						</a></i></td>            
                                    	       </tr>   
                                         	 <%
@@ -232,7 +232,7 @@
         {
             $.jAlert({
                 'title': 'Éxito',
-                'content': '¡El elemento se ha guardado exitosamente!',
+                'content': '¡Servicio guardado exitosamente!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionServicio.jsp";

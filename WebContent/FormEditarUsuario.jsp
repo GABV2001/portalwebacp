@@ -111,7 +111,8 @@
 										<!-- El valor de este input es para el Servlet opcion guardar -->
 										<input name="idUsuario" type="hidden" value="<%=user.getIdUser()%>" />								
 		                            	<input name="opcion" type="hidden" value="2" />
-		                            	<input name="url_foto" type="hidden" value="" />		                            	
+		                            	<input name="url_foto" type="hidden" value="" />
+		                            	<input name="estado" type="hidden" value="<%=user.getEstado()%>" />		                            			                            	
 		                            	<div class="form-group row">
 		                                    <div class="col-sm-12 mb-3">
 		                                        <label>Nombres:</label>
@@ -225,7 +226,7 @@
 		var mensaje = "";
         mensaje = "<%=varMsj%>";
 
-        if(mensaje == "existec"){
+        if(mensaje == "existe"){
         	$.jAlert({
 	               'title': 'Error',
 	               'content': '¡Usuario ingresado ya existe!',

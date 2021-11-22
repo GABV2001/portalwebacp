@@ -93,7 +93,7 @@ public class Sl_GestionCoordenada extends HttpServlet {
 		        	if(ngc.existeCoordenada(co.getNombre())){
 			        	response.sendRedirect("FormCoordenada.jsp?msj=existe");
 			        }
-		        	if(ngc.existeLongitud(co.getLongitud()) || ngc.existeLatitud(co.getLatitud())){
+		        	else if(ngc.existeLongitud(co.getLongitud()) || ngc.existeLatitud(co.getLatitud())){
 			        	response.sendRedirect("FormCoordenada.jsp?msj=existe1");
 			        }
 			        else {

@@ -192,8 +192,12 @@ public class Dt_Usuario {
 						if(user.getPwd().equals("")==false){
 						rsUsuario.updateString("contra", user.getPwd());
 						}
+						if(user.getKey_encriptacion().equals("")==false){
 						rsUsuario.updateString("key_encriptacion", user.getKey_encriptacion());
+						}
+						if(user.getEstado()!=0){
 						rsUsuario.updateInt("estado", 2);						
+						}
 						rsUsuario.updateRow();
 						modificado=true;
 						break;
@@ -332,7 +336,6 @@ public class Dt_Usuario {
 					{
 						
 						rsUsuario.updateString("url_foto", urlFoto);
-						rsUsuario.updateInt("estado", 2);
 						rsUsuario.updateRow();
 						actualizado = true;
 						break;

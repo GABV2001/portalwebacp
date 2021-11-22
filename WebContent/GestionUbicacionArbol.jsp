@@ -92,7 +92,7 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormUbicacionArbol.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nueva ubicación árbol</a>
+                                                class="fas fa-plus-square" title="Nueva Ubicación Árbol"></i>&nbsp; Nueva ubicación árbol</a>
                                     <%
                                     ArrayList<ViewUbicacionArbol> listUArbol = new ArrayList<ViewUbicacionArbol>();
                                     Dt_UbicacionArbol dtu = new Dt_UbicacionArbol();
@@ -241,7 +241,7 @@ import="vistas.ViewUbicacionArbol,datos.Dt_UbicacionArbol, entidades.Rol,vistas.
         {
             $.jAlert({
                 'title': 'Éxito',
-                'content': '¡Ubicación del árbol actializado exitosamente!',
+                'content': '¡Ubicación del árbol actualizado exitosamente!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionUbicacionArbol.jsp";

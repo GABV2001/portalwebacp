@@ -103,7 +103,7 @@
                                    <form class="TipoProducto" method="post" action="./Sl_GestionTipoProducto">
                       					<input name="opcion" type="hidden" value="1" />
                                         <div class="form-group">
-                                                <label for="TP" class="form-label fw-bolder">Tipo de Producto:</label>
+                                                <label for="TP" class="form-label fw-bolder">Formulario Tipo de Producto:</label>
                                                 <input type="text" class="form-control" name= "nombreTipoProducto" id="nombreTipoProducto" minlength="3" maxlength="200" required>
                                             	 <small id="message"></small>
                                             </div>
@@ -192,7 +192,7 @@
 
 	        if(mensaje == "existe")
 	        {
-	            errorAlert('Error', 'El Tipo Producto ingresado ya existe!');
+	            errorAlert('Error', '¡El Tipo Producto ingresado ya existe!');
 	        }
 	    });
 	    

@@ -87,7 +87,7 @@
 								%>
 								<div class="container" align="center">
 									<img id="preview" class="img-fluid" src="<%=us.getUrl_foto()==null?"img/Defecto.jpeg":us.getUrl_foto()%>" name="preview"  alt="Foto Usuario"
-										style="width: 250px; height: 300px; border-bottom-color: white; margin: 2px;" />
+										style="width: 300px; height: 300px; border-bottom-color: white; margin: 2px;" />
 								</div>
 								<br>		
 								<input type="file" id="foto" name="foto" onchange="Test.UpdatePreview(this)" accept="image/jpeg" required="required" >&nbsp; 

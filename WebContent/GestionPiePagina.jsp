@@ -140,14 +140,14 @@
                                                       <span class="input-group-text">Archivo</span>
                                                   </div>
                                                  <div class="custom-file">
-											    <label class="custom-file-label text-left" for="customFile" id="filmultFooter">ImagenFooter.png</label>
-											    <input type="file" class="custom-file-input" id="multFooter" name="multFooter" onchange="Test.UpdatePreview(this)" accept="image/png" title="ImagenFooter.png">
+											    <label class="custom-file-label text-left" for="customFile" id="filmultFooter">Footer.png</label>
+											    <input type="file" class="custom-file-input" id="multFooter" name="multFooter" onchange="Test.UpdatePreview(this)" accept="image/png" title="Footer.png">
 											</div>
                                               </div>
                                           </div> 
                                             <div class="m-3" align="center">
-										<img id="preview" src="<%=ft.getLogo()+"?t="+System.currentTimeMillis()%>" name="preview"  alt="Imagen Footer"
-											class="img-fluid bg-dark" alt="Responsive image" style="width: 300px; height: 200px; border-bottom-color: white; margin: 2px;" />
+										<img id="preview" src="<%=ft.getLogo()+"?t="+System.currentTimeMillis()%>" name="preview"  alt="Imagen Pie de Página"
+											class="img-fluid bg-dark" alt="Responsive image" style="width: 350px; height: 200px; border-bottom-color: white; margin: 2px;" />
 										<input type="hidden" name="url_foto" value="<%=ft.getLogo()%>">
 									</div>										
                                     	 <div class="text-center">

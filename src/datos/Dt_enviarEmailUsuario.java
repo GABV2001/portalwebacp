@@ -20,9 +20,9 @@ public class Dt_enviarEmailUsuario {
 	private static final String SMTP_AUTH_PWD = "PortalACP2@21";
 	
 	//Enlace
-    String linkHR = "http://localhost:8080/PortalWebACP/login.jsp";
+    String linkHR = "http://165.98.12.158:9090/PortalWebACP/login.jsp";
     
-    String linkHR2 = "http://localhost:8080/PortalWebACP/CambiarContra.jsp";
+    String linkHR2 = "http://165.98.12.158:9090/PortalWebACP/CambiarContra.jsp";
     
     
     //DECLARAMOS UNA CLASE PRIVADA COMO ATRIBUTO QUE HEREDA JAVAX.MAIL.AUTHENTICATOR

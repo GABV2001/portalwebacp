@@ -146,7 +146,7 @@
          							<i class="fas fa-camera mostrarImagen" title="<%=bn.getMultimedia() + "?t="+System.currentTimeMillis()%>" onClick="getValue()" data-toggle="modal" data-target="#modalVisualizarImagen"></i>
          							</a></td>                              
                                   <td>
-                                  &nbsp;&nbsp;<a href="FormEditarBanner.jsp?idB=<%=bn.getBannerID()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;                                       
+                                  &nbsp;&nbsp;<a href="FormEditarBanner.jsp?idB=<%=bn.getBannerID()%>"><i class="fas fa-edit" title="Editar Banner" ></i></a>&nbsp;&nbsp;                                       
                                   
                                   <a class="ajax-link" href="javascript:void(0);" 
                             		onclick="$.jAlert({
@@ -260,7 +260,7 @@
                 }
               });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje =="4")
         {
             $.jAlert({
                 'title': 'Error',
@@ -309,7 +309,6 @@
     function getValue()
     {   	
         var a= event.srcElement.title;
-        console.log(a);
         document.getElementById("preview").src = a;
     }  
 	</script>

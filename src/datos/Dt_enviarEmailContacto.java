@@ -32,7 +32,7 @@ public class Dt_enviarEmailContacto {
 /*----------------------------------------------------------------------------*/
 
   //METODO QUE ENVIA EL EMAIL DE VERIFICACION
-	public boolean enviarEmailVerificacion(String nombres, String apellidos, String correo, String descripcion) throws MessagingException{
+	public boolean enviarEmailVerificacion(String nombrescompleto, String asunto, String correo, String descripcion) throws MessagingException{
 	
 		 boolean debug=false;
 		
@@ -68,12 +68,13 @@ public class Dt_enviarEmailContacto {
 	      	message.addRecipient(Message.RecipientType.TO, new InternetAddress(email_solicitante));
 	      
 	      // Asunto: encabezado del archivo
-	        message.setSubject("Información Arboreto Carmelo Palma UCA");  		      
+	        message.setSubject(asunto);  		      
 	        
 	      //Cuerpo del correo  
-	        String myMsg = "<meta charset=\"utf-8\">";
-	      	myMsg += "A continuaci&oacute;n se detallan los datos enviados: <br><br>";
-	      	myMsg += "<strong>Nombres y apellidos: </strong> "+nombres+" "+apellidos+"<br>";
+	        String myMsg = "<meta charset=\"utf-8\">";	        
+	      	myMsg += "<strong>Formulario de contacto - Arboreto Carmelo Palma UCA:</strong><br><br>";
+	        myMsg += "A continuaci&oacute;n se detallan los datos enviados: <br><br>";
+	      	myMsg += "<strong>Nombres y apellidos: </strong> "+nombrescompleto+"<br>";
 	      	myMsg += "<strong>Correo electr&oacute;nico: </strong> "+ correo+"<br>";
 	      	myMsg += "<strong>Descripción: </strong>"+descripcion+"<br>";
 	      

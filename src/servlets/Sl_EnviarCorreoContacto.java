@@ -43,13 +43,13 @@ public class Sl_EnviarCorreoContacto extends HttpServlet {
 		
 		Dt_enviarEmailContacto dte = new Dt_enviarEmailContacto();
 		
-		String nombres = request.getParameter("nombres");
-		String apellidos = request.getParameter("apellidos");
+		String nombrescompleto = request.getParameter("nombrescompleto");
+		String asunto = request.getParameter("asunto");
 		String correo = request.getParameter("email");
 		String descripcion = request.getParameter("desc");
 		
 			try {
-				if(dte.enviarEmailVerificacion(nombres,apellidos,correo,descripcion)){
+				if(dte.enviarEmailVerificacion(nombrescompleto,asunto,correo,descripcion)){
 					response.sendRedirect("Contacto.jsp?msj=1");
 				}
 				else {

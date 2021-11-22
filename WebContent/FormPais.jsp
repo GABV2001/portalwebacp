@@ -117,7 +117,8 @@ import="vistas.ViewPais, datos.Dt_Pais,  entidades.Rol,vistas.ViewRolUsuario, da
                                             listRegion = dtu.listaRegion();
                                             %>                     
                                                 <label>Región:</label>
-                                                <select class="form-control" name = "txtNombreRegion" id ="txtNombreRegion">
+                                                <select class="form-control" name = "txtNombreRegion" id ="txtNombreRegion" required>
+  	                                 		<option value="" selected disabled>Seleccionar</option>                                  			                                            	                                    		                                       
                                              <%
                                     		for(Region r: listRegion){
                                     	    %>	

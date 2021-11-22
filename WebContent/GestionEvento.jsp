@@ -153,7 +153,7 @@
                         					</a></td>                                        	
                                                 <td><%=ev.getUbicacion() %></td>
                                             <td><%=ev.getHipervinculo() %></td>
-                                            <td>&nbsp;&nbsp;<a href="FormEditarEvento.jsp?idE=<%=ev.getEventoid()%>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                                            <td>&nbsp;&nbsp;<a href="FormEditarEvento.jsp?idE=<%=ev.getEventoid()%>"><i class="fas fa-edit" title="Editar Evento"></i></a>&nbsp;&nbsp;
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
@@ -263,7 +263,7 @@
                 }
               });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
             $.jAlert({
                 'title': 'Error',
@@ -285,11 +285,22 @@
                 }
               });
         }
+        if(mensaje == "existe")
+        {
+            $.jAlert({
+                'title': 'Error',
+                'content': '¡Evento ingresado ya existe!',
+                'theme': 'red',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionEvento.jsp";
+                }
+              });
+        }
         if(mensaje == "5")
         {
             $.jAlert({
                 'title': 'Éxito',
-                'content': '!Evento eliminado con éxito¡',
+                'content': '¡Evento eliminado con éxito!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionEvento.jsp";
@@ -299,9 +310,9 @@
         if(mensaje == "colision")
         {
             $.jAlert({
-                'title': 'Éxito',
+                'title': 'Error',
                 'content': '¡Existe un evento agendado, ya en la misma fecha y hora!',
-                'theme': 'green',
+                'theme': 'red',
                 'onClose': function(OnClose) {               
                     window.location = "GestionEvento.jsp";
                 }

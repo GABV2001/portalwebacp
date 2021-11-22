@@ -12,7 +12,6 @@ import datos.Encrypt;
 import entidades.Usuario;
 import negocio.Ng_Usuario;
 import datos.Dt_Usuario;
-import datos.Dt_enviarEmailUsuario;
 
 /**
  * Servlet implementation class Sl_GestionUsuario
@@ -91,13 +90,20 @@ public class Sl_GestionUsuario extends HttpServlet {
 		user.setEmail(email);
 		user.setTelefono(telefono);
 		user.setUrl_foto(url_foto);		
-		/////// ENCRIPTACION DE LA PWD //////////
-		String key = "";
-		String pwdEncrypt = "";
-		key=enc.generarLLave();
-		pwdEncrypt = enc.getAES(user.getPwd(),key);
-		user.setPwd(pwdEncrypt);
-		user.setKey_encriptacion(key);
+
+		if(user.getPwd().equals("")==false){
+			/////// ENCRIPTACION DE LA PWD //////////
+			String key = "";
+			String pwdEncrypt = "";
+			key=enc.generarLLave();
+			pwdEncrypt = enc.getAES(user.getPwd(),key);
+			user.setPwd(pwdEncrypt);
+			user.setKey_encriptacion(key);
+		}else {
+		     user.setCod_verificacion("");
+		     user.setKey_encriptacion("");
+		    
+		}
 
 	    if(user.getTelefono() == null || user.getTelefono().isEmpty()){
 			user.setTelefono("-");			
@@ -135,8 +141,7 @@ public class Sl_GestionUsuario extends HttpServlet {
 			        catch(Exception e) {
 			        	System.out.println("Sl_GestionUsuario, el error es: " + e.getMessage());
 						e.printStackTrace();
-			        }
-			        
+			        }			        
 					break;
 				}
 			
@@ -144,10 +149,10 @@ public class Sl_GestionUsuario extends HttpServlet {
 					
 				try {
 					user.setIdUser(Integer.parseInt(request.getParameter("idUsuario")));
+					user.setEstado(Integer.parseInt(request.getParameter("estado")));
 		        	//PARA GUARDAR LA FECHA Y HORA DE MODIFICACION
 			        Date fechaSistema = new Date();
 			        user.setfModificacion(new java.sql.Timestamp(fechaSistema.getTime()));
-			        System.out.println("user.getfModificacion(): "+user.getfModificacion());	
 			        if(ngu.existeActualizarUsuario(user.getIdUser(),user.getUser())){
 			          	response.sendRedirect("FormEditarUsuario.jsp?userID="+user.getIdUser()+"&msj=existe");
 			        }else {

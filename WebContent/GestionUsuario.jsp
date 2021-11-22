@@ -95,7 +95,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                        <div class="table-responsive">
                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                              <div style="text-align:right;">
-                               	<a href="FormUsuario.jsp"><i class="fas fa-user-plus"></i> Nuevo Usuario</a>&nbsp;                                     
+                               	<a href="FormUsuario.jsp"><i class="fas fa-user-plus" title="Nuevo Usuario"></i> Nuevo Usuario</a>&nbsp;                                     
                   			<a href="GestionRolUsuario.jsp"><i class="fas fa-user-tag" title="Asignar Rol a Usuarios"></i> Rol-Usuario</a>&nbsp; 
                   			<a href="#" onclick="verRptUsuarios();"><i class="fas fa-print " title="Imprimir Lista de Usuarios"></i>&nbsp;Imprimir</a>                 				                  		
                   			</div>
@@ -139,16 +139,16 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                                     <td><%=us.getApellido() %></td>
                                     <td><%=validacionTel%></td>
                                     <td><%=us.getEmail()%></td>                                           
-                                    <td><%=us.getEstado()==1||us.getEstado()==2?"Activo":"Inactivo" %></td>
+                                    <td><%=us.getEstado()!=0?"Activo":"Inactivo" %></td>
                                     <td>
                                     		<a id="btn-edita-abrir" href="FormEditarUsuario.jsp?userID=<%=us.getIdUser()%>">
-                 							<i class="fas fa-edit" title="Modificar datos del Usuario"></i>
+                 							<i class="fas fa-edit" title="Editar Usuario"></i>
                  						</a>
                                     	     &nbsp;                   						
                  						<a class="ajax-link" href="javascript:void(0);" 
                                     		onclick="$.jAlert({
                                     		    'type': 'confirm',
-                                    		    'confirmQuestion': '¿Realmente desea eliminar este registro?',
+                                    		    'confirmQuestion': '¿Realmente desea eliminar este usuario?',
                                     		    'onConfirm': function(e, btn){
                                     		      e.preventDefault();
                                     		      //do something here
@@ -255,7 +255,7 @@ import="vistas.*, entidades.*, datos.*, java.util.*;" %>
                 }
              });
          }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
             $.jAlert({
                 'title': 'Error',

@@ -116,7 +116,7 @@ public class Sl_PdfPublicacion extends HttpServlet {
 					else
 					{
 						System.out.println("SERVIDOR: VERIFIQUE QUE EL ARCHIVO CUMPLA CON LAS ESPECIFICACIONES REQUERIDAS!!!");
-						response.sendRedirect("GestionPublicacion.jsp?msj=3");						
+						response.sendRedirect("GestionPublicacion.jsp?msj=2");						
 					}
 				}	
 			}

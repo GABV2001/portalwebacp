@@ -104,9 +104,9 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                             <div class="table-responsive">
                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">  
                                 <div class="text-right">
-                                <a href="FormArbol.jsp"><i class="fas fa-plus-square"></i>&nbsp; Nuevo Árbol</a>
-                                <a href="RestaurarArbol.jsp"><i class="fas fa-redo"></i>&nbsp; Restaurar Árbol</a>
-                                <a href="#" onclick="verRptArbol();"><i class="fas fa-print"></i></i>&nbsp;Imprimir</a>
+                                <a href="FormArbol.jsp"><i class="fas fa-plus-square" title="Nuevo Árbol"></i>&nbsp; Nuevo Árbol</a>
+                                <a href="RestaurarArbol.jsp"><i class="fas fa-redo" title="Restaurar Árbol"></i>&nbsp; Restaurar Árbol</a>
+                                <a href="#" onclick="verRptArbol();"><i class="fas fa-print" title="Imprimir Árbol"></i></i>&nbsp;Imprimir</a>
                                 </div>                               
                                     <%
                                     ArrayList<ViewArbol> listArbol = new ArrayList<ViewArbol>();
@@ -154,12 +154,12 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                             <td><%=us.getNombreFam()%></td>
                                             <td><%=us.getNombreFlo()%></td>
                                             <td><%="Activo"%></td>
-                                            <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idA=<%=us.getArbolID()%>"><i class="fas fa-edit"></i></a>
+                                            <td>&nbsp;&nbsp;<a href="FormEditarArbol.jsp?idA=<%=us.getArbolID()%>"><i class="fas fa-edit" title="Editar Árbol"></i></a>
                                                         
                                                    &nbsp;&nbsp;<a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Servicio',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este Árbol?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -175,7 +175,7 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                                            		      return false;
                                            		    }
                                            		  });">
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Árbol"></i>
                         						</a></td>                        					           
  											    </tr>
                                            <%
@@ -272,7 +272,7 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
                 }
               });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
               $.jAlert({
                 'title': 'Error',
@@ -289,6 +289,17 @@ import="vistas.ViewArbol,datos.Dt_Arbol, entidades.Rol,vistas.ViewRolUsuario, vi
             $.jAlert({
                 'title': 'Éxito',
                 'content': '¡Árbol eliminado exitosamente!',
+                'theme': 'green',
+                'onClose': function(OnClose) {               
+                    window.location = "GestionArbol.jsp";
+                }
+              });
+        }
+        if(mensaje == "3")
+        {
+              $.jAlert({
+                'title': 'Éxito',
+                'content': '¡Árbol actualizado con éxito!',
                 'theme': 'green',
                 'onClose': function(OnClose) {               
                     window.location = "GestionArbol.jsp";

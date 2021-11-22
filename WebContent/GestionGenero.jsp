@@ -98,7 +98,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <div style="text-align:right;"><a href="FormGenero.jsp"><i
-                                                class="fas fa-plus-square"></i>&nbsp; Nuevo Género</div></a>
+                                                class="fas fa-plus-square" title="Nuevo Género"></i>&nbsp; Nuevo Género</div></a>
                                     <%
                                     	ArrayList<Genero> listGenero = new ArrayList<Genero>();
                                       	Dt_Genero dtu = new Dt_Genero();
@@ -127,12 +127,12 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                        	    <td><%=lg.getNombre()%></td>                                           
                                             <td><%=lg.getDescripcion()%></td>                                      
                                             <td>&nbsp;&nbsp;
-                                            <a href="FormEditarGenero.jsp?idG=<%=lg.getGeneroID()%>"><i class="fas fa-edit"></i></a>                                            
+                                            <a href="FormEditarGenero.jsp?idG=<%=lg.getGeneroID()%>"><i class="fas fa-edit" title="Editar Género"></i></a>                                            
                                                    &nbsp;&nbsp;      
                                                  <a class="ajax-link" href="javascript:void(0);" 
                                            			onclick="$.jAlert({
                                            		    'type': 'confirm',
-                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este genero?',
+                                           		    'confirmQuestion': '¿Estás seguro que deseas eliminar este género?',
                                            		    'onConfirm': function(e, btn){
                                            		      e.preventDefault();
                                            		      //do something here
@@ -149,7 +149,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                                            		    }
                                            		  });">
                                            		  
-                        							<i class="fas fa-trash-alt" title="Eliminar Elemento"></i>
+                        							<i class="fas fa-trash-alt" title="Eliminar Género"></i>
                         						</a>
                         						</td> 
                                         </tr>
@@ -226,7 +226,7 @@ import="entidades.Genero,datos.Dt_Genero,entidades.Rol,vistas.ViewRolUsuario, vi
                  }
                });
         }
-        if(mensaje == "2")
+        if(mensaje == "2" || mensaje == "4")
         {
         	 $.jAlert({
                  'title': 'Error',
